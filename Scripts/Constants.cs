@@ -13,10 +13,10 @@ public static class Inputs
 	public const string ZoomIn = "zoom_in";
 	public const string ZoomOut = "zoom_out";
 	public const string CameraPan = "camera_pan";
-	public const string CameraUp = "camera_up"
-	public const string CameraDown = "camera_down"
-	public const string CameraLeft = "camera_left"
-	public const string CameraRight = "camera_right"
+	public const string CameraUp = "camera_up";
+	public const string CameraDown = "camera_down";
+	public const string CameraLeft = "camera_left";
+	public const string CameraRight = "camera_right";
 }
 
 public static class Signals

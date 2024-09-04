@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using Scripts.Constants;
 
 public partial class GameCamera : Camera2D
 {
@@ -9,9 +10,9 @@ public partial class GameCamera : Camera2D
 	private bool _isDragging;
 
 	private Vector2 _zoom;
-	private const int ZoomMaxStep = 2;
-	private const int ZoomMinStep = 0;
-	private int _zoomStep = 1;
+	private const int ZoomMaxStep = 1;
+	private const int ZoomMinStep = -2;
+	private float _zoomStep = 1;
 
 	private int PanStep
 	{
@@ -54,19 +55,19 @@ public partial class GameCamera : Camera2D
 		}
 
 		// Panning behaviour
-		if (@event.IsAction("camera_move_left"))
+		if (@event.IsAction(Inputs.CameraLeft))
 		{
 			_position.X -= PanStep;
 		}
-		if (@event.IsAction("camera_move_right"))
+		if (@event.IsAction(Inputs.CameraRight))
 		{
 			_position.X += PanStep;
 		}
-		if (@event.IsAction("camera_move_up"))
+		if (@event.IsAction(Inputs.CameraUp))
 		{
 			_position.Y -= PanStep;
 		}
-		if (@event.IsAction("camera_move_down"))
+		if (@event.IsAction(Inputs.CameraDown))
 		{
 			_position.Y += PanStep;
 		}

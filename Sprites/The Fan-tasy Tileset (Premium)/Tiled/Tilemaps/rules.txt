@@ -1,0 +1,3 @@
+Rules\RockSlopes_Rules.tmx
+Rules\RockSlopes2_Rules.tmx
+Rules\CityWalls_Rules.tmx

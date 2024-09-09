@@ -10,7 +10,11 @@ public partial class House : AbstractPlaceable
 
 	public override void _Process(double delta)
 	{
-		FollowMouse(delta); 
+		if (!IsPlaced)
+		{
+			FollowMouse(delta); 
+		}
+		
 		
 	}
 

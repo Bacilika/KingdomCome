@@ -9,12 +9,16 @@ public partial class GameMenu : Control
 
 	private PackedScene _houseScene;
 	private AbstractPlaceable _object;
-
+	
 	[Signal]
-	public delegate void HousePlacedEventHandler(); 
+	public delegate void HousePlacedEventHandler(Node2D house);
+	
+	
 	public override void _Ready()
 	{
 		_houseScene = ResourceLoader.Load<PackedScene>("res://Scenes/House.tscn");
+		
+
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -22,13 +26,13 @@ public partial class GameMenu : Control
 	{
 		
 	}
-	
 	public void OnHouseButtonPressed()
 	{
 		Console.WriteLine("OnHouseButtonPressed");
 		var house = _houseScene.Instantiate<House>();
 		house.Position = GetViewport().GetMousePosition();
-		AddChild(house);
+		var baseNode = GetParent();
+		baseNode.AddChild(house);
 		_object = house;
 	}
 
@@ -41,7 +45,8 @@ public partial class GameMenu : Control
 
 		if (@event.IsActionPressed(Inputs.LeftClick))
 		{
-			var placedHouse = _object.Duplicate();
+			var placedHouse =  _object.Duplicate();
+			Console.WriteLine("emit signal");
 			EmitSignal(SignalName.HousePlaced, placedHouse);
 		}	
 	}

@@ -1,11 +1,13 @@
 [gd_scene load_steps=3 format=3 uid="uid://cx5dug5bljx7r"]
 
 [ext_resource type="Texture2D" uid="uid://dbsqgn5x7uxof" path="res://Art/Buildings/House_Hay_Stone_1.png" id="1_lt1ul"]
-[ext_resource type="Script" path="res://Scenes/House.cs" id="1_y1wo4"]
+[ext_resource type="Script" path="res://Scripts/House.cs" id="1_y1wo4"]
 
 [node name="House" type="Node2D"]
 physics_interpolation_mode = 2
+y_sort_enabled = true
 script = ExtResource("1_y1wo4")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+y_sort_enabled = true
 texture = ExtResource("1_lt1ul")

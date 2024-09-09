@@ -1,18 +1,19 @@
 [gd_scene load_steps=3 format=3 uid="uid://25kpv3trjyvk"]
 
 [ext_resource type="Texture2D" uid="uid://dbsqgn5x7uxof" path="res://Art/Buildings/House_Hay_Stone_1.png" id="1_78281"]
-[ext_resource type="Script" path="res://Scenes/GameMenu.cs" id="1_dev6f"]
+[ext_resource type="Script" path="res://Scripts/GameMenu.cs" id="1_dev6f"]
 
 [node name="GameMenu" type="Control"]
+y_sort_enabled = true
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("1_dev6f")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="MenuCanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="HouseButton" type="TextureButton" parent="CanvasLayer"]
+[node name="HouseButton" type="TextureButton" parent="MenuCanvasLayer"]
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
@@ -21,4 +22,13 @@ offset_right = 89.0
 grow_vertical = 0
 texture_normal = ExtResource("1_78281")
 
-[connection signal="pressed" from="CanvasLayer/HouseButton" to="." method="OnHouseButtonPressed"]
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 56.0
+offset_top = 336.0
+offset_right = 153.0
+offset_bottom = 435.0
+toggle_mode = true
+icon = ExtResource("1_78281")
+
+[connection signal="pressed" from="MenuCanvasLayer/HouseButton" to="." method="OnHouseButtonPressed"]

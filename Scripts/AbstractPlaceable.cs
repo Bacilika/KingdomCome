@@ -14,16 +14,17 @@ public abstract partial class AbstractPlaceable : Node2D
 	{
 		if(IsPlaced)
 		{
-			GameMenu.containHouse = true; 
-			GD.Print("OnMouseEntered");
+			GameMenu.ContainHouse = true;
+			GameMenu.SelectedPlaceable = this;
+
 		}			
 	}
 
 	public void OnMouseExited()
 	{
-		GameMenu.containHouse = false; 
-		Console.WriteLine("OnMouseExited");
-		GD.Print("OnMouseExited");
+		GameMenu.ContainHouse = false;
+		GameMenu.SelectedPlaceable = null;
+
 	}
 	
 	// Called when the node enters the scene tree for the first time.
@@ -32,8 +33,20 @@ public abstract partial class AbstractPlaceable : Node2D
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	protected void FollowMouse(double delta)
+	protected void FollowMouse()
 	{
 		Position = GetGlobalMousePosition();
 	}
+
+	public int GetBuildingPrice()
+	{
+		return (int) GetType().GetMethod("GetPrice")!.Invoke(this, null)!;
+	}
+
+	public void ShowBuildingInfoScreen()
+	{
+		GetType().GetMethod("ShowInfo")?.Invoke(this, null);
+	}
+
+	
 }

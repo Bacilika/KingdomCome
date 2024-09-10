@@ -9,7 +9,16 @@ public partial class GameMenu : Control
 
 	private PackedScene _houseScene;
 	private AbstractPlaceable _object;
-	public static bool containHouse;
+	public static AbstractPlaceable SelectedPlaceable;
+	public static bool ContainHouse;
+	private int _money = 50000;
+	public static int Citizens;
+	public static int Happiness;
+	private TextureRect _textureRect;
+	private Label _moneyLabel;
+	private Label _citizensLabel;
+	private Label _happinessLabel;
+	
 
 	
 	[Signal]
@@ -19,18 +28,25 @@ public partial class GameMenu : Control
 	public override void _Ready()
 	{
 		_houseScene = ResourceLoader.Load<PackedScene>("res://Scenes/House.tscn");
-		
+		var menuCanvasLayer = GetNode<CanvasLayer>("MenuCanvasLayer");
+		_textureRect = menuCanvasLayer.GetNode<TextureRect>("TextureRect");
+		_moneyLabel = _textureRect.GetNode<Label>("Money");
+		_citizensLabel = _textureRect.GetNode<Label>("Citizens");
+		_happinessLabel = _textureRect.GetNode<Label>("Happiness");
+
 
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		
+		UpdateMenuInfo();
+		_textureRect.Size = new Vector2(GetTree().Root.Size.X,_textureRect.Size.Y);
+
 	}
 	public void OnHouseButtonPressed()
 	{
-		Console.WriteLine("OnHouseButtonPressed");
+
 		var house = _houseScene.Instantiate<House>();
 		house.Position = GetViewport().GetMousePosition();
 		var baseNode = GetParent();
@@ -42,27 +58,42 @@ public partial class GameMenu : Control
 	{
 		if (_object == null)
 		{
-			return;
+			if (SelectedPlaceable is not null && @event.IsActionPressed(Inputs.LeftClick))
+			{
+				SelectedPlaceable.ShowBuildingInfoScreen();
+			}
+			
 		}
 
-		if (@event.IsActionPressed(Inputs.LeftClick))
+		else if (@event.IsActionPressed(Inputs.LeftClick))
 		{
-			if (containHouse == false)
+			if (CanPlace())
 			{
+				_money -= _object.GetBuildingPrice();
 				var placedHouse =  _object.Duplicate();
-				Console.WriteLine("emit signal");
 				EmitSignal(SignalName.HousePlaced, placedHouse);
-				_object.QueueFree();
-				_object = null;
 			}
 
 		}
 
 		if (@event.IsActionPressed((Inputs.RightClick)))
 		{
-			_object.QueueFree();
+			_object?.QueueFree();
 			_object = null;
 		}
 	}
+
+	public void UpdateMenuInfo()
+	{
+		_moneyLabel.Text = "Money: " + _money;
+		_citizensLabel.Text = "Citizens: " + Citizens;
+		_happinessLabel.Text = "Happiness: " + Happiness;
+	}
+
+	private bool CanPlace()
+	{
+		return ContainHouse == false && _object.GetBuildingPrice() <= _money;
+	}
+	
 	
 }

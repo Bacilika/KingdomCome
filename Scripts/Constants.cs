@@ -9,6 +9,7 @@ public static class Constants
 public static class Inputs
 {
 	public const string LeftClick = "left_click";
+	public const string RightClick = "right_click";
 	public const string ClearCursor = "clear_cursor";
 	public const string ZoomIn = "zoom_in";
 	public const string ZoomOut = "zoom_out";

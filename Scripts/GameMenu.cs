@@ -48,7 +48,13 @@ public partial class GameMenu : Control
 			var placedHouse =  _object.Duplicate();
 			Console.WriteLine("emit signal");
 			EmitSignal(SignalName.HousePlaced, placedHouse);
-		}	
+		}
+
+		if (@event.IsActionPressed((Inputs.RightClick)))
+		{
+			_object.QueueFree();
+			_object = null;
+		}
 	}
 	
 }

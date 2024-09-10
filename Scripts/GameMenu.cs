@@ -9,6 +9,8 @@ public partial class GameMenu : Control
 
 	private PackedScene _houseScene;
 	private AbstractPlaceable _object;
+	public static bool containHouse;
+
 	
 	[Signal]
 	public delegate void HousePlacedEventHandler(Node2D house);
@@ -45,9 +47,15 @@ public partial class GameMenu : Control
 
 		if (@event.IsActionPressed(Inputs.LeftClick))
 		{
-			var placedHouse =  _object.Duplicate();
-			Console.WriteLine("emit signal");
-			EmitSignal(SignalName.HousePlaced, placedHouse);
+			if (containHouse == false)
+			{
+				var placedHouse =  _object.Duplicate();
+				Console.WriteLine("emit signal");
+				EmitSignal(SignalName.HousePlaced, placedHouse);
+				_object.QueueFree();
+				_object = null;
+			}
+
 		}
 
 		if (@event.IsActionPressed((Inputs.RightClick)))

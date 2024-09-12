@@ -1,24 +1,26 @@
 using Godot;
 using System;
 using System.Threading;
+using Godot.Collections;
 using Scripts.Constants;
 
 public partial class GameMenu : Control
 {
 	// Called when the node enters the scene tree for the first time.
-
-	private PackedScene _houseScene;
+	
 	private AbstractPlaceable _object;
 	public static AbstractPlaceable SelectedPlaceable;
 	public static bool ContainHouse;
 	private int _money = 50000;
 	public static int Citizens;
 	public static int Happiness;
+	public static int Food;
 	private TextureRect _textureRect;
 	private Label _moneyLabel;
+	private Label _foodLabel;
 	private Label _citizensLabel;
 	private Label _happinessLabel;
-	
+	private Dictionary<String, PackedScene> _packedScenesscenes;
 
 	
 	[Signal]
@@ -27,14 +29,14 @@ public partial class GameMenu : Control
 	
 	public override void _Ready()
 	{
-		_houseScene = ResourceLoader.Load<PackedScene>("res://Scenes/House.tscn");
 		var menuCanvasLayer = GetNode<CanvasLayer>("MenuCanvasLayer");
 		_textureRect = menuCanvasLayer.GetNode<TextureRect>("TextureRect");
 		_moneyLabel = _textureRect.GetNode<Label>("Money");
+		_foodLabel = _textureRect.GetNode<Label>("Food");
 		_citizensLabel = _textureRect.GetNode<Label>("Citizens");
 		_happinessLabel = _textureRect.GetNode<Label>("Happiness");
-
-
+		_packedScenesscenes = new Dictionary<String, PackedScene> { { "House", ResourceLoader.Load<PackedScene>("res://Scenes/House.tscn") },
+			{"FarmHouse", ResourceLoader.Load<PackedScene>("res://Scenes/FarmHouse.tscn")} };
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -44,10 +46,10 @@ public partial class GameMenu : Control
 		_textureRect.Size = new Vector2(GetTree().Root.Size.X,_textureRect.Size.Y);
 
 	}
-	public void OnHouseButtonPressed()
+	public void OnHouseButtonPressed(String type)
 	{
-
-		var house = _houseScene.Instantiate<House>();
+		Console.WriteLine(type);
+		var house = _packedScenesscenes[type].Instantiate<AbstractPlaceable>();
 		house.Position = GetViewport().GetMousePosition();
 		var baseNode = GetParent();
 		baseNode.AddChild(house);
@@ -88,6 +90,7 @@ public partial class GameMenu : Control
 		_moneyLabel.Text = "Money: " + _money;
 		_citizensLabel.Text = "Citizens: " + Citizens;
 		_happinessLabel.Text = "Happiness: " + Happiness;
+		_foodLabel.Text = "Food: " + Food;
 	}
 
 	private bool CanPlace()

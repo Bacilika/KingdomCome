@@ -47,6 +47,6 @@ public abstract partial class AbstractPlaceable : Node2D
 	{
 		GetType().GetMethod("ShowInfo")?.Invoke(this, null);
 	}
-
+	
 	
 }

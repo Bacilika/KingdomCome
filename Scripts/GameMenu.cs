@@ -15,9 +15,12 @@ public partial class GameMenu : Control
 	public static int Citizens;
 	public static int Happiness;
 	public static int Food;
+	public static int Stone;
+	public static int WorkingCitizens; 
 	private TextureRect _textureRect;
 	private Label _moneyLabel;
 	private Label _foodLabel;
+	private Label _stoneLabel;
 	private Label _citizensLabel;
 	private Label _happinessLabel;
 	private Dictionary<String, PackedScene> _packedScenesscenes;
@@ -34,9 +37,12 @@ public partial class GameMenu : Control
 		_moneyLabel = _textureRect.GetNode<Label>("Money");
 		_foodLabel = _textureRect.GetNode<Label>("Food");
 		_citizensLabel = _textureRect.GetNode<Label>("Citizens");
+		_stoneLabel = _textureRect.GetNode<Label>("Stone");
 		_happinessLabel = _textureRect.GetNode<Label>("Happiness");
 		_packedScenesscenes = new Dictionary<String, PackedScene> { { "House", ResourceLoader.Load<PackedScene>("res://Scenes/House.tscn") },
-			{"FarmHouse", ResourceLoader.Load<PackedScene>("res://Scenes/FarmHouse.tscn")} };
+			{"FarmHouse", ResourceLoader.Load<PackedScene>("res://Scenes/FarmHouse.tscn")},
+			{"StoneMine", ResourceLoader.Load<PackedScene>("res://Scenes/StoneMine.tscn")}
+		};
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -91,6 +97,7 @@ public partial class GameMenu : Control
 		_citizensLabel.Text = "Citizens: " + Citizens;
 		_happinessLabel.Text = "Happiness: " + Happiness;
 		_foodLabel.Text = "Food: " + Food;
+		_stoneLabel.Text = "Stone: " + Stone;
 	}
 
 	private bool CanPlace()

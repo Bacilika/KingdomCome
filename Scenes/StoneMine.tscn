@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://b88wabyfmkyij"]
+
+[ext_resource type="Script" path="res://Scripts/StoneMine.cs" id="1_72tjo"]
+[ext_resource type="Texture2D" uid="uid://ddk81u02fs4si" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Rocks/Rock_Brown_Moss_1.png" id="2_g4hmu"]
+[ext_resource type="PackedScene" uid="uid://biil4p82w3tjw" path="res://Scenes/PlaceableInfo.tscn" id="3_fiyya"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_af4du"]
+radius = 16.0312
+
+[node name="StoneMine" type="Area2D"]
+physics_interpolation_mode = 2
+script = ExtResource("1_72tjo")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+y_sort_enabled = true
+texture = ExtResource("2_g4hmu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, 3)
+shape = SubResource("CircleShape2D_af4du")
+
+[node name="PlaceableInfo" parent="." instance=ExtResource("3_fiyya")]
+visible = false
+offset_left = 16.0
+offset_top = -192.0
+offset_right = 16.0
+offset_bottom = -192.0
+
+[connection signal="mouse_entered" from="." to="." method="OnMouseEntered"]
+[connection signal="mouse_exited" from="." to="." method="OnMouseExited"]

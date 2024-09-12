@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://25kpv3trjyvk"]
+[gd_scene load_steps=6 format=3 uid="uid://25kpv3trjyvk"]
 
 [ext_resource type="Texture2D" uid="uid://dbsqgn5x7uxof" path="res://Art/Buildings/House_Hay_Stone_1.png" id="1_78281"]
 [ext_resource type="Script" path="res://Scripts/GameMenu.cs" id="1_dev6f"]
 [ext_resource type="Texture2D" uid="uid://bkkxu2mctqb7e" path="res://Sprites/Extra/MenuBar.png" id="2_kenlx"]
 [ext_resource type="Texture2D" uid="uid://cc1ypnuadgjre" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/House_RedWood_Stone_2.png" id="4_3ehhv"]
+[ext_resource type="Texture2D" uid="uid://xos1w8uubf6b" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Rocks/Rock_Brown_Moss_3.png" id="5_5beao"]
 
 [node name="GameMenu" type="Control"]
 y_sort_enabled = true
@@ -26,11 +27,12 @@ grow_vertical = 0
 texture = ExtResource("2_kenlx")
 
 [node name="Food" type="Label" parent="MenuCanvasLayer/TextureRect"]
+layout_mode = 0
 offset_left = 184.0
 offset_top = 43.0
 offset_right = 376.0
 offset_bottom = 66.0
-text = "Happiness: 0"
+text = "Food: 0"
 
 [node name="Money" type="Label" parent="MenuCanvasLayer/TextureRect"]
 layout_mode = 0
@@ -55,6 +57,13 @@ offset_top = 72.0
 offset_right = 200.0
 offset_bottom = 95.0
 text = "Happiness: 0"
+
+[node name="Stone" type="Label" parent="MenuCanvasLayer/TextureRect"]
+offset_left = 173.0
+offset_top = 78.0
+offset_right = 365.0
+offset_bottom = 101.0
+text = "Stone: 0"
 
 [node name="HouseButton" type="TextureButton" parent="MenuCanvasLayer/TextureRect"]
 layout_mode = 1
@@ -82,5 +91,20 @@ grow_vertical = 0
 tooltip_text = "This house costs 5000 to build"
 texture_normal = ExtResource("4_3ehhv")
 
+[node name="StoneMineButton" type="TextureButton" parent="MenuCanvasLayer/TextureRect"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 806.0
+offset_top = -92.0
+offset_right = 837.0
+offset_bottom = -62.0
+grow_vertical = 0
+scale = Vector2(1.5, 1.5)
+tooltip_text = "This house costs 5000 to build"
+texture_normal = ExtResource("5_5beao")
+
 [connection signal="pressed" from="MenuCanvasLayer/TextureRect/HouseButton" to="." method="OnHouseButtonPressed" binds= ["House"]]
 [connection signal="pressed" from="MenuCanvasLayer/TextureRect/Farmbutton" to="." method="OnHouseButtonPressed" binds= ["FarmHouse"]]
+[connection signal="pressed" from="MenuCanvasLayer/TextureRect/StoneMineButton" to="." method="OnHouseButtonPressed" binds= ["StoneMine"]]

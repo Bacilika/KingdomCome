@@ -1,18 +1,19 @@
 using Godot;
 using System;
 
-public partial class FarmHouse : AbstractPlaceable
+public partial class StoneMine : AbstractPlaceable
 {
 	private RandomNumberGenerator habitantGrowth = new ();
-	private RandomNumberGenerator foodGrowth = new ();
-	private int _growth = 50; // 1/_growth% chance to increase habitants by 1 each tick. 
+	private int _growth = 100; // 1/_growth% chance to increase habitants by 1 each tick. 
 	private int _workers;
-	private int _foodGrowth = 500; // 1/_growth% chance to increase habitants by 1 each tick. 
+	private int _stone;
+	private RandomNumberGenerator stoneGrowth = new ();
 	private Control _infoBox;
-	private const int MaxWorkers = 10;
-	private int _food; 
+	private const int MaxWorkers = 5;
+	private int _stoneGrowth = 500; // 1/_growth% chance to increase habitants by 1 each tick. 
 
-	private const int price = 20000;
+
+	private const int price = 15000;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -20,10 +21,16 @@ public partial class FarmHouse : AbstractPlaceable
 		_infoBox.Visible = false;
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
+	public int GetPrice()
+	{
+		return price;
+		
+	}
+	
+	
+	
 	public override void _Process(double delta)
 	{
-		
 		if (!IsPlaced)
 		{
 			FollowMouse(); 
@@ -35,29 +42,21 @@ public partial class FarmHouse : AbstractPlaceable
 				if (habitantGrowth.RandiRange(0, _growth) ==0)
 				{
 					_workers++;
-					GameMenu.WorkingCitizens++;
-					_foodGrowth = 500 / _workers;
+					GameMenu.WorkingCitizens++; 
 				}
 			}
-
-			
-			if (foodGrowth.RandiRange(0, _foodGrowth) == 0)
+			if (stoneGrowth.RandiRange(0, _stoneGrowth) == 0)
 			{
-				_food++;
-				GameMenu.Food++;
+				_stone++;
+				GameMenu.Stone++;
 			}
-				
-			
+
+
 			UpdateInfo();
 		}
 		
 	}
-	
-	public int GetPrice()
-	{
-		return price;
-		
-	}
+
 	public void UpdateInfo()
 	{
 		var textLabel = (RichTextLabel) _infoBox.GetChild(0).GetChild(0);
@@ -67,4 +66,5 @@ public partial class FarmHouse : AbstractPlaceable
 	{
 		_infoBox.Visible = !_infoBox.Visible;
 	}
+
 }

@@ -1673,3 +1673,9 @@ tile_set = SubResource("TileSet_bpvrp")
 [node name="GameMenu" parent="." instance=ExtResource("6_d7dld")]
 offset_right = 1280.0
 offset_bottom = 712.0
+
+[node name="EatFoodTimer" type="Timer" parent="."]
+wait_time = 10.0
+autostart = true
+
+[connection signal="timeout" from="EatFoodTimer" to="." method="OnEatFoodTimerTimedout"]

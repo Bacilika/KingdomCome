@@ -45,13 +45,12 @@ public partial class StoneMine : AbstractPlaceable
 					GameMenu.WorkingCitizens++; 
 				}
 			}
-			if (stoneGrowth.RandiRange(0, _stoneGrowth) == 0)
+			if (stoneGrowth.RandiRange(0, _stoneGrowth) == 0 && _workers > 0)
 			{
 				_stone++;
 				GameMenu.Stone++;
 			}
-
-
+			
 			UpdateInfo();
 		}
 		

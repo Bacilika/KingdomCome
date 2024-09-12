@@ -41,7 +41,7 @@ public partial class FarmHouse : AbstractPlaceable
 			}
 
 			
-			if (foodGrowth.RandiRange(0, _foodGrowth) == 0)
+			if (foodGrowth.RandiRange(0, _foodGrowth) == 0 && _workers > 0)
 			{
 				_food++;
 				GameMenu.Food++;

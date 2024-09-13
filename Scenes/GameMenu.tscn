@@ -1,10 +1,223 @@
-[gd_scene load_steps=6 format=3 uid="uid://25kpv3trjyvk"]
+[gd_scene load_steps=11 format=4 uid="uid://25kpv3trjyvk"]
 
-[ext_resource type="Texture2D" uid="uid://dbsqgn5x7uxof" path="res://Art/Buildings/House_Hay_Stone_1.png" id="1_78281"]
 [ext_resource type="Script" path="res://Scripts/GameMenu.cs" id="1_dev6f"]
-[ext_resource type="Texture2D" uid="uid://bkkxu2mctqb7e" path="res://Sprites/Extra/MenuBar.png" id="2_kenlx"]
+[ext_resource type="Texture2D" uid="uid://o80rtv7te3j4" path="res://Sprites/Extra/Atlas_Castle_Building-export.png" id="2_k8sk1"]
+[ext_resource type="FontFile" uid="uid://dul1t3v440c7s" path="res://Deutsch.ttf" id="3_d13wb"]
 [ext_resource type="Texture2D" uid="uid://cc1ypnuadgjre" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/House_RedWood_Stone_2.png" id="4_3ehhv"]
+[ext_resource type="Texture2D" uid="uid://17gjb7osbvni" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/House_Hay_Stone_1.png" id="4_m1x3j"]
 [ext_resource type="Texture2D" uid="uid://xos1w8uubf6b" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Rocks/Rock_Brown_Moss_3.png" id="5_5beao"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fs6ce"]
+texture = ExtResource("2_k8sk1")
+texture_region_size = Vector2i(64, 64)
+0:9/0 = 0
+1:9/0 = 0
+2:9/0 = 0
+3:9/0 = 0
+4:9/0 = 0
+3:10/0 = 0
+2:10/0 = 0
+1:10/0 = 0
+0:10/0 = 0
+4:10/0 = 0
+5:69/0 = 0
+6:69/0 = 0
+7:69/0 = 0
+8:69/0 = 0
+9:69/0 = 0
+9:70/0 = 0
+9:71/0 = 0
+9:72/0 = 0
+8:72/0 = 0
+7:72/0 = 0
+6:72/0 = 0
+5:72/0 = 0
+5:71/0 = 0
+5:70/0 = 0
+6:70/0 = 0
+7:70/0 = 0
+8:70/0 = 0
+8:71/0 = 0
+7:71/0 = 0
+6:71/0 = 0
+3:69/0 = 0
+2:69/0 = 0
+1:69/0 = 0
+1:70/0 = 0
+1:71/0 = 0
+2:70/0 = 0
+3:70/0 = 0
+3:71/0 = 0
+2:71/0 = 0
+0:63/0 = 0
+1:63/0 = 0
+2:63/0 = 0
+3:63/0 = 0
+4:63/0 = 0
+4:64/0 = 0
+3:64/0 = 0
+2:64/0 = 0
+1:64/0 = 0
+0:64/0 = 0
+0:65/0 = 0
+0:66/0 = 0
+0:67/0 = 0
+1:67/0 = 0
+2:67/0 = 0
+3:67/0 = 0
+4:67/0 = 0
+4:66/0 = 0
+4:65/0 = 0
+3:65/0 = 0
+2:65/0 = 0
+2:66/0 = 0
+1:66/0 = 0
+1:65/0 = 0
+3:66/0 = 0
+21:67/0 = 0
+22:67/0 = 0
+23:67/0 = 0
+24:67/0 = 0
+25:67/0 = 0
+25:66/0 = 0
+25:65/0 = 0
+24:64/0 = 0
+23:64/0 = 0
+22:65/0 = 0
+21:65/0 = 0
+22:66/0 = 0
+23:66/0 = 0
+24:66/0 = 0
+24:65/0 = 0
+23:65/0 = 0
+21:66/0 = 0
+21:64/0 = 0
+22:64/0 = 0
+22:63/0 = 0
+23:63/0 = 0
+23:62/0 = 0
+24:63/0 = 0
+25:64/0 = 0
+1:12/0 = 0
+2:12/0 = 0
+3:12/0 = 0
+3:13/0 = 0
+2:13/0 = 0
+1:13/0 = 0
+5:13/0 = 0
+5:11/0 = 0
+7:11/0 = 0
+7:13/0 = 0
+9:13/0 = 0
+11:13/0 = 0
+11:11/0 = 0
+9:11/0 = 0
+9:9/0 = 0
+11:9/0 = 0
+10:7/0 = 0
+10:6/0 = 0
+8:7/0 = 0
+8:6/0 = 0
+8:4/0 = 0
+8:3/0 = 0
+9:3/0 = 0
+10:3/0 = 0
+10:4/0 = 0
+8:1/0 = 0
+10:1/0 = 0
+12:1/0 = 0
+14:1/0 = 0
+3:5/0 = 0
+2:5/0 = 0
+1:5/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+7:2/0 = 0
+7:3/0 = 0
+5:2/0 = 0
+5:3/0 = 0
+3:2/0 = 0
+3:3/0 = 0
+1:2/0 = 0
+1:3/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_qt3fw"]
+sources/0 = SubResource("TileSetAtlasSource_fs6ce")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_kpo0o"]
+texture = ExtResource("2_k8sk1")
+texture_region_size = Vector2i(64, 64)
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+3:3/0 = 0
+3:4/0 = 0
+3:5/0 = 0
+3:6/0 = 0
+3:7/0 = 0
+2:6/0 = 0
+1:6/0 = 0
+1:5/0 = 0
+2:5/0 = 0
+1:4/0 = 0
+1:3/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+2:3/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+7:2/0 = 0
+6:2/0 = 0
+5:2/0 = 0
+5:3/0 = 0
+6:3/0 = 0
+7:3/0 = 0
+7:4/0 = 0
+7:5/0 = 0
+7:6/0 = 0
+7:7/0 = 0
+6:7/0 = 0
+5:7/0 = 0
+5:6/0 = 0
+6:6/0 = 0
+6:5/0 = 0
+5:5/0 = 0
+5:4/0 = 0
+8:1/0 = 0
+8:3/0 = 0
+8:4/0 = 0
+8:6/0 = 0
+8:7/0 = 0
+10:7/0 = 0
+10:6/0 = 0
+10:4/0 = 0
+10:3/0 = 0
+10:1/0 = 0
+12:1/0 = 0
+14:1/0 = 0
+16:1/0 = 0
+17:1/0 = 0
+18:1/0 = 0
+18:2/0 = 0
+17:2/0 = 0
+16:2/0 = 0
+16:4/0 = 0
+17:4/0 = 0
+18:4/0 = 0
+18:5/0 = 0
+17:5/0 = 0
+16:5/0 = 0
+2:7/0 = 0
+1:7/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_sfqou"]
+sources/0 = SubResource("TileSetAtlasSource_kpo0o")
 
 [node name="GameMenu" type="Control"]
 y_sort_enabled = true
@@ -16,95 +229,161 @@ mouse_filter = 2
 script = ExtResource("1_dev6f")
 
 [node name="MenuCanvasLayer" type="CanvasLayer" parent="."]
+follow_viewport_scale = 3.877
 
-[node name="TextureRect" type="TextureRect" parent="MenuCanvasLayer"]
-anchors_preset = 2
+[node name="Container" type="Control" parent="MenuCanvasLayer"]
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
 anchor_top = 1.0
+anchor_right = 0.5
 anchor_bottom = 1.0
-offset_top = -104.0
-offset_right = 1280.0
+offset_left = -636.0
+offset_top = -120.0
+offset_right = 636.0
+grow_horizontal = 2
 grow_vertical = 0
-texture = ExtResource("2_kenlx")
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
-[node name="Food" type="Label" parent="MenuCanvasLayer/TextureRect"]
-layout_mode = 0
-offset_left = 184.0
-offset_top = 43.0
-offset_right = 376.0
-offset_bottom = 66.0
+[node name="ShopBackground" type="TileMapLayer" parent="MenuCanvasLayer/Container"]
+visible = false
+position = Vector2(0, 4)
+tile_map_data = PackedByteArray("AABMAPv/AAADAAoAAABMAPf/AAADAAkAAABQAPf/AAAEAAkAAABIAPf/AAACAAkAAABIAPv/AAACAAoAAABQAPv/AAAEAAoAAABIAPP/AAABAAkAAABMAPP/AAABAAkAAABQAPP/AAAEAAkAAABEAPv/AAACAAoAAABAAPv/AAABAAoAAABEAPf/AAACAAkAAABEAPP/AAACAAkAAABAAPf/AAABAAkAAABAAPP/AAABAAkAAAA8APP/AAAAAAkAAAA8APf/AAAAAAkAAAA8APv/AAAAAAoAAAA8AO//AAAAAAkAAABAAO//AAABAAkAAABEAO//AAABAAkAAABIAO//AAABAAkAAABMAO//AAABAAkAAABQAO//AAAEAAkAAAA8AOv/AAAAAAkAAABAAOv/AAABAAkAAABEAOv/AAABAAkAAABIAOv/AAABAAkAAABMAOv/AAABAAkAAABQAOv/AAAEAAkAAAA+AOf/AAABAEMAAABCAOf/AAACAEMAAABGAOf/AAACAEMAAABKAOf/AAACAEMAAABKAOP/AAACAEIAAABGAOP/AAACAEIAAABCAOP/AAACAEIAAAA+AOP/AAABAEIAAAA6AOP/AAAAAEIAAABOAOP/AAADAEIAAABSAOP/AAAEAEIAAABOAOf/AAADAEMAAABSAOf/AAAEAEMAAAA6AOf/AAAAAEMAAAA6AN//AAAAAEEAAAA+AN//AAABAEEAAABCAN//AAACAEEAAABGAN//AAACAEEAAABKAN//AAACAEEAAABOAN//AAADAEEAAABSAN//AAAEAEEAAABSANv/AAAEAD8AAAA6ANv/AAAAAD8AAAA+ANv/AAABAD8AAABOANv/AAADAD8AAABKANv/AAACAD8AAABCANv/AAACAD8AAABGANv/AAACAD8AAAA=")
+tile_set = SubResource("TileSet_qt3fw")
+rendering_quadrant_size = 64
+
+[node name="HouseTab" type="CanvasGroup" parent="MenuCanvasLayer/Container/ShopBackground"]
+visible = false
+
+[node name="HouseButton" type="Button" parent="MenuCanvasLayer/Container/ShopBackground/HouseTab"]
+offset_left = 1004.0
+offset_top = -380.0
+offset_right = 1076.0
+offset_bottom = -300.0
+tooltip_text = "This house costs 5000 to build"
+icon = ExtResource("4_m1x3j")
+flat = true
+expand_icon = true
+
+[node name="ProductionTab" type="CanvasGroup" parent="MenuCanvasLayer/Container/ShopBackground"]
+visible = false
+
+[node name="Farmbutton" type="Button" parent="MenuCanvasLayer/Container/ShopBackground/ProductionTab"]
+offset_left = 1004.0
+offset_top = -388.0
+offset_right = 1100.0
+offset_bottom = -316.0
+size_flags_horizontal = 4
+tooltip_text = "This house costs 5000 to build"
+icon = ExtResource("4_3ehhv")
+flat = true
+expand_icon = true
+
+[node name="StoneMineButton" type="Button" parent="MenuCanvasLayer/Container/ShopBackground/ProductionTab"]
+offset_left = 1156.0
+offset_top = -388.0
+offset_right = 1220.0
+offset_bottom = -324.0
+size_flags_horizontal = 4
+size_flags_vertical = 0
+tooltip_text = "This house costs 5000 to build"
+icon = ExtResource("5_5beao")
+flat = true
+expand_icon = true
+
+[node name="DecorationTab" type="CanvasGroup" parent="MenuCanvasLayer/Container/ShopBackground"]
+
+[node name="MenuBar" type="TileMapLayer" parent="MenuCanvasLayer/Container"]
+position = Vector2(4, -600)
+tile_map_data = PackedByteArray("AAABACsAAAABAAcAAAABACcAAAABAAYAAAABACMAAAABAAUAAAAFACsAAAACAAcAAAAJACsAAAACAAcAAAANACsAAAACAAcAAAARACsAAAACAAcAAAAVACsAAAACAAcAAAAZACsAAAACAAcAAAAdACsAAAACAAcAAAAhACsAAAACAAcAAAAlACsAAAACAAcAAAApACsAAAACAAcAAAAtACsAAAACAAcAAAAxACsAAAACAAcAAAA1ACsAAAACAAcAAAA5ACsAAAACAAcAAAA9ACsAAAACAAcAAABBACsAAAACAAcAAABFACsAAAACAAcAAABJACsAAAACAAcAAAAFACcAAAACAAYAAAAJACcAAAACAAYAAAANACcAAAACAAYAAAARACcAAAACAAYAAAAVACcAAAACAAYAAAAZACcAAAACAAYAAAAdACcAAAACAAYAAAAhACcAAAACAAYAAAAlACcAAAACAAYAAAApACcAAAACAAYAAAAtACcAAAACAAYAAAAxACcAAAACAAYAAAA1ACcAAAACAAYAAAA5ACcAAAACAAYAAAA9ACcAAAACAAYAAABBACcAAAACAAYAAABFACcAAAACAAYAAABJACcAAAACAAYAAAAFACMAAAACAAUAAAAJACMAAAACAAUAAAANACMAAAACAAUAAAARACMAAAACAAUAAAAVACMAAAACAAUAAAAZACMAAAACAAUAAAAdACMAAAACAAUAAAAhACMAAAACAAUAAAAlACMAAAACAAUAAAApACMAAAACAAUAAAAtACMAAAACAAUAAAAxACMAAAACAAUAAAA1ACMAAAACAAUAAAA5ACMAAAACAAUAAAA9ACMAAAACAAUAAABBACMAAAACAAUAAABFACMAAAACAAUAAABJACMAAAACAAUAAABNACMAAAADAAUAAABNACcAAAADAAYAAABNACsAAAADAAcAAAA=")
+tile_set = SubResource("TileSet_sfqou")
+rendering_quadrant_size = 64
+
+[node name="GameStats" type="GridContainer" parent="MenuCanvasLayer/Container"]
+layout_mode = 2
+offset_left = 10.0
+offset_right = 356.0
+offset_bottom = 104.0
+theme_override_constants/h_separation = 41
+theme_override_constants/v_separation = 7
+columns = 2
+
+[node name="Food" type="Label" parent="MenuCanvasLayer/Container/GameStats"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_d13wb")
+theme_override_font_sizes/font_size = 25
 text = "Food: 0"
 
-[node name="Money" type="Label" parent="MenuCanvasLayer/TextureRect"]
-layout_mode = 0
-offset_left = 8.0
-offset_top = 8.0
-offset_right = 200.0
-offset_bottom = 31.0
+[node name="Money" type="Label" parent="MenuCanvasLayer/Container/GameStats"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_d13wb")
+theme_override_font_sizes/font_size = 25
 text = "Moneys: 0"
 
-[node name="Citizens" type="Label" parent="MenuCanvasLayer/TextureRect"]
-layout_mode = 0
-offset_left = 8.0
-offset_top = 40.0
-offset_right = 200.0
-offset_bottom = 63.0
+[node name="Citizens" type="Label" parent="MenuCanvasLayer/Container/GameStats"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_d13wb")
+theme_override_font_sizes/font_size = 25
 text = "Habitants: 0"
 
-[node name="Happiness" type="Label" parent="MenuCanvasLayer/TextureRect"]
-layout_mode = 0
-offset_left = 8.0
-offset_top = 72.0
-offset_right = 200.0
-offset_bottom = 95.0
+[node name="Happiness" type="Label" parent="MenuCanvasLayer/Container/GameStats"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_d13wb")
+theme_override_font_sizes/font_size = 25
 text = "Happiness: 0"
 
-[node name="Stone" type="Label" parent="MenuCanvasLayer/TextureRect"]
-offset_left = 173.0
-offset_top = 78.0
-offset_right = 365.0
-offset_bottom = 101.0
+[node name="Stone" type="Label" parent="MenuCanvasLayer/Container/GameStats"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_d13wb")
+theme_override_font_sizes/font_size = 25
 text = "Stone: 0"
 
-[node name="HouseButton" type="TextureButton" parent="MenuCanvasLayer/TextureRect"]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 688.0
-offset_top = -96.0
-offset_right = 777.0
-offset_bottom = -5.0
-grow_vertical = 0
-tooltip_text = "This house costs 5000 to build"
-texture_normal = ExtResource("1_78281")
-
-[node name="Farmbutton" type="TextureButton" parent="MenuCanvasLayer/TextureRect"]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 477.0
-offset_top = -108.0
-offset_right = 635.0
-offset_bottom = 3.0
-grow_vertical = 0
-tooltip_text = "This house costs 5000 to build"
-texture_normal = ExtResource("4_3ehhv")
-
-[node name="StoneMineButton" type="TextureButton" parent="MenuCanvasLayer/TextureRect"]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 806.0
+[node name="BuildButtons" type="GridContainer" parent="MenuCanvasLayer/Container"]
+custom_minimum_size = Vector2(100, 0)
+layout_direction = 2
+layout_mode = 2
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -684.0
 offset_top = -92.0
-offset_right = 837.0
-offset_bottom = -62.0
-grow_vertical = 0
-scale = Vector2(1.5, 1.5)
-tooltip_text = "This house costs 5000 to build"
-texture_normal = ExtResource("5_5beao")
+offset_right = -4.0
+offset_bottom = 58.0
+grow_horizontal = 0
+grow_vertical = 2
+columns = 3
 
-[connection signal="pressed" from="MenuCanvasLayer/TextureRect/HouseButton" to="." method="OnHouseButtonPressed" binds= ["House"]]
-[connection signal="pressed" from="MenuCanvasLayer/TextureRect/Farmbutton" to="." method="OnHouseButtonPressed" binds= ["FarmHouse"]]
-[connection signal="pressed" from="MenuCanvasLayer/TextureRect/StoneMineButton" to="." method="OnHouseButtonPressed" binds= ["StoneMine"]]
+[node name="Houses" type="Button" parent="MenuCanvasLayer/Container/BuildButtons"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme_override_fonts/font = ExtResource("3_d13wb")
+theme_override_font_sizes/font_size = 36
+text = "Housing"
+
+[node name="Production" type="Button" parent="MenuCanvasLayer/Container/BuildButtons"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme_override_fonts/font = ExtResource("3_d13wb")
+theme_override_font_sizes/font_size = 36
+text = "Production
+"
+
+[node name="Decorations" type="Button" parent="MenuCanvasLayer/Container/BuildButtons"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme_override_fonts/font = ExtResource("3_d13wb")
+theme_override_font_sizes/font_size = 36
+text = "Decorations
+"
+
+[connection signal="pressed" from="MenuCanvasLayer/Container/ShopBackground/HouseTab/HouseButton" to="." method="OnHouseButtonPressed" binds= ["House"]]
+[connection signal="pressed" from="MenuCanvasLayer/Container/ShopBackground/ProductionTab/Farmbutton" to="." method="OnHouseButtonPressed" binds= ["FarmHouse"]]
+[connection signal="pressed" from="MenuCanvasLayer/Container/ShopBackground/ProductionTab/StoneMineButton" to="." method="OnHouseButtonPressed" binds= ["StoneMine"]]
+[connection signal="pressed" from="MenuCanvasLayer/Container/BuildButtons/Houses" to="." method="OnBuildButtonPressed" binds= ["MenuCanvasLayer/Container/ShopBackground/HouseTab"]]
+[connection signal="pressed" from="MenuCanvasLayer/Container/BuildButtons/Production" to="." method="OnBuildButtonPressed" binds= ["MenuCanvasLayer/Container/ShopBackground/ProductionTab"]]
+[connection signal="pressed" from="MenuCanvasLayer/Container/BuildButtons/Decorations" to="." method="OnBuildButtonPressed" binds= ["MenuCanvasLayer/Container/ShopBackground/DecorationTab"]]

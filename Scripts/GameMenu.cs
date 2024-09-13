@@ -17,14 +17,9 @@ public partial class GameMenu : Control
 	public static int Food;
 	public static int Stone;
 	public static int WorkingCitizens; 
-	private TextureRect _textureRect;
-	private Label _moneyLabel;
-	private Label _foodLabel;
-	private Label _stoneLabel;
-	private Label _citizensLabel;
-	private Label _happinessLabel;
-	private Dictionary<String, PackedScene> _packedScenesscenes;
-
+	private Dictionary<string, PackedScene> _packedScenesscenes;
+	private Dictionary<string, Label> _gameStatLabels;
+	private TileMapLayer _shopBackground;
 	
 	[Signal]
 	public delegate void HousePlacedEventHandler(Node2D house);
@@ -32,24 +27,28 @@ public partial class GameMenu : Control
 	
 	public override void _Ready()
 	{
-		var menuCanvasLayer = GetNode<CanvasLayer>("MenuCanvasLayer");
-		_textureRect = menuCanvasLayer.GetNode<TextureRect>("TextureRect");
-		_moneyLabel = _textureRect.GetNode<Label>("Money");
-		_foodLabel = _textureRect.GetNode<Label>("Food");
-		_citizensLabel = _textureRect.GetNode<Label>("Citizens");
-		_stoneLabel = _textureRect.GetNode<Label>("Stone");
-		_happinessLabel = _textureRect.GetNode<Label>("Happiness");
-		_packedScenesscenes = new Dictionary<String, PackedScene> { { "House", ResourceLoader.Load<PackedScene>("res://Scenes/House.tscn") },
+		var statLabels = GetNode<GridContainer>("MenuCanvasLayer/Container/GameStats");
+		_shopBackground = GetNode<TileMapLayer>("MenuCanvasLayer/Container/ShopBackground");
+		
+		_packedScenesscenes = new Dictionary<String, PackedScene> { 
+			{ "House", ResourceLoader.Load<PackedScene>("res://Scenes/House.tscn") },
 			{"FarmHouse", ResourceLoader.Load<PackedScene>("res://Scenes/FarmHouse.tscn")},
 			{"StoneMine", ResourceLoader.Load<PackedScene>("res://Scenes/StoneMine.tscn")}
 		};
+		_gameStatLabels = new Dictionary<string, Label> { 
+			{ "money", statLabels.GetNode<Label>("Money") },
+			{"food", statLabels.GetNode<Label>("Food") },
+			{"citizens", statLabels.GetNode<Label>("Citizens") },
+			{"stone",statLabels.GetNode<Label>("Stone")}, 
+			{"happiness",statLabels.GetNode<Label>("Happiness")}
+		};
+
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
 		UpdateMenuInfo();
-		_textureRect.Size = new Vector2(GetTree().Root.Size.X,_textureRect.Size.Y);
 
 	}
 	public void OnHouseButtonPressed(String type)
@@ -93,17 +92,33 @@ public partial class GameMenu : Control
 
 	public void UpdateMenuInfo()
 	{
-		_moneyLabel.Text = "Money: " + _money;
-		_citizensLabel.Text = "Citizens: " + Citizens;
-		_happinessLabel.Text = "Happiness: " + Happiness;
-		_foodLabel.Text = "Food: " + Food;
-		_stoneLabel.Text = "Stone: " + Stone;
+		_gameStatLabels["money"].Text = "Money: " + _money;
+		_gameStatLabels["citizens"].Text = "Citizens: " + Citizens;
+		_gameStatLabels["happiness"].Text = "Happiness: " + Happiness;
+		_gameStatLabels["food"].Text = "Food: " + Food;
+		_gameStatLabels["stone"].Text = "Stone: " + Stone;
 	}
 
 	private bool CanPlace()
 	{
 		return ContainHouse == false && _object.GetBuildingPrice() <= _money;
 	}
-	
-	
+
+	public void OnBuildButtonPressed(string tabPath)
+	{
+		var currentTab = GetNode<Node2D>(tabPath);
+		foreach (var node in _shopBackground.GetChildren())
+		{
+			var child = (Node2D)node;
+			if (child != currentTab)
+			{
+				child.Visible = false;
+			}
+		}
+
+		currentTab.Visible = !currentTab.Visible;
+		_shopBackground.Visible = currentTab.Visible;
+
+
+	}
 }

@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=4 uid="uid://1433h08bkvft"]
+[gd_scene load_steps=16 format=4 uid="uid://1433h08bkvft"]
 
 [ext_resource type="Script" path="res://Scripts/MainMenu.cs" id="1_he78q"]
 [ext_resource type="Texture2D" uid="uid://kqomif0mwutf" path="res://Sprites/The Fan-tasy Tileset - Castles and Fortresses/Tiled/Tilemaps/Forest Keep.png" id="2_x2w5f"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://ci03tp5ikmm4r" path="res://Sprites/Extra/QuitButton1.png" id="8_ach2g"]
 [ext_resource type="Texture2D" uid="uid://bdrdixpsahwv" path="res://Sprites/Extra/QuitButton3.png" id="9_ed45i"]
 [ext_resource type="Texture2D" uid="uid://bcl4wla5156ld" path="res://Sprites/Extra/QuitButton2.png" id="10_pnyef"]
+[ext_resource type="FontFile" uid="uid://dul1t3v440c7s" path="res://Deutsch.ttf" id="11_yv51q"]
 
 [sub_resource type="Environment" id="Environment_63rof"]
 background_mode = 3
@@ -6608,6 +6609,7 @@ sources/0 = SubResource("TileSetAtlasSource_xtnjx")
 
 [sub_resource type="LabelSettings" id="LabelSettings_eht88"]
 font_size = 50
+font_color = Color(0, 0, 0, 1)
 
 [node name="Menu" type="Control"]
 layout_mode = 3
@@ -6676,6 +6678,8 @@ offset_right = 317.0
 offset_bottom = -144.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("11_yv51q")
 text = "Kingdom Come: The game"
 label_settings = SubResource("LabelSettings_eht88")
 horizontal_alignment = 1

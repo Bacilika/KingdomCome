@@ -7,10 +7,11 @@ public partial class FarmHouse : AbstractPlaceable
 	private RandomNumberGenerator foodGrowth = new ();
 	private int _growth = 50; // 1/_growth% chance to increase habitants by 1 each tick. 
 	private int _workers;
-	private int _foodGrowth = 500; // 1/_growth% chance to increase habitants by 1 each tick. 
 	private Control _infoBox;
 	private const int MaxWorkers = 10;
-	private int _food; 
+	private int _food;
+	private bool _timerTimedOut = false;
+	private Timer _timer; 
 
 	private const int price = 20000;
 	// Called when the node enters the scene tree for the first time.
@@ -18,15 +19,20 @@ public partial class FarmHouse : AbstractPlaceable
 	{
 		_infoBox = GetNode<Control>("PlaceableInfo");
 		_infoBox.Visible = false;
+		_timer = GetNode<Timer>("FoodTimer");
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		
 		if (!IsPlaced)
 		{
 			FollowMouse(); 
+		}
+
+		else if (_timer.IsStopped() && _workers > 0)
+		{
+			_timer.Start();
 		}
 		else
 		{
@@ -36,21 +42,18 @@ public partial class FarmHouse : AbstractPlaceable
 				{
 					_workers++;
 					GameMenu.WorkingCitizens++;
-					_foodGrowth = 500 / _workers;
 				}
 			}
-
-			
-			if (foodGrowth.RandiRange(0, _foodGrowth) == 0 && _workers > 0)
-			{
-				_food++;
-				GameMenu.Food++;
-			}
-				
-			
 			UpdateInfo();
 		}
 		
+	}
+
+	public void OnFoodTimerTimeout()
+	{
+		_food++;
+		GameMenu.Food++;
+		_timer.SetWaitTime(30/(Math.Sqrt(_workers)));
 	}
 	
 	public int GetPrice()

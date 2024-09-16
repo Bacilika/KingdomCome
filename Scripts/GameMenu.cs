@@ -1,7 +1,7 @@
 using Godot;
 using System;
-using System.Collections.Generic;
 using System.Threading;
+using Godot.Collections;
 using Scripts.Constants;
 
 public partial class GameMenu : Control

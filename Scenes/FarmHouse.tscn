@@ -24,5 +24,9 @@ offset_top = -192.0
 offset_right = 16.0
 offset_bottom = -192.0
 
+[node name="FoodTimer" type="Timer" parent="."]
+wait_time = 30.0
+
 [connection signal="mouse_entered" from="." to="." method="OnMouseEntered"]
 [connection signal="mouse_exited" from="." to="." method="OnMouseExited"]
+[connection signal="timeout" from="FoodTimer" to="." method="OnFoodTimerTimeout"]

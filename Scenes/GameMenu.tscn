@@ -119,6 +119,7 @@ offset_bottom = -108.0
 grow_vertical = 0
 
 [node name="ShopBackground" type="TileMapLayer" parent="MenuCanvasLayer/Container"]
+visible = false
 position = Vector2(0, 4)
 tile_set = SubResource("TileSet_qt3fw")
 rendering_quadrant_size = 32
@@ -127,10 +128,10 @@ rendering_quadrant_size = 32
 visible = false
 
 [node name="HouseButton" type="Button" parent="MenuCanvasLayer/Container/ShopBackground/HouseTab"]
-offset_left = 1004.0
-offset_top = -380.0
-offset_right = 1076.0
-offset_bottom = -300.0
+offset_left = 1056.0
+offset_top = -76.0
+offset_right = 1128.0
+offset_bottom = 4.0
 tooltip_text = "This house costs 5000 to build"
 icon = ExtResource("4_m1x3j")
 flat = true
@@ -140,10 +141,10 @@ expand_icon = true
 visible = false
 
 [node name="Farmbutton" type="Button" parent="MenuCanvasLayer/Container/ShopBackground/ProductionTab"]
-offset_left = 1004.0
-offset_top = -388.0
-offset_right = 1100.0
-offset_bottom = -316.0
+offset_left = 952.0
+offset_top = -76.0
+offset_right = 1048.0
+offset_bottom = -4.0
 size_flags_horizontal = 4
 tooltip_text = "This house costs 5000 to build"
 icon = ExtResource("4_3ehhv")
@@ -151,10 +152,10 @@ flat = true
 expand_icon = true
 
 [node name="StoneMineButton" type="Button" parent="MenuCanvasLayer/Container/ShopBackground/ProductionTab"]
-offset_left = 1156.0
-offset_top = -388.0
-offset_right = 1220.0
-offset_bottom = -324.0
+offset_left = 1056.0
+offset_top = -68.0
+offset_right = 1120.0
+offset_bottom = -4.0
 size_flags_horizontal = 4
 size_flags_vertical = 0
 tooltip_text = "This house costs 5000 to build"

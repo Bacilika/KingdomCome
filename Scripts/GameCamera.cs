@@ -10,8 +10,8 @@ public partial class GameCamera : Camera2D
 	private bool _isDragging;
 
 	private Vector2 _zoom;
-	private const int ZoomMaxStep = 1;
-	private const int ZoomMinStep = -2;
+	private const int ZoomMaxStep = 3;
+	private const int ZoomMinStep = 0;
 	private float _zoomStep = 1;
 
 	private int PanStep

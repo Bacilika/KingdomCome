@@ -27,6 +27,6 @@ public partial class MainMenu : Control
 	}
 	public void OnQuitPressed()
 	{
-		Console.WriteLine("quit");
+		GetTree().Quit();
 	}
 }

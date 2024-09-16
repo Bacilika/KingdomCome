@@ -1,7 +1,7 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 using System.Threading;
-using Godot.Collections;
 using Scripts.Constants;
 
 public partial class GameMenu : Control
@@ -17,8 +17,8 @@ public partial class GameMenu : Control
 	public static int Food;
 	public static int Stone;
 	public static int WorkingCitizens; 
-	private Dictionary<string, PackedScene> _packedScenesscenes;
-	private Dictionary<string, Label> _gameStatLabels;
+	private Godot.Collections.Dictionary<string, PackedScene> _packedScenesscenes;
+	private Godot.Collections.Dictionary<string, Label> _gameStatLabels;
 	private TileMapLayer _shopBackground;
 	
 	[Signal]
@@ -37,12 +37,12 @@ public partial class GameMenu : Control
 		var statLabels = GetNode<GridContainer>("MenuCanvasLayer/Container/GameStats");
 		
 		
-		_packedScenesscenes = new Dictionary<string, PackedScene> { 
+		_packedScenesscenes = new Godot.Collections.Dictionary<string, PackedScene> { 
 			{ "House", ResourceLoader.Load<PackedScene>("res://Scenes/House.tscn") },
 			{"FarmHouse", ResourceLoader.Load<PackedScene>("res://Scenes/FarmHouse.tscn")},
 			{"StoneMine", ResourceLoader.Load<PackedScene>("res://Scenes/StoneMine.tscn")}
 		};
-		_gameStatLabels = new Dictionary<string, Label> { 
+		_gameStatLabels = new Godot.Collections.Dictionary<string, Label> { 
 			{"money", statLabels.GetNode<Label>("Money") },
 			{"food", statLabels.GetNode<Label>("Food") },
 			{"citizens", statLabels.GetNode<Label>("Citizens") },
@@ -108,8 +108,31 @@ public partial class GameMenu : Control
 
 	private bool CanPlace()
 	{
+		var collisionObj = _object.GetNode<CollisionShape2D>("CollisionShape2D");
+		var size = collisionObj.Shape.GetRect().Size;
+		var occupiedCoords = GetOccupiedCoords(size, _object.Position);
+		//var tilemap = GetNode<TileMapLayer>("res://Scenes/base/BuildingLayer");
 		return ContainHouse == false && _object.GetBuildingPrice() <= _money;
 	}
+
+	private List<Vector2I> GetOccupiedCoords(Vector2 objectSize, Vector2 position)
+	{
+		var startX = (int) position.X / 16;
+		var startY = (int)position.Y / 16;
+		var tileWidth = (int) objectSize.X / 16;
+		var tileHeight = (int) objectSize.Y / 16;
+		var coords = new List<Vector2I>();
+		for (var x = startX; x < startX + tileWidth; x++)
+		{
+			for (var y = startY; y < startY + tileHeight; y++)
+			{
+				coords.Add(new Vector2I(x,y));
+			}
+		}
+		return coords;
+	}
+
+	
 
 	public void OnBuildButtonPressed(string tabPath)
 	{

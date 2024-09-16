@@ -27,16 +27,23 @@ public partial class GameMenu : Control
 	
 	public override void _Ready()
 	{
-		var statLabels = GetNode<GridContainer>("MenuCanvasLayer/Container/GameStats");
+		var currentScale = GetTree().Root.Size / GetTree().Root.MinSize;
+		var container = GetNode<Control>("MenuCanvasLayer/Container");
+		container.Scale = currentScale;
+		
 		_shopBackground = GetNode<TileMapLayer>("MenuCanvasLayer/Container/ShopBackground");
 		
-		_packedScenesscenes = new Dictionary<String, PackedScene> { 
+		
+		var statLabels = GetNode<GridContainer>("MenuCanvasLayer/Container/GameStats");
+		
+		
+		_packedScenesscenes = new Dictionary<string, PackedScene> { 
 			{ "House", ResourceLoader.Load<PackedScene>("res://Scenes/House.tscn") },
 			{"FarmHouse", ResourceLoader.Load<PackedScene>("res://Scenes/FarmHouse.tscn")},
 			{"StoneMine", ResourceLoader.Load<PackedScene>("res://Scenes/StoneMine.tscn")}
 		};
 		_gameStatLabels = new Dictionary<string, Label> { 
-			{ "money", statLabels.GetNode<Label>("Money") },
+			{"money", statLabels.GetNode<Label>("Money") },
 			{"food", statLabels.GetNode<Label>("Food") },
 			{"citizens", statLabels.GetNode<Label>("Citizens") },
 			{"stone",statLabels.GetNode<Label>("Stone")}, 

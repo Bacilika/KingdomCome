@@ -9,9 +9,11 @@ public partial class Base : Node2D
 	
 	public override void _Ready()
 	{
+		
 		timer = GetNode<Timer>("EatFoodTimer");
 		var gameMenu = GetNode<GameMenu>("GameMenu");
 		gameMenu.HousePlaced += PlaceHouse;
+		
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

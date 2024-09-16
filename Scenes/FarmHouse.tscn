@@ -23,6 +23,7 @@ offset_left = 16.0
 offset_top = -192.0
 offset_right = 16.0
 offset_bottom = -192.0
+script = null
 
 [node name="FoodTimer" type="Timer" parent="."]
 wait_time = 30.0

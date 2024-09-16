@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://biil4p82w3tjw"]
+[gd_scene load_steps=3 format=3 uid="uid://biil4p82w3tjw"]
 
 [ext_resource type="Texture2D" uid="uid://b5llsw0d3srcl" path="res://Sprites/Extra/InfoBoxSprite.png" id="1_1dfka"]
+[ext_resource type="Script" path="res://Scripts/PlaceableInfo.cs" id="1_snswj"]
 
 [node name="PlaceableInfo" type="Control"]
 layout_mode = 3
@@ -9,6 +10,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_snswj")
 
 [node name="InfoBox" type="TextureRect" parent="."]
 layout_mode = 0
@@ -23,3 +26,13 @@ offset_top = 6.0
 offset_right = 201.0
 offset_bottom = 176.0
 theme_override_colors/default_color = Color(0, 0, 0, 1)
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 116.0
+offset_top = 139.0
+offset_right = 175.0
+offset_bottom = 170.0
+text = "Delete"
+
+[connection signal="pressed" from="Button" to="." method="OnDeleteButtonPressed"]

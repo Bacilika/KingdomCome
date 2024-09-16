@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using Godot.Collections;
 using Scripts.Constants;
@@ -27,7 +28,7 @@ public partial class GameMenu : Control
 	
 	public override void _Ready()
 	{
-		var currentScale = GetTree().Root.Size / GetTree().Root.MinSize;
+		var currentScale = (Vector2)GetTree().Root.Size / GetTree().Root.MinSize;
 		var container = GetNode<Control>("MenuCanvasLayer/Container");
 		container.Scale = currentScale;
 		

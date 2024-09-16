@@ -20,6 +20,8 @@ public abstract partial class AbstractPlaceable : Node2D
 		}			
 	}
 
+
+
 	public void OnMouseExited()
 	{
 		GameMenu.ContainHouse = false;

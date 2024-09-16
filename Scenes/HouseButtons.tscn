@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://buuik20yq2we6"]
+[gd_scene load_steps=3 format=3 uid="uid://dxcthlusxtef5"]
 
 [ext_resource type="Texture2D" uid="uid://b5llsw0d3srcl" path="res://Sprites/Extra/InfoBoxSprite.png" id="1_cvbkg"]
 [ext_resource type="Texture2D" uid="uid://dbsqgn5x7uxof" path="res://Art/Buildings/House_Hay_Stone_1.png" id="2_m5oq6"]

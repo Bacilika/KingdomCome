@@ -11,6 +11,7 @@ public partial class GameMenu : Control
 	
 	private AbstractPlaceable _object;
 	public static AbstractPlaceable SelectedPlaceable;
+	public static bool IsPlaceMode;
 	public static bool ContainHouse;
 	private int _money = 50000;
 	public static int Citizens;
@@ -18,7 +19,7 @@ public partial class GameMenu : Control
 	public static int Food;
 	public static int Stone;
 	public static int WorkingCitizens; 
-	private Godot.Collections.Dictionary<string, PackedScene> _packedScenesscenes;
+	private Godot.Collections.Dictionary<string, PackedScene> _packedScenes;
 	private Godot.Collections.Dictionary<string, Label> _gameStatLabels;
 	private TileMapLayer _shopBackground;
 	
@@ -38,7 +39,7 @@ public partial class GameMenu : Control
 		var statLabels = GetNode<GridContainer>("MenuCanvasLayer/Container/GameStats");
 		
 		
-		_packedScenesscenes = new Godot.Collections.Dictionary<string, PackedScene> { 
+		_packedScenes = new Godot.Collections.Dictionary<string, PackedScene> { 
 			{ "House", ResourceLoader.Load<PackedScene>("res://Scenes/House.tscn") },
 			{"FarmHouse", ResourceLoader.Load<PackedScene>("res://Scenes/FarmHouse.tscn")},
 			{"StoneMine", ResourceLoader.Load<PackedScene>("res://Scenes/StoneMine.tscn")}
@@ -59,28 +60,21 @@ public partial class GameMenu : Control
 		UpdateMenuInfo();
 
 	}
+	
 	public void OnHouseButtonPressed(String type)
 	{
 		Console.WriteLine(type);
-		var house = _packedScenesscenes[type].Instantiate<AbstractPlaceable>();
+		var house = _packedScenes[type].Instantiate<AbstractPlaceable>();
 		house.Position = GetViewport().GetMousePosition();
 		var baseNode = GetParent();
 		baseNode.AddChild(house);
 		_object = house;
+		IsPlaceMode = true;
 	}
 
 	public override void _Input(InputEvent @event)
 	{
-		if (_object == null)
-		{
-			if (SelectedPlaceable is not null && @event.IsActionPressed(Inputs.LeftClick))
-			{
-				SelectedPlaceable.ShowBuildingInfoScreen();
-			}
-			
-		}
-
-		else if (@event.IsActionPressed(Inputs.LeftClick))
+		if (_object != null && @event.IsActionPressed(Inputs.LeftClick))
 		{
 			if (CanPlace())
 			{
@@ -95,6 +89,7 @@ public partial class GameMenu : Control
 		{
 			_object?.QueueFree();
 			_object = null;
+			IsPlaceMode = false;
 		}
 	}
 
@@ -109,32 +104,10 @@ public partial class GameMenu : Control
 
 	private bool CanPlace()
 	{
-		var collisionObj = _object.GetNode<CollisionShape2D>("CollisionShape2D");
-		var size = collisionObj.Shape.GetRect().Size;
-		var occupiedCoords = GetOccupiedCoords(size, _object.Position);
-		//var tilemap = GetNode<TileMapLayer>("res://Scenes/base/BuildingLayer");
 		return ContainHouse == false && _object.GetBuildingPrice() <= _money;
 	}
 
-	private List<Vector2I> GetOccupiedCoords(Vector2 objectSize, Vector2 position)
-	{
-		var startX = (int) position.X / 16;
-		var startY = (int)position.Y / 16;
-		var tileWidth = (int) objectSize.X / 16;
-		var tileHeight = (int) objectSize.Y / 16;
-		var coords = new List<Vector2I>();
-		for (var x = startX; x < startX + tileWidth; x++)
-		{
-			for (var y = startY; y < startY + tileHeight; y++)
-			{
-				coords.Add(new Vector2I(x,y));
-			}
-		}
-		return coords;
-	}
-
 	
-
 	public void OnBuildButtonPressed(string tabPath)
 	{
 		var currentTab = GetNode<Node2D>(tabPath);

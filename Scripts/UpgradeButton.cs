@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class BuildMenu : Container
+public partial class UpgradeButton : Button
 {
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -12,4 +12,12 @@ public partial class BuildMenu : Container
 	public override void _Process(double delta)
 	{
 	}
+	
+	public void OnButtonPressed()
+	{
+		
+		//GetScript()<AbstractPlaceable>(); 
+		//GetScript("/root/Scripts/AbstractPlaceable.tscn").Call("UpgradeHouse");
+	}
+	
 }

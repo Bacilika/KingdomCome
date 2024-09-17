@@ -8,6 +8,7 @@ public partial class House : AbstractPlaceable
 	private int _habitants;
 	private Control _infoBox;
 	private const int MaxHabitants = 5;
+	
 
 	private const int price = 5000;
 	// Called when the node enters the scene tree for the first time.
@@ -15,6 +16,9 @@ public partial class House : AbstractPlaceable
 	{
 		_infoBox = GetNode<Control>("PlaceableInfo");
 		_infoBox.Visible = false;
+		var button = _infoBox.GetNode<Button>("InfoBox/DeleteButton");
+		button.Connect(DeleteButton.SignalName.OnDelete, Callable.From(OnDelete));
+		
 	}
 
 	public int GetPrice()
@@ -22,9 +26,12 @@ public partial class House : AbstractPlaceable
 		return price;
 		
 	}
-	
-	
-	
+	private void OnDelete()
+	{
+		Console.WriteLine("On delete");
+		GameMenu.Citizens-= _habitants;
+		QueueFree();
+	}
 	public override void _Process(double delta)
 	{
 		if (!IsPlaced)

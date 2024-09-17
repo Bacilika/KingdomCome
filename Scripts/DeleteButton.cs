@@ -1,8 +1,10 @@
 using Godot;
 using System;
 
-public partial class UpgradeButton : Button
+public partial class DeleteButton : Button
 {
+	[Signal]
+	public delegate void OnDeleteEventHandler();
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -15,8 +17,6 @@ public partial class UpgradeButton : Button
 	
 	public void OnButtonPressed()
 	{
-		//GetScript()<AbstractPlaceable>(); 
-		//GetScript("/root/Scripts/AbstractPlaceable.tscn").Call("UpgradeHouse");
+		EmitSignal(SignalName.OnDelete);
 	}
-	
 }

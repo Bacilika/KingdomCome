@@ -13,6 +13,12 @@ public partial class PlaceableInfo : Control
 	{
 	}
 	
+	public void OnButtonDownPressed(){
+				GD.Print("button down");
+
+		
+	}
+	
 	public void OnDeleteButtonPressed()
 	{
 		Console.WriteLine("Delete");

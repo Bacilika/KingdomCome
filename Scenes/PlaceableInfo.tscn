@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://biil4p82w3tjw"]
+[gd_scene load_steps=5 format=3 uid="uid://biil4p82w3tjw"]
 
 [ext_resource type="Texture2D" uid="uid://b5llsw0d3srcl" path="res://Sprites/Extra/InfoBoxSprite.png" id="1_1dfka"]
 [ext_resource type="Script" path="res://Scripts/PlaceableInfo.cs" id="1_snswj"]
+[ext_resource type="Script" path="res://Scenes/DeleteButton.cs" id="3_mnuac"]
+[ext_resource type="Script" path="res://Scenes/UpgradeButton.cs" id="4_2gasv"]
 
 [node name="PlaceableInfo" type="Control"]
 layout_mode = 3
@@ -27,12 +29,22 @@ offset_right = 201.0
 offset_bottom = 176.0
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 
-[node name="Button" type="Button" parent="."]
+[node name="DeleteButton" type="Button" parent="InfoBox"]
 layout_mode = 0
 offset_left = 116.0
 offset_top = 139.0
 offset_right = 175.0
 offset_bottom = 170.0
 text = "Delete"
+script = ExtResource("3_mnuac")
 
-[connection signal="pressed" from="Button" to="." method="OnDeleteButtonPressed"]
+[node name="UpgradeButton" type="Button" parent="InfoBox"]
+offset_left = 17.0
+offset_top = 140.0
+offset_right = 92.0
+offset_bottom = 171.0
+text = "Upgrade"
+script = ExtResource("4_2gasv")
+
+[connection signal="pressed" from="InfoBox/DeleteButton" to="InfoBox/DeleteButton" method="OnButtonPressed"]
+[connection signal="pressed" from="InfoBox/UpgradeButton" to="InfoBox/UpgradeButton" method="OnButtonPressed"]

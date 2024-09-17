@@ -102,10 +102,13 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+size_flags_vertical = 8
 mouse_filter = 2
 script = ExtResource("1_dev6f")
 
 [node name="MenuCanvasLayer" type="CanvasLayer" parent="."]
+offset = Vector2(0, 50)
+transform = Transform2D(1, 0, 0, 1, 0, 50)
 follow_viewport_scale = 3.877
 
 [node name="Container" type="Control" parent="MenuCanvasLayer"]

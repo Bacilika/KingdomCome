@@ -19,9 +19,7 @@ public abstract partial class AbstractPlaceable : Node2D
 
 		}			
 	}
-
-
-
+	
 	public void OnMouseExited()
 	{
 		GameMenu.ContainHouse = false;
@@ -48,6 +46,11 @@ public abstract partial class AbstractPlaceable : Node2D
 	public void ShowBuildingInfoScreen()
 	{
 		GetType().GetMethod("ShowInfo")?.Invoke(this, null);
+	}
+
+	public void UpgradeHouse()
+	{
+		GetNode<Sprite2D>("Sprite2D").SetTexture(GetNode<Texture2D>("res://Art/Buildings/House_Hay_Stone_2.png"));
 	}
 	
 	

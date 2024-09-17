@@ -10,7 +10,6 @@ public partial class GameMenu : Control
 	// Called when the node enters the scene tree for the first time.
 	
 	private AbstractPlaceable _object;
-	public static AbstractPlaceable SelectedPlaceable;
 	public static bool IsPlaceMode;
 	public static bool ContainHouse;
 	private int _money = 50000;
@@ -19,9 +18,8 @@ public partial class GameMenu : Control
 	public static int Food;
 	public static int Stone;
 	public static int WorkingCitizens; 
-	private Godot.Collections.Dictionary<string, PackedScene> _packedScenes;
+
 	private Godot.Collections.Dictionary<string, Label> _gameStatLabels;
-	private TileMapLayer _shopBackground;
 	
 	[Signal]
 	public delegate void HousePlacedEventHandler(Node2D house);
@@ -29,21 +27,17 @@ public partial class GameMenu : Control
 	
 	public override void _Ready()
 	{
+		
 		var currentScale = (Vector2)GetTree().Root.Size / GetTree().Root.MinSize;
 		var container = GetNode<Control>("MenuCanvasLayer/Container");
 		container.Scale = currentScale;
 		
-		_shopBackground = GetNode<TileMapLayer>("MenuCanvasLayer/Container/ShopBackground");
 		
 		
 		var statLabels = GetNode<GridContainer>("MenuCanvasLayer/Container/GameStats");
 		
 		
-		_packedScenes = new Godot.Collections.Dictionary<string, PackedScene> { 
-			{ "House", ResourceLoader.Load<PackedScene>("res://Scenes/House.tscn") },
-			{"FarmHouse", ResourceLoader.Load<PackedScene>("res://Scenes/FarmHouse.tscn")},
-			{"StoneMine", ResourceLoader.Load<PackedScene>("res://Scenes/StoneMine.tscn")}
-		};
+		
 		_gameStatLabels = new Godot.Collections.Dictionary<string, Label> { 
 			{"money", statLabels.GetNode<Label>("Money") },
 			{"food", statLabels.GetNode<Label>("Food") },
@@ -51,6 +45,8 @@ public partial class GameMenu : Control
 			{"stone",statLabels.GetNode<Label>("Stone")}, 
 			{"happiness",statLabels.GetNode<Label>("Happiness")}
 		};
+		var shop = GetNode<Shop>("MenuCanvasLayer/Container/Shop");
+		shop.OnBuildingButtonPressed += BuildBuilding;
 
 	}
 
@@ -61,31 +57,24 @@ public partial class GameMenu : Control
 
 	}
 	
-	public void OnHouseButtonPressed(String type)
-	{
-		Console.WriteLine(type);
-		var house = _packedScenes[type].Instantiate<AbstractPlaceable>();
-		house.Position = GetViewport().GetMousePosition();
-		var baseNode = GetParent();
-		baseNode.AddChild(house);
-		_object = house;
-		IsPlaceMode = true;
-	}
+
 
 	public override void _Input(InputEvent @event)
 	{
-		if (_object != null && @event.IsActionPressed(Inputs.LeftClick))
+
+		if (@event.IsActionPressed(Inputs.LeftClick))
 		{
-			if (CanPlace())
+			if (_object != null)
 			{
-				_money -= _object.GetBuildingPrice();
-				var placedHouse =  _object.Duplicate();
-				EmitSignal(SignalName.HousePlaced, placedHouse);
+				if (CanPlace())
+				{
+					_money -= _object.GetBuildingPrice();
+					var placedHouse = _object.Duplicate();
+					EmitSignal(SignalName.HousePlaced, placedHouse);
+				}
 			}
-
 		}
-
-		if (@event.IsActionPressed((Inputs.RightClick)))
+		else if (@event.IsActionPressed((Inputs.RightClick)))
 		{
 			_object?.QueueFree();
 			_object = null;
@@ -107,22 +96,15 @@ public partial class GameMenu : Control
 		return ContainHouse == false && _object.GetBuildingPrice() <= _money;
 	}
 
-	
-	public void OnBuildButtonPressed(string tabPath)
+	private void BuildBuilding(AbstractPlaceable house)
 	{
-		var currentTab = GetNode<Node2D>(tabPath);
-		foreach (var node in _shopBackground.GetChildren())
-		{
-			var child = (Node2D)node;
-			if (child != currentTab)
-			{
-				child.Visible = false;
-			}
-		}
-
-		currentTab.Visible = !currentTab.Visible;
-		_shopBackground.Visible = currentTab.Visible;
-
-
+		house.Position = GetViewport().GetMousePosition();
+		var baseNode = GetParent();
+		baseNode.AddChild(house);
+		_object = house;
+		IsPlaceMode = true;
 	}
+
+	
+
 }

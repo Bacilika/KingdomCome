@@ -12,7 +12,6 @@ public abstract partial class AbstractPlaceable : Node2D
 		if(IsPlaced)
 		{
 			GameMenu.ContainHouse = true;
-			GameMenu.SelectedPlaceable = this;
 			_isFocused = true;
 
 		}			
@@ -21,7 +20,6 @@ public abstract partial class AbstractPlaceable : Node2D
 	public void OnMouseExited()
 	{
 		GameMenu.ContainHouse = false;
-		GameMenu.SelectedPlaceable = null;
 		_isFocused = false;
 
 	}

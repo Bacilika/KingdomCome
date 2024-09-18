@@ -6,6 +6,19 @@ public abstract partial class AbstractPlaceable : Node2D
 {
 	public bool IsPlaced;
 	private bool _isFocused;
+	public Control InfoBox;
+
+	// Called when the node enters the scene tree for the first time.
+	public override void _Ready()
+	{
+		InfoBox = GetNode<Control>("PlaceableInfo");
+		InfoBox.Visible = false;
+		Console.WriteLine("Abstract placeable");
+		_Ready_instance();
+	}
+
+	public abstract void _Ready_instance();
+
 	
 	public void OnMouseEntered()
 	{
@@ -16,6 +29,10 @@ public abstract partial class AbstractPlaceable : Node2D
 
 		}			
 	}
+
+
+
+	public abstract void OnDelete();
 	
 	public void OnMouseExited()
 	{
@@ -24,14 +41,8 @@ public abstract partial class AbstractPlaceable : Node2D
 
 	}
 	
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-		var infoBox = GetNode<Control>("PlaceableInfo");
-		infoBox.Visible = false;
 
-		
-	}
+
 	
 	protected void FollowMouse()
 	{

@@ -8,7 +8,6 @@ public partial class StoneMine : AbstractPlaceable
 	private int _workers;
 	private int _stone;
 	private RandomNumberGenerator stoneGrowth = new ();
-	private Control _infoBox;
 	private const int MaxWorkers = 5;
 	private int _stoneGrowth = 500; // 1/_growth% chance to increase habitants by 1 each tick. 
 
@@ -17,14 +16,26 @@ public partial class StoneMine : AbstractPlaceable
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		_infoBox = GetNode<Control>("PlaceableInfo");
-		_infoBox.Visible = false;
+		InfoBox = GetNode<Control>("PlaceableInfo");
+		InfoBox.Visible = false;
 	}
 
 	public int GetPrice()
 	{
 		return price;
 		
+	}
+	
+	
+	public override void OnDelete()
+	{
+		Console.WriteLine("On delete farmhouse");
+		QueueFree();
+	}
+	public override void _Ready_instance()
+	{
+		var button = InfoBox.GetNode<Button>("InfoBox/DeleteButton");
+		button.Connect(DeleteButton.SignalName.OnDelete, Callable.From(OnDelete));
 	}
 	
 	
@@ -58,12 +69,12 @@ public partial class StoneMine : AbstractPlaceable
 
 	public void UpdateInfo()
 	{
-		var textLabel = (RichTextLabel) _infoBox.GetChild(0).GetChild(0);
+		var textLabel = (RichTextLabel) InfoBox.GetChild(0).GetChild(0);
 		textLabel.Text = "Workers: " + _workers;
 	}
 	public void ShowInfo()
 	{
-		_infoBox.Visible = !_infoBox.Visible;
+		InfoBox.Visible = !InfoBox.Visible;
 	}
 
 }

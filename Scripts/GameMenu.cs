@@ -73,6 +73,7 @@ public partial class GameMenu : Control
 					EmitSignal(SignalName.HousePlaced, placedHouse);
 				}
 			}
+
 		}
 		else if (@event.IsActionPressed((Inputs.RightClick)))
 		{

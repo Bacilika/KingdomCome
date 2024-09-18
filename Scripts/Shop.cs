@@ -12,6 +12,9 @@ public partial class Shop : Control
 
 	[Signal]
 	public delegate void OnBuildingButtonPressedEventHandler(AbstractPlaceable type);
+
+	[Signal]
+	public delegate void OnRoadBuildEventHandler();
 	public override void _Ready()
 	{
 		_shopItems = new Godot.Collections.Dictionary<string, PackedScene> { 
@@ -57,10 +60,13 @@ public partial class Shop : Control
 	{
 		var button = GetNode<Button>(buttonPath);
 		button.ReleaseFocus();
-		if(type == "Road"){
-			Console.WriteLine("Road");
+		if(type == "Road")
+		{
+			EmitSignal(SignalName.OnRoadBuild);
 			return;
 		}
+
+
 		Console.WriteLine(type);
 		var house = _shopItems[type].Instantiate<AbstractPlaceable>();
 		EmitSignal(SignalName.OnBuildingButtonPressed, house);

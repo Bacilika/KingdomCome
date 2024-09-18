@@ -5,34 +5,31 @@ public partial class House : AbstractPlaceable
 {
 	private RandomNumberGenerator habitantGrowth = new ();
 	private int _growth = 50; // 1/_growth% chance to increase habitants by 1 each tick. 
-	private int _habitants;
+	private int _citizens;
 	private const int MaxHabitants = 5;
 	
 
-	private const int price = 5000;
+	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready_instance()
 	{
+		Price = 5000;
 
-		
-	}
 
-	public int GetPrice()
-	{
-		return price;
-		
 	}
+	
 	protected override void OnDelete()
 	{
 		Console.WriteLine("On delete");
-		GameMenu.Citizens-= _habitants;
+		GameMenu.Citizens-= _citizens;
 		QueueFree();
 	}
 
 	protected override void OnUpgrade()
 	{
 		Console.WriteLine("On Upgrade");
-		
+		Level++;
+
 	}
 	public override void _Process(double delta)
 	{
@@ -42,11 +39,11 @@ public partial class House : AbstractPlaceable
 		}
 		else
 		{
-			if (_habitants < MaxHabitants)
+			if (_citizens < MaxHabitants)
 			{
 				if (habitantGrowth.RandiRange(0, _growth) ==0)
 				{
-					_habitants++;
+					_citizens++;
 					GameMenu.Citizens++;
 				}
 			}
@@ -59,11 +56,7 @@ public partial class House : AbstractPlaceable
 	public void UpdateInfo()
 	{
 		var textLabel = (RichTextLabel) InfoBox.GetChild(0).GetChild(0);
-		textLabel.Text = "Citizens: " + _habitants;
-	}
-	public void ShowInfo()
-	{
-		InfoBox.Visible = !InfoBox.Visible;
+		textLabel.Text = "Citizens: " + _citizens;
 	}
 
 }

@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using Godot.Collections;
 using Scripts.Constants;
@@ -10,14 +11,23 @@ public partial class GameMenu : Control
 	// Called when the node enters the scene tree for the first time.
 	
 	private AbstractPlaceable _object;
+	private Road _roadObject;
 	public static bool IsPlaceMode;
+	public static bool RoadPlaceMode;
 	public static bool ContainHouse;
-	private int _money = 50000;
+	public static int Money = 50000;
 	public static int Citizens;
 	public static int Happiness;
 	public static int Food;
 	public static int Stone;
-	public static int WorkingCitizens; 
+	public static int WorkingCitizens;
+	public static bool dragging;
+	private PackedScene _roadScene = ResourceLoader.Load<PackedScene>("res://Scenes/Road.tscn");
+	
+	
+	private int _roadPrice = 100;
+	private Array<Vector2I> _roadPositions = [];
+	private TileMapLayer _roadLayer;
 
 	private Godot.Collections.Dictionary<string, Label> _gameStatLabels;
 	
@@ -31,13 +41,7 @@ public partial class GameMenu : Control
 		var currentScale = (Vector2)GetTree().Root.Size / GetTree().Root.MinSize;
 		var container = GetNode<Control>("MenuCanvasLayer/Container");
 		container.Scale = currentScale;
-		
-		
-		
 		var statLabels = GetNode<GridContainer>("MenuCanvasLayer/Container/GameStats");
-		
-		
-		
 		_gameStatLabels = new Godot.Collections.Dictionary<string, Label> { 
 			{"money", statLabels.GetNode<Label>("Money") },
 			{"food", statLabels.GetNode<Label>("Food") },
@@ -45,8 +49,10 @@ public partial class GameMenu : Control
 			{"stone",statLabels.GetNode<Label>("Stone")}, 
 			{"happiness",statLabels.GetNode<Label>("Happiness")}
 		};
+		_roadLayer = GetNode<TileMapLayer>("../RoadLayer");
 		var shop = GetNode<Shop>("MenuCanvasLayer/Container/Shop");
 		shop.OnBuildingButtonPressed += BuildBuilding;
+		shop.Connect(Shop.SignalName.OnRoadBuild,Callable.From(OnRoadBuild));
 
 	}
 
@@ -54,8 +60,24 @@ public partial class GameMenu : Control
 	public override void _Process(double delta)
 	{
 		UpdateMenuInfo();
+		if (dragging && RoadPlaceMode)
+		{
+			PlaceRoad();
+		}
 
 	}
+
+	private void OnRoadBuild()
+	{
+		Console.WriteLine("Onroadbuild");
+		RoadPlaceMode = true;
+		IsPlaceMode = true;
+		_roadObject = _roadScene.Instantiate<Road>();
+		GetParent().AddChild(_roadObject);
+		
+
+	}
+	
 	
 
 
@@ -64,28 +86,40 @@ public partial class GameMenu : Control
 
 		if (@event.IsActionPressed(Inputs.LeftClick))
 		{
+			dragging = true;
 			if (_object != null)
 			{
 				if (CanPlace())
 				{
-					_money -= _object.GetBuildingPrice();
+					Money -= _object.GetPrice();
 					var placedHouse = _object.Duplicate();
+					ContainHouse = true;
 					EmitSignal(SignalName.HousePlaced, placedHouse);
 				}
 			}
+			
 
 		}
-		else if (@event.IsActionPressed((Inputs.RightClick)))
+		if (@event.IsActionPressed((Inputs.RightClick)))
 		{
 			_object?.QueueFree();
+			_roadObject?.QueueFree();
 			_object = null;
+			_roadObject = null;
 			IsPlaceMode = false;
+			RoadPlaceMode = false;
 		}
+
+		if (@event.IsActionReleased(Inputs.LeftClick))
+		{
+			dragging = false;
+		}
+		
 	}
 
 	public void UpdateMenuInfo()
 	{
-		_gameStatLabels["money"].Text = "Money: " + _money;
+		_gameStatLabels["money"].Text = "Money: " + Money;
 		_gameStatLabels["citizens"].Text = "Citizens: " + Citizens;
 		_gameStatLabels["happiness"].Text = "Happiness: " + Happiness;
 		_gameStatLabels["food"].Text = "Food: " + Food;
@@ -94,16 +128,30 @@ public partial class GameMenu : Control
 
 	private bool CanPlace()
 	{
-		return ContainHouse == false && _object.GetBuildingPrice() <= _money;
+		return ContainHouse == false && _object.GetPrice() <= Money;
 	}
 
-	private void BuildBuilding(AbstractPlaceable house)
+	private void BuildBuilding(AbstractPlaceable building)
 	{
-		house.Position = GetViewport().GetMousePosition();
+		building.Position = GetViewport().GetMousePosition();
 		var baseNode = GetParent();
-		baseNode.AddChild(house);
-		_object = house;
+		baseNode.AddChild(building);
+		_object = building;
 		IsPlaceMode = true;
+	}
+	
+	private void PlaceRoad()
+	{
+		if (CanPlaceRoad())
+		{
+			var gridPosition = _roadLayer.LocalToMap(GetGlobalMousePosition());
+			_roadPositions.Add(gridPosition);
+			_roadLayer.SetCellsTerrainConnect( _roadPositions, 0, 0);
+		}
+	}
+	private bool CanPlaceRoad()
+	{
+		return !_roadPositions.Contains(_roadLayer.LocalToMap(GetGlobalMousePosition()));
 	}
 
 	

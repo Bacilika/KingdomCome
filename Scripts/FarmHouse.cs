@@ -11,12 +11,12 @@ public partial class FarmHouse : AbstractPlaceable
 	private int _food;
 	private bool _timerTimedOut = false;
 	private Timer _timer; 
-
-	private const int price = 20000;
+	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready_instance()
 	{
 		_timer = GetNode<Timer>("FoodTimer");
+		Price = 20000;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -49,12 +49,15 @@ public partial class FarmHouse : AbstractPlaceable
 	protected override void OnDelete()
 	{
 		Console.WriteLine("On delete farmhouse");
+		GameMenu.WorkingCitizens -= _workers;
+		
 		QueueFree();
 	}
 
 	protected override void OnUpgrade()
 	{
 		Console.WriteLine("On upgrade farmhouse");
+		Level++;
 	}
 	
 
@@ -66,11 +69,6 @@ public partial class FarmHouse : AbstractPlaceable
 		_timer.SetWaitTime(30/(Math.Sqrt(_workers)));
 	}
 	
-	public int GetPrice()
-	{
-		return price;
-		
-	}
 	public void UpdateInfo()
 	{
 		var textLabel = (RichTextLabel) InfoBox.GetChild(0).GetChild(0);

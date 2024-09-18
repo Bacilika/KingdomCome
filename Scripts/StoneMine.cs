@@ -10,30 +10,24 @@ public partial class StoneMine : AbstractPlaceable
 	private RandomNumberGenerator stoneGrowth = new ();
 	private const int MaxWorkers = 5;
 	private int _stoneGrowth = 500; // 1/_growth% chance to increase habitants by 1 each tick. 
-
-
-	private const int price = 15000;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready_instance()
 	{
-	}
-
-	public int GetPrice()
-	{
-		return price;
-		
+		Price = 15000;
 	}
 	
 	
 	protected override void OnDelete()
 	{
 		Console.WriteLine("On delete stonemine");
+		GameMenu.WorkingCitizens -= _workers;
 		QueueFree();
 	}
 	
 	protected override void OnUpgrade()
 	{
 		Console.WriteLine("On upgrade stonemine");
+		Level++;
 	}
 
 	

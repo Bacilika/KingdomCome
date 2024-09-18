@@ -7,12 +7,16 @@ public abstract partial class AbstractPlaceable : Node2D
 	public bool IsPlaced;
 	private bool _isFocused;
 	protected PlaceableInfo InfoBox;
+	protected int Price;
+	protected int Level;
+	
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		InfoBox = GetNode<PlaceableInfo>("PlaceableInfo");
 		InfoBox.Visible = false;
+
 		_Ready_instance();
 		InfoBox.Connect(PlaceableInfo.SignalName.OnDelete, Callable.From(OnDelete));
 		InfoBox.Connect(PlaceableInfo.SignalName.OnUpgrade, Callable.From(OnUpgrade));
@@ -45,30 +49,28 @@ public abstract partial class AbstractPlaceable : Node2D
 		Position = GetGlobalMousePosition();
 	}
 	
-	public int GetBuildingPrice()
+	
+	
+	public int GetPrice()
 	{
-		return (int) GetType().GetMethod("GetPrice")!.Invoke(this, null)!;
+		return Price;
 	}
 	
 	public void UpgradeHouse()
 	{
 		GetNode<Sprite2D>("Sprite2D").SetTexture(GetNode<Texture2D>("res://Art/Buildings/House_Hay_Stone_2.png"));
 	}
-
-	private void ToggleBuildingInfo()
-	{
-		GetType().GetMethod("ShowInfo")?.Invoke(this, null);
-	}
+	
 
 	public override void _Input(InputEvent @event)
 	{
-		if (_isFocused)
+		if (_isFocused) //if mouse is on Building
 		{
 			if( @event.IsActionPressed(Inputs.LeftClick))
 			{
 				if (!GameMenu.IsPlaceMode)
 				{
-					ToggleBuildingInfo();
+					InfoBox.Visible = !InfoBox.Visible;
 				}
 			}
 		}

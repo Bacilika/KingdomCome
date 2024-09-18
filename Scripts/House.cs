@@ -6,7 +6,7 @@ public partial class House : AbstractPlaceable
 	private RandomNumberGenerator habitantGrowth = new ();
 	private int _growth = 50; // 1/_growth% chance to increase habitants by 1 each tick. 
 	private int _habitants;
-	private Control _infoBox;
+	private PlaceableInfo _infoBox;
 	private const int MaxHabitants = 5;
 	
 
@@ -14,10 +14,11 @@ public partial class House : AbstractPlaceable
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		_infoBox = GetNode<Control>("PlaceableInfo");
+		 _infoBox = GetNode<PlaceableInfo>("PlaceableInfo");
 		_infoBox.Visible = false;
-		var button = _infoBox.GetNode<Button>("InfoBox/DeleteButton");
-		button.Connect(DeleteButton.SignalName.OnDelete, Callable.From(OnDelete));
+
+		_infoBox.Connect(PlaceableInfo.SignalName.OnDelete, Callable.From(OnDelete));
+		_infoBox.Connect(PlaceableInfo.SignalName.OnUpgrade, Callable.From(OnUpgrade));
 		
 	}
 
@@ -31,6 +32,12 @@ public partial class House : AbstractPlaceable
 		Console.WriteLine("On delete");
 		GameMenu.Citizens-= _habitants;
 		QueueFree();
+	}
+
+	private void OnUpgrade()
+	{
+		Console.WriteLine("On Upgrade");
+		
 	}
 	public override void _Process(double delta)
 	{
@@ -57,7 +64,7 @@ public partial class House : AbstractPlaceable
 	public void UpdateInfo()
 	{
 		var textLabel = (RichTextLabel) _infoBox.GetChild(0).GetChild(0);
-		textLabel.Text = "Habitants: " + _habitants;
+		textLabel.Text = "Citizens: " + _habitants;
 	}
 	public void ShowInfo()
 	{

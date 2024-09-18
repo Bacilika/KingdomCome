@@ -4,6 +4,13 @@ using System;
 public partial class PlaceableInfo : Control
 {
 	// Called when the node enters the scene tree for the first time.
+
+	public bool Focused; 
+	[Signal]
+	public delegate void OnDeleteEventHandler();
+	
+	[Signal]
+	public delegate void OnUpgradeEventHandler();
 	public override void _Ready()
 	{
 	}
@@ -21,8 +28,14 @@ public partial class PlaceableInfo : Control
 	
 	public void OnDeleteButtonPressed()
 	{
-		Console.WriteLine("Delete");
-		GD.Print("Delete");
-		//GetParent().QueueFree();
+		EmitSignal(SignalName.OnDelete);
 	}
+
+	public void OnUpgradeButtonPressed()
+	{
+		EmitSignal(SignalName.OnUpgrade);
+
+	}
+	
+
 }

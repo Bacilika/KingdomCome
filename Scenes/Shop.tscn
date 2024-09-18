@@ -1,11 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://dlbb4eje8p5k2"]
+[gd_scene load_steps=8 format=3 uid="uid://dlbb4eje8p5k2"]
 
 [ext_resource type="Script" path="res://Scripts/Shop.cs" id="1_1o3pr"]
 [ext_resource type="Texture2D" uid="uid://cc1ypnuadgjre" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/House_RedWood_Stone_2.png" id="2_s6jgi"]
 [ext_resource type="Texture2D" uid="uid://dbsqgn5x7uxof" path="res://Art/Buildings/House_Hay_Stone_1.png" id="3_vymuh"]
 [ext_resource type="FontFile" uid="uid://dul1t3v440c7s" path="res://Deutsch.ttf" id="4_f5p4c"]
-[ext_resource type="Script" path="res://Scenes/BuildingTab.cs" id="4_m0gjx"]
+[ext_resource type="Script" path="res://Scripts/BuildingTab.cs" id="4_m0gjx"]
 [ext_resource type="Texture2D" uid="uid://dryjqgjq5rfkk" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Rocks/Rock_Gray_1.png" id="5_3wji3"]
+[ext_resource type="Texture2D" uid="uid://ljxctder1g5t" path="res://Sprites/Extra/Road.png" id="7_g4svy"]
 
 [node name="Shop" type="Control"]
 layout_mode = 3
@@ -35,7 +36,7 @@ mouse_filter = 0
 [node name="Houses" type="Button" parent="BuildTabButtons"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("4_f5p4c")
-theme_override_font_sizes/font_size = 25
+theme_override_font_sizes/font_size = 24
 text = "Housing"
 
 [node name="ShopItemNode" type="Control" parent="BuildTabButtons/Houses"]
@@ -47,6 +48,7 @@ offset_right = -23.0
 offset_bottom = 56.0
 
 [node name="HouseButton" type="Button" parent="BuildTabButtons/Houses/ShopItemNode"]
+layout_mode = 0
 offset_left = 128.0
 offset_right = 192.0
 offset_bottom = 64.0
@@ -58,32 +60,47 @@ script = ExtResource("4_m0gjx")
 [node name="Production" type="Button" parent="BuildTabButtons"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("4_f5p4c")
-theme_override_font_sizes/font_size = 25
+theme_override_font_sizes/font_size = 22
 text = "Production"
 
 [node name="ShopItemNode" type="Control" parent="BuildTabButtons/Production"]
 visible = false
 anchors_preset = 0
-offset_left = -216.0
+offset_left = -471.0
 offset_top = -48.0
 offset_right = -23.0
 offset_bottom = 16.0
 mouse_filter = 2
 
 [node name="FarmButton" type="Button" parent="BuildTabButtons/Production/ShopItemNode"]
-layout_mode = 0
-offset_right = 89.0
-offset_bottom = 64.0
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -89.0
+offset_top = -32.0
+offset_bottom = 32.0
+grow_horizontal = 0
+grow_vertical = 2
 icon = ExtResource("2_s6jgi")
 flat = true
 expand_icon = true
 
 [node name="StoneButton" type="Button" parent="BuildTabButtons/Production/ShopItemNode"]
-layout_mode = 0
-offset_left = 129.0
-offset_top = 8.0
-offset_right = 185.0
-offset_bottom = 56.0
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -192.0
+offset_top = -24.0
+offset_right = -136.0
+offset_bottom = 24.0
+grow_horizontal = 0
+grow_vertical = 2
 icon = ExtResource("5_3wji3")
 flat = true
 expand_icon = true
@@ -91,17 +108,41 @@ expand_icon = true
 [node name="Decorations" type="Button" parent="BuildTabButtons"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("4_f5p4c")
-theme_override_font_sizes/font_size = 25
+theme_override_font_sizes/font_size = 22
 text = "Decoration"
 
 [node name="ShopItemNode" type="Control" parent="BuildTabButtons/Decorations"]
 visible = false
 anchors_preset = 0
-offset_left = 19.0
-offset_top = -120.0
-offset_right = 59.0
-offset_bottom = -80.0
+offset_left = -407.0
+offset_top = -88.0
+offset_right = -23.0
+offset_bottom = -24.0
+
+[node name="Roads" type="Button" parent="BuildTabButtons"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_f5p4c")
+theme_override_font_sizes/font_size = 22
+text = "Road"
+
+[node name="ShopItemNode" type="Control" parent="BuildTabButtons/Roads"]
+visible = false
+anchors_preset = 0
+offset_left = -399.0
+offset_top = -126.0
+offset_right = -23.0
+offset_bottom = -62.0
+
+[node name="RoadButton" type="Button" parent="BuildTabButtons/Roads/ShopItemNode"]
+layout_mode = 0
+offset_left = 312.0
+offset_right = 368.0
+offset_bottom = 64.0
+icon = ExtResource("7_g4svy")
+flat = true
+expand_icon = true
 
 [connection signal="pressed" from="BuildTabButtons/Houses" to="." method="OnBuildTabPressed" binds= ["Houses"]]
 [connection signal="pressed" from="BuildTabButtons/Production" to="." method="OnBuildTabPressed" binds= ["Production"]]
 [connection signal="pressed" from="BuildTabButtons/Decorations" to="." method="OnBuildTabPressed" binds= ["Decorations"]]
+[connection signal="pressed" from="BuildTabButtons/Roads" to="." method="OnBuildTabPressed" binds= ["Roads"]]

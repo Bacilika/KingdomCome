@@ -21,11 +21,14 @@ public partial class Shop : Control
 		};
 		_buildButtons = GetNode<GridContainer>("BuildTabButtons");
 		var house = GetNode<Button>("BuildTabButtons/Houses/ShopItemNode/HouseButton");
-		house.Connect(Signals.Pressed, Callable.From(() => {OnBuildButtonPressed("House"); }));
+		house.Connect(Signals.Pressed, Callable.From(() => {OnBuildButtonPressed("House", "BuildTabButtons/Houses/ShopItemNode/HouseButton" ); }));
 		var farmHouse = GetNode<Button>("BuildTabButtons/Production/ShopItemNode/FarmButton");
-		farmHouse.Connect(Signals.Pressed, Callable.From(() => {OnBuildButtonPressed("FarmHouse"); }));
+		farmHouse.Connect(Signals.Pressed, Callable.From(() => {OnBuildButtonPressed("FarmHouse", "BuildTabButtons/Production/ShopItemNode/FarmButton"); }));
 		var stoneMine = GetNode<Button>("BuildTabButtons/Production/ShopItemNode/StoneButton");
-		stoneMine.Connect(Signals.Pressed, Callable.From(() => {OnBuildButtonPressed("StoneMine"); }));
+		stoneMine.Connect(Signals.Pressed, Callable.From(() => {OnBuildButtonPressed("StoneMine","BuildTabButtons/Production/ShopItemNode/StoneButton"); }));
+		var road = GetNode<Button>("BuildTabButtons/Roads/ShopItemNode/RoadButton");
+		road.Connect(Signals.Pressed, Callable.From(() => {OnBuildButtonPressed("Road","BuildTabButtons/Roads/ShopItemNode/RoadButton"); }));
+		
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -50,8 +53,14 @@ public partial class Shop : Control
 		}
 		
 	}
-	public void OnBuildButtonPressed(string type)
+	public void OnBuildButtonPressed(string type, string buttonPath)
 	{
+		var button = GetNode<Button>(buttonPath);
+		button.ReleaseFocus();
+		if(type == "Road"){
+			Console.WriteLine("Road");
+			return;
+		}
 		Console.WriteLine(type);
 		var house = _shopItems[type].Instantiate<AbstractPlaceable>();
 		EmitSignal(SignalName.OnBuildingButtonPressed, house);

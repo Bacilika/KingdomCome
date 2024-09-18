@@ -20,12 +20,6 @@ position = Vector2(-1.5, 0.5)
 shape = SubResource("RectangleShape2D_r3tpq")
 
 [node name="PlaceableInfo" parent="." instance=ExtResource("3_avs7j")]
-visible = false
-offset_left = 16.0
-offset_top = -192.0
-offset_right = 16.0
-offset_bottom = -192.0
-script = null
 
 [connection signal="mouse_entered" from="." to="." method="OnMouseEntered"]
 [connection signal="mouse_exited" from="." to="." method="OnMouseExited"]

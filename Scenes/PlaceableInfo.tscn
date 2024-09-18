@@ -1,17 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://biil4p82w3tjw"]
+[gd_scene load_steps=3 format=3 uid="uid://biil4p82w3tjw"]
 
 [ext_resource type="Texture2D" uid="uid://b5llsw0d3srcl" path="res://Sprites/Extra/InfoBoxSprite.png" id="1_1dfka"]
 [ext_resource type="Script" path="res://Scripts/PlaceableInfo.cs" id="1_snswj"]
-[ext_resource type="Script" path="res://Scripts/DeleteButton.cs" id="3_mnuac"]
-[ext_resource type="Script" path="res://Scripts/UpgradeButton.cs" id="4_2gasv"]
 
 [node name="PlaceableInfo" type="Control"]
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = 0
+offset_right = 200.0
+offset_bottom = 184.0
 mouse_filter = 2
 script = ExtResource("1_snswj")
 
@@ -19,6 +15,7 @@ script = ExtResource("1_snswj")
 layout_mode = 0
 offset_right = 208.0
 offset_bottom = 184.0
+mouse_filter = 2
 texture = ExtResource("1_1dfka")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="InfoBox"]
@@ -27,6 +24,7 @@ offset_left = 8.0
 offset_top = 6.0
 offset_right = 201.0
 offset_bottom = 176.0
+mouse_filter = 2
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 
 [node name="DeleteButton" type="Button" parent="InfoBox"]
@@ -36,7 +34,6 @@ offset_top = 139.0
 offset_right = 175.0
 offset_bottom = 170.0
 text = "Delete"
-script = ExtResource("3_mnuac")
 
 [node name="UpgradeButton" type="Button" parent="InfoBox"]
 layout_mode = 0
@@ -45,7 +42,6 @@ offset_top = 140.0
 offset_right = 92.0
 offset_bottom = 171.0
 text = "Upgrade"
-script = ExtResource("4_2gasv")
 
-[connection signal="pressed" from="InfoBox/DeleteButton" to="InfoBox/DeleteButton" method="OnButtonPressed"]
-[connection signal="pressed" from="InfoBox/UpgradeButton" to="InfoBox/UpgradeButton" method="OnButtonPressed"]
+[connection signal="pressed" from="InfoBox/DeleteButton" to="." method="OnDeleteButtonPressed"]
+[connection signal="pressed" from="InfoBox/UpgradeButton" to="." method="OnUpgradeButtonPressed"]

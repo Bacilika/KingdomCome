@@ -9,6 +9,7 @@ public partial class Base : Node2D
 	
 	public override void _Ready()
 	{
+		Console.WriteLine("hello")
 		
 		timer = GetNode<Timer>("EatFoodTimer");
 		var gameMenu = GetNode<GameMenu>("GameMenu");

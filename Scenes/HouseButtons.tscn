@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://bnegsctsxxmvq"]
+
+[ext_resource type="Texture2D" uid="uid://b5llsw0d3srcl" path="res://Sprites/Extra/InfoBoxSprite.png" id="1_cvbkg"]
+[ext_resource type="Texture2D" uid="uid://dbsqgn5x7uxof" path="res://Art/Buildings/House_Hay_Stone_1.png" id="2_m5oq6"]
+
+[node name="HouseButtons" type="Node2D"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_left = -13.0
+offset_right = 832.0
+offset_bottom = 192.0
+texture = ExtResource("1_cvbkg")
+
+[node name="GridContainer" type="GridContainer" parent="TextureRect"]
+layout_mode = 0
+offset_left = 29.0
+offset_top = 8.0
+offset_right = 821.0
+offset_bottom = 184.0
+columns = 2
+
+[node name="HouseButton" type="TextureButton" parent="TextureRect/GridContainer"]
+layout_mode = 2
+tooltip_text = "This house costs 5000 to build"
+texture_normal = ExtResource("2_m5oq6")

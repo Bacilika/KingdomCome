@@ -2083,4 +2083,9 @@ offset_bottom = 712.0
 wait_time = 10.0
 autostart = true
 
+[node name="DayTimer" type="Timer" parent="."]
+wait_time = 30.0
+autostart = true
+
 [connection signal="timeout" from="EatFoodTimer" to="." method="OnEatFoodTimerTimedout"]
+[connection signal="timeout" from="DayTimer" to="." method="OnDayTimerTimeout"]

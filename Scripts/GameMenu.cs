@@ -21,6 +21,7 @@ public partial class GameMenu : Control
 	public static int Food;
 	public static int Stone;
 	public static int WorkingCitizens;
+	public static int Day = 0;
 	public static bool dragging;
 	private PackedScene _roadScene = ResourceLoader.Load<PackedScene>("res://Scenes/Road.tscn");
 	
@@ -29,7 +30,7 @@ public partial class GameMenu : Control
 	private Array<Vector2I> _roadPositions = [];
 	private TileMapLayer _roadLayer;
 
-	private Godot.Collections.Dictionary<string, Label> _gameStatLabels;
+	private static Godot.Collections.Dictionary<string, Label> _gameStatLabels;
 	
 	[Signal]
 	public delegate void HousePlacedEventHandler(Node2D house);
@@ -47,7 +48,8 @@ public partial class GameMenu : Control
 			{"food", statLabels.GetNode<Label>("Food") },
 			{"citizens", statLabels.GetNode<Label>("Citizens") },
 			{"stone",statLabels.GetNode<Label>("Stone")}, 
-			{"happiness",statLabels.GetNode<Label>("Happiness")}
+			{"happiness",statLabels.GetNode<Label>("Happiness")},
+			{"day",statLabels.GetNode<Label>("Day")}
 		};
 		_roadLayer = GetNode<TileMapLayer>("../RoadLayer");
 		var shop = GetNode<Shop>("MenuCanvasLayer/Container/Shop");
@@ -64,33 +66,24 @@ public partial class GameMenu : Control
 		{
 			PlaceRoad();
 		}
-
 	}
 
 	private void OnRoadBuild()
 	{
-		Console.WriteLine("Onroadbuild");
 		RoadPlaceMode = true;
 		IsPlaceMode = true;
 		_roadObject = _roadScene.Instantiate<Road>();
 		GetParent().AddChild(_roadObject);
-		
-
 	}
 	
-	
-
 
 	public override void _Input(InputEvent @event)
 	{
-
 		if (@event.IsActionPressed(Inputs.LeftClick))
 		{
 			dragging = true;
 			if (_object != null)
 			{
-				
-				Console.WriteLine("Can place" + CanPlace());
 				if (CanPlace())
 				{
 					Money -= _object.GetPrice();
@@ -99,9 +92,9 @@ public partial class GameMenu : Control
 					EmitSignal(SignalName.HousePlaced, placedHouse);
 				}
 			}
-			
-
 		}
+		
+		
 		if (@event.IsActionPressed((Inputs.RightClick)))
 		{
 			_object?.QueueFree();
@@ -111,21 +104,23 @@ public partial class GameMenu : Control
 			IsPlaceMode = false;
 			RoadPlaceMode = false;
 		}
+		
 
 		if (@event.IsActionReleased(Inputs.LeftClick))
 		{
 			dragging = false;
 		}
-		
 	}
 
-	public void UpdateMenuInfo()
+	public static void UpdateMenuInfo()
 	{
 		_gameStatLabels["money"].Text = "Money: " + Money;
 		_gameStatLabels["citizens"].Text = "Citizens: " + Citizens;
 		_gameStatLabels["happiness"].Text = "Happiness: " + Happiness;
 		_gameStatLabels["food"].Text = "Food: " + Food;
 		_gameStatLabels["stone"].Text = "Stone: " + Stone;
+		_gameStatLabels["day"].Text = "Day: " + Day;
+		
 	}
 
 	private bool CanPlace()
@@ -151,11 +146,9 @@ public partial class GameMenu : Control
 			_roadLayer.SetCellsTerrainConnect( _roadPositions, 0, 0);
 		}
 	}
+	
 	private bool CanPlaceRoad()
 	{
 		return !_roadPositions.Contains(_roadLayer.LocalToMap(GetGlobalMousePosition()));
 	}
-
-	
-
 }

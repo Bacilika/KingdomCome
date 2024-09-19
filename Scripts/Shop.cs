@@ -58,8 +58,8 @@ public partial class Shop : Control
 			}
 			else if (shopItemNode != null) shopItemNode.Visible = false;
 		}
-		
 	}
+	
 	public void OnBuildButtonPressed(string type, string buttonPath)
 	{
 		var button = GetNode<Button>(buttonPath);
@@ -69,12 +69,7 @@ public partial class Shop : Control
 			EmitSignal(SignalName.OnRoadBuild);
 			return;
 		}
-
-
-		Console.WriteLine(type);
 		var house = _shopItems[type].Instantiate<AbstractPlaceable>();
 		EmitSignal(SignalName.OnBuildingButtonPressed, house);
-
-		
 	}
 }

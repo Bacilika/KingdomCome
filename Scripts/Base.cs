@@ -5,13 +5,16 @@ public partial class Base : Node2D
 {
 	// Called when the node enters the scene tree for the first time.
 	private int hungry;
-	private Timer timer; 
+	private Timer _foodTimer; 
+	private Timer _dayTimer;
 	
 	public override void _Ready()
 	{
 		Console.WriteLine("hello");
 		
-		timer = GetNode<Timer>("EatFoodTimer");
+		_foodTimer = GetNode<Timer>("EatFoodTimer");
+		_dayTimer = GetNode<Timer>("DayTimer");
+		_dayTimer.Start();
 		var gameMenu = GetNode<GameMenu>("GameMenu");
 		gameMenu.HousePlaced += PlaceHouse;
 		
@@ -22,13 +25,13 @@ public partial class Base : Node2D
 	{	
 		if (GameMenu.Food > 0)
 		{
-			timer.Start();
+			_foodTimer.Start();
 			hungry = 0;
 
 		}
 	}
 
-	public void OnEatFoodTimerTimedout()
+	private void OnEatFoodTimerTimedout()
 	{
 		hungry++; 
 		Console.WriteLine("Your citizens are Hungry!");
@@ -45,5 +48,15 @@ public partial class Base : Node2D
 		placeable.Position = GetGlobalMousePosition();
 		AddChild(placeable);
 		
+	}
+
+	private void OnDayTimerTimeout()
+	{
+		GameMenu.Day += 1;
+		if (GameMenu.Food > 0)
+		{
+			GameMenu.Food -= 1;
+		}
+		GameMenu.UpdateMenuInfo();
 	}
 }

@@ -24,7 +24,6 @@ public partial class House : AbstractPlaceable
 	
 	protected override void OnDelete()
 	{
-		Console.WriteLine("On delete");
 		GameMenu.Citizens-= Citizens;
 		QueueFree();
 		GameMenu.Money += Upgrades["MoneyBackOnDelete"][Level];

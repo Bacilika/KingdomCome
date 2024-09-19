@@ -60,7 +60,7 @@ public abstract partial class AbstractPlaceable : Area2D
 	
 	public void OnAreaExited(Area2D other)
 	{
-		Console.WriteLine("Area Exited");
+		//Console.WriteLine("Area Exited");
 		GameMenu.ContainHouse = false;
 	}
 	

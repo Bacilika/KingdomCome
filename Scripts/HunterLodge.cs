@@ -31,15 +31,12 @@ public partial class HunterLodge : AbstractPlaceable
 		{
 			FollowMouse(); 
 		}
-
 		else if (_timer.IsStopped() && Workers > 0)
 		{
 			_timer.Start();
 		}
 		else
 		{
-			Console.WriteLine("Citizens"+GameMenu.Citizens);
-			Console.WriteLine("WorkingMen"+GameMenu.WorkingCitizens);
 			if (Workers < Upgrades["MaxWorkers"][Level] && GameMenu.WorkingCitizens < GameMenu.Citizens)
 			{
 				if (habitantGrowth.RandiRange(0, _growth) ==0)
@@ -50,12 +47,10 @@ public partial class HunterLodge : AbstractPlaceable
 			}
 			UpdateInfo();
 		}
-		
 	}
 	
 	protected override void OnDelete()
 	{
-		Console.WriteLine("On delete farmhouse");
 		GameMenu.WorkingCitizens -= Workers;
 		GameMenu.Money += Upgrades["MoneyBackOnDelete"][Level];
 		QueueFree();
@@ -63,7 +58,6 @@ public partial class HunterLodge : AbstractPlaceable
 	
 	public void OnFoodTimerTimeout()
 	{
-		Console.WriteLine("Food time out");
 		_food++;
 		GameMenu.Food++;
 		float time = 15 - Workers;
@@ -74,9 +68,5 @@ public partial class HunterLodge : AbstractPlaceable
 	{
 		var textLabel = (RichTextLabel) InfoBox.GetChild(0).GetChild(0);
 		textLabel.Text = "Workers: " + Workers;
-	}
-	public void ShowInfo()
-	{
-		InfoBox.Visible = !InfoBox.Visible;
 	}
 }

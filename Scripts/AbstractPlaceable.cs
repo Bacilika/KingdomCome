@@ -1,8 +1,9 @@
 using Godot;
 using System;
+using System.Threading;
 using Scripts.Constants;
 
-public abstract partial class AbstractPlaceable : Node2D
+public abstract partial class AbstractPlaceable : Area2D
 {
 	public bool IsPlaced;
 	private bool _isFocused;
@@ -17,6 +18,7 @@ public abstract partial class AbstractPlaceable : Node2D
 		InfoBox = GetNode<PlaceableInfo>("PlaceableInfo");
 		InfoBox.Visible = false;
 
+		Monitoring = true;
 		_Ready_instance();
 		InfoBox.Connect(PlaceableInfo.SignalName.OnDelete, Callable.From(OnDelete));
 		InfoBox.Connect(PlaceableInfo.SignalName.OnUpgrade, Callable.From(OnUpgrade));
@@ -29,19 +31,30 @@ public abstract partial class AbstractPlaceable : Node2D
 	{
 		if(IsPlaced)
 		{
-			GameMenu.ContainHouse = true;
+			Console.WriteLine("Mouse Entered");
 			_isFocused = true;
-
 		}			
 	}
-
-	protected abstract void OnDelete();
-	protected abstract void OnUpgrade();
 	
 	public void OnMouseExited()
 	{
-		GameMenu.ContainHouse = false;
+		Console.WriteLine("Mouse Exited");
 		_isFocused = false;
+	}
+	
+	public void OnAreaEntered(Area2D other)
+	{
+		Console.WriteLine("Area Entered");
+		if(IsPlaced)
+		{
+			GameMenu.ContainHouse = true;
+		}			
+	}
+	
+	public void OnAreaExited(Area2D other)
+	{
+		Console.WriteLine("Area Exited");
+		GameMenu.ContainHouse = false;
 	}
 	
 	protected void FollowMouse()
@@ -75,4 +88,6 @@ public abstract partial class AbstractPlaceable : Node2D
 			}
 		}
 	}
+	protected abstract void OnDelete();
+	protected abstract void OnUpgrade();
 }

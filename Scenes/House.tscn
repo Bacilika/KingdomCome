@@ -21,5 +21,7 @@ shape = SubResource("RectangleShape2D_r3tpq")
 
 [node name="PlaceableInfo" parent="." instance=ExtResource("3_avs7j")]
 
+[connection signal="area_entered" from="." to="." method="OnAreaEntered"]
+[connection signal="area_exited" from="." to="." method="OnAreaExited"]
 [connection signal="mouse_entered" from="." to="." method="OnMouseEntered"]
 [connection signal="mouse_exited" from="." to="." method="OnMouseExited"]

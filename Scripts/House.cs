@@ -14,8 +14,6 @@ public partial class House : AbstractPlaceable
 	public override void _Ready_instance()
 	{
 		Price = 5000;
-
-
 	}
 	
 	protected override void OnDelete()
@@ -47,16 +45,15 @@ public partial class House : AbstractPlaceable
 					GameMenu.Citizens++;
 				}
 			}
-
 			UpdateInfo();
 		}
 		
 	}
+
 
 	public void UpdateInfo()
 	{
 		var textLabel = (RichTextLabel) InfoBox.GetChild(0).GetChild(0);
 		textLabel.Text = "Citizens: " + _citizens;
 	}
-
 }

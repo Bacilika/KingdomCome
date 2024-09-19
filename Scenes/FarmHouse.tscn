@@ -22,6 +22,8 @@ wait_time = 30.0
 
 [node name="PlaceableInfo" parent="." instance=ExtResource("3_ug2hv")]
 
+[connection signal="area_entered" from="." to="." method="OnAreaEntered"]
+[connection signal="area_exited" from="." to="." method="OnAreaExited"]
 [connection signal="mouse_entered" from="." to="." method="OnMouseEntered"]
 [connection signal="mouse_exited" from="." to="." method="OnMouseExited"]
 [connection signal="timeout" from="FoodTimer" to="." method="OnFoodTimerTimeout"]

@@ -89,6 +89,8 @@ public partial class GameMenu : Control
 			dragging = true;
 			if (_object != null)
 			{
+				
+				Console.WriteLine("Can place" + CanPlace());
 				if (CanPlace())
 				{
 					Money -= _object.GetPrice();

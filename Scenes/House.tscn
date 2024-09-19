@@ -1,8 +1,27 @@
-[gd_scene load_steps=5 format=3 uid="uid://cx5dug5bljx7r"]
+[gd_scene load_steps=8 format=3 uid="uid://cx5dug5bljx7r"]
 
-[ext_resource type="Texture2D" uid="uid://dbsqgn5x7uxof" path="res://Art/Buildings/House_Hay_Stone_1.png" id="1_lt1ul"]
 [ext_resource type="Script" path="res://Scripts/House.cs" id="1_y1wo4"]
+[ext_resource type="Texture2D" uid="uid://17gjb7osbvni" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/House_Hay_Stone_1.png" id="3_4a08c"]
 [ext_resource type="PackedScene" uid="uid://biil4p82w3tjw" path="res://Scenes/PlaceableInfo.tscn" id="3_avs7j"]
+[ext_resource type="Texture2D" uid="uid://cmbyvpglvmln2" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/House_Hay_Stone_2.png" id="4_2grwf"]
+[ext_resource type="Texture2D" uid="uid://w6xnseryjo1k" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/House_Hay_Stone_3.png" id="5_lamte"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fiu42"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_4a08c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_2grwf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_lamte")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r3tpq"]
 size = Vector2(85, 89)
@@ -11,15 +30,20 @@ size = Vector2(85, 89)
 physics_interpolation_mode = 2
 script = ExtResource("1_y1wo4")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-y_sort_enabled = true
-texture = ExtResource("1_lt1ul")
+[node name="HouseSprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_fiu42")
+frame_progress = 0.335059
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1.5, 0.5)
 shape = SubResource("RectangleShape2D_r3tpq")
 
 [node name="PlaceableInfo" parent="." instance=ExtResource("3_avs7j")]
+visible = false
+offset_left = 16.0
+offset_top = -192.0
+offset_right = 16.0
+offset_bottom = -192.0
 
 [connection signal="area_entered" from="." to="." method="OnAreaEntered"]
 [connection signal="area_exited" from="." to="." method="OnAreaExited"]

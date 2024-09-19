@@ -1,8 +1,27 @@
-[gd_scene load_steps=5 format=3 uid="uid://b756hj4muxdwb"]
+[gd_scene load_steps=8 format=3 uid="uid://b756hj4muxdwb"]
 
 [ext_resource type="Script" path="res://Scripts/FarmHouse.cs" id="1_36o5k"]
-[ext_resource type="Texture2D" uid="uid://cc1ypnuadgjre" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/House_RedWood_Stone_2.png" id="2_bji2b"]
+[ext_resource type="Texture2D" uid="uid://bbho1x8o7mjxm" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/House_RedWood_Stone_4.png" id="3_dgai6"]
 [ext_resource type="PackedScene" uid="uid://biil4p82w3tjw" path="res://Scenes/PlaceableInfo.tscn" id="3_ug2hv"]
+[ext_resource type="Texture2D" uid="uid://dfn3t8gnuyumi" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/House_RedWood_Stone_5.png" id="4_ywaan"]
+[ext_resource type="Texture2D" uid="uid://dr0gkt6lqtuog" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/House_RedWood_Stone_6.png" id="5_ocdr2"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gy8eo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_dgai6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_ywaan")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_ocdr2")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cews5"]
 size = Vector2(154, 108)
@@ -10,17 +29,18 @@ size = Vector2(154, 108)
 [node name="FarmHouse" type="Area2D"]
 script = ExtResource("1_36o5k")
 
+[node name="HouseSprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_gy8eo")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, -1)
 shape = SubResource("RectangleShape2D_cews5")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_bji2b")
-
 [node name="FoodTimer" type="Timer" parent="."]
-wait_time = 30.0
+wait_time = 10.0
 
 [node name="PlaceableInfo" parent="." instance=ExtResource("3_ug2hv")]
+visible = false
 
 [connection signal="area_entered" from="." to="." method="OnAreaEntered"]
 [connection signal="area_exited" from="." to="." method="OnAreaExited"]

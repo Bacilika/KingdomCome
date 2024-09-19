@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dlbb4eje8p5k2"]
+[gd_scene load_steps=9 format=3 uid="uid://dlbb4eje8p5k2"]
 
 [ext_resource type="Script" path="res://Scripts/Shop.cs" id="1_1o3pr"]
 [ext_resource type="Texture2D" uid="uid://cc1ypnuadgjre" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/House_RedWood_Stone_2.png" id="2_s6jgi"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://Scripts/BuildingTab.cs" id="4_m0gjx"]
 [ext_resource type="Texture2D" uid="uid://dryjqgjq5rfkk" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Rocks/Rock_Gray_1.png" id="5_3wji3"]
 [ext_resource type="Texture2D" uid="uid://ljxctder1g5t" path="res://Sprites/Extra/Road.png" id="7_g4svy"]
+[ext_resource type="Texture2D" uid="uid://ds2amcmwp0pcr" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/WatchTower_BlueBricks_Wood_1.png" id="7_oo1vr"]
 
 [node name="Shop" type="Control"]
 layout_mode = 3
@@ -102,6 +103,23 @@ offset_bottom = 24.0
 grow_horizontal = 0
 grow_vertical = 2
 icon = ExtResource("5_3wji3")
+flat = true
+expand_icon = true
+
+[node name="HuntingButton" type="Button" parent="BuildTabButtons/Production/ShopItemNode"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -328.0
+offset_top = -24.0
+offset_right = -272.0
+offset_bottom = 24.0
+grow_horizontal = 0
+grow_vertical = 2
+icon = ExtResource("7_oo1vr")
 flat = true
 expand_icon = true
 

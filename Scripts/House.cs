@@ -16,7 +16,7 @@ public partial class House : AbstractPlaceable
 		Price = 5000;
 		Upgrades = new Dictionary<String, List<int>>
 		{
-			{ "Cost", [5000, 3000, 3000] }, { "Inhabitants", [5, 7, 10] }, { "Workers", [5, 7, 10] },
+			{ "Cost", [5000, 3000, 3000] }, { "MaxInhabitants", [5, 7, 10] }, { "Workers", [5, 7, 10] },
 			{ "WoodCost", [0, 0, 0] },
 			{ "StoneCost", [0, 0, 0]}, {"MoneyBackOnDelete", [4000, 2000, 2000] }
 		};
@@ -39,7 +39,7 @@ public partial class House : AbstractPlaceable
 		}
 		else
 		{
-			if (Citizens < MaxHabitants)
+			if (Citizens < Upgrades["MaxInhabitants"][Level])
 			{
 				if (habitantGrowth.RandiRange(0, _growth) ==0)
 				{

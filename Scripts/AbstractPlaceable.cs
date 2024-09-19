@@ -76,10 +76,6 @@ public abstract partial class AbstractPlaceable : Area2D
 		return Price;
 	}
 	
-	public void UpgradeHouse()
-	{
-		GetNode<Sprite2D>("Sprite2D").SetTexture(GetNode<Texture2D>("res://Art/Buildings/House_Hay_Stone_2.png"));
-	}
 	
 
 	public override void _Input(InputEvent @event)
@@ -104,8 +100,6 @@ public abstract partial class AbstractPlaceable : Area2D
 			Level++;
 			AnimatedSprite.Frame = Level;
 			Price = Upgrades["Cost"][Level];
-			Citizens = Upgrades["Inhabitants"][Level];
-			Workers = Upgrades["Workers"][Level];
 			GameMenu.Money -= Upgrades["Cost"][Level];
 			
 		}

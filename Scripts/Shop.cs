@@ -20,7 +20,9 @@ public partial class Shop : Control
 		_shopItems = new Godot.Collections.Dictionary<string, PackedScene> { 
 			{ "House", ResourceLoader.Load<PackedScene>("res://Scenes/House.tscn") },
 			{"FarmHouse", ResourceLoader.Load<PackedScene>("res://Scenes/FarmHouse.tscn")},
-			{"StoneMine", ResourceLoader.Load<PackedScene>("res://Scenes/StoneMine.tscn")}
+			{"StoneMine", ResourceLoader.Load<PackedScene>("res://Scenes/StoneMine.tscn")},
+			{"HunterLodge", ResourceLoader.Load<PackedScene>("res://Scenes/HunterLodge.tscn")}
+
 		};
 		_buildButtons = GetNode<GridContainer>("BuildTabButtons");
 		var house = GetNode<Button>("BuildTabButtons/Houses/ShopItemNode/HouseButton");
@@ -31,6 +33,8 @@ public partial class Shop : Control
 		stoneMine.Connect(Signals.Pressed, Callable.From(() => {OnBuildButtonPressed("StoneMine","BuildTabButtons/Production/ShopItemNode/StoneButton"); }));
 		var road = GetNode<Button>("BuildTabButtons/Roads/ShopItemNode/RoadButton");
 		road.Connect(Signals.Pressed, Callable.From(() => {OnBuildButtonPressed("Road","BuildTabButtons/Roads/ShopItemNode/RoadButton"); }));
+		var huntersLodge = GetNode<Button>("BuildTabButtons/Production/ShopItemNode/HuntingButton");
+		huntersLodge.Connect(Signals.Pressed, Callable.From(() => {OnBuildButtonPressed("HunterLodge","BuildTabButtons/Production/ShopItemNode/HuntingButton"); }));
 		
 	}
 

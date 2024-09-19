@@ -8,7 +8,6 @@ public partial class StoneMine : AbstractPlaceable
 	private int _growth = 100; // 1/_growth% chance to increase habitants by 1 each tick. 
 	private int _stone;
 	private RandomNumberGenerator stoneGrowth = new ();
-	private const int MaxWorkers = 5;
 	private int _stoneGrowth = 500; // 1/_growth% chance to increase habitants by 1 each tick. 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready_instance()
@@ -16,7 +15,7 @@ public partial class StoneMine : AbstractPlaceable
 		Price = 15000;
 		Upgrades = new Dictionary<String, List<int>>
 		{
-			{"Cost", [5000, 3000, 3000]}, {"Workers", [5, 7, 10]}, {"Inhabitants", [5, 7, 10]}, {"WoodCost", [0, 0, 0]},
+			{"Cost", [5000, 3000, 3000]}, {"MaxWorkers", [5, 7, 10]}, {"Inhabitants", [5, 7, 10]}, {"WoodCost", [0, 0, 0]},
 			{"StoneCost", [0, 0, 0]}, {"MoneyBackOnDelete", [4000, 2000, 2000] }
 		};
 	}
@@ -40,7 +39,7 @@ public partial class StoneMine : AbstractPlaceable
 		}
 		else
 		{
-			if (Workers < MaxWorkers && GameMenu.WorkingCitizens < GameMenu.Citizens)
+			if (Workers < Upgrades["MaxWorkers"][Level] && GameMenu.WorkingCitizens < GameMenu.Citizens)
 			{
 				if (habitantGrowth.RandiRange(0, _growth) ==0)
 				{

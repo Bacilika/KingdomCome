@@ -17,7 +17,9 @@ public partial class Base : Node2D
 		_dayTimer.Start();
 		var gameMenu = GetNode<GameMenu>("GameMenu");
 		gameMenu.HousePlaced += PlaceHouse;
-		
+		var music = GetNode<AudioStreamPlayer2D>("BackgroundMusic");
+		music.Play();
+
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

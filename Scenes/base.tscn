@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://vcvlb4vnybwc"]
+[gd_scene load_steps=17 format=4 uid="uid://vcvlb4vnybwc"]
 
 [ext_resource type="Script" path="res://Scripts/GameCamera.cs" id="1_e6cpq"]
 [ext_resource type="Script" path="res://Scripts/Base.cs" id="1_ugl4q"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://b7mydwstdxrtn" path="res://Art/Buildings/Atlas/Buildings.png" id="4_snug4"]
 [ext_resource type="Texture2D" uid="uid://bam6r0w1dcr7v" path="res://Sprites/Extra/Tileset_Road-export.png" id="5_iblko"]
 [ext_resource type="PackedScene" uid="uid://25kpv3trjyvk" path="res://Scenes/GameMenu.tscn" id="6_d7dld"]
+[ext_resource type="AudioStream" uid="uid://bt8a2ugntrebk" path="res://Audio/Vinnaren.mp3" id="8_kik7y"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_saoes"]
 texture = ExtResource("2_r5mi0")
@@ -2086,6 +2087,9 @@ autostart = true
 [node name="DayTimer" type="Timer" parent="."]
 wait_time = 30.0
 autostart = true
+
+[node name="BackgroundMusic" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_kik7y")
 
 [connection signal="timeout" from="EatFoodTimer" to="." method="OnEatFoodTimerTimedout"]
 [connection signal="timeout" from="DayTimer" to="." method="OnDayTimerTimeout"]

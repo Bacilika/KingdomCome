@@ -101,7 +101,7 @@ public abstract partial class AbstractPlaceable : Area2D
 			AnimatedSprite.Frame = Level;
 			Price = Upgrades["Cost"][Level];
 			GameMenu.Money -= Upgrades["Cost"][Level];
-			
+			Shop.placeAudio.Play();
 		}
 	}
 }

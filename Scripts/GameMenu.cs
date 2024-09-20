@@ -90,6 +90,8 @@ public partial class GameMenu : Control
 					var placedHouse = _object.Duplicate();
 					ContainHouse = true;
 					EmitSignal(SignalName.HousePlaced, placedHouse);
+					Shop.placeAudio.Play();
+					Console.WriteLine("Build building");
 				}
 			}
 		}

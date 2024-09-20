@@ -46,4 +46,4 @@ visible = false
 [connection signal="area_exited" from="." to="." method="OnAreaExited"]
 [connection signal="mouse_entered" from="." to="." method="OnMouseEntered"]
 [connection signal="mouse_exited" from="." to="." method="OnMouseExited"]
-[connection signal="timeout" from="WoodTimer" to="." method="OnFoodTimerTimeout"]
+[connection signal="timeout" from="WoodTimer" to="." method="OnWoodTimerTimeout"]

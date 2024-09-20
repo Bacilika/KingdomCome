@@ -146,6 +146,8 @@ public partial class GameMenu : Control
 			var gridPosition = _roadLayer.LocalToMap(GetGlobalMousePosition());
 			_roadPositions.Add(gridPosition);
 			_roadLayer.SetCellsTerrainConnect( _roadPositions, 0, 0);
+			GameMenu.Money -= _roadPrice;
+
 		}
 	}
 	

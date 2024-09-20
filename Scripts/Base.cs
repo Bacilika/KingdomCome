@@ -35,7 +35,9 @@ public partial class Base : Node2D
 
 	private void OnBackgroundMusicFinish()
 	{
+		_music.Seek(0);
 		_music.Play();
+		Console.WriteLine("Music");
 	}
 
 	private void OnEatFoodTimerTimedout()

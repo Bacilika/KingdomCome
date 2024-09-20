@@ -1,16 +1,17 @@
 [gd_scene load_steps=17 format=4 uid="uid://vcvlb4vnybwc"]
 
-[ext_resource type="Script" path="res://Scripts/GameCamera.cs" id="1_e6cpq"]
-[ext_resource type="Script" path="res://Scripts/Base.cs" id="1_ugl4q"]
-[ext_resource type="Texture2D" uid="uid://dfqs8hmb86hff" path="res://Art/Ground Tileset/Tileset_Ground.png" id="2_r5mi0"]
-[ext_resource type="Texture2D" uid="uid://c2hlx3kkqjc7h" path="res://Art/Water and Sand/Tileset_Water.png" id="3_o3hkr"]
-[ext_resource type="Texture2D" uid="uid://b7mydwstdxrtn" path="res://Art/Buildings/Atlas/Buildings.png" id="4_snug4"]
-[ext_resource type="Texture2D" uid="uid://bam6r0w1dcr7v" path="res://Sprites/Extra/Tileset_Road-export.png" id="5_iblko"]
-[ext_resource type="PackedScene" uid="uid://25kpv3trjyvk" path="res://Scenes/GameMenu.tscn" id="6_d7dld"]
+[ext_resource type="Script" path="res://Scripts/GameMap.cs" id="1_owh02"]
+[ext_resource type="Script" path="res://Scripts/GameCamera.cs" id="2_rjrjb"]
+[ext_resource type="Texture2D" uid="uid://dfqs8hmb86hff" path="res://Art/Ground Tileset/Tileset_Ground.png" id="3_ayklq"]
+[ext_resource type="Texture2D" uid="uid://c2hlx3kkqjc7h" path="res://Art/Water and Sand/Tileset_Water.png" id="4_rdbrl"]
+[ext_resource type="Texture2D" uid="uid://bam6r0w1dcr7v" path="res://Sprites/Extra/Tileset_Road-export.png" id="5_o0nfu"]
+[ext_resource type="Texture2D" uid="uid://b7mydwstdxrtn" path="res://Art/Buildings/Atlas/Buildings.png" id="6_o5c4n"]
+[ext_resource type="PackedScene" uid="uid://25kpv3trjyvk" path="res://Scenes/GameMenu.tscn" id="7_8oe3h"]
+[ext_resource type="PackedScene" uid="uid://cxe0cv5bgxbcc" path="res://Scenes/Forest.tscn" id="8_obv6i"]
 [ext_resource type="AudioStream" uid="uid://plht8nry2hu6" path="res://Audio/TavernMusic.mp3" id="8_2qw43"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_saoes"]
-texture = ExtResource("2_r5mi0")
+texture = ExtResource("3_ayklq")
 0:0/0 = 0
 0:0/0/terrain_set = 0
 0:0/0/terrain = 0
@@ -567,7 +568,7 @@ terrain_set_0/terrain_0/color = Color(0.139061, 0.216108, 1, 1)
 sources/0 = SubResource("TileSetAtlasSource_saoes")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rslsv"]
-texture = ExtResource("3_o3hkr")
+texture = ExtResource("4_rdbrl")
 0:0/0 = 0
 0:0/0/terrain_set = 0
 0:0/0/terrain = 0
@@ -1260,7 +1261,7 @@ terrain_set_0/terrain_1/color = Color(0.5, 0.4375, 0.25, 1)
 sources/0 = SubResource("TileSetAtlasSource_rslsv")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ylvdc"]
-texture = ExtResource("5_iblko")
+texture = ExtResource("5_o0nfu")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
 0:0/0/terrain_set = 0
@@ -2038,7 +2039,7 @@ terrain_set_0/terrain_0/color = Color(0.650203, 0.225219, 0, 1)
 sources/1 = SubResource("TileSetAtlasSource_ylvdc")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pw2yr"]
-texture = ExtResource("4_snug4")
+texture = ExtResource("6_o5c4n")
 1:0/size_in_atlas = Vector2i(7, 6)
 1:0/0 = 0
 1:7/size_in_atlas = Vector2i(10, 7)
@@ -2051,12 +2052,12 @@ texture = ExtResource("4_snug4")
 [sub_resource type="TileSet" id="TileSet_bpvrp"]
 sources/5 = SubResource("TileSetAtlasSource_pw2yr")
 
-[node name="Base" type="Node2D"]
+[node name="GameMap" type="Node2D"]
 y_sort_enabled = true
-script = ExtResource("1_ugl4q")
+script = ExtResource("1_owh02")
 
 [node name="GameCamera" type="Camera2D" parent="."]
-script = ExtResource("1_e6cpq")
+script = ExtResource("2_rjrjb")
 
 [node name="GrassLayer" type="TileMapLayer" parent="."]
 z_index = -1
@@ -2076,7 +2077,7 @@ rendering_quadrant_size = 32
 z_index = -1
 tile_set = SubResource("TileSet_bpvrp")
 
-[node name="GameMenu" parent="." instance=ExtResource("6_d7dld")]
+[node name="GameMenu" parent="." instance=ExtResource("7_8oe3h")]
 offset_right = 1280.0
 offset_bottom = 712.0
 
@@ -2087,6 +2088,9 @@ autostart = true
 [node name="DayTimer" type="Timer" parent="."]
 wait_time = 30.0
 autostart = true
+
+[node name="Forest" parent="." instance=ExtResource("8_obv6i")]
+position = Vector2(-728, -312)
 
 [node name="BackgroundMusic" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("8_2qw43")

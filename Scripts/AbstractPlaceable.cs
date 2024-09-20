@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 using Scripts.Constants;
 
 public abstract partial class AbstractPlaceable : Area2D
@@ -15,44 +16,63 @@ public abstract partial class AbstractPlaceable : Area2D
 	protected int Level;
 	private int _maxLevel = 2;
 	protected int Citizens;
-	protected Dictionary<String, List<int>> Upgrades; 
+	private CollisionShape2D _hitbox;
+	protected Dictionary<string, List<int>> Upgrades; 
 	protected AnimatedSprite2D AnimatedSprite;
+	private double _time;
 	
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		InfoBox = GetNode<PlaceableInfo>("PlaceableInfo");
-		InfoBox.Visible = false;
-		InfoBox.MoveToFront();
-		Monitoring = true;
-		_Ready_instance();
+		AnimatedSprite = GetNode<AnimatedSprite2D>("HouseSprite");
+		
 		InfoBox.Connect(PlaceableInfo.SignalName.OnDelete, Callable.From(OnDelete));
 		InfoBox.Connect(PlaceableInfo.SignalName.OnUpgrade, Callable.From(OnUpgrade));
-		AnimatedSprite = GetNode<AnimatedSprite2D>("HouseSprite");
+		Monitoring = true;
+		Monitorable = true;
+		InfoBox.Visible = false;
+		InfoBox.MoveToFront();
+		_Ready_instance();
+		SetObjectValues();
+		
 	}
 
-	public abstract void _Ready_instance();
+	public override void _Process(double delta)
+	{
+		if (!IsPlaced) return;
 
+		_time += delta;
+		if (_time > 1)
+		{
+			_time -= 1;
+			Tick();
+			
+		}
+		InfoBox.MoveToFront();
+		
+	}
+
+	protected abstract void Tick();
+
+	public abstract void _Ready_instance();
 	
 	public void OnMouseEntered()
 	{
 		if(IsPlaced)
 		{
-			//Console.WriteLine("Mouse Entered");
 			_isFocused = true;
 		}			
 	}
 	
 	public void OnMouseExited()
 	{
-		//Console.WriteLine("Mouse Exited");
 		_isFocused = false;
 	}
 	
 	public void OnAreaEntered(Area2D other)
 	{
-		//Console.WriteLine("Area Entered");
 		if(IsPlaced)
 		{
 			GameMenu.ContainHouse = true;
@@ -61,16 +81,8 @@ public abstract partial class AbstractPlaceable : Area2D
 	
 	public void OnAreaExited(Area2D other)
 	{
-		//Console.WriteLine("Area Exited");
 		GameMenu.ContainHouse = false;
 	}
-	
-	protected void FollowMouse()
-	{
-		Position = GetGlobalMousePosition();
-	}
-	
-	
 	
 	public int GetPrice()
 	{
@@ -81,16 +93,26 @@ public abstract partial class AbstractPlaceable : Area2D
 
 	public override void _Input(InputEvent @event)
 	{
-		if (_isFocused) //if mouse is on Building
+		if (@event.IsActionPressed(Inputs.LeftClick) && !GameMenu.IsPlaceMode)
 		{
-			if( @event.IsActionPressed(Inputs.LeftClick))
+			if (_isFocused) //if mouse is on Building
 			{
-				if (!GameMenu.IsPlaceMode)
+				InfoBox.Visible = !InfoBox.Visible;
+			}
+			else //if building is not focused
+			{
+				if (!InfoBox.Focused) //and infobox is not focused
 				{
-					InfoBox.Visible = !InfoBox.Visible;
+					InfoBox.Visible = false;
+				}
+				else
+				{
+					InfoBox.Focused = true;
 				}
 			}
 		}
+
+
 	}
 	protected abstract void OnDelete();
 
@@ -98,11 +120,59 @@ public abstract partial class AbstractPlaceable : Area2D
 	{
 		if (Level <_maxLevel && Upgrades["Cost"][Level] < GameMenu.Money)
 		{
-			Level++;
-			AnimatedSprite.Frame = Level;
-			Price = Upgrades["Cost"][Level];
-			GameMenu.Money -= Upgrades["Cost"][Level];
+			EnoughSpace();
 			Shop.placeAudio.Play();
+
 		}
+	}
+
+	private void ActivateHitbox(int level)
+	{
+		GD.Print("Activating hitbox for level: " + level);
+		foreach (var child in GetChildren())
+		{
+			if (child is CollisionShape2D shape2D)
+			{
+				if (shape2D.Name == "CollisionShape" + level)
+				{
+					shape2D.Disabled = false;
+					_hitbox = shape2D;
+				}
+				else
+				{
+					shape2D.Disabled = true;
+				}
+				shape2D.Visible = true;
+			}
+
+		}
+
+	}
+
+	protected void SetObjectValues()
+	{
+		AnimatedSprite.Frame = Level;
+		Price = Upgrades["Cost"][Level];
+		ActivateHitbox(Level);
+	}
+
+	private async void EnoughSpace()
+	{
+		ActivateHitbox(Level+1); //try with larger hitbox
+		await Task.Delay(100);
+		GD.Print( GetOverlappingAreas().Count);
+		if ( HasOverlappingAreas())
+		{ 
+			GD.Print("Collision when trying to upgrade");
+			ActivateHitbox(Level); //return to old hitbox
+		}
+		else
+		{
+			GD.Print("No collision, upgrading house");
+			Level++;
+			GameMenu.Money -= Upgrades["Cost"][Level];
+			SetObjectValues();
+		}
+		
 	}
 }

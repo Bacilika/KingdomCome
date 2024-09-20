@@ -27,29 +27,25 @@ public partial class FarmHouse : AbstractPlaceable
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		if (!IsPlaced)
-		{
-			FollowMouse(); 
-		}
-
-		else if (_timer.IsStopped() && Workers > 0) 
+		if (IsPlaced && _timer.IsStopped() && Workers > 0) 
 		{
 			_timer.Start();
 		}
-		else
-		{
-			if (Workers < Upgrades["MaxWorkers"][Level] && GameMenu.WorkingCitizens < GameMenu.Citizens)
-			{
-				if (habitantGrowth.RandiRange(0, _growth) ==0)
-				{
-					Workers++;
-					GameMenu.WorkingCitizens++;
-				}
-			}
-			UpdateInfo();
-		}
 	}
-	
+
+	protected override void Tick()
+	{
+		if (Workers < Upgrades["MaxWorkers"][Level] && GameMenu.WorkingCitizens < GameMenu.Citizens)
+		{
+			if (habitantGrowth.RandiRange(0, _growth) ==0)
+			{
+				Workers++;
+				GameMenu.WorkingCitizens++;
+			}
+		}
+		UpdateInfo();
+	}
+
 	protected override void OnDelete()
 	{
 		Console.WriteLine("On delete farmhouse");

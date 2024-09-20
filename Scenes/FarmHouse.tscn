@@ -40,7 +40,6 @@ shape = SubResource("RectangleShape2D_cews5")
 wait_time = 10.0
 
 [node name="PlaceableInfo" parent="." instance=ExtResource("3_ug2hv")]
-visible = false
 
 [connection signal="area_entered" from="." to="." method="OnAreaEntered"]
 [connection signal="area_exited" from="." to="." method="OnAreaExited"]

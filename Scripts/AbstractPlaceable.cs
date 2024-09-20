@@ -12,12 +12,13 @@ public abstract partial class AbstractPlaceable : Area2D
 	protected PlaceableInfo InfoBox;
 	protected int Price;
 	protected int Workers;
-	protected int Wood; 
-	protected int Level;
+	public int Level;
+	protected int WoodCost;
+	protected int StoneCost;
 	private int _maxLevel = 2;
 	protected int Citizens;
 	private CollisionShape2D _hitbox;
-	protected Dictionary<string, List<int>> Upgrades; 
+	public Dictionary<string, List<int>> Upgrades; 
 	protected AnimatedSprite2D AnimatedSprite;
 	private double _time;
 	
@@ -48,6 +49,7 @@ public abstract partial class AbstractPlaceable : Area2D
 		{
 			_time -= 1;
 			Tick();
+			Console.WriteLine("tick");
 			
 		}
 		InfoBox.MoveToFront();
@@ -90,6 +92,7 @@ public abstract partial class AbstractPlaceable : Area2D
 	}
 	
 	
+	
 
 	public override void _Input(InputEvent @event)
 	{
@@ -118,7 +121,8 @@ public abstract partial class AbstractPlaceable : Area2D
 
 	protected void OnUpgrade()
 	{
-		if (Level <_maxLevel && Upgrades["Cost"][Level] < GameMenu.Money)
+		if (Level <_maxLevel && Upgrades["WoodCost"][Level] < GameMenu.Wood
+							 && Upgrades["StoneCost"][Level] < GameMenu.Stone)
 		{
 			EnoughSpace();
 			Shop.placeAudio.Play();
@@ -170,7 +174,8 @@ public abstract partial class AbstractPlaceable : Area2D
 		{
 			GD.Print("No collision, upgrading house");
 			Level++;
-			GameMenu.Money -= Upgrades["Cost"][Level];
+			GameMenu.Stone -= Upgrades["Stone"][Level];
+			GameMenu.Wood -= Upgrades["Wood"][Level];
 			SetObjectValues();
 		}
 		

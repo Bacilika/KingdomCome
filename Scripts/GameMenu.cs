@@ -15,12 +15,12 @@ public partial class GameMenu : Control
 	public static bool IsPlaceMode;
 	public static bool RoadPlaceMode;
 	public static bool ContainHouse;
-	public static int Money = 500000;
+	public static int Money = 0;
 	public static int Citizens;
 	public static int Happiness;
 	public static int Food;
-	public static int Stone;
-	public static int Wood = 0;
+	public static int Stone = 20;
+	public static int Wood = 20;
 	public static int WorkingCitizens;
 	public static int Day = 0;
 	public static bool dragging;
@@ -91,12 +91,15 @@ public partial class GameMenu : Control
 			{
 				if (CanPlace())
 				{
-					Money -= _object.GetPrice();
+					//Money -= _object.GetPrice();
+					Wood -= _object.Upgrades["WoodCost"][_object.Level];
+					Stone -= _object.Upgrades["StoneCost"][_object.Level];
+					Console.WriteLine(_object.Upgrades["StoneCost"][_object.Level]);
+
 					var placedHouse = _object.Duplicate();
 					ContainHouse = true;
 					EmitSignal(SignalName.HousePlaced, placedHouse);
 					Shop.placeAudio.Play();
-					Console.WriteLine("Build building");
 				}
 			}
 		}
@@ -132,7 +135,9 @@ public partial class GameMenu : Control
 
 	private bool CanPlace()
 	{
-		return ContainHouse == false && _object.GetPrice() <= Money;
+		return ContainHouse == false && _object.Upgrades["WoodCost"][_object.Level] <= Wood
+									 && _object.Upgrades["StoneCost"][_object.Level] <= Stone;
+		//_object.GetPrice() <= Money;
 	}
 
 	private void BuildBuilding(AbstractPlaceable building)
@@ -151,7 +156,7 @@ public partial class GameMenu : Control
 			var gridPosition = _roadLayer.LocalToMap( GetGlobalMousePosition());
 			_roadPositions.Add(gridPosition);
 			_roadLayer.SetCellsTerrainConnect( _roadPositions, 0, 0);
-			GameMenu.Money -= _roadPrice;
+			Money -= _roadPrice;
 
 		}
 	}

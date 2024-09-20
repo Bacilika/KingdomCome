@@ -40,7 +40,6 @@ wait_time = 30.0
 sprite_frames = SubResource("SpriteFrames_wjt6n")
 
 [node name="PlaceableInfo" parent="." instance=ExtResource("3_llus8")]
-visible = false
 
 [connection signal="area_entered" from="." to="." method="OnAreaEntered"]
 [connection signal="area_exited" from="." to="." method="OnAreaExited"]

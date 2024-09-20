@@ -8,15 +8,15 @@ public partial class StoneMine : AbstractPlaceable
 	private int _growth = 100; // 1/_growth% chance to increase habitants by 1 each tick. 
 	private int _stone;
 	private RandomNumberGenerator stoneGrowth = new ();
-	private int _stoneGrowth = 500; // 1/_growth% chance to increase habitants by 1 each tick. 
+	private int _stoneGrowth = 300; // 1/_growth% chance to increase habitants by 1 each tick. 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready_instance()
 	{
-		Price = 15000;
 		Upgrades = new Dictionary<String, List<int>>
 		{
-			{"Cost", [5000, 3000, 3000]}, {"MaxWorkers", [5, 7, 10]}, {"Inhabitants", [5, 7, 10]}, {"WoodCost", [0, 0, 0]},
-			{"StoneCost", [0, 0, 0]}, {"MoneyBackOnDelete", [4000, 2000, 2000] }
+			{"Cost", [5000, 3000, 3000]}, {"MaxWorkers", [5, 7, 10]}, {"Inhabitants", [5, 7, 10]}, {"WoodCost", [2, 2, 2]},
+			{"StoneCost", [2, 2, 2]}, {"MoneyBackOnDelete", [4000, 2000, 2000] },{"WoodBackOnDelete", [3, 7, 15]},
+			{"StoneBackOnDelete", [3, 7, 15]}
 		};
 	}
 	
@@ -26,15 +26,13 @@ public partial class StoneMine : AbstractPlaceable
 		Console.WriteLine("On delete stonemine");
 		GameMenu.WorkingCitizens -= Workers;
 		QueueFree();
-		GameMenu.Money += Upgrades["MoneyBackOnDelete"][Level];
+		//GameMenu.Money += Upgrades["MoneyBackOnDelete"][Level];
+		GameMenu.Wood += Upgrades["WoodBackOnDelete"][Level];
+		GameMenu.Stone += Upgrades["StoneBackOnDelete"][Level];
 
 	}
 	
 	
-	public override void _Process(double delta)
-	{
-		
-	}
 
 	protected override void Tick()
 	{

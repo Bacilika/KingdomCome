@@ -9,7 +9,6 @@ public partial class HunterLodge : AbstractPlaceable
 	private RandomNumberGenerator foodGrowth = new ();
 	private int _growth = 500;// 1/_growth% chance to increase habitants by 1 each tick. 
 	private int _food;
-	private bool _timerTimedOut = false;
 	private Timer _timer; 
 	
 	// Called when the node enters the scene tree for the first time.
@@ -19,8 +18,8 @@ public partial class HunterLodge : AbstractPlaceable
 		Price = 20000;
 		Upgrades = new Dictionary<String, List<int>>
 		{
-			{"Cost", [5000, 3000, 3000]}, {"MaxWorkers", [5, 7, 10]}, {"Inhabitants", [5, 7, 10]}, {"WoodCost", [0, 0, 0]},
-			{"StoneCost", [0, 0, 0]}, {"MoneyBackOnDelete", [4000, 2000, 2000] }
+			{"Cost", [5000, 3000, 3000]}, {"MaxWorkers", [5, 7, 10]}, {"Inhabitants", [5, 7, 10]}, {"WoodCost", [1, 1, 1]},
+			{"StoneCost", [1, 1, 1]}, {"MoneyBackOnDelete", [4000, 2000, 2000] }
 		};
 	}
 
@@ -49,7 +48,9 @@ public partial class HunterLodge : AbstractPlaceable
 	protected override void OnDelete()
 	{
 		GameMenu.WorkingCitizens -= Workers;
-		GameMenu.Money += Upgrades["MoneyBackOnDelete"][Level];
+		//GameMenu.Money += Upgrades["MoneyBackOnDelete"][Level];
+		GameMenu.Wood += Upgrades["WoodBackOnDelete"][Level];
+		GameMenu.Stone += Upgrades["StoneBackOnDelete"][Level];
 		QueueFree();
 	}
 	

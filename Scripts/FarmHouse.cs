@@ -19,8 +19,9 @@ public partial class FarmHouse : AbstractPlaceable
 		Price = 20000;
 		Upgrades = new Dictionary<String, List<int>>
 		{
-			{"Cost", [5000, 3000, 3000]}, {"MaxWorkers", [5, 7, 10]}, {"Inhabitants", [5, 7, 10]}, {"WoodCost", [0, 0, 0]},
-			{"StoneCost", [0, 0, 0]}, {"MoneyBackOnDelete", [4000, 2000, 2000] }
+			{"Cost", [5000, 3000, 3000]}, {"MaxWorkers", [5, 7, 10]}, {"Inhabitants", [5, 7, 10]}, {"WoodCost", [20, 40, 100]},
+			{"StoneCost", [40, 100, 100]}, {"MoneyBackOnDelete", [4000, 2000, 2000] },{"WoodBackOnDelete", [3, 7, 15]},
+			{"StoneBackOnDelete", [3, 7, 15]}
 		};
 	}
 
@@ -51,9 +52,9 @@ public partial class FarmHouse : AbstractPlaceable
 		Console.WriteLine("On delete farmhouse");
 		GameMenu.WorkingCitizens -= Workers;
 		QueueFree();
-		GameMenu.Money += Upgrades["MoneyBackOnDelete"][Level];
-
-	}
+		//GameMenu.Money += Upgrades["MoneyBackOnDelete"][Level];
+		GameMenu.Wood += Upgrades["WoodBackOnDelete"][Level];
+		GameMenu.Stone += Upgrades["StoneBackOnDelete"][Level];	}
 
 
 	public void OnFoodTimerTimeout()

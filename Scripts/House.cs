@@ -18,9 +18,11 @@ public partial class House : AbstractPlaceable
 			{ "Cost", [5000, 3000, 3000] }, 
 			{ "MaxInhabitants", [5, 7, 10] },
 			{ "Workers", [5, 7, 10] },
-			{ "WoodCost", [0, 0, 0] },
-			{ "StoneCost", [0, 0, 0]}, 
+			{ "WoodCost", [5, 7, 10] },
+			{ "StoneCost", [5, 7, 10]}, 
 			{"MoneyBackOnDelete", [4000, 2000, 2000] },
+			{"WoodBackOnDelete", [3, 7, 15]},
+			{"StoneBackOnDelete", [3, 7, 15]}
 		};
 	}
 	
@@ -28,8 +30,10 @@ public partial class House : AbstractPlaceable
 	{
 		GameMenu.Citizens-= Citizens;
 		QueueFree();
-		GameMenu.Money += Upgrades["MoneyBackOnDelete"][Level];
-	}
+		//GameMenu.Money += Upgrades["MoneyBackOnDelete"][Level];
+		GameMenu.Wood += Upgrades["WoodBackOnDelete"][Level];
+		GameMenu.Stone += Upgrades["StoneBackOnDelete"][Level];	}
+	
 	protected override void Tick()
 	{
 		if (Citizens < Upgrades["MaxInhabitants"][Level])

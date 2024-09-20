@@ -9,6 +9,7 @@ public partial class Shop : Control
 	private Godot.Collections.Dictionary<string, PackedScene> _shopItems;
 	// Called when the node enters the scene tree for the first time.
 	private GridContainer _buildButtons;
+	public static AudioStreamPlayer2D placeAudio;
 
 	[Signal]
 	public delegate void OnBuildingButtonPressedEventHandler(AbstractPlaceable type);
@@ -21,8 +22,8 @@ public partial class Shop : Control
 			{ "House", ResourceLoader.Load<PackedScene>("res://Scenes/House.tscn") },
 			{"FarmHouse", ResourceLoader.Load<PackedScene>("res://Scenes/FarmHouse.tscn")},
 			{"StoneMine", ResourceLoader.Load<PackedScene>("res://Scenes/StoneMine.tscn")},
-			{"HunterLodge", ResourceLoader.Load<PackedScene>("res://Scenes/HunterLodge.tscn")}
-
+			{"HunterLodge", ResourceLoader.Load<PackedScene>("res://Scenes/HunterLodge.tscn")},
+			{"WoodCutter", ResourceLoader.Load<PackedScene>("res://Scenes/WoodCutter.tscn")}
 		};
 		_buildButtons = GetNode<GridContainer>("BuildTabButtons");
 		var house = GetNode<Button>("BuildTabButtons/Houses/ShopItemNode/HouseButton");
@@ -35,7 +36,10 @@ public partial class Shop : Control
 		road.Connect(Signals.Pressed, Callable.From(() => {OnBuildButtonPressed("Road","BuildTabButtons/Roads/ShopItemNode/RoadButton"); }));
 		var huntersLodge = GetNode<Button>("BuildTabButtons/Production/ShopItemNode/HuntingButton");
 		huntersLodge.Connect(Signals.Pressed, Callable.From(() => {OnBuildButtonPressed("HunterLodge","BuildTabButtons/Production/ShopItemNode/HuntingButton"); }));
-		
+		var woodCutter = GetNode<Button>("BuildTabButtons/Production/ShopItemNode/WoodButton");
+		woodCutter.Connect(Signals.Pressed, Callable.From(() => {OnBuildButtonPressed("WoodCutter","BuildTabButtons/Production/ShopItemNode/WoodButton"); }));
+
+		placeAudio = GetNode<AudioStreamPlayer2D>("PlaceBuildingAudio");
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -71,5 +75,7 @@ public partial class Shop : Control
 		}
 		var house = _shopItems[type].Instantiate<AbstractPlaceable>();
 		EmitSignal(SignalName.OnBuildingButtonPressed, house);
+		
+		
 	}
 }

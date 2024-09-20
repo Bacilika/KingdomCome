@@ -20,6 +20,7 @@ public partial class GameMenu : Control
 	public static int Happiness;
 	public static int Food;
 	public static int Stone;
+	public static int Wood = 0;
 	public static int WorkingCitizens;
 	public static int Day = 0;
 	public static bool dragging;
@@ -48,7 +49,8 @@ public partial class GameMenu : Control
 			{"citizens", statLabels.GetNode<Label>("Citizens") },
 			{"stone",statLabels.GetNode<Label>("Stone")}, 
 			{"happiness",statLabels.GetNode<Label>("Happiness")},
-			{"day",statLabels.GetNode<Label>("Day")}
+			{"day",statLabels.GetNode<Label>("Day")},
+			{"wood",statLabels.GetNode<Label>("Wood")}
 		};
 		_roadLayer = GetNode<TileMapLayer>("../RoadLayer");
 		var shop = GetNode<Shop>("MenuCanvasLayer/Container/Shop");
@@ -93,6 +95,8 @@ public partial class GameMenu : Control
 					var placedHouse = _object.Duplicate();
 					ContainHouse = true;
 					EmitSignal(SignalName.HousePlaced, placedHouse);
+					Shop.placeAudio.Play();
+					Console.WriteLine("Build building");
 				}
 			}
 		}
@@ -123,7 +127,7 @@ public partial class GameMenu : Control
 		_gameStatLabels["food"].Text = "Food: " + Food;
 		_gameStatLabels["stone"].Text = "Stone: " + Stone;
 		_gameStatLabels["day"].Text = "Day: " + Day;
-		
+		_gameStatLabels["wood"].Text = "Wood: " + Wood;
 	}
 
 	private bool CanPlace()
@@ -147,6 +151,8 @@ public partial class GameMenu : Control
 			var gridPosition = _roadLayer.LocalToMap( GetGlobalMousePosition());
 			_roadPositions.Add(gridPosition);
 			_roadLayer.SetCellsTerrainConnect( _roadPositions, 0, 0);
+			GameMenu.Money -= _roadPrice;
+
 		}
 	}
 	

@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://b7mydwstdxrtn" path="res://Art/Buildings/Atlas/Buildings.png" id="6_o5c4n"]
 [ext_resource type="PackedScene" uid="uid://25kpv3trjyvk" path="res://Scenes/GameMenu.tscn" id="7_8oe3h"]
 [ext_resource type="PackedScene" uid="uid://cxe0cv5bgxbcc" path="res://Scenes/Forest.tscn" id="8_obv6i"]
+[ext_resource type="AudioStream" uid="uid://plht8nry2hu6" path="res://Audio/TavernMusic.mp3" id="8_2qw43"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_saoes"]
 texture = ExtResource("3_ayklq")
@@ -2091,5 +2092,9 @@ autostart = true
 [node name="Forest" parent="." instance=ExtResource("8_obv6i")]
 position = Vector2(-728, -312)
 
+[node name="BackgroundMusic" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_2qw43")
+
 [connection signal="timeout" from="EatFoodTimer" to="." method="OnEatFoodTimerTimedout"]
 [connection signal="timeout" from="DayTimer" to="." method="OnDayTimerTimeout"]
+[connection signal="finished" from="BackgroundMusic" to="." method="OnBackgroundMusicFinish"]

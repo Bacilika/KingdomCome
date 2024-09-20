@@ -6,9 +6,8 @@
 [node name="PlaceableInfo" type="Control"]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 200.0
+offset_right = 208.0
 offset_bottom = 184.0
-mouse_filter = 2
 script = ExtResource("1_snswj")
 
 [node name="InfoBox" type="TextureRect" parent="."]
@@ -21,8 +20,8 @@ texture = ExtResource("1_1dfka")
 [node name="RichTextLabel" type="RichTextLabel" parent="InfoBox"]
 layout_mode = 0
 offset_left = 8.0
-offset_top = 6.0
-offset_right = 201.0
+offset_top = 8.0
+offset_right = 200.0
 offset_bottom = 176.0
 mouse_filter = 2
 theme_override_colors/default_color = Color(0, 0, 0, 1)
@@ -43,5 +42,11 @@ offset_right = 92.0
 offset_bottom = 171.0
 text = "Upgrade"
 
+[connection signal="mouse_entered" from="." to="." method="OnMouseEntered"]
+[connection signal="mouse_exited" from="." to="." method="OnMouseExited"]
+[connection signal="mouse_entered" from="InfoBox/DeleteButton" to="." method="OnMouseEntered"]
+[connection signal="mouse_exited" from="InfoBox/DeleteButton" to="." method="OnMouseExited"]
 [connection signal="pressed" from="InfoBox/DeleteButton" to="." method="OnDeleteButtonPressed"]
+[connection signal="mouse_entered" from="InfoBox/UpgradeButton" to="." method="OnMouseEntered"]
+[connection signal="mouse_exited" from="InfoBox/UpgradeButton" to="." method="OnMouseExited"]
 [connection signal="pressed" from="InfoBox/UpgradeButton" to="." method="OnUpgradeButtonPressed"]

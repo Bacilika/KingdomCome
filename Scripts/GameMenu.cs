@@ -15,7 +15,7 @@ public partial class GameMenu : Control
 	public static bool IsPlaceMode;
 	public static bool RoadPlaceMode;
 	public static bool ContainHouse;
-	public static int Money = 50000;
+	public static int Money = 500000;
 	public static int Citizens;
 	public static int Happiness;
 	public static int Food;
@@ -38,7 +38,6 @@ public partial class GameMenu : Control
 	
 	public override void _Ready()
 	{
-		
 		var currentScale = (Vector2)GetTree().Root.Size / GetTree().Root.MinSize;
 		var container = GetNode<Control>("MenuCanvasLayer/Container");
 		container.Scale = currentScale;
@@ -66,6 +65,11 @@ public partial class GameMenu : Control
 		{
 			PlaceRoad();
 		}
+
+		if (_object is not null)
+		{
+			_object.Position = GetGlobalMousePosition();
+		}
 	}
 
 	private void OnRoadBuild()
@@ -75,7 +79,6 @@ public partial class GameMenu : Control
 		_roadObject = _roadScene.Instantiate<Road>();
 		GetParent().AddChild(_roadObject);
 	}
-	
 
 	public override void _Input(InputEvent @event)
 	{
@@ -141,7 +144,7 @@ public partial class GameMenu : Control
 	{
 		if (CanPlaceRoad())
 		{
-			var gridPosition = _roadLayer.LocalToMap(GetGlobalMousePosition());
+			var gridPosition = _roadLayer.LocalToMap( GetGlobalMousePosition());
 			_roadPositions.Add(gridPosition);
 			_roadLayer.SetCellsTerrainConnect( _roadPositions, 0, 0);
 		}

@@ -33,29 +33,26 @@ public partial class StoneMine : AbstractPlaceable
 	
 	public override void _Process(double delta)
 	{
-		if (!IsPlaced)
-		{
-			FollowMouse(); 
-		}
-		else
-		{
-			if (Workers < Upgrades["MaxWorkers"][Level] && GameMenu.WorkingCitizens < GameMenu.Citizens)
-			{
-				if (habitantGrowth.RandiRange(0, _growth) ==0)
-				{
-					Workers++;
-					GameMenu.WorkingCitizens++; 
-				}
-			}
-			if (stoneGrowth.RandiRange(0, _stoneGrowth) == 0 && Workers > 0)
-			{
-				_stone++;
-				GameMenu.Stone++;
-			}
-			
-			UpdateInfo();
-		}
 		
+	}
+
+	protected override void Tick()
+	{
+		if (Workers < Upgrades["MaxWorkers"][Level] && GameMenu.WorkingCitizens < GameMenu.Citizens)
+		{
+			if (habitantGrowth.RandiRange(0, _growth) ==0)
+			{
+				Workers++;
+				GameMenu.WorkingCitizens++; 
+			}
+		}
+		if (stoneGrowth.RandiRange(0, _stoneGrowth) == 0 && Workers > 0)
+		{
+			_stone++;
+			GameMenu.Stone++;
+		}
+			
+		UpdateInfo();
 	}
 
 	public void UpdateInfo()

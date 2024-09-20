@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cx5dug5bljx7r"]
+[gd_scene load_steps=10 format=3 uid="uid://cx5dug5bljx7r"]
 
 [ext_resource type="Script" path="res://Scripts/House.cs" id="1_y1wo4"]
 [ext_resource type="Texture2D" uid="uid://17gjb7osbvni" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/House_Hay_Stone_1.png" id="3_4a08c"]
@@ -24,7 +24,13 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r3tpq"]
-size = Vector2(85, 89)
+size = Vector2(88, 96)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ijjqg"]
+size = Vector2(160, 112)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ecvay"]
+size = Vector2(176, 128)
 
 [node name="House" type="Area2D"]
 physics_interpolation_mode = 2
@@ -34,16 +40,19 @@ script = ExtResource("1_y1wo4")
 sprite_frames = SubResource("SpriteFrames_fiu42")
 frame_progress = 0.335059
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-1.5, 0.5)
+[node name="CollisionShape0" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 0)
 shape = SubResource("RectangleShape2D_r3tpq")
 
+[node name="CollisionShape1" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_ijjqg")
+disabled = true
+
+[node name="CollisionShape2" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_ecvay")
+disabled = true
+
 [node name="PlaceableInfo" parent="." instance=ExtResource("3_avs7j")]
-visible = false
-offset_left = 16.0
-offset_top = -192.0
-offset_right = 16.0
-offset_bottom = -192.0
 
 [connection signal="area_entered" from="." to="." method="OnAreaEntered"]
 [connection signal="area_exited" from="." to="." method="OnAreaExited"]

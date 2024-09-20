@@ -3,19 +3,12 @@ using System;
 
 public partial class PlaceableInfo : Control
 {
-	// Called when the node enters the scene tree for the first time.
-
+	
 	public bool Focused; 
 	[Signal]
 	public delegate void OnDeleteEventHandler();
-	
 	[Signal]
 	public delegate void OnUpgradeEventHandler();
-	public override void _Ready()
-	{
-	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
 	}
@@ -33,6 +26,16 @@ public partial class PlaceableInfo : Control
 	{
 		EmitSignal(SignalName.OnUpgrade);
 
+	}
+
+	private void OnMouseEntered()
+	{
+		Focused = true;
+	}
+	private void OnMouseExited()
+	{
+		Focused = false;
+		
 	}
 	
 

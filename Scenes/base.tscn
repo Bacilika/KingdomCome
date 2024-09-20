@@ -2050,7 +2050,7 @@ texture = ExtResource("4_snug4")
 [sub_resource type="TileSet" id="TileSet_bpvrp"]
 sources/5 = SubResource("TileSetAtlasSource_pw2yr")
 
-[node name="Base" type="Node2D"]
+[node name="GameMap" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_ugl4q")
 

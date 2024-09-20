@@ -67,12 +67,13 @@ collision_enabled = false
 
 [node name="GameStats" type="GridContainer" parent="MenuCanvasLayer/Container"]
 layout_mode = 2
-offset_left = 16.0
-offset_top = -66.0
-offset_right = 156.0
-offset_bottom = 111.0
+offset_left = 18.0
+offset_top = 38.0
+offset_right = 474.0
+offset_bottom = 98.0
 theme_override_constants/h_separation = 40
 theme_override_constants/v_separation = 7
+columns = 4
 
 [node name="Food" type="Label" parent="MenuCanvasLayer/Container/GameStats"]
 layout_mode = 2
@@ -110,6 +111,12 @@ size_flags_horizontal = 0
 theme_override_fonts/font = ExtResource("3_d13wb")
 theme_override_font_sizes/font_size = 19
 text = "Day: 0"
+
+[node name="Wood" type="Label" parent="MenuCanvasLayer/Container/GameStats"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_d13wb")
+theme_override_font_sizes/font_size = 19
+text = "Wood: 0"
 
 [node name="Shop" parent="MenuCanvasLayer/Container" instance=ExtResource("4_nmxg4")]
 offset_left = 1260.0

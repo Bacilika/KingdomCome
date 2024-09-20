@@ -11,6 +11,7 @@ public abstract partial class AbstractPlaceable : Area2D
 	protected PlaceableInfo InfoBox;
 	protected int Price;
 	protected int Workers;
+	protected int Wood; 
 	protected int Level;
 	private int _maxLevel = 2;
 	protected int Citizens;

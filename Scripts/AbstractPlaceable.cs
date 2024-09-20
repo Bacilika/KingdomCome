@@ -174,8 +174,8 @@ public abstract partial class AbstractPlaceable : Area2D
 		{
 			GD.Print("No collision, upgrading house");
 			Level++;
-			GameMenu.Stone -= Upgrades["Stone"][Level];
-			GameMenu.Wood -= Upgrades["Wood"][Level];
+			GameMenu.Stone -= Upgrades["StoneCost"][Level];
+			GameMenu.Wood -= Upgrades["WoodCost"][Level];
 			SetObjectValues();
 		}
 		

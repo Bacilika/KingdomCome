@@ -7,6 +7,7 @@ public partial class Base : Node2D
 	private int hungry;
 	private Timer _foodTimer; 
 	private Timer _dayTimer;
+	private AudioStreamPlayer2D _music;
 	
 	public override void _Ready()
 	{
@@ -17,20 +18,24 @@ public partial class Base : Node2D
 		_dayTimer.Start();
 		var gameMenu = GetNode<GameMenu>("GameMenu");
 		gameMenu.HousePlaced += PlaceHouse;
-		var music = GetNode<AudioStreamPlayer2D>("BackgroundMusic");
-		music.Play();
+		_music = GetNode<AudioStreamPlayer2D>("BackgroundMusic");
+		_music.Play();
 
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{	
-		if (GameMenu.Food > 0)
+		if (GameMenu.Food > 0 && GameMenu.Citizens > 0)
 		{
 			_foodTimer.Start();
 			hungry = 0;
-
 		}
+	}
+
+	private void OnBackgroundMusicFinish()
+	{
+		_music.Play();
 	}
 
 	private void OnEatFoodTimerTimedout()

@@ -22,7 +22,7 @@ public partial class MainMenu : Control
 
 	public void OnStartGamePressed()
 	{
-		GetTree().ChangeSceneToFile("res://Scenes/base.tscn");
+		GetTree().ChangeSceneToFile("res://Scenes/GameMap.tscn");
 		Console.WriteLine("start");
 	}
 	public void OnQuitPressed()

@@ -157,11 +157,11 @@ public abstract partial class AbstractPlaceable : Area2D
 	private async void EnoughSpace()
 	{
 		ActivateHitbox(Level+1); //try with larger hitbox
-		_= await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
-		
+		await Task.Delay(100);
 		GD.Print( GetOverlappingAreas().Count);
-		if ( GetOverlappingAreas().Count > 0)
-		{ GD.Print("Collision when trying to upgrade");
+		if ( HasOverlappingAreas())
+		{ 
+			GD.Print("Collision when trying to upgrade");
 			ActivateHitbox(Level); //return to old hitbox
 		}
 		else

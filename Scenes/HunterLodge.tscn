@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://c471nqu3aeebi" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/WatchTower_Wood_Stone_1.png" id="5_jld3l"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cews5"]
-size = Vector2(154, 108)
+size = Vector2(67, 139)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_wjt6n"]
 animations = [{
@@ -29,15 +29,23 @@ animations = [{
 [node name="HunterLodge" type="Area2D"]
 script = ExtResource("1_6cilf")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-1, -1)
+[node name="CollisionShape0" type="CollisionShape2D" parent="."]
+position = Vector2(-1.5, 3.5)
 shape = SubResource("RectangleShape2D_cews5")
 
 [node name="FoodTimer" type="Timer" parent="."]
 wait_time = 30.0
+autostart = true
 
 [node name="HouseSprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_wjt6n")
+
+[node name="CollisionShape1" type="CollisionShape2D" parent="."]
+position = Vector2(-2, -2)
+shape = SubResource("RectangleShape2D_cews5")
+
+[node name="CollisionShape2" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_cews5")
 
 [node name="PlaceableInfo" parent="." instance=ExtResource("3_llus8")]
 

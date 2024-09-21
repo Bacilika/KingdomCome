@@ -24,20 +24,30 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cews5"]
-size = Vector2(154, 108)
+size = Vector2(87, 112)
 
 [node name="FarmHouse" type="Area2D"]
 script = ExtResource("1_36o5k")
 
 [node name="HouseSprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_gy8eo")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-1, -1)
-shape = SubResource("RectangleShape2D_cews5")
+frame = 1
+frame_progress = 0.7408
 
 [node name="FoodTimer" type="Timer" parent="."]
 wait_time = 10.0
+
+[node name="CollisionShape1" type="CollisionShape2D" parent="."]
+position = Vector2(-10.5, 2)
+shape = SubResource("RectangleShape2D_cews5")
+
+[node name="CollisionShape2" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, 2)
+shape = SubResource("RectangleShape2D_cews5")
+
+[node name="CollisionShape0" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_cews5")
 
 [node name="PlaceableInfo" parent="." instance=ExtResource("3_ug2hv")]
 

@@ -5,10 +5,10 @@ using System.Collections.Generic;
 public partial class StoneMine : AbstractPlaceable
 {
 	private RandomNumberGenerator habitantGrowth = new ();
-	private int _growth = 100; // 1/_growth% chance to increase habitants by 1 each tick. 
+	private int _growth = 2; // 1/_growth% chance to increase habitants by 1 each tick. 
 	private int _stone;
 	private RandomNumberGenerator stoneGrowth = new ();
-	private int _stoneGrowth = 300; // 1/_growth% chance to increase habitants by 1 each tick. 
+	private int _stoneGrowth = 10; // 1/_growth% chance to increase habitants by 1 each tick. 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready_instance()
 	{
@@ -36,8 +36,10 @@ public partial class StoneMine : AbstractPlaceable
 
 	protected override void Tick()
 	{
+
 		if (Workers < Upgrades["MaxWorkers"][Level] && GameMenu.WorkingCitizens < GameMenu.Citizens)
 		{
+
 			if (habitantGrowth.RandiRange(0, _growth) ==0)
 			{
 				Workers++;

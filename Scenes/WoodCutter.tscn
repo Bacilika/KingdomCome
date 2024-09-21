@@ -24,7 +24,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cews5"]
-size = Vector2(90, 91)
+size = Vector2(153, 108.5)
 
 [node name="WoodCutter" type="Area2D"]
 script = ExtResource("1_a236h")
@@ -32,12 +32,20 @@ script = ExtResource("1_a236h")
 [node name="HouseSprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_gy8eo")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape0" type="CollisionShape2D" parent="."]
 position = Vector2(1, 1.5)
 shape = SubResource("RectangleShape2D_cews5")
 
 [node name="WoodTimer" type="Timer" parent="."]
 wait_time = 10.0
+
+[node name="CollisionShape1" type="CollisionShape2D" parent="."]
+position = Vector2(2, 0.5)
+shape = SubResource("RectangleShape2D_cews5")
+
+[node name="CollisionShape2" type="CollisionShape2D" parent="."]
+position = Vector2(-1.5, 2.75)
+shape = SubResource("RectangleShape2D_cews5")
 
 [node name="PlaceableInfo" parent="." instance=ExtResource("5_h81m2")]
 visible = false

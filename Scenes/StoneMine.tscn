@@ -7,8 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://c2em0yxe3sv6d" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Rocks/Rock_Brown_10.png" id="5_vdxdq"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4rn2q"]
-radius = 16.0
-height = 52.0
+radius = 18.0
+height = 58.0
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_q3bpt"]
 animations = [{
@@ -42,11 +42,11 @@ frame = 2
 frame_progress = 0.824811
 
 [node name="CollisionShape2" type="CollisionShape2D" parent="."]
-visible = false
-position = Vector2(1, 1)
+position = Vector2(1, 6)
 shape = SubResource("CapsuleShape2D_4rn2q")
 
 [node name="CollisionShape1" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(2, 6)
 shape = SubResource("CapsuleShape2D_4rn2q")
 

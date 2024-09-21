@@ -11,7 +11,7 @@ public abstract partial class AbstractPlaceable : Area2D
 	private bool _isFocused;
 	protected PlaceableInfo InfoBox;
 	protected int Price;
-	protected int Workers;
+	protected int Workers =0;
 	public int Level;
 	protected int WoodCost;
 	protected int StoneCost;
@@ -49,7 +49,6 @@ public abstract partial class AbstractPlaceable : Area2D
 		{
 			_time -= 1;
 			Tick();
-			Console.WriteLine("tick");
 			
 		}
 		InfoBox.MoveToFront();

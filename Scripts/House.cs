@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.IO.Pipes;
 
 public partial class House : AbstractPlaceable
 {
@@ -51,6 +52,6 @@ public partial class House : AbstractPlaceable
 	public void UpdateInfo()
 	{
 		var textLabel = (RichTextLabel) InfoBox.GetChild(0).GetChild(0);
-		textLabel.Text = "Citizens: " + Citizens + "/" +MaxHabitants ;
+		textLabel.Text = "Citizens: " + Citizens + "/" +Upgrades["MaxInhabitants"][Level] ;
 	}
 }

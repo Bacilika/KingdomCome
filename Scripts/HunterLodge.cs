@@ -30,6 +30,10 @@ public partial class HunterLodge : AbstractPlaceable
 	{
 		if (Workers < Upgrades["MaxWorkers"][Level] && GameMenu.WorkingCitizens < GameMenu.Citizens)
 		{
+			if (_timer.IsStopped())
+			{
+				_timer.Start();
+			}
 
 			if (habitantGrowth.RandiRange(0, _growth) ==0)
 			{

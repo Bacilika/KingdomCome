@@ -14,6 +14,7 @@ public partial class WoodCutter : AbstractPlaceable{
 	{
 		_timer = GetNode<Timer>("WoodTimer");
 		Price = 20000;
+
 		Upgrades = new Dictionary<String, List<int>>
 		{
 			{"Cost", [5000, 3000, 3000]}, {"MaxWorkers", [5, 7, 10]}, {"Inhabitants", [0,0,0]}, {"WoodCost", [5, 10, 20]},
@@ -26,6 +27,10 @@ public partial class WoodCutter : AbstractPlaceable{
 	{
 		if (Workers < Upgrades["MaxWorkers"][Level] && GameMenu.WorkingCitizens < GameMenu.Citizens)
 		{
+			if (_timer.IsStopped())
+			{
+				_timer.Start();
+			}
 			if (habitantGrowth.RandiRange(0, _growth) ==0)
 			{
 				Workers++;
@@ -35,14 +40,6 @@ public partial class WoodCutter : AbstractPlaceable{
 		UpdateInfo();
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-		if (IsPlaced && _timer.IsStopped() && Workers > 0) 
-		{
-			_timer.Start();
-		}
-	}
 	
 
 	
@@ -68,6 +65,6 @@ public partial class WoodCutter : AbstractPlaceable{
 	public void UpdateInfo()
 	{
 		var textLabel = (RichTextLabel) InfoBox.GetChild(0).GetChild(0);
-		textLabel.Text = "Wood: " + GameMenu.Wood;
+		textLabel.Text = "Workers: " + Workers;
 	}
 }

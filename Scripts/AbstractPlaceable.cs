@@ -43,7 +43,6 @@ public abstract partial class AbstractPlaceable : Area2D
 	public override void _Process(double delta)
 	{
 		if (!IsPlaced) return;
-
 		_time += delta;
 		if (_time > 1)
 		{
@@ -147,9 +146,7 @@ public abstract partial class AbstractPlaceable : Area2D
 				}
 				shape2D.Visible = true;
 			}
-
 		}
-
 	}
 
 	protected void SetObjectValues()

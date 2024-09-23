@@ -7,8 +7,7 @@ public partial class House : AbstractPlaceable
 {
 	private RandomNumberGenerator habitantGrowth = new ();
 	private int _growth = 5; // 1/_growth% chance to increase habitants by 1 each tick. 
-	private const int MaxHabitants = 5;
-	
+	private Npc Npc;	
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready_instance()
@@ -25,6 +24,11 @@ public partial class House : AbstractPlaceable
 			{"WoodBackOnDelete", [3, 7, 15]},
 			{"StoneBackOnDelete", [3, 7, 15]}
 		};
+	}
+
+	public Npc GetNpc()
+	{
+		return Npc;
 	}
 	
 	protected override void OnDelete()

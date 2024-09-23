@@ -10,10 +10,10 @@ public partial class Npc : RigidBody2D
 	public override void _Ready()
 	{
 		Console.WriteLine("Npc Ready");
-		_home = GetNode<AbstractPlaceable>("Home");
+		_home = GetNode<AbstractPlaceable>("House");
 		_navigation = GetNode<NavigationAgent2D>("NavigationAgent2D");
 		Position = _home.GlobalPosition;
-		//_navigation.TargetPosition = 
+		_navigation.TargetPosition = GetNode<StoneMine>("res://Scenes/StoneMine.tscn").GlobalPosition;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

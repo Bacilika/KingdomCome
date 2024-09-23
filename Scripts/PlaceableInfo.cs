@@ -9,6 +9,8 @@ public partial class PlaceableInfo : Control
 	public delegate void OnDeleteEventHandler();
 	[Signal]
 	public delegate void OnUpgradeEventHandler();
+	[Signal]
+	public delegate void OnMoveEventHandler();
 	public override void _Process(double delta)
 	{
 	}
@@ -25,7 +27,11 @@ public partial class PlaceableInfo : Control
 	public void OnUpgradeButtonPressed()
 	{
 		EmitSignal(SignalName.OnUpgrade);
-
+	}
+	
+	public void OnMoveButtonPressed()
+	{
+		EmitSignal(SignalName.OnMove);
 	}
 
 	private void OnMouseEntered()

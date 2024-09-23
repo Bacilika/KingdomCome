@@ -21,7 +21,8 @@ public partial class FarmHouse : AbstractPlaceable
 		{
 			{"Cost", [5000, 3000, 3000]}, {"MaxWorkers", [5, 7, 10]}, {"Inhabitants", [5, 7, 10]}, {"WoodCost", [20, 40, 100]},
 			{"StoneCost", [40, 100, 100]}, {"MoneyBackOnDelete", [4000, 2000, 2000] },{"WoodBackOnDelete", [3, 7, 15]},
-			{"StoneBackOnDelete", [3, 7, 15]}
+			{"StoneBackOnDelete", [3, 7, 15]}, {"WoodMoveCost", [2, 5, 10]},
+			{"StoneMoveCost", [2, 5, 10]}
 		};
 	}
 

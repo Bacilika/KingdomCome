@@ -21,7 +21,8 @@ public partial class HunterLodge : AbstractPlaceable
 		{
 			{"Cost", [5000, 3000, 3000]}, {"MaxWorkers", [5, 7, 10]}, {"Inhabitants", [0, 0, 0]}, {"WoodCost", [1, 1, 1]},
 			{"StoneCost", [1, 1, 1]}, {"MoneyBackOnDelete", [4000, 2000, 2000] }, {"WoodBackOnDelete", [3, 7, 15]},
-			{"StoneBackOnDelete", [3, 7, 15]}
+			{"StoneBackOnDelete", [3, 7, 15]}, {"WoodMoveCost", [2, 5, 10]},
+			{"StoneMoveCost", [2, 5, 10]}
 		};
 	}
 	

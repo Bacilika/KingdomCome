@@ -58,6 +58,14 @@ public partial class GameMap : Node2D
 		AddChild(placeable);
 		
 	}
+	
+	public static void MoveHouse(Node2D nodeObject, Vector2 position)
+	{
+		AbstractPlaceable placeable = (AbstractPlaceable) nodeObject;
+		placeable.IsPlaced = true;
+		placeable.Position = position;
+		
+	}
 
 	private void OnDayTimerTimeout()
 	{

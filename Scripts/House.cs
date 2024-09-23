@@ -22,7 +22,9 @@ public partial class House : AbstractPlaceable
 			{ "StoneCost", [5, 7, 10]}, 
 			{"MoneyBackOnDelete", [4000, 2000, 2000] },
 			{"WoodBackOnDelete", [3, 7, 15]},
-			{"StoneBackOnDelete", [3, 7, 15]}
+			{"StoneBackOnDelete", [3, 7, 15]}, 
+			{"WoodMoveCost", [2, 5, 10]}, 
+			{"StoneMoveCost", [2, 5, 10]}
 		};
 	}
 

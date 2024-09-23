@@ -82,6 +82,11 @@ public partial class GameMenu : Control
 		GetParent().AddChild(_roadObject);
 	}
 
+	public void onMove(Node placeable)
+	{
+		_object = (AbstractPlaceable)placeable;
+	}
+
 	public override void _Input(InputEvent @event)
 	{
 		if (@event.IsActionPressed(Inputs.LeftClick))
@@ -95,7 +100,6 @@ public partial class GameMenu : Control
 					Wood -= _object.Upgrades["WoodCost"][_object.Level];
 					Stone -= _object.Upgrades["StoneCost"][_object.Level];
 					Console.WriteLine(_object.Upgrades["StoneCost"][_object.Level]);
-
 					var placedHouse = _object.Duplicate();
 					ContainHouse = true;
 					EmitSignal(SignalName.HousePlaced, placedHouse);
@@ -133,7 +137,7 @@ public partial class GameMenu : Control
 		_gameStatLabels["wood"].Text = "Wood: " + Wood;
 	}
 
-	private bool CanPlace()
+	public bool CanPlace()
 	{
 		return ContainHouse == false && _object.Upgrades["WoodCost"][_object.Level] <= Wood
 									 && _object.Upgrades["StoneCost"][_object.Level] <= Stone;

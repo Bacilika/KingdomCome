@@ -21,6 +21,7 @@ public abstract partial class AbstractPlaceable : Area2D
 	public Dictionary<string, List<int>> Upgrades; 
 	protected AnimatedSprite2D AnimatedSprite;
 	private double _time;
+	private bool _move = false;
 	
 
 	// Called when the node enters the scene tree for the first time.
@@ -31,6 +32,7 @@ public abstract partial class AbstractPlaceable : Area2D
 		
 		InfoBox.Connect(PlaceableInfo.SignalName.OnDelete, Callable.From(OnDelete));
 		InfoBox.Connect(PlaceableInfo.SignalName.OnUpgrade, Callable.From(OnUpgrade));
+		InfoBox.Connect(PlaceableInfo.SignalName.OnMove, Callable.From(OnMove));
 		Monitoring = true;
 		Monitorable = true;
 		InfoBox.Visible = false;
@@ -48,9 +50,13 @@ public abstract partial class AbstractPlaceable : Area2D
 		{
 			_time -= 1;
 			Tick();
-			
 		}
+		
 		InfoBox.MoveToFront();
+		if (_move)
+		{
+			Position = GetGlobalMousePosition();
+		}
 		
 	}
 
@@ -89,8 +95,6 @@ public abstract partial class AbstractPlaceable : Area2D
 		return Price;
 	}
 	
-	
-	
 
 	public override void _Input(InputEvent @event)
 	{
@@ -112,8 +116,17 @@ public abstract partial class AbstractPlaceable : Area2D
 				}
 			}
 		}
-
-
+		else if (@event.IsActionPressed(Inputs.LeftClick) && GameMenu.ContainHouse == false && Upgrades["WoodMoveCost"][Level] <= GameMenu.Wood
+		         && Upgrades["StoneMoveCost"][Level] <= GameMenu.Stone)
+		{
+			Console.WriteLine("left click");
+			Vector2 position = GetGlobalMousePosition();
+			GameMap.MoveHouse(this, GetGlobalMousePosition());
+			_move = false;
+			GameMenu.IsPlaceMode = false;
+			GameMenu.Wood -= Upgrades["WoodMoveCost"][Level];
+			GameMenu.Stone -= Upgrades["StoneMoveCost"][Level];
+		}
 	}
 	protected abstract void OnDelete();
 
@@ -149,6 +162,13 @@ public abstract partial class AbstractPlaceable : Area2D
 		}
 	}
 
+	protected void OnMove()
+	{
+		InfoBox.Visible = false;
+		_move = true;
+		GameMenu.IsPlaceMode = true;
+	}
+
 	protected void SetObjectValues()
 	{
 		AnimatedSprite.Frame = Level;
@@ -174,6 +194,5 @@ public abstract partial class AbstractPlaceable : Area2D
 			GameMenu.Wood -= Upgrades["WoodCost"][Level];
 			SetObjectValues();
 		}
-		
 	}
 }

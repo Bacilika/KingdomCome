@@ -16,7 +16,8 @@ public partial class StoneMine : AbstractPlaceable
 		{
 			{"Cost", [5000, 3000, 3000]}, {"MaxWorkers", [5, 7, 10]}, {"Inhabitants", [5, 7, 10]}, {"WoodCost", [2, 2, 2]},
 			{"StoneCost", [2, 2, 2]}, {"MoneyBackOnDelete", [4000, 2000, 2000] },{"WoodBackOnDelete", [3, 7, 15]},
-			{"StoneBackOnDelete", [3, 7, 15]}
+			{"StoneBackOnDelete", [3, 7, 15]}, {"WoodMoveCost", [2, 5, 10]},
+			{"StoneMoveCost", [2, 5, 10]}
 		};
 	}
 	

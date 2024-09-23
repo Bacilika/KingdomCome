@@ -1,8 +1,7 @@
-[gd_scene load_steps=22 format=3 uid="uid://2uovf4y3vnqd"]
+[gd_scene load_steps=21 format=3 uid="uid://2uovf4y3vnqd"]
 
 [ext_resource type="Script" path="res://Scripts/Npc.cs" id="1_dv6rn"]
 [ext_resource type="Texture2D" uid="uid://7ld563nokdjq" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Character/Character/Character_Walk.png" id="1_f3dyl"]
-[ext_resource type="PackedScene" uid="uid://cx5dug5bljx7r" path="res://Scenes/House.tscn" id="3_ms42g"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_f4nvv"]
 atlas = ExtResource("1_f3dyl")
@@ -143,7 +142,7 @@ animations = [{
 radius = 7.0
 height = 26.0
 
-[node name="RigidBody2D" type="CharacterBody2D"]
+[node name="CharacterBody2D" type="CharacterBody2D"]
 script = ExtResource("1_dv6rn")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -156,5 +155,3 @@ position = Vector2(0, 2)
 shape = SubResource("CapsuleShape2D_8jye2")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
-
-[node name="House" parent="." instance=ExtResource("3_ms42g")]

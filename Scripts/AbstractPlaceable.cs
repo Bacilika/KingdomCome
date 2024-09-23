@@ -116,8 +116,9 @@ public abstract partial class AbstractPlaceable : Area2D
 				}
 			}
 		}
+		
 		else if (@event.IsActionPressed(Inputs.LeftClick) && GameMenu.ContainHouse == false && Upgrades["WoodMoveCost"][Level] <= GameMenu.Wood
-		         && Upgrades["StoneMoveCost"][Level] <= GameMenu.Stone)
+				 && Upgrades["StoneMoveCost"][Level] <= GameMenu.Stone)
 		{
 			Console.WriteLine("left click");
 			Vector2 position = GetGlobalMousePosition();

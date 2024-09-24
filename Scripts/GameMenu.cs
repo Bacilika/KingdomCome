@@ -13,9 +13,9 @@ public partial class GameMenu : Control
 	private AbstractPlaceable _object;
 	private Road _roadObject;
 	public static bool IsPlaceMode;
-	public static bool RoadPlaceMode;
-	public static bool ContainHouse;
-	public static int Money = 50000;
+	private bool _roadPlaceMode;
+	private bool _containBuilding;
+	private static int _money = 50000;
 	public static int Citizens;
 	public static int Happiness;
 	public static int Food;
@@ -61,7 +61,7 @@ public partial class GameMenu : Control
 	public override void _Process(double delta)
 	{
 		UpdateMenuInfo();
-		if (dragging && RoadPlaceMode)
+		if (dragging && _roadPlaceMode)
 		{
 			PlaceRoad();
 		}
@@ -78,7 +78,7 @@ public partial class GameMenu : Control
 
 	private void OnRoadBuild()
 	{
-		RoadPlaceMode = true;
+		_roadPlaceMode = true;
 		IsPlaceMode = true;
 		_roadObject = _roadScene.Instantiate<Road>();
 		GetParent().AddChild(_roadObject);
@@ -97,24 +97,25 @@ public partial class GameMenu : Control
 				{
 					if (!Move )
 					{
-							Money -= _object.GetPrice();
+							_money -= _object.GetPrice();
 							Wood -= _object.Upgrades["WoodCost"][_object.Level];
 							Stone -= _object.Upgrades["StoneCost"][_object.Level];
-							var placedHouse = _object.Duplicate();
-							EmitSignal(SignalName.HousePlaced, placedHouse); //Emitted to GameMap
-							((AbstractPlaceable)placedHouse).OnMoveBuilding += OnMove;
+							var placedNode = _object.Duplicate();
+							EmitSignal(SignalName.HousePlaced, placedNode); //Emitted to GameMap
+							var placedBuilding = (AbstractPlaceable)placedNode;
+							placedBuilding.OnMoveBuilding += OnMove;
+							placedBuilding.OnAreaUpdated += SetContainsBuilding;
+							placedBuilding.OnBuildingUpgrade += UpgradeBuilding;
+							
 							Shop.placeAudio.Play();
-							ContainHouse = true;
+							_containBuilding = true;
 
 					}
 					else
 					{
 						_object.IsPlaced = true;
-						Move = false;
-						_object = null;
-						IsPlaceMode = false;
+						ResetModes();
 					}
-					
 					
 				}
 			}
@@ -123,11 +124,7 @@ public partial class GameMenu : Control
 		{
 			_object?.QueueFree();
 			_roadObject?.QueueFree();
-			_object = null;
-			_roadObject = null;
-			IsPlaceMode = false;
-			RoadPlaceMode = false;
-			Move = false;
+			ResetModes();
 		}
 		if (@event.IsActionReleased(Inputs.LeftClick))
 		{
@@ -137,7 +134,7 @@ public partial class GameMenu : Control
 
 	public static void UpdateMenuInfo()
 	{
-		_gameStatLabels["money"].Text = "Money: " + Money;
+		_gameStatLabels["money"].Text = "Money: " + _money;
 		_gameStatLabels["citizens"].Text = "Citizens: " + Citizens;
 		_gameStatLabels["happiness"].Text = "Happiness: " + Happiness;
 		_gameStatLabels["food"].Text = "Food: " + Food;
@@ -148,16 +145,30 @@ public partial class GameMenu : Control
 
 	public bool CanPlace()
 	{
-		return ContainHouse == false;
+		return _containBuilding == false;
 	}
 
-	public bool CanAfford()
+	public void ResetModes()
 	{
+		_object = null;
+		_roadObject = null;
+		IsPlaceMode = false;
+		_roadPlaceMode = false;
+		Move = false;
+	}
+
+	public bool CanAfford(AbstractPlaceable building = null)
+	{
+		var _building = building;
+		if (building is null)
+		{
+			_building = _object;
+		}
 		if (!Move)
 		{
-			return _object.Upgrades["WoodCost"][_object.Level] <= Wood && 
-				   _object.Upgrades["StoneCost"][_object.Level] <= Stone && 
-				   _object.GetPrice() <= Money;
+			return _building.Upgrades["WoodCost"][_building.Level] <= Wood && 
+			       _building.Upgrades["StoneCost"][_building.Level] <= Stone && 
+			       _building.GetPrice() <= _money;
 		}
 		// add cost for moving house here
 		else
@@ -169,7 +180,27 @@ public partial class GameMenu : Control
 	public void OnMove(AbstractPlaceable building)
 	{
 		_object = building;
-		ContainHouse = false;
+		_containBuilding = false;
+		Move = true;
+		IsPlaceMode = true;
+	}
+
+	public void SetContainsBuilding(bool status)
+	{
+		_containBuilding = status;
+	}
+	private void UpgradeBuilding(AbstractPlaceable building)
+	{
+		if(CanAfford(building))
+		{
+			Stone -= building.Upgrades["StoneCost"][building.Level];
+			Wood -= building.Upgrades["WoodCost"][building.Level];
+			building.SetObjectValues();
+		}
+		else
+		{
+			building.Level--;
+		}
 	}
 
 	private void BuildBuilding(AbstractPlaceable building)
@@ -189,7 +220,7 @@ public partial class GameMenu : Control
 			var gridPosition = _roadLayer.LocalToMap( GetGlobalMousePosition());
 			_roadPositions.Add(gridPosition);
 			_roadLayer.SetCellsTerrainConnect( _roadPositions, 0, 0);
-			Money -= _roadPrice;
+			_money -= _roadPrice;
 
 		}
 	}

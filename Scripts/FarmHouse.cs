@@ -52,10 +52,13 @@ public partial class FarmHouse : AbstractPlaceable
 	{
 		Console.WriteLine("On delete farmhouse");
 		GameMenu.WorkingCitizens -= Workers;
-		QueueFree();
+		
 		//GameMenu.Money += Upgrades["MoneyBackOnDelete"][Level];
 		GameMenu.Wood += Upgrades["WoodBackOnDelete"][Level];
-		GameMenu.Stone += Upgrades["StoneBackOnDelete"][Level];	}
+		GameMenu.Stone += Upgrades["StoneBackOnDelete"][Level];
+		QueueFree();
+	}
+	
 
 
 	public void OnFoodTimerTimeout()

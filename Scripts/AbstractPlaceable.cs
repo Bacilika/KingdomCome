@@ -21,7 +21,16 @@ public abstract partial class AbstractPlaceable : Area2D
 	public Dictionary<string, List<int>> Upgrades; 
 	protected AnimatedSprite2D AnimatedSprite;
 	private double _time;
-	private bool _move = false;
+	private bool _move;
+
+	[Signal]
+	public delegate void OnMoveBuildingEventHandler(AbstractPlaceable building);
+	
+	[Signal]
+	public delegate void OnAreaUpdatedEventHandler(bool status);
+	[Signal]
+	public delegate void OnBuildingUpgradeEventHandler(AbstractPlaceable building);
+	
 	
 
 	// Called when the node enters the scene tree for the first time.
@@ -44,20 +53,16 @@ public abstract partial class AbstractPlaceable : Area2D
 
 	public override void _Process(double delta)
 	{
-		if (!IsPlaced) return;
-		_time += delta;
-		if (_time > 1)
+		if (IsPlaced)
 		{
-			_time -= 1;
-			Tick();
+			_time += delta;
+			if (_time > 1)
+			{
+				_time -= 1;
+				Tick();
+			}
+			InfoBox.MoveToFront();
 		}
-		
-		InfoBox.MoveToFront();
-		if (_move)
-		{
-			Position = GetGlobalMousePosition();
-		}
-		
 	}
 
 	protected abstract void Tick();
@@ -79,15 +84,18 @@ public abstract partial class AbstractPlaceable : Area2D
 	
 	public void OnAreaEntered(Area2D other)
 	{
+		
 		if(IsPlaced)
 		{
-			GameMenu.ContainHouse = true;
+			GD.Print("Area entered");
+			EmitSignal(SignalName.OnAreaUpdated,true);
 		}			
 	}
 	
 	public void OnAreaExited(Area2D other)
 	{
-		GameMenu.ContainHouse = false;
+		GD.Print("area exited");
+		EmitSignal(SignalName.OnAreaUpdated,false);
 	}
 	
 	public int GetPrice()
@@ -116,30 +124,37 @@ public abstract partial class AbstractPlaceable : Area2D
 				}
 			}
 		}
-		
-		else if (@event.IsActionPressed(Inputs.LeftClick) && GameMenu.ContainHouse == false && Upgrades["WoodMoveCost"][Level] <= GameMenu.Wood
-				 && Upgrades["StoneMoveCost"][Level] <= GameMenu.Stone)
-		{
-			Console.WriteLine("left click");
-			Vector2 position = GetGlobalMousePosition();
-			GameMap.MoveHouse(this, GetGlobalMousePosition());
-			_move = false;
-			GameMenu.IsPlaceMode = false;
-			GameMenu.Wood -= Upgrades["WoodMoveCost"][Level];
-			GameMenu.Stone -= Upgrades["StoneMoveCost"][Level];
-		}
 	}
 	protected abstract void OnDelete();
 
-	protected void OnUpgrade()
+	protected async void OnUpgrade()
 	{
-		if (Level <_maxLevel && Upgrades["WoodCost"][Level] < GameMenu.Wood
-							 && Upgrades["StoneCost"][Level] < GameMenu.Stone)
+		if (Level <_maxLevel)
 		{
-			EnoughSpace();
-			Shop.placeAudio.Play();
+			if (await EnoughSpace())
+			{
+				GD.Print("No collision");
+				ActivateHitbox(Level); //return to old hitbox
+				Level++;
+				EmitSignal(SignalName.OnBuildingUpgrade, this);
 
+				SetObjectValues();
+				Shop.placeAudio.Play();
+			}
+			else
+			{
+				GD.Print("Collision when trying to upgrade");
+				ActivateHitbox(Level); //return to old hitbox
+
+			}
 		}
+	}
+	public void OnMove()
+	{
+		InfoBox.Visible = false;
+		IsPlaced = false;
+		EmitSignal(SignalName.OnMoveBuilding, this);
+
 	}
 
 	private void ActivateHitbox(int level)
@@ -162,38 +177,20 @@ public abstract partial class AbstractPlaceable : Area2D
 			}
 		}
 	}
-
-	protected void OnMove()
-	{
-		InfoBox.Visible = false;
-		_move = true;
-		GameMenu.IsPlaceMode = true;
-	}
-
-	protected void SetObjectValues()
+	
+	public void SetObjectValues()
 	{
 		AnimatedSprite.Frame = Level;
 		Price = Upgrades["Cost"][Level];
 		ActivateHitbox(Level);
 	}
 
-	private async void EnoughSpace()
+	private async Task<bool> EnoughSpace()
 	{
 		ActivateHitbox(Level+1); //try with larger hitbox
 		await Task.Delay(100);
 		GD.Print( GetOverlappingAreas().Count);
-		if ( HasOverlappingAreas())
-		{ 
-			GD.Print("Collision when trying to upgrade");
-			ActivateHitbox(Level); //return to old hitbox
-		}
-		else
-		{
-			GD.Print("No collision, upgrading house");
-			Level++;
-			GameMenu.Stone -= Upgrades["StoneCost"][Level];
-			GameMenu.Wood -= Upgrades["WoodCost"][Level];
-			SetObjectValues();
-		}
+		return !HasOverlappingAreas();
+
 	}
 }

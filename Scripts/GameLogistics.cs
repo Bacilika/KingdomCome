@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using Godot.Collections;
-using Scripts.Constants;
+using KingdomCome.Scripts;
 
 public partial class GameLogistics: Node2D
 {

@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Scripts.Constants;
+using KingdomCome.Scripts;
 
 public abstract partial class AbstractPlaceable : Area2D
 {
@@ -25,16 +25,16 @@ public abstract partial class AbstractPlaceable : Area2D
 
 	[Signal]
 	public delegate void OnMoveBuildingEventHandler(AbstractPlaceable building);
-	
 	[Signal]
 	public delegate void OnAreaUpdatedEventHandler(bool status);
 	[Signal]
 	public delegate void OnBuildingUpgradeEventHandler(AbstractPlaceable building);
 	
 	protected abstract void Tick();
-
 	public abstract void _Ready_instance();
 	public abstract void _ReadyProduction();
+	protected abstract void OnDelete();
+
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -45,14 +45,15 @@ public abstract partial class AbstractPlaceable : Area2D
 		InfoBox.Connect(PlaceableInfo.SignalName.OnDelete, Callable.From(OnDelete));
 		InfoBox.Connect(PlaceableInfo.SignalName.OnUpgrade, Callable.From(OnUpgrade));
 		InfoBox.Connect(PlaceableInfo.SignalName.OnMove, Callable.From(OnMove));
+		
 		Monitoring = true;
 		Monitorable = true;
 		InfoBox.Visible = false;
 		InfoBox.MoveToFront();
+		
 		_Ready_instance();
 		_ReadyProduction();
 		SetObjectValues();
-		
 	}
 
 	public override void _Process(double delta)
@@ -68,10 +69,8 @@ public abstract partial class AbstractPlaceable : Area2D
 			InfoBox.MoveToFront();
 		}
 	}
-
-
 	
-	public void OnMouseEntered()
+	private void OnMouseEntered()
 	{
 		if(IsPlaced)
 		{
@@ -79,14 +78,13 @@ public abstract partial class AbstractPlaceable : Area2D
 		}			
 	}
 	
-	public void OnMouseExited()
+	private void OnMouseExited()
 	{
 		_isFocused = false;
 	}
 	
-	public void OnAreaEntered(Area2D other)
+	private void OnAreaEntered(Area2D other)
 	{
-		
 		if(IsPlaced)
 		{
 			GD.Print("Area entered");
@@ -94,7 +92,7 @@ public abstract partial class AbstractPlaceable : Area2D
 		}			
 	}
 	
-	public void OnAreaExited(Area2D other)
+	private void OnAreaExited(Area2D other)
 	{
 		GD.Print("area exited");
 		EmitSignal(SignalName.OnAreaUpdated,false);
@@ -127,9 +125,8 @@ public abstract partial class AbstractPlaceable : Area2D
 			}
 		}
 	}
-	protected abstract void OnDelete();
 
-	protected async void OnUpgrade()
+	private async void OnUpgrade()
 	{
 		if (Level <_maxLevel)
 		{
@@ -151,7 +148,7 @@ public abstract partial class AbstractPlaceable : Area2D
 			}
 		}
 	}
-	public void OnMove()
+	private void OnMove()
 	{
 		InfoBox.Visible = false;
 		IsPlaced = false;
@@ -193,6 +190,5 @@ public abstract partial class AbstractPlaceable : Area2D
 		await Task.Delay(100);
 		GD.Print( GetOverlappingAreas().Count);
 		return !HasOverlappingAreas();
-
 	}
 }

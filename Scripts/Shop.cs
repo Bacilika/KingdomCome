@@ -2,7 +2,7 @@
 using Godot;
 using System;
 using System.Diagnostics;
-using Scripts.Constants;
+using KingdomCome.Scripts;
 
 public partial class Shop : Control
 {

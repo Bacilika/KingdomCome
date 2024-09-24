@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=4 uid="uid://vcvlb4vnybwc"]
+[gd_scene load_steps=18 format=4 uid="uid://vcvlb4vnybwc"]
 
 [ext_resource type="Script" path="res://Scripts/GameMap.cs" id="1_owh02"]
 [ext_resource type="Script" path="res://Scripts/GameCamera.cs" id="2_rjrjb"]
@@ -7,8 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://bam6r0w1dcr7v" path="res://Sprites/Extra/Tileset_Road-export.png" id="5_o0nfu"]
 [ext_resource type="Texture2D" uid="uid://b7mydwstdxrtn" path="res://Art/Buildings/Atlas/Buildings.png" id="6_o5c4n"]
 [ext_resource type="PackedScene" uid="uid://25kpv3trjyvk" path="res://Scenes/GameMenu.tscn" id="7_8oe3h"]
-[ext_resource type="PackedScene" uid="uid://cxe0cv5bgxbcc" path="res://Scenes/Forest.tscn" id="8_obv6i"]
 [ext_resource type="AudioStream" uid="uid://plht8nry2hu6" path="res://Audio/TavernMusic.mp3" id="8_2qw43"]
+[ext_resource type="PackedScene" uid="uid://cxe0cv5bgxbcc" path="res://Scenes/Forest.tscn" id="8_obv6i"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_saoes"]
 texture = ExtResource("3_ayklq")

@@ -9,8 +9,8 @@ public partial class GameMap : Node2D
 	private Timer _foodTimer; 
 	private Timer _dayTimer;
 	private AudioStreamPlayer2D _music;
-	private List<House> _placedHouses = new();
-	private List<AbstractPlaceable> _placedProduction = new();
+	private List<House> _placedHouses = [];
+	private List<AbstractPlaceable> _placedProduction = [];
 	
 	public override void _Ready()
 	{
@@ -40,7 +40,6 @@ public partial class GameMap : Node2D
 	{
 		_music.Seek(0);
 		_music.Play();
-		Console.WriteLine("Music");
 	}
 
 	private void OnEatFoodTimerTimedout()
@@ -56,9 +55,9 @@ public partial class GameMap : Node2D
 	public void PlaceHouse(Node2D nodeObject)
 	{
 		AbstractPlaceable placeable = (AbstractPlaceable) nodeObject;
-		if (placeable is House)
+		if (placeable is House house)
 		{
-			_placedHouses.Add((House)placeable);
+			_placedHouses.Add(house);
 			PlaceNPC();
 		}
 		else
@@ -77,7 +76,6 @@ public partial class GameMap : Node2D
 		AddChild(npc);
 		npc.Position = new Vector2(0, 0);
 		npc.setDestination(_placedProduction.Count > 0 ? _placedProduction[0].Position: new Vector2(2,2));
-		Console.WriteLine("Placepos " + _placedProduction[0].Position);
 
 	}
 	

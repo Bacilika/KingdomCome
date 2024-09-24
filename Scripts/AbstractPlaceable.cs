@@ -22,6 +22,9 @@ public abstract partial class AbstractPlaceable : Area2D
 	protected AnimatedSprite2D AnimatedSprite;
 	private double _time;
 	private bool _move = false;
+
+	[Signal]
+	public delegate void OnMoveBuildingEventHandler(AbstractPlaceable building);
 	
 
 	// Called when the node enters the scene tree for the first time.
@@ -44,20 +47,16 @@ public abstract partial class AbstractPlaceable : Area2D
 
 	public override void _Process(double delta)
 	{
-		if (!IsPlaced) return;
-		_time += delta;
-		if (_time > 1)
+		if (IsPlaced)
 		{
-			_time -= 1;
-			Tick();
+			_time += delta;
+			if (_time > 1)
+			{
+				_time -= 1;
+				Tick();
+			}
+			InfoBox.MoveToFront();
 		}
-		
-		InfoBox.MoveToFront();
-		if (_move)
-		{
-			Position = GetGlobalMousePosition();
-		}
-		
 	}
 
 	protected abstract void Tick();
@@ -81,12 +80,14 @@ public abstract partial class AbstractPlaceable : Area2D
 	{
 		if(IsPlaced)
 		{
+			GD.Print("Area entered");
 			GameMenu.ContainHouse = true;
 		}			
 	}
 	
 	public void OnAreaExited(Area2D other)
 	{
+		GD.Print("area exited");
 		GameMenu.ContainHouse = false;
 	}
 	
@@ -116,18 +117,6 @@ public abstract partial class AbstractPlaceable : Area2D
 				}
 			}
 		}
-		
-		else if (@event.IsActionPressed(Inputs.LeftClick) && GameMenu.ContainHouse == false && Upgrades["WoodMoveCost"][Level] <= GameMenu.Wood
-				 && Upgrades["StoneMoveCost"][Level] <= GameMenu.Stone)
-		{
-			Console.WriteLine("left click");
-			Vector2 position = GetGlobalMousePosition();
-			GameMap.MoveHouse(this, GetGlobalMousePosition());
-			_move = false;
-			GameMenu.IsPlaceMode = false;
-			GameMenu.Wood -= Upgrades["WoodMoveCost"][Level];
-			GameMenu.Stone -= Upgrades["StoneMoveCost"][Level];
-		}
 	}
 	protected abstract void OnDelete();
 
@@ -140,6 +129,15 @@ public abstract partial class AbstractPlaceable : Area2D
 			Shop.placeAudio.Play();
 
 		}
+	}
+	public void OnMove()
+	{
+		InfoBox.Visible = false;
+		GameMenu.Move = true;
+		GameMenu.IsPlaceMode = true;
+		IsPlaced = false;
+		EmitSignal(SignalName.OnMoveBuilding, this);
+
 	}
 
 	private void ActivateHitbox(int level)
@@ -163,12 +161,7 @@ public abstract partial class AbstractPlaceable : Area2D
 		}
 	}
 
-	protected void OnMove()
-	{
-		InfoBox.Visible = false;
-		_move = true;
-		GameMenu.IsPlaceMode = true;
-	}
+
 
 	protected void SetObjectValues()
 	{

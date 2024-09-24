@@ -11,7 +11,6 @@ public abstract partial class AbstractPlaceable : Area2D
 	private bool _isFocused;
 	protected PlaceableInfo InfoBox;
 	protected int Price;
-	protected int Workers =0;
 	public int Level;
 	protected int WoodCost;
 	protected int StoneCost;
@@ -22,6 +21,7 @@ public abstract partial class AbstractPlaceable : Area2D
 	protected AnimatedSprite2D AnimatedSprite;
 	private double _time;
 	private bool _move;
+	protected int HouseholdHappiness;
 
 	[Signal]
 	public delegate void OnMoveBuildingEventHandler(AbstractPlaceable building);
@@ -31,7 +31,10 @@ public abstract partial class AbstractPlaceable : Area2D
 	[Signal]
 	public delegate void OnBuildingUpgradeEventHandler(AbstractPlaceable building);
 	
-	
+	protected abstract void Tick();
+
+	public abstract void _Ready_instance();
+	public abstract void _ReadyProduction();
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -47,6 +50,7 @@ public abstract partial class AbstractPlaceable : Area2D
 		InfoBox.Visible = false;
 		InfoBox.MoveToFront();
 		_Ready_instance();
+		_ReadyProduction();
 		SetObjectValues();
 		
 	}
@@ -65,9 +69,7 @@ public abstract partial class AbstractPlaceable : Area2D
 		}
 	}
 
-	protected abstract void Tick();
 
-	public abstract void _Ready_instance();
 	
 	public void OnMouseEntered()
 	{
@@ -106,7 +108,7 @@ public abstract partial class AbstractPlaceable : Area2D
 
 	public override void _Input(InputEvent @event)
 	{
-		if (@event.IsActionPressed(Inputs.LeftClick) && !GameMenu.IsPlaceMode)
+		if (@event.IsActionPressed(Inputs.LeftClick) && !GameLogistics.IsPlaceMode)
 		{
 			if (_isFocused) //if mouse is on Building
 			{

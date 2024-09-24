@@ -10,6 +10,8 @@ public partial class Shop : Control
 	// Called when the node enters the scene tree for the first time.
 	private GridContainer _buildButtons;
 	public static AudioStreamPlayer2D placeAudio;
+	private int _roadPrice = 100;
+
 
 	[Signal]
 	public delegate void OnBuildingButtonPressedEventHandler(AbstractPlaceable type);

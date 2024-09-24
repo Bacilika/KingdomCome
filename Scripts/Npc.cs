@@ -3,7 +3,9 @@ using System;
 
 public partial class Npc : CharacterBody2D
 {
-	private AbstractPlaceable _home;
+	public House Home;
+	public AbstractPlaceable Work;
+	private bool isUnemployed = true;
 	private NavigationAgent2D _navigation;
 	private float _speed = 100;
 	public Vector2 startPos;
@@ -66,6 +68,13 @@ public partial class Npc : CharacterBody2D
 	public void SetStartPos(Vector2 pos)
 	{
 		startPos = pos;
+	}
+
+	public void GetJob(Production production)
+	{
+			Work = production;
+			production.EmployWorker();
+			setDestination(Work.Position);
 	}
 
 	public void setDestination(Vector2 destPos)

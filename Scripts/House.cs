@@ -9,6 +9,9 @@ public partial class House : AbstractPlaceable
 	private int _growth = 5; // 1/_growth% chance to increase habitants by 1 each tick. 
 	private Npc Npc;	
 	
+	[Signal]
+	public delegate void OnCreateNpcEventHandler(House house);
+	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready_instance()
 	{
@@ -35,11 +38,11 @@ public partial class House : AbstractPlaceable
 	
 	protected override void OnDelete()
 	{
-		GameMenu.Citizens-= Citizens;
+		GameLogistics.Citizens-= Citizens;
 		QueueFree();
 		//GameMenu.Money += Upgrades["MoneyBackOnDelete"][Level];
-		GameMenu.Wood += Upgrades["WoodBackOnDelete"][Level];
-		GameMenu.Stone += Upgrades["StoneBackOnDelete"][Level];	}
+		GameLogistics.Wood += Upgrades["WoodBackOnDelete"][Level];
+		GameLogistics.Stone += Upgrades["StoneBackOnDelete"][Level];	}
 	
 	protected override void Tick()
 	{
@@ -48,7 +51,8 @@ public partial class House : AbstractPlaceable
 			if (habitantGrowth.RandiRange(0, _growth) ==0)
 			{
 				Citizens++;
-				GameMenu.Citizens++;
+				GameLogistics.Citizens++;
+				EmitSignal(SignalName.OnCreateNpc, this);
 			}
 		}
 		UpdateInfo();
@@ -59,5 +63,9 @@ public partial class House : AbstractPlaceable
 	{
 		var textLabel = (RichTextLabel) InfoBox.GetChild(0).GetChild(0);
 		textLabel.Text = "Citizens: " + Citizens + "/" +Upgrades["MaxInhabitants"][Level] ;
+	}
+
+	public override void _ReadyProduction()
+	{
 	}
 }

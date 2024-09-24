@@ -9,8 +9,8 @@ public partial class GameMap : Node2D
 	private Timer _foodTimer; 
 	private Timer _dayTimer;
 	private AudioStreamPlayer2D _music;
-	private List<House> _placedHouses = [];
-	private List<AbstractPlaceable> _placedProduction = [];
+	public List<House> _placedHouses = [];
+	public List<Production> _placedProduction = [];
 	
 	public override void _Ready()
 	{
@@ -19,8 +19,8 @@ public partial class GameMap : Node2D
 		_foodTimer = GetNode<Timer>("EatFoodTimer");
 		_dayTimer = GetNode<Timer>("DayTimer");
 		_dayTimer.Start();
-		var gameMenu = GetNode<GameMenu>("GameMenu");
-		gameMenu.HousePlaced += PlaceHouse;
+		var gameLogistics = GetNode<GameLogistics>("GameLogistics");
+		gameLogistics.HousePlaced += PlaceHouse;
 		_music = GetNode<AudioStreamPlayer2D>("BackgroundMusic");
 		_music.Play();
 		var nav = GetNode<NavigationRegion2D>("NavigationRegion2D");
@@ -31,7 +31,7 @@ public partial class GameMap : Node2D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{	
-		if (GameMenu.Food > 0 && GameMenu.Citizens > 0)
+		if (GameLogistics.Food > 0 && GameLogistics.Citizens > 0)
 		{
 			_foodTimer.Start();
 			hungry = 0;
@@ -60,30 +60,30 @@ public partial class GameMap : Node2D
 		AbstractPlaceable placeable = (AbstractPlaceable) nodeObject;
 		if (placeable is House house)
 		{
+			house.OnCreateNpc += PlaceNpc;
 			_placedHouses.Add(house);
-			if (_placedProduction.Count > 0)
-			{
-				PlaceNpc();
-			}
 		}
-		else
+		else 
 		{
-			_placedProduction.Add(placeable);
+			_placedProduction.Add((Production)placeable);
 		}
 		placeable.IsPlaced = true;
 		placeable.Position = GetGlobalMousePosition();
 		AddChild(placeable);
 	}
 
-	public void PlaceNpc()
+	public void PlaceNpc(House house)
 	{
 		var NPCScene = ResourceLoader.Load<PackedScene>("res://Scenes/NPC.tscn");
 		var npc = NPCScene.Instantiate<Npc>();
 		AddChild(npc);
-		npc.Position = _placedHouses[0].GetGlobalPosition();
-		npc.SetStartPos(_placedHouses[0].GetGlobalPosition());
-		npc.setDestination(_placedProduction.Count > 0 ? _placedProduction[0].Position: new Vector2(2,2));
-
+		npc.Home = house;
+		npc.Position = house.Position;
+		npc.SetStartPos(npc.Position);
+		foreach (var workplace in _placedProduction)
+		{
+			workplace.LookingForWorkers += npc.GetJob;
+		}
 	}
 	
 	
@@ -97,10 +97,10 @@ public partial class GameMap : Node2D
 
 	private void OnDayTimerTimeout()
 	{
-		GameMenu.Day += 1;
-		if (GameMenu.Food > 0)
+		GameLogistics.Day += 1;
+		if (GameLogistics.Food > 0)
 		{
-			GameMenu.Food -= 1;
+			GameLogistics.Food -= 1;
 		}
 		GameMenu.UpdateMenuInfo();
 	}

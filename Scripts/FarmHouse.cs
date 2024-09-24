@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public partial class FarmHouse : AbstractPlaceable
+public partial class FarmHouse : Production
 {
 	private RandomNumberGenerator habitantGrowth = new ();
 	private RandomNumberGenerator foodGrowth = new ();
@@ -37,12 +37,12 @@ public partial class FarmHouse : AbstractPlaceable
 
 	protected override void Tick()
 	{
-		if (Workers < Upgrades["MaxWorkers"][Level] && GameMenu.WorkingCitizens < GameMenu.Citizens)
+		if (Workers < Upgrades["MaxWorkers"][Level] && GameLogistics.WorkingCitizens < GameLogistics.Citizens)
 		{
 			if (habitantGrowth.RandiRange(0, _growth) ==0)
 			{
 				Workers++;
-				GameMenu.WorkingCitizens++;
+				GameLogistics.WorkingCitizens++;
 			}
 		}
 		UpdateInfo();
@@ -51,11 +51,11 @@ public partial class FarmHouse : AbstractPlaceable
 	protected override void OnDelete()
 	{
 		Console.WriteLine("On delete farmhouse");
-		GameMenu.WorkingCitizens -= Workers;
+		GameLogistics.WorkingCitizens -= Workers;
 		
 		//GameMenu.Money += Upgrades["MoneyBackOnDelete"][Level];
-		GameMenu.Wood += Upgrades["WoodBackOnDelete"][Level];
-		GameMenu.Stone += Upgrades["StoneBackOnDelete"][Level];
+		GameLogistics.Wood += Upgrades["WoodBackOnDelete"][Level];
+		GameLogistics.Stone += Upgrades["StoneBackOnDelete"][Level];
 		QueueFree();
 	}
 	
@@ -65,7 +65,7 @@ public partial class FarmHouse : AbstractPlaceable
 	{
 		Console.WriteLine("Food time out");
 		_food++;
-		GameMenu.Food++;
+		GameLogistics.Food++;
 		float time = 15 - Workers;
 		_timer.Start(time);
 	}

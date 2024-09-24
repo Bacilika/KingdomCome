@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public partial class HunterLodge : AbstractPlaceable
+public partial class HunterLodge : Production
 {
 
 	private RandomNumberGenerator habitantGrowth = new ();
@@ -29,7 +29,7 @@ public partial class HunterLodge : AbstractPlaceable
 
 	protected override void Tick()
 	{
-		if (Workers < Upgrades["MaxWorkers"][Level] && GameMenu.WorkingCitizens < GameMenu.Citizens)
+		if (Workers < Upgrades["MaxWorkers"][Level] && GameLogistics.WorkingCitizens < GameLogistics.Citizens)
 		{
 			if (_timer.IsStopped())
 			{
@@ -39,7 +39,7 @@ public partial class HunterLodge : AbstractPlaceable
 			if (habitantGrowth.RandiRange(0, _growth) ==0)
 			{
 				Workers++;
-				GameMenu.WorkingCitizens++;
+				GameLogistics.WorkingCitizens++;
 			}
 		}
 		UpdateInfo();
@@ -47,17 +47,17 @@ public partial class HunterLodge : AbstractPlaceable
 
 	protected override void OnDelete()
 	{
-		GameMenu.WorkingCitizens -= Workers;
+		GameLogistics.WorkingCitizens -= Workers;
 		//GameMenu.Money += Upgrades["MoneyBackOnDelete"][Level];
-		GameMenu.Wood += Upgrades["WoodBackOnDelete"][Level];
-		GameMenu.Stone += Upgrades["StoneBackOnDelete"][Level];
+		GameLogistics.Wood += Upgrades["WoodBackOnDelete"][Level];
+		GameLogistics.Stone += Upgrades["StoneBackOnDelete"][Level];
 		QueueFree();
 	}
 	
 	public void OnFoodTimerTimeout()
 	{
 		_food++;
-		GameMenu.Food++;
+		GameLogistics.Food++;
 		float time = 15 - Workers;
 		_timer.Start(time);
 	}

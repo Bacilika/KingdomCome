@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public partial class StoneMine : AbstractPlaceable
+public partial class StoneMine : Production
 {
 	private RandomNumberGenerator habitantGrowth = new ();
 	private int _growth = 2; // 1/_growth% chance to increase habitants by 1 each tick. 
@@ -25,11 +25,11 @@ public partial class StoneMine : AbstractPlaceable
 	protected override void OnDelete()
 	{
 		Console.WriteLine("On delete stonemine");
-		GameMenu.WorkingCitizens -= Workers;
+		GameLogistics.WorkingCitizens -= Workers;
 		QueueFree();
 		//GameMenu.Money += Upgrades["MoneyBackOnDelete"][Level];
-		GameMenu.Wood += Upgrades["WoodBackOnDelete"][Level];
-		GameMenu.Stone += Upgrades["StoneBackOnDelete"][Level];
+		GameLogistics.Wood += Upgrades["WoodBackOnDelete"][Level];
+		GameLogistics.Stone += Upgrades["StoneBackOnDelete"][Level];
 
 	}
 	
@@ -37,20 +37,10 @@ public partial class StoneMine : AbstractPlaceable
 
 	protected override void Tick()
 	{
-
-		if (Workers < Upgrades["MaxWorkers"][Level] && GameMenu.WorkingCitizens < GameMenu.Citizens)
-		{
-
-			if (habitantGrowth.RandiRange(0, _growth) ==0)
-			{
-				Workers++;
-				GameMenu.WorkingCitizens++; 
-			}
-		}
 		if (stoneGrowth.RandiRange(0, _stoneGrowth) == 0 && Workers > 0)
 		{
 			_stone++;
-			GameMenu.Stone++;
+			GameLogistics.Stone++;
 		}
 			
 		UpdateInfo();

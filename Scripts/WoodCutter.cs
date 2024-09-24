@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public partial class WoodCutter : AbstractPlaceable{
+public partial class WoodCutter : Production{
 	private RandomNumberGenerator habitantGrowth = new ();
 	private RandomNumberGenerator foodGrowth = new ();
 	private int _growth = 50; // 1/_growth% chance to increase habitants by 1 each tick. 
@@ -26,7 +26,7 @@ public partial class WoodCutter : AbstractPlaceable{
 	
 	protected override void Tick()
 	{
-		if (Workers < Upgrades["MaxWorkers"][Level] && GameMenu.WorkingCitizens < GameMenu.Citizens)
+		if (Workers < Upgrades["MaxWorkers"][Level] && GameLogistics.WorkingCitizens < GameLogistics.Citizens)
 		{
 			if (_timer.IsStopped())
 			{
@@ -35,7 +35,7 @@ public partial class WoodCutter : AbstractPlaceable{
 			if (habitantGrowth.RandiRange(0, _growth) ==0)
 			{
 				Workers++;
-				GameMenu.WorkingCitizens++;
+				GameLogistics.WorkingCitizens++;
 			}
 		}
 		UpdateInfo();
@@ -47,18 +47,18 @@ public partial class WoodCutter : AbstractPlaceable{
 	protected override void OnDelete()
 	{
 		Console.WriteLine("On delete farmhouse");
-		GameMenu.WorkingCitizens -= Workers;
+		GameLogistics.WorkingCitizens -= Workers;
 		QueueFree();
 		//GameMenu.Money += Upgrades["MoneyBackOnDelete"][Level];
-		GameMenu.Wood += Upgrades["WoodBackOnDelete"][Level];
-		GameMenu.Stone += Upgrades["StoneBackOnDelete"][Level];
+		GameLogistics.Wood += Upgrades["WoodBackOnDelete"][Level];
+		GameLogistics.Stone += Upgrades["StoneBackOnDelete"][Level];
 	}
 
 
 	public void OnWoodTimerTimeout()
 	{
 		Console.WriteLine("Wood time out");
-		GameMenu.Wood++;
+		GameLogistics.Wood++;
 		float time = 15 - Workers;
 		_timer.Start(time);
 	}

@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO.Pipes;
 
-public partial class House : AbstractPlaceable
+public partial class House : LivingSpaces
 {
 	private RandomNumberGenerator habitantGrowth = new ();
 	private int _growth = 5; // 1/_growth% chance to increase habitants by 1 each tick. 
@@ -65,7 +65,5 @@ public partial class House : AbstractPlaceable
 		textLabel.Text = "Citizens: " + Citizens + "/" +Upgrades["MaxInhabitants"][Level] ;
 	}
 
-	public override void _ReadyProduction()
-	{
-	}
+
 }

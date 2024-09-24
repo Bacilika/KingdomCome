@@ -40,32 +40,4 @@ public partial class WoodCutter : Production{
 		}
 		UpdateInfo();
 	}
-
-	
-
-	
-	protected override void OnDelete()
-	{
-		Console.WriteLine("On delete farmhouse");
-		GameLogistics.WorkingCitizens -= Workers;
-		QueueFree();
-		//GameMenu.Money += Upgrades["MoneyBackOnDelete"][Level];
-		GameLogistics.Wood += Upgrades["WoodBackOnDelete"][Level];
-		GameLogistics.Stone += Upgrades["StoneBackOnDelete"][Level];
-	}
-
-
-	public void OnWoodTimerTimeout()
-	{
-		Console.WriteLine("Wood time out");
-		GameLogistics.Wood++;
-		float time = 15 - Workers;
-		_timer.Start(time);
-	}
-	
-	public void UpdateInfo()
-	{
-		var textLabel = (RichTextLabel) InfoBox.GetChild(0).GetChild(0);
-		textLabel.Text = "Workers: " + Workers;
-	}
 }

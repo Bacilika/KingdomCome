@@ -20,20 +20,6 @@ public partial class StoneMine : Production
 			{"StoneMoveCost", [2, 5, 10]}
 		};
 	}
-	
-	
-	protected override void OnDelete()
-	{
-		Console.WriteLine("On delete stonemine");
-		GameLogistics.WorkingCitizens -= Workers;
-		QueueFree();
-		//GameMenu.Money += Upgrades["MoneyBackOnDelete"][Level];
-		GameLogistics.Wood += Upgrades["WoodBackOnDelete"][Level];
-		GameLogistics.Stone += Upgrades["StoneBackOnDelete"][Level];
-
-	}
-	
-	
 
 	protected override void Tick()
 	{
@@ -42,14 +28,7 @@ public partial class StoneMine : Production
 			_stone++;
 			GameLogistics.Stone++;
 		}
-			
 		UpdateInfo();
-	}
-
-	public void UpdateInfo()
-	{
-		var textLabel = (RichTextLabel) InfoBox.GetChild(0).GetChild(0);
-		textLabel.Text = "Workers: " + Workers;
 	}
 
 }

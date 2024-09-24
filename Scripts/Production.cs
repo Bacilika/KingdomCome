@@ -4,10 +4,16 @@ using System;
 public abstract partial class Production : AbstractPlaceable
 {
 	protected int Workers =0;
+	private int _food;
+	protected Timer _timer; 
+
+	protected abstract override void Tick();
+	public abstract override void _Ready_instance();
+
 
 	[Signal]
 	public delegate void LookingForWorkersEventHandler(Production production);
-	// Called when the node enters the scene tree for the first time.
+	
 	public override void _ReadyProduction()
 	{
 		EmitSignal(SignalName.LookingForWorkers, this);
@@ -23,9 +29,29 @@ public abstract partial class Production : AbstractPlaceable
 		} 
 		
 	}
-	protected abstract override void Tick();
-	public abstract override void _Ready_instance();
-	protected abstract override void OnDelete();
+	
+	public void OnFoodTimerTimeout()
+	{
+		_food++;
+		GameLogistics.Food++;
+		float time = 15 - Workers;
+		_timer.Start(time);
+	}
+	
+	protected override void OnDelete()
+	{
+		GameLogistics.WorkingCitizens -= Workers;
+		//GameMenu.Money += Upgrades["MoneyBackOnDelete"][Level];
+		GameLogistics.Wood += Upgrades["WoodBackOnDelete"][Level];
+		GameLogistics.Stone += Upgrades["StoneBackOnDelete"][Level];
+		QueueFree();
+	}
+	
+	public void UpdateInfo()
+	{
+		var textLabel = (RichTextLabel) InfoBox.GetChild(0).GetChild(0);
+		textLabel.Text = "Workers: " + Workers;
+	}
 
 
 }

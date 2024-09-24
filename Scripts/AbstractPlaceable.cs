@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using KingdomCome.Scripts;
+using Scripts.Constants;
 
 public abstract partial class AbstractPlaceable : Area2D
 {

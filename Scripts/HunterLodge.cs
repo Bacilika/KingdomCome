@@ -4,12 +4,9 @@ using System.Collections.Generic;
 
 public partial class HunterLodge : Production
 {
-
 	private RandomNumberGenerator habitantGrowth = new ();
 	private RandomNumberGenerator foodGrowth = new ();
 	private int _growth = 2;// 1/_growth% chance to increase habitants by 1 each tick. 
-	private int _food;
-	private Timer _timer; 
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready_instance()
@@ -26,7 +23,6 @@ public partial class HunterLodge : Production
 		};
 	}
 	
-
 	protected override void Tick()
 	{
 		if (Workers < Upgrades["MaxWorkers"][Level] && GameLogistics.WorkingCitizens < GameLogistics.Citizens)
@@ -44,27 +40,5 @@ public partial class HunterLodge : Production
 		}
 		UpdateInfo();
 	}
-
-	protected override void OnDelete()
-	{
-		GameLogistics.WorkingCitizens -= Workers;
-		//GameMenu.Money += Upgrades["MoneyBackOnDelete"][Level];
-		GameLogistics.Wood += Upgrades["WoodBackOnDelete"][Level];
-		GameLogistics.Stone += Upgrades["StoneBackOnDelete"][Level];
-		QueueFree();
-	}
 	
-	public void OnFoodTimerTimeout()
-	{
-		_food++;
-		GameLogistics.Food++;
-		float time = 15 - Workers;
-		_timer.Start(time);
-	}
-	
-	public void UpdateInfo()
-	{
-		var textLabel = (RichTextLabel) InfoBox.GetChild(0).GetChild(0);
-		textLabel.Text = "Workers: " + Workers;
-	}
 }

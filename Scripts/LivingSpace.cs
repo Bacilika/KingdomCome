@@ -1,15 +1,15 @@
 using Godot;
 using System;
 
-public partial class LivingSpaces : Node
+public abstract partial class LivingSpaces : AbstractPlaceable
 {
+	protected abstract override void Tick();
+	public abstract override void _Ready_instance();
+	protected abstract override void OnDelete();
 	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
+	
+	public override void _ReadyProduction()
 	{
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
 }

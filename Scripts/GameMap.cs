@@ -14,8 +14,8 @@ public partial class GameMap : Node2D
 	
 	public override void _Ready()
 	{
-		Console.WriteLine("hello");
-		
+		Console.WriteLine(GetWorld2D().GetNavigationMap());
+		Console.WriteLine(GetNode<NavigationRegion2D>("NavigationRegion2D").GetNavigationMap());
 		_foodTimer = GetNode<Timer>("EatFoodTimer");
 		_dayTimer = GetNode<Timer>("DayTimer");
 		_dayTimer.Start();
@@ -23,7 +23,9 @@ public partial class GameMap : Node2D
 		gameMenu.HousePlaced += PlaceHouse;
 		_music = GetNode<AudioStreamPlayer2D>("BackgroundMusic");
 		_music.Play();
-
+		var nav = GetNode<NavigationRegion2D>("NavigationRegion2D");
+		nav.BakeNavigationPolygon();
+		Console.WriteLine(nav.IsBaking());
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -79,6 +81,11 @@ public partial class GameMap : Node2D
 		npc.setDestination(_placedProduction.Count > 0 ? _placedProduction[0].Position: new Vector2(2,2));
 		Console.WriteLine("Placepos " + _placedProduction[0].Position);
 
+	}
+
+	public void OnBakeFinished()
+	{
+		Console.WriteLine("Bake finished");
 	}
 	
 	public static void MoveHouse(Node2D nodeObject, Vector2 position)

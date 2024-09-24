@@ -2109,4 +2109,3 @@ navigation_polygon = SubResource("NavigationPolygon_n6683")
 [connection signal="timeout" from="EatFoodTimer" to="." method="OnEatFoodTimerTimedout"]
 [connection signal="timeout" from="DayTimer" to="." method="OnDayTimerTimeout"]
 [connection signal="finished" from="BackgroundMusic" to="." method="OnBackgroundMusicFinish"]
-[connection signal="bake_finished" from="NavigationRegion2D" to="." method="OnBakedFinished"]

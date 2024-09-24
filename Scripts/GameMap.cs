@@ -9,7 +9,7 @@ public partial class GameMap : Node2D
 	private Timer _foodTimer; 
 	private Timer _dayTimer;
 	private AudioStreamPlayer2D _music;
-	private List<House> _placedHouses = new();
+	public List<House> _placedHouses = new();
 	private List<AbstractPlaceable> _placedProduction = new();
 	
 	public override void _Ready()
@@ -61,7 +61,10 @@ public partial class GameMap : Node2D
 		if (placeable is House)
 		{
 			_placedHouses.Add((House)placeable);
-			PlaceNPC();
+			if (_placedProduction.Count > 0)
+			{
+				PlaceNpc();
+			}
 		}
 		else
 		{
@@ -72,20 +75,15 @@ public partial class GameMap : Node2D
 		AddChild(placeable);
 	}
 
-	public void PlaceNPC()
+	public void PlaceNpc()
 	{
 		var NPCScene = ResourceLoader.Load<PackedScene>("res://Scenes/NPC.tscn");
 		var npc = NPCScene.Instantiate<Npc>();
 		AddChild(npc);
-		npc.Position = new Vector2(0, 0);
+		npc.Position = _placedHouses[0].GetGlobalPosition();
+		npc.SetStartPos(_placedHouses[0].GetGlobalPosition());
 		npc.setDestination(_placedProduction.Count > 0 ? _placedProduction[0].Position: new Vector2(2,2));
 		Console.WriteLine("Placepos " + _placedProduction[0].Position);
-
-	}
-
-	public void OnBakeFinished()
-	{
-		Console.WriteLine("Bake finished");
 	}
 	
 	public static void MoveHouse(Node2D nodeObject, Vector2 position)

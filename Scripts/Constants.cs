@@ -25,3 +25,17 @@ public static class Signals
 	public const string Pressed = "pressed";
 	public const string ItemSelected = "item_selected";
 }
+
+public static class Upgrade
+{
+	public const string Cost = "Cost";
+	public const string MaxWorkers = "MaxWorkers";
+	public const string Inhabitants = "Inhabitants";
+	public const string WoodCost = "WoodCost";
+	public const string StoneCost = "StoneCost";
+	public const string MoneyBackOnDelete = "MoneyBackOnDelete";
+	public const string WoodBackOnDelete = "WoodBackOnDelete";
+	public const string StoneBackOnDelete = "StoneBackOnDelete";
+	public const string WoodMoveCost = "WoodMoveCost";
+	public const string StoneMoveCost = "StoneMoveCost";
+}

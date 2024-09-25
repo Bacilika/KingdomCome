@@ -83,8 +83,8 @@ public partial class GameLogistics: Node2D
 					if (!Move )
 					{
 							_money -= _object.GetPrice();
-							Wood -= _object.Upgrades["WoodCost"][_object.Level];
-							Stone -= _object.Upgrades["StoneCost"][_object.Level];
+							Wood -= _object.Upgrades[Upgrade.WoodCost][_object.Level];
+							Stone -= _object.Upgrades[Upgrade.StoneCost][_object.Level];
 							var placedNode = _object.Duplicate();
 							EmitSignal(SignalName.HousePlaced, placedNode); //Emitted to GameMap
 							var placedBuilding = (AbstractPlaceable)placedNode;
@@ -115,6 +115,11 @@ public partial class GameLogistics: Node2D
 			dragging = false;
 		}
 	}
+
+	public static bool HasUnemployedCitizens()
+	{
+		return WorkingCitizens < Citizens;
+	}
 	
 
 	public bool CanPlace()
@@ -140,8 +145,8 @@ public partial class GameLogistics: Node2D
 		}
 		if (!Move)
 		{
-			return _building.Upgrades["WoodCost"][_building.Level] <= Wood &&
-				   _building.Upgrades["StoneCost"][_building.Level] <= Stone;
+			return _building.Upgrades[Upgrade.WoodCost][_building.Level] <= Wood &&
+				   _building.Upgrades[Upgrade.StoneCost][_building.Level] <= Stone;
 		}
 		// add cost for moving house here
 		else
@@ -166,8 +171,8 @@ public partial class GameLogistics: Node2D
 	{
 		if(CanAfford(building))
 		{
-			Stone -= building.Upgrades["StoneCost"][building.Level];
-			Wood -= building.Upgrades["WoodCost"][building.Level];
+			Stone -= building.Upgrades[Upgrade.StoneCost][building.Level];
+			Wood -= building.Upgrades[Upgrade.WoodCost][building.Level];
 			building.SetObjectValues();
 		}
 		else

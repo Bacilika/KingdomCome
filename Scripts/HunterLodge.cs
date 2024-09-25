@@ -1,44 +1,33 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using Scripts.Constants;
 
 public partial class HunterLodge : Production
 {
-	private RandomNumberGenerator habitantGrowth = new ();
-	private RandomNumberGenerator foodGrowth = new ();
-	private int _growth = 2;// 1/_growth% chance to increase habitants by 1 each tick. 
+	private int _food;
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready_instance()
 	{
+		ProductionRate = 2;
 		_timer = GetNode<Timer>("FoodTimer");
 		_timer.Start();
 		Price = 20000;
-		Upgrades = new Dictionary<String, List<int>>
+		Upgrades = new Dictionary<string, List<int>>
 		{
-			{"Cost", [5000, 3000, 3000]}, {"MaxWorkers", [5, 7, 10]}, {"Inhabitants", [0, 0, 0]}, {"WoodCost", [1, 1, 1]},
-			{"StoneCost", [1, 1, 1]}, {"MoneyBackOnDelete", [4000, 2000, 2000] }, {"WoodBackOnDelete", [3, 7, 15]},
-			{"StoneBackOnDelete", [3, 7, 15]}, {"WoodMoveCost", [2, 5, 10]},
-			{"StoneMoveCost", [2, 5, 10]}
+			{Upgrade.Cost, [5000, 3000, 3000]}, {Upgrade.MaxWorkers, [5, 7, 10]},
+			{Upgrade.Inhabitants, [0, 0, 0]}, {Upgrade.WoodCost, [1, 1, 1]},
+			{Upgrade.StoneCost, [1, 1, 1]}, {Upgrade.MoneyBackOnDelete, [4000, 2000, 2000] },
+			{Upgrade.WoodBackOnDelete, [3, 7, 15]}, {Upgrade.StoneBackOnDelete, [3, 7, 15]},
+			{Upgrade.WoodMoveCost, [2, 5, 10]}, {Upgrade.StoneMoveCost, [2, 5, 10]}
 		};
 	}
 	
-	protected override void Tick()
+	public override void ProduceItem()
 	{
-		if (Workers < Upgrades["MaxWorkers"][Level] && GameLogistics.WorkingCitizens < GameLogistics.Citizens)
-		{
-			if (_timer.IsStopped())
-			{
-				_timer.Start();
-			}
-
-			if (habitantGrowth.RandiRange(0, _growth) ==0)
-			{
-				Workers++;
-				GameLogistics.WorkingCitizens++;
-			}
-		}
-		UpdateInfo();
+		_food++;
+		GameLogistics.Food++;
 	}
 	
 }

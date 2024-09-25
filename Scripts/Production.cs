@@ -1,33 +1,45 @@
 using Godot;
 using System;
+using Scripts.Constants;
 
 public abstract partial class Production : AbstractPlaceable
 {
-	protected int Workers =0;
+	protected int Workers;
 	private int _food;
-	protected Timer _timer; 
+	protected Timer _timer;
+	public bool HasMaxEmployees;
+	protected RandomNumberGenerator Rnd = new ();
+	protected int ProductionRate = 10; // 1/ProductionRate % chance to produce item by 1 each tick. 
 
-	protected abstract override void Tick();
+	protected override void Tick()
+	{
+		
+		if (!HasMaxEmployees && GameLogistics.HasUnemployedCitizens())
+		{
+			if ( _timer is not null && _timer.IsStopped())
+			{
+				_timer.Start();
+			}
+		}
+		UpdateInfo();
+	}
+
+	public abstract void ProduceItem();
 	public abstract override void _Ready_instance();
 
 
 	[Signal]
 	public delegate void LookingForWorkersEventHandler(Production production);
 	
-	public override void _ReadyProduction()
-	{
-		EmitSignal(SignalName.LookingForWorkers, this);
-	}
-	
 
 	public void EmployWorker()
 	{
 		Workers++;
-		if (Upgrades["MaxWorkers"][Level] > Workers)
+		GameLogistics.WorkingCitizens++;
+		if (Workers == Upgrades[Upgrade.MaxWorkers][Level])
 		{
-			EmitSignal(SignalName.LookingForWorkers, this);
-		} 
-		
+			HasMaxEmployees = true;
+		}
 	}
 	
 	public void OnFoodTimerTimeout()
@@ -42,8 +54,8 @@ public abstract partial class Production : AbstractPlaceable
 	{
 		GameLogistics.WorkingCitizens -= Workers;
 		//GameMenu.Money += Upgrades["MoneyBackOnDelete"][Level];
-		GameLogistics.Wood += Upgrades["WoodBackOnDelete"][Level];
-		GameLogistics.Stone += Upgrades["StoneBackOnDelete"][Level];
+		GameLogistics.Wood += Upgrades[Upgrade.WoodBackOnDelete][Level];
+		GameLogistics.Stone += Upgrades[Upgrade.StoneBackOnDelete][Level];
 		QueueFree();
 	}
 	

@@ -56,6 +56,7 @@ public abstract partial class Production : AbstractPlaceable
 		//GameMenu.Money += Upgrades["MoneyBackOnDelete"][Level];
 		GameLogistics.Wood += Upgrades[Upgrade.WoodBackOnDelete][Level];
 		GameLogistics.Stone += Upgrades[Upgrade.StoneBackOnDelete][Level];
+		Shop.deleteAudio.Play();
 		QueueFree();
 	}
 	

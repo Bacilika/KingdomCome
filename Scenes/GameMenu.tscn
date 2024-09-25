@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=4 uid="uid://25kpv3trjyvk"]
+[gd_scene load_steps=8 format=4 uid="uid://25kpv3trjyvk"]
 
 [ext_resource type="Script" path="res://Scripts/GameMenu.cs" id="1_dev6f"]
 [ext_resource type="Texture2D" uid="uid://o80rtv7te3j4" path="res://Sprites/Extra/Atlas_Castle_Building-export.png" id="2_k8sk1"]
 [ext_resource type="FontFile" uid="uid://dul1t3v440c7s" path="res://Deutsch.ttf" id="3_d13wb"]
 [ext_resource type="PackedScene" uid="uid://dlbb4eje8p5k2" path="res://Scenes/Shop.tscn" id="4_nmxg4"]
+[ext_resource type="AudioStream" uid="uid://b51ml7us3al4e" path="res://Audio/ButtonPressed.mp3" id="5_dsk46"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fyhtp"]
 texture = ExtResource("2_k8sk1")
@@ -145,3 +146,7 @@ offset_top = 23.0
 offset_right = 1262.0
 offset_bottom = 23.0
 mouse_filter = 2
+
+[node name="ButtonPressedSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_dsk46")
+volume_db = -14.247

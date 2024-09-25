@@ -3,7 +3,8 @@ using System;
 
 public partial class MainMenu : Control
 {
-	// Called when the node enters the scene tree for the first time.
+	
+
 	public Vector2 CurrentScale { get; set; }
 	public override void _Ready()
 	{
@@ -24,6 +25,8 @@ public partial class MainMenu : Control
 	{
 		GetTree().ChangeSceneToFile("res://Scenes/GameMap.tscn");
 		Console.WriteLine("start");
+		Console.WriteLine("start2");
+
 	}
 	public void OnQuitPressed()
 	{

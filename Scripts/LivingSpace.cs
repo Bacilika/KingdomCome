@@ -5,8 +5,15 @@ public abstract partial class LivingSpaces : AbstractPlaceable
 {
 	protected abstract override void Tick();
 	public abstract override void _Ready_instance();
-	protected abstract override void OnDelete();
-	// Called when the node enters the scene tree for the first time.
 	
-
+	
+	protected override void OnDelete()
+	{
+		GameLogistics.Citizens-= Citizens;
+		QueueFree();
+		//GameMenu.Money += Upgrades["MoneyBackOnDelete"][Level];
+		GameLogistics.Wood += Upgrades["WoodBackOnDelete"][Level];
+		GameLogistics.Stone += Upgrades["StoneBackOnDelete"][Level];
+		Shop.deleteAudio.Play();
+	}
 }

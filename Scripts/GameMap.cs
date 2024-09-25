@@ -27,7 +27,7 @@ public partial class GameMap : Node2D
 		var gameLogistics = GetNode<GameLogistics>("GameLogistics");
 		gameLogistics.HousePlaced += PlaceHouse;
 		_music = GetNode<AudioStreamPlayer2D>("BackgroundMusic");
-		_music.Play();
+		//_music.Play();
 		var nav = GetNode<NavigationRegion2D>("NavigationRegion2D");
 		nav.BakeNavigationPolygon();
 		Console.WriteLine(nav.IsBaking());
@@ -125,7 +125,9 @@ public partial class GameMap : Node2D
 		AbstractPlaceable placeable = (AbstractPlaceable) nodeObject;
 		placeable.IsPlaced = true;
 		placeable.Position = position;
-		
+		//Fix
+		Shop.placeAudio.Play();
+		Console.WriteLine("Audio");
 	}
 
 	private void OnDayTimerTimeout()

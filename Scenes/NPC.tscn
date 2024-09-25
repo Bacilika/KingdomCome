@@ -1,7 +1,8 @@
-[gd_scene load_steps=21 format=3 uid="uid://2uovf4y3vnqd"]
+[gd_scene load_steps=22 format=3 uid="uid://2uovf4y3vnqd"]
 
 [ext_resource type="Script" path="res://Scripts/Npc.cs" id="1_dv6rn"]
 [ext_resource type="Texture2D" uid="uid://7ld563nokdjq" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Character/Character/Character_Walk.png" id="1_f3dyl"]
+[ext_resource type="AudioStream" uid="uid://b42k3qloq1c6x" path="res://Audio/GrassWalking.mp3" id="3_kh5mf"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_f4nvv"]
 atlas = ExtResource("1_f3dyl")
@@ -159,5 +160,8 @@ disabled = true
 
 [node name="WorkTimer" type="Timer" parent="."]
 wait_time = 10.042
+
+[node name="GrassWalking" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_kh5mf")
 
 [connection signal="timeout" from="WorkTimer" to="." method="OnWorkTimerTimeout"]

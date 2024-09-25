@@ -13,10 +13,8 @@ public partial class Npc : CharacterBody2D
 	private Timer _timer;
 	private bool timerOut = false;
 	private RandomNumberGenerator _rnd = new ();
+	private AudioStreamPlayer2D _walkingOnGrassSound;
 	
-
-	[Signal]
-	public delegate void LookingForJobEventHandler();
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -24,11 +22,22 @@ public partial class Npc : CharacterBody2D
 		_navigation = GetNode<NavigationAgent2D>("NavigationAgent2D");
 		Console.WriteLine();
 		_timer = GetNode<Timer>("WorkTimer");
+		_walkingOnGrassSound = GetNode<AudioStreamPlayer2D>("GrassWalking");
 	}
 
 	public void OnWorkTimerTimeout()
 	{
 		timerOut = true;
+	}
+
+	private void TurnOnAudio(bool on)
+	{
+		if (on)
+		{
+			_walkingOnGrassSound.Play();
+			return;
+		}
+		_walkingOnGrassSound.Stop();
 	}
 	
 	public override void _PhysicsProcess(double delta)
@@ -45,9 +54,8 @@ public partial class Npc : CharacterBody2D
 				if (_timer.IsStopped())
 				{
 					_timer.Start();
-
+					TurnOnAudio(false);
 				}
-
 				if (timerOut)
 				{
 					if (_rnd.RandiRange(0, 10)==0) //to make their movement a bit less monotone
@@ -57,7 +65,6 @@ public partial class Npc : CharacterBody2D
 						timerOut = false;
 						_timer.Stop();
 						var nextPos = _navigation.GetNextPathPosition();
-						Console.WriteLine(nextPos);
 						Vector2 new_vel =  (GlobalPosition.DirectionTo(nextPos) * _speed);
 						Velocity = new_vel;
 						MoveAndSlide();
@@ -65,7 +72,6 @@ public partial class Npc : CharacterBody2D
 						
 					}
 				}
-
 
 			}
 			else
@@ -104,7 +110,6 @@ public partial class Npc : CharacterBody2D
 		_navigation.SetTargetPosition(destPos);
 		_navigation.GetNextPathPosition();
 		_ready = true;
+		TurnOnAudio(true);
 	}
-	
-	
 }

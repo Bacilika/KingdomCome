@@ -32,7 +32,6 @@ public abstract partial class AbstractPlaceable : Area2D
 	
 	protected abstract void Tick();
 	public abstract void _Ready_instance();
-	public abstract void _ReadyProduction();
 	protected abstract void OnDelete();
 
 
@@ -52,7 +51,6 @@ public abstract partial class AbstractPlaceable : Area2D
 		InfoBox.MoveToFront();
 		
 		_Ready_instance();
-		_ReadyProduction();
 		SetObjectValues();
 	}
 

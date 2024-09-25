@@ -66,6 +66,18 @@ tile_set = SubResource("TileSet_et3qr")
 rendering_quadrant_size = 32
 collision_enabled = false
 
+[node name="Day" type="Label" parent="MenuCanvasLayer/Container"]
+layout_mode = 2
+offset_left = 40.0
+offset_top = -32.0
+offset_right = 119.0
+offset_bottom = 8.0
+size_flags_horizontal = 0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_d13wb")
+theme_override_font_sizes/font_size = 27
+text = "Day: 0"
+
 [node name="GameStats" type="GridContainer" parent="MenuCanvasLayer/Container"]
 layout_mode = 2
 offset_left = 18.0
@@ -79,43 +91,51 @@ columns = 4
 
 [node name="Food" type="Label" parent="MenuCanvasLayer/Container/GameStats"]
 layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("3_d13wb")
 theme_override_font_sizes/font_size = 19
 text = "Food: 0"
 
 [node name="Money" type="Label" parent="MenuCanvasLayer/Container/GameStats"]
 layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("3_d13wb")
 theme_override_font_sizes/font_size = 19
 text = "Moneys: 0"
 
 [node name="Citizens" type="Label" parent="MenuCanvasLayer/Container/GameStats"]
 layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("3_d13wb")
 theme_override_font_sizes/font_size = 19
 text = "Habitants: 0"
 
 [node name="Happiness" type="Label" parent="MenuCanvasLayer/Container/GameStats"]
 layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("3_d13wb")
 theme_override_font_sizes/font_size = 19
 text = "Happiness: 0"
 
 [node name="Stone" type="Label" parent="MenuCanvasLayer/Container/GameStats"]
 layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("3_d13wb")
 theme_override_font_sizes/font_size = 19
 text = "Stone: 0"
 
-[node name="Day" type="Label" parent="MenuCanvasLayer/Container/GameStats"]
+[node name="Employed" type="Label" parent="MenuCanvasLayer/Container/GameStats"]
 layout_mode = 2
-size_flags_horizontal = 0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("3_d13wb")
 theme_override_font_sizes/font_size = 19
-text = "Day: 0"
+text = "Employed: 0"
 
 [node name="Wood" type="Label" parent="MenuCanvasLayer/Container/GameStats"]
 layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("3_d13wb")
 theme_override_font_sizes/font_size = 19
 text = "Wood: 0"

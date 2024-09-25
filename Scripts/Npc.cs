@@ -4,7 +4,7 @@ using System;
 public partial class Npc : CharacterBody2D
 {
 	public House Home;
-	public AbstractPlaceable Work;
+	public Production Work;
 	private bool isUnemployed = true;
 	private NavigationAgent2D _navigation;
 	private float _speed = 100;
@@ -12,7 +12,9 @@ public partial class Npc : CharacterBody2D
 	private bool _ready;
 	private Timer _timer;
 	private bool timerOut = false;
+	private RandomNumberGenerator _rnd = new ();
 	private AudioStreamPlayer2D _walkingOnGrassSound;
+	
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -56,14 +58,19 @@ public partial class Npc : CharacterBody2D
 				}
 				if (timerOut)
 				{
-					setDestination(startPos);
-					startPos = GetGlobalPosition();
-					timerOut = false;
-					_timer.Stop();
-					var nextPos = _navigation.GetNextPathPosition();
-					Vector2 new_vel =  (GlobalPosition.DirectionTo(nextPos) * _speed);
-					Velocity = new_vel;
-					MoveAndSlide();
+					if (_rnd.RandiRange(0, 10)==0) //to make their movement a bit less monotone
+					{
+						setDestination(startPos);
+						startPos = GetGlobalPosition();
+						timerOut = false;
+						_timer.Stop();
+						var nextPos = _navigation.GetNextPathPosition();
+						Vector2 new_vel =  (GlobalPosition.DirectionTo(nextPos) * _speed);
+						Velocity = new_vel;
+						MoveAndSlide();
+						Work.ProduceItem();
+						
+					}
 				}
 
 			}
@@ -84,9 +91,18 @@ public partial class Npc : CharacterBody2D
 
 	public void GetJob(Production production)
 	{
+		if (Work is null)
+		{
 			Work = production;
 			production.EmployWorker();
 			setDestination(Work.Position);
+		}
+
+	}
+
+	public bool IsEmployed()
+	{
+		return Work != null;
 	}
 
 	public void setDestination(Vector2 destPos)

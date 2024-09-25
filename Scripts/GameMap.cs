@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public partial class GameMap : Node2D
 {
@@ -11,6 +12,10 @@ public partial class GameMap : Node2D
 	private AudioStreamPlayer2D _music;
 	public List<House> _placedHouses = [];
 	public List<Production> _placedProduction = [];
+	public List<Npc> Citizens = [];
+
+	private double _timeSinceLastTick;
+	
 	
 	public override void _Ready()
 	{
@@ -30,11 +35,17 @@ public partial class GameMap : Node2D
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
-	{	
+	{
+		_timeSinceLastTick += delta;
 		if (GameLogistics.Food > 0 && GameLogistics.Citizens > 0)
 		{
 			_foodTimer.Start();
 			hungry = 0;
+		}
+
+		if (_timeSinceLastTick > 1 && GameLogistics.Citizens > GameLogistics.WorkingCitizens) //there are unemployed
+		{
+			GiveJobToNpcs();
 		}
 	}
 
@@ -63,9 +74,11 @@ public partial class GameMap : Node2D
 			house.OnCreateNpc += PlaceNpc;
 			_placedHouses.Add(house);
 		}
-		else 
+		else if(placeable is Production production)
 		{
-			_placedProduction.Add((Production)placeable);
+			
+			_placedProduction.Add(production);
+			
 		}
 		placeable.IsPlaced = true;
 		placeable.Position = GetGlobalMousePosition();
@@ -80,9 +93,29 @@ public partial class GameMap : Node2D
 		npc.Home = house;
 		npc.Position = house.Position;
 		npc.SetStartPos(npc.Position);
-		foreach (var workplace in _placedProduction)
+		Citizens.Add(npc);
+		Console.WriteLine(Citizens.Count);
+		
+	}
+
+	private void GiveJobToNpcs()
+	{
+		foreach (var citizen in Citizens)
 		{
-			workplace.LookingForWorkers += npc.GetJob;
+			if(citizen.IsEmployed()) continue;
+			Production closestJob = null;
+			foreach (var job in _placedProduction)
+			{
+				if(job.HasMaxEmployees)continue;
+				//if jop is closer
+				closestJob = job;
+			}
+
+			if (closestJob is not null)
+			{
+				citizen.GetJob(closestJob);
+				closestJob.EmployWorker();
+			}
 		}
 	}
 	

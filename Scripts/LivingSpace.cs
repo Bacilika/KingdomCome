@@ -6,9 +6,6 @@ public abstract partial class LivingSpaces : AbstractPlaceable
 	protected abstract override void Tick();
 	public abstract override void _Ready_instance();
 	
-	public override void _ReadyProduction()
-	{
-	}
 	
 	protected override void OnDelete()
 	{

@@ -10,7 +10,11 @@ public partial class Shop : Control
 	// Called when the node enters the scene tree for the first time.
 	private GridContainer _buildButtons;
 	public static AudioStreamPlayer2D placeAudio;
+	public static AudioStreamPlayer2D deleteAudio;
 	private int _roadPrice = 100;
+	//Make overall level. If level > x, unlock certain buildings. 
+	private bool _locked = true;
+
 
 
 	[Signal]
@@ -32,6 +36,7 @@ public partial class Shop : Control
 		house.Connect(Signals.Pressed, Callable.From(() => {OnBuildButtonPressed("House", "BuildTabButtons/Houses/ShopItemNode/HouseButton" ); }));
 		var farmHouse = GetNode<Button>("BuildTabButtons/Production/ShopItemNode/FarmButton");
 		farmHouse.Connect(Signals.Pressed, Callable.From(() => {OnBuildButtonPressed("FarmHouse", "BuildTabButtons/Production/ShopItemNode/FarmButton"); }));
+		farmHouse.Disabled = _locked;
 		var stoneMine = GetNode<Button>("BuildTabButtons/Production/ShopItemNode/StoneButton");
 		stoneMine.Connect(Signals.Pressed, Callable.From(() => {OnBuildButtonPressed("StoneMine","BuildTabButtons/Production/ShopItemNode/StoneButton"); }));
 		var road = GetNode<Button>("BuildTabButtons/Roads/ShopItemNode/RoadButton");
@@ -42,6 +47,7 @@ public partial class Shop : Control
 		woodCutter.Connect(Signals.Pressed, Callable.From(() => {OnBuildButtonPressed("WoodCutter","BuildTabButtons/Production/ShopItemNode/WoodButton"); }));
 
 		placeAudio = GetNode<AudioStreamPlayer2D>("PlaceBuildingAudio");
+		deleteAudio = GetNode<AudioStreamPlayer2D>("DeleteBuildingAudio");
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -70,6 +76,7 @@ public partial class Shop : Control
 	{
 		var button = GetNode<Button>(buttonPath);
 		button.ReleaseFocus();
+
 		if(type == "Road")
 		{
 			EmitSignal(SignalName.OnRoadBuild);

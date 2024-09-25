@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://1433h08bkvft"]
+[gd_scene load_steps=17 format=4 uid="uid://1433h08bkvft"]
 
 [ext_resource type="Script" path="res://Scripts/MainMenu.cs" id="1_he78q"]
 [ext_resource type="Texture2D" uid="uid://kqomif0mwutf" path="res://Sprites/The Fan-tasy Tileset - Castles and Fortresses/Tiled/Tilemaps/Forest Keep.png" id="2_x2w5f"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://bdrdixpsahwv" path="res://Sprites/Extra/QuitButton3.png" id="9_ed45i"]
 [ext_resource type="Texture2D" uid="uid://bcl4wla5156ld" path="res://Sprites/Extra/QuitButton2.png" id="10_pnyef"]
 [ext_resource type="FontFile" uid="uid://dul1t3v440c7s" path="res://Deutsch.ttf" id="11_yv51q"]
+[ext_resource type="AudioStream" uid="uid://b51ml7us3al4e" path="res://Audio/ButtonPressed.mp3" id="12_8jx5p"]
 
 [sub_resource type="Environment" id="Environment_63rof"]
 background_mode = 3
@@ -6684,6 +6685,9 @@ text = "Kingdom Come: The game"
 label_settings = SubResource("LabelSettings_eht88")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="ButtonPressedSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("12_8jx5p")
 
 [connection signal="pressed" from="MenuOverlay/StartGameButton" to="." method="OnStartGamePressed"]
 [connection signal="pressed" from="MenuOverlay/Quit" to="." method="OnQuitPressed"]

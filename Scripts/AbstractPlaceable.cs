@@ -139,6 +139,7 @@ public abstract partial class AbstractPlaceable : Area2D
 
 				SetObjectValues();
 				Shop.placeAudio.Play();
+
 			}
 			else
 			{
@@ -153,7 +154,6 @@ public abstract partial class AbstractPlaceable : Area2D
 		InfoBox.Visible = false;
 		IsPlaced = false;
 		EmitSignal(SignalName.OnMoveBuilding, this);
-
 	}
 
 	private void ActivateHitbox(int level)

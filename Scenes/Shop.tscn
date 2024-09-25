@@ -1,6 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://dlbb4eje8p5k2"]
+[gd_scene load_steps=12 format=3 uid="uid://dlbb4eje8p5k2"]
 
 [ext_resource type="Script" path="res://Scripts/Shop.cs" id="1_1o3pr"]
+[ext_resource type="AudioStream" uid="uid://dj5f1kt2yx1yb" path="res://Audio/DeleteBuilding.mp3" id="2_eaaiu"]
 [ext_resource type="Texture2D" uid="uid://cc1ypnuadgjre" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/House_RedWood_Stone_2.png" id="2_s6jgi"]
 [ext_resource type="Texture2D" uid="uid://dbsqgn5x7uxof" path="res://Art/Buildings/House_Hay_Stone_1.png" id="3_vymuh"]
 [ext_resource type="FontFile" uid="uid://dul1t3v440c7s" path="res://Deutsch.ttf" id="4_f5p4c"]
@@ -21,6 +22,7 @@ offset_bottom = 104.0
 script = ExtResource("1_1o3pr")
 
 [node name="DeleteBuildingAudio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_eaaiu")
 
 [node name="PlaceBuildingAudio" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("9_woy45")

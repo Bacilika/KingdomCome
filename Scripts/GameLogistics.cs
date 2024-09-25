@@ -91,7 +91,6 @@ public partial class GameLogistics: Node2D
 							placedBuilding.OnMoveBuilding += OnMove;
 							placedBuilding.OnAreaUpdated += SetContainsBuilding;
 							placedBuilding.OnBuildingUpgrade += UpgradeBuilding;
-							
 							Shop.placeAudio.Play();
 							_containBuilding = true;
 					}

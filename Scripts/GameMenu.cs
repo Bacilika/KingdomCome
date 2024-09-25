@@ -10,6 +10,9 @@ public partial class GameMenu : Control
 {
 	// Called when the node enters the scene tree for the first time.
 	
+	public static AudioStreamPlayer2D ButtonPress;
+
+	
 	private static Godot.Collections.Dictionary<string, Label> _gameStatLabels;
 	
 	[Signal]
@@ -22,6 +25,8 @@ public partial class GameMenu : Control
 		var container = GetNode<Control>("MenuCanvasLayer/Container");
 		container.Scale = currentScale;
 		var statLabels = GetNode<GridContainer>("MenuCanvasLayer/Container/GameStats");
+		ButtonPress = GetNode<AudioStreamPlayer2D>("ButtonPressedSound");
+		ButtonPress.Play();
 		_gameStatLabels = new Godot.Collections.Dictionary<string, Label> { 
 			{"money", statLabels.GetNode<Label>("Money") },
 			{"food", statLabels.GetNode<Label>("Food") },

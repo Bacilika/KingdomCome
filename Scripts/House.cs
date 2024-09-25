@@ -36,13 +36,7 @@ public partial class House : LivingSpaces
 		return Npc;
 	}
 	
-	protected override void OnDelete()
-	{
-		GameLogistics.Citizens-= Citizens;
-		QueueFree();
-		//GameMenu.Money += Upgrades["MoneyBackOnDelete"][Level];
-		GameLogistics.Wood += Upgrades["WoodBackOnDelete"][Level];
-		GameLogistics.Stone += Upgrades["StoneBackOnDelete"][Level];	}
+
 	
 	protected override void Tick()
 	{

@@ -66,6 +66,8 @@ public partial class Shop : Control
 				if (shopItemNode != null)
 				{
 					shopItemNode.Visible = !shopItemNode.Visible;
+					GameMenu.ButtonPress.Play();
+
 				}
 			}
 			else if (shopItemNode != null) shopItemNode.Visible = false;

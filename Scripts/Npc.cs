@@ -12,6 +12,7 @@ public partial class Npc : CharacterBody2D
 	private bool _ready;
 	private Timer _timer;
 	private bool timerOut = false;
+	private AudioStreamPlayer2D _walkingOnGrassSound;
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -19,11 +20,22 @@ public partial class Npc : CharacterBody2D
 		_navigation = GetNode<NavigationAgent2D>("NavigationAgent2D");
 		Console.WriteLine();
 		_timer = GetNode<Timer>("WorkTimer");
+		_walkingOnGrassSound = GetNode<AudioStreamPlayer2D>("GrassWalking");
 	}
 
 	public void OnWorkTimerTimeout()
 	{
 		timerOut = true;
+	}
+
+	private void TurnOnAudio(bool on)
+	{
+		if (on)
+		{
+			_walkingOnGrassSound.Play();
+			return;
+		}
+		_walkingOnGrassSound.Stop();
 	}
 	
 	public override void _PhysicsProcess(double delta)
@@ -40,7 +52,7 @@ public partial class Npc : CharacterBody2D
 				if (_timer.IsStopped())
 				{
 					_timer.Start();
-
+					TurnOnAudio(false);
 				}
 				if (timerOut)
 				{
@@ -82,7 +94,6 @@ public partial class Npc : CharacterBody2D
 		_navigation.SetTargetPosition(destPos);
 		_navigation.GetNextPathPosition();
 		_ready = true;
+		TurnOnAudio(true);
 	}
-	
-	
 }

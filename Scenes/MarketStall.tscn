@@ -1,22 +1,22 @@
-[gd_scene load_steps=8 format=3 uid="uid://cooh60404pw1g"]
+[gd_scene load_steps=8 format=3 uid="uid://b65krkl35tdig"]
 
-[ext_resource type="Script" path="res://Scripts/IronMine.cs" id="1_8hkwk"]
-[ext_resource type="Texture2D" uid="uid://dqll61u34ddet" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Props/Banner_1.png" id="2_wftt1"]
-[ext_resource type="Texture2D" uid="uid://cao0o0lb86hf3" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Props/Banner_2.png" id="3_bauej"]
-[ext_resource type="Texture2D" uid="uid://cnemxq7vo8ek5" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Props/Banner_4.png" id="4_8nnvv"]
-[ext_resource type="PackedScene" uid="uid://biil4p82w3tjw" path="res://Scenes/PlaceableInfo.tscn" id="5_udt75"]
+[ext_resource type="Script" path="res://Scripts/MarketStall.cs" id="1_tdre6"]
+[ext_resource type="Texture2D" uid="uid://hbex1b218kay" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Props/Wood_Cart_2.png" id="2_o1vwq"]
+[ext_resource type="Texture2D" uid="uid://d4dxackhgjuth" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/MarketStand_Small_1.png" id="3_qfx01"]
+[ext_resource type="Texture2D" uid="uid://q1igvln154pw" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/MarketStand_Large_1.png" id="4_kosqo"]
+[ext_resource type="PackedScene" uid="uid://biil4p82w3tjw" path="res://Scenes/PlaceableInfo.tscn" id="5_k5x2f"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_gy8eo"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_wftt1")
+"texture": ExtResource("2_o1vwq")
 }, {
 "duration": 1.0,
-"texture": ExtResource("3_bauej")
+"texture": ExtResource("3_qfx01")
 }, {
 "duration": 1.0,
-"texture": ExtResource("4_8nnvv")
+"texture": ExtResource("4_kosqo")
 }],
 "loop": true,
 "name": &"default",
@@ -24,32 +24,33 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cews5"]
-size = Vector2(34, 87)
+size = Vector2(57, 55)
 
-[node name="IronMine" type="Area2D"]
-script = ExtResource("1_8hkwk")
+[node name="FarmHouse" type="Area2D"]
+script = ExtResource("1_tdre6")
 
 [node name="HouseSprite" type="AnimatedSprite2D" parent="."]
-scale = Vector2(1.5, 1.5)
+visible = false
 sprite_frames = SubResource("SpriteFrames_gy8eo")
-frame_progress = 0.7408
+frame = 1
+frame_progress = 0.429671
 
 [node name="FoodTimer" type="Timer" parent="."]
 wait_time = 10.0
 
 [node name="CollisionShape1" type="CollisionShape2D" parent="."]
-position = Vector2(0, 0.5)
+position = Vector2(1.5, 0)
 shape = SubResource("RectangleShape2D_cews5")
 
 [node name="CollisionShape2" type="CollisionShape2D" parent="."]
-position = Vector2(-0.5, 2)
+position = Vector2(-1.5, 2)
 shape = SubResource("RectangleShape2D_cews5")
 
 [node name="CollisionShape0" type="CollisionShape2D" parent="."]
-position = Vector2(0, 1)
+position = Vector2(1, -0.5)
 shape = SubResource("RectangleShape2D_cews5")
 
-[node name="PlaceableInfo" parent="." instance=ExtResource("5_udt75")]
+[node name="PlaceableInfo" parent="." instance=ExtResource("5_k5x2f")]
 
 [connection signal="area_entered" from="." to="." method="OnAreaEntered"]
 [connection signal="area_exited" from="." to="." method="OnAreaExited"]

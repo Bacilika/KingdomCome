@@ -5,7 +5,6 @@ using Scripts.Constants;
 
 public partial class WoodCutter : Production
 {
-	private int _wood;
 	public override void _Ready_instance()
 	{
 		_timer = GetNode<Timer>("WoodTimer");
@@ -22,7 +21,6 @@ public partial class WoodCutter : Production
 	}
 	public override void ProduceItem()
 	{
-		_wood++;
 		GameLogistics.Wood++;
 	}
 }

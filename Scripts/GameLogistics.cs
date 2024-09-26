@@ -21,6 +21,8 @@ public partial class GameLogistics: Node2D
 	public static int Food;
 	public static int Stone = 2000;
 	public static int Wood = 2000;
+	public static int Water;
+	public static int Iron;
 	public static int WorkingCitizens;
 	public static int Day = 0;
 	public static bool dragging;

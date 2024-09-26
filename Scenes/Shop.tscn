@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dlbb4eje8p5k2"]
+[gd_scene load_steps=15 format=3 uid="uid://dlbb4eje8p5k2"]
 
 [ext_resource type="Script" path="res://Scripts/Shop.cs" id="1_1o3pr"]
 [ext_resource type="AudioStream" uid="uid://dj5f1kt2yx1yb" path="res://Audio/DeleteBuilding.mp3" id="2_eaaiu"]
@@ -11,6 +11,9 @@
 [ext_resource type="Texture2D" uid="uid://ds2amcmwp0pcr" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/WatchTower_BlueBricks_Wood_1.png" id="7_oo1vr"]
 [ext_resource type="Texture2D" uid="uid://brvm4do2qgrtr" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Props/WoodenBoard_1.png" id="9_qeg75"]
 [ext_resource type="AudioStream" uid="uid://bg6kys8wlkqcn" path="res://Audio/PlaceBuilding.mp3" id="9_woy45"]
+[ext_resource type="Texture2D" uid="uid://dqgtiysashmi4" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/Well_BlueBricks_Stone.png" id="11_m0aoq"]
+[ext_resource type="Texture2D" uid="uid://dqll61u34ddet" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Props/Banner_1.png" id="12_3dnmg"]
+[ext_resource type="Texture2D" uid="uid://d4dxackhgjuth" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/MarketStand_Small_1.png" id="13_tk7b3"]
 
 [node name="Shop" type="Control"]
 layout_mode = 3
@@ -74,7 +77,6 @@ theme_override_font_sizes/font_size = 22
 text = "Production"
 
 [node name="ShopItemNode" type="Control" parent="BuildTabButtons/Production"]
-visible = false
 anchors_preset = 0
 offset_left = -471.0
 offset_top = -48.0
@@ -89,9 +91,10 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -89.0
-offset_top = -32.0
-offset_bottom = 32.0
+offset_left = -472.0
+offset_top = -25.0
+offset_right = -395.0
+offset_bottom = 35.0
 grow_horizontal = 0
 grow_vertical = 2
 icon = ExtResource("2_s6jgi")
@@ -105,10 +108,10 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -173.0
-offset_top = -23.0
-offset_right = -117.0
-offset_bottom = 25.0
+offset_left = -175.0
+offset_top = -13.0
+offset_right = -119.0
+offset_bottom = 35.0
 grow_horizontal = 0
 grow_vertical = 2
 icon = ExtResource("5_3wji3")
@@ -122,10 +125,10 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -252.0
-offset_top = -20.0
-offset_right = -196.0
-offset_bottom = 28.0
+offset_left = -55.0
+offset_top = -36.0
+offset_right = -16.0
+offset_bottom = 34.0
 grow_horizontal = 0
 grow_vertical = 2
 icon = ExtResource("7_oo1vr")
@@ -139,13 +142,64 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -350.0
-offset_top = -33.0
-offset_right = -261.0
-offset_bottom = 31.0
+offset_left = -112.0
+offset_top = -29.0
+offset_right = -63.0
+offset_bottom = 35.0
 grow_horizontal = 0
 grow_vertical = 2
 icon = ExtResource("9_qeg75")
+flat = true
+expand_icon = true
+
+[node name="WellButton" type="Button" parent="BuildTabButtons/Production/ShopItemNode"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -239.0
+offset_top = -29.0
+offset_right = -189.0
+offset_bottom = 35.0
+grow_horizontal = 0
+grow_vertical = 2
+icon = ExtResource("11_m0aoq")
+flat = true
+expand_icon = true
+
+[node name="IronMineButton" type="Button" parent="BuildTabButtons/Production/ShopItemNode"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -289.0
+offset_top = -30.0
+offset_right = -258.0
+offset_bottom = 34.0
+grow_horizontal = 0
+grow_vertical = 2
+icon = ExtResource("12_3dnmg")
+flat = true
+expand_icon = true
+
+[node name="MarketStallButton" type="Button" parent="BuildTabButtons/Production/ShopItemNode"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -372.0
+offset_top = -22.0
+offset_right = -311.0
+offset_bottom = 34.0
+grow_horizontal = 0
+grow_vertical = 2
+icon = ExtResource("13_tk7b3")
 flat = true
 expand_icon = true
 

@@ -29,7 +29,10 @@ public partial class Shop : Control
 			{"FarmHouse", ResourceLoader.Load<PackedScene>("res://Scenes/FarmHouse.tscn")},
 			{"StoneMine", ResourceLoader.Load<PackedScene>("res://Scenes/StoneMine.tscn")},
 			{"HunterLodge", ResourceLoader.Load<PackedScene>("res://Scenes/HunterLodge.tscn")},
-			{"WoodCutter", ResourceLoader.Load<PackedScene>("res://Scenes/WoodCutter.tscn")}
+			{"WoodCutter", ResourceLoader.Load<PackedScene>("res://Scenes/WoodCutter.tscn")},
+			{"IronMine", ResourceLoader.Load<PackedScene>("res://Scenes/IronMine.tscn")},
+			{"Well", ResourceLoader.Load<PackedScene>("res://Scenes/Well.tscn")},
+			{"MarketStall", ResourceLoader.Load<PackedScene>("res://Scenes/MarketStall.tscn")}
 		};
 		_buildButtons = GetNode<GridContainer>("BuildTabButtons");
 		var house = GetNode<Button>("BuildTabButtons/Houses/ShopItemNode/HouseButton");
@@ -45,6 +48,12 @@ public partial class Shop : Control
 		huntersLodge.Connect(Signals.Pressed, Callable.From(() => {OnBuildButtonPressed("HunterLodge","BuildTabButtons/Production/ShopItemNode/HuntingButton"); }));
 		var woodCutter = GetNode<Button>("BuildTabButtons/Production/ShopItemNode/WoodButton");
 		woodCutter.Connect(Signals.Pressed, Callable.From(() => {OnBuildButtonPressed("WoodCutter","BuildTabButtons/Production/ShopItemNode/WoodButton"); }));
+		var marketStall = GetNode<Button>("BuildTabButtons/Production/ShopItemNode/MarketStallButton");
+		marketStall.Connect(Signals.Pressed, Callable.From(() => {OnBuildButtonPressed("MarketStall","BuildTabButtons/Production/ShopItemNode/MarketStallButton"); }));
+		var well = GetNode<Button>("BuildTabButtons/Production/ShopItemNode/WellButton");
+		well.Connect(Signals.Pressed, Callable.From(() => {OnBuildButtonPressed("Well","BuildTabButtons/Production/ShopItemNode/WellButton"); }));
+		var ironMine = GetNode<Button>("BuildTabButtons/Production/ShopItemNode/IronMineButton");
+		ironMine.Connect(Signals.Pressed, Callable.From(() => {OnBuildButtonPressed("IronMine","BuildTabButtons/Production/ShopItemNode/IronMineButton"); }));
 
 		placeAudio = GetNode<AudioStreamPlayer2D>("PlaceBuildingAudio");
 		deleteAudio = GetNode<AudioStreamPlayer2D>("DeleteBuildingAudio");

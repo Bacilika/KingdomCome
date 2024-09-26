@@ -35,7 +35,9 @@ public partial class GameMenu : Control
 			{"happiness",statLabels.GetNode<Label>("Happiness")},
 			{"day",GetNode<Label>("MenuCanvasLayer/Container/Day")},
 			{"wood",statLabels.GetNode<Label>("Wood")},
-			{"Employed",statLabels.GetNode<Label>("Employed")}
+			{"Employed",statLabels.GetNode<Label>("Employed")},
+			{"Iron",statLabels.GetNode<Label>("Iron")},
+			{"Water",statLabels.GetNode<Label>("Water")}
 		};
 	}
 
@@ -55,6 +57,8 @@ public partial class GameMenu : Control
 		_gameStatLabels["day"].Text = "Day " + GameLogistics.Day;
 		_gameStatLabels["wood"].Text = "Wood: " + GameLogistics.Wood;
 		_gameStatLabels["Employed"].Text = "Employed: " + GameLogistics.WorkingCitizens;
+		_gameStatLabels["Iron"].Text = "Iron: " + GameLogistics.WorkingCitizens;
+		_gameStatLabels["Water"].Text = "Water: " + GameLogistics.WorkingCitizens;
 	}
 
 

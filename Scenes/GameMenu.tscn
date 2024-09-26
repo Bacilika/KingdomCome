@@ -78,15 +78,16 @@ theme_override_font_sizes/font_size = 27
 text = "Day: 0"
 
 [node name="GameStats" type="GridContainer" parent="MenuCanvasLayer/Container"]
+visible = false
 layout_mode = 2
 offset_left = 18.0
 offset_top = 38.0
-offset_right = 474.0
-offset_bottom = 98.0
+offset_right = 724.0
+offset_bottom = 118.0
 mouse_filter = 2
 theme_override_constants/h_separation = 40
 theme_override_constants/v_separation = 7
-columns = 4
+columns = 5
 
 [node name="Citizens" type="Label" parent="MenuCanvasLayer/Container/GameStats"]
 layout_mode = 2
@@ -138,6 +139,20 @@ theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("3_d13wb")
 theme_override_font_sizes/font_size = 19
 text = "Wood: 0"
+
+[node name="Iron" type="Label" parent="MenuCanvasLayer/Container/GameStats"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_d13wb")
+theme_override_font_sizes/font_size = 19
+text = "Iron: 0"
+
+[node name="Water" type="Label" parent="MenuCanvasLayer/Container/GameStats"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_d13wb")
+theme_override_font_sizes/font_size = 19
+text = "Water: 0"
 
 [node name="Shop" parent="MenuCanvasLayer/Container" instance=ExtResource("4_nmxg4")]
 offset_left = 1260.0

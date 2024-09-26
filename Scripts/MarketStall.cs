@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using Scripts.Constants;
 
-public partial class HunterLodge : Production
+public partial class MarketStall : Production
 {
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready_instance()
@@ -26,5 +26,5 @@ public partial class HunterLodge : Production
 	{
 		GameLogistics.Food++;
 	}
-	
+
 }

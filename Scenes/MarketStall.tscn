@@ -1,0 +1,59 @@
+[gd_scene load_steps=8 format=3 uid="uid://b65krkl35tdig"]
+
+[ext_resource type="Script" path="res://Scripts/MarketStall.cs" id="1_tdre6"]
+[ext_resource type="Texture2D" uid="uid://hbex1b218kay" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Props/Wood_Cart_2.png" id="2_o1vwq"]
+[ext_resource type="Texture2D" uid="uid://d4dxackhgjuth" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/MarketStand_Small_1.png" id="3_qfx01"]
+[ext_resource type="Texture2D" uid="uid://q1igvln154pw" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/MarketStand_Large_1.png" id="4_kosqo"]
+[ext_resource type="PackedScene" uid="uid://biil4p82w3tjw" path="res://Scenes/PlaceableInfo.tscn" id="5_k5x2f"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gy8eo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_o1vwq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_qfx01")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_kosqo")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cews5"]
+size = Vector2(57, 55)
+
+[node name="FarmHouse" type="Area2D"]
+script = ExtResource("1_tdre6")
+
+[node name="HouseSprite" type="AnimatedSprite2D" parent="."]
+visible = false
+sprite_frames = SubResource("SpriteFrames_gy8eo")
+frame = 1
+frame_progress = 0.429671
+
+[node name="FoodTimer" type="Timer" parent="."]
+wait_time = 10.0
+
+[node name="CollisionShape1" type="CollisionShape2D" parent="."]
+position = Vector2(1.5, 0)
+shape = SubResource("RectangleShape2D_cews5")
+
+[node name="CollisionShape2" type="CollisionShape2D" parent="."]
+position = Vector2(-1.5, 2)
+shape = SubResource("RectangleShape2D_cews5")
+
+[node name="CollisionShape0" type="CollisionShape2D" parent="."]
+position = Vector2(1, -0.5)
+shape = SubResource("RectangleShape2D_cews5")
+
+[node name="PlaceableInfo" parent="." instance=ExtResource("5_k5x2f")]
+
+[connection signal="area_entered" from="." to="." method="OnAreaEntered"]
+[connection signal="area_exited" from="." to="." method="OnAreaExited"]
+[connection signal="mouse_entered" from="." to="." method="OnMouseEntered"]
+[connection signal="mouse_exited" from="." to="." method="OnMouseExited"]
+[connection signal="timeout" from="FoodTimer" to="." method="OnFoodTimerTimeout"]

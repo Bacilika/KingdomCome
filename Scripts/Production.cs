@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Net;
 using Scripts.Constants;
 
 public abstract partial class Production : AbstractPlaceable
@@ -34,12 +35,16 @@ public abstract partial class Production : AbstractPlaceable
 
 	public void EmployWorker()
 	{
-		Workers++;
-		GameLogistics.WorkingCitizens++;
-		if (Workers == Upgrades[Upgrade.MaxWorkers][Level])
+		if (Workers == Upgrades[Upgrade.MaxWorkers][Level]-1)
 		{
 			HasMaxEmployees = true;
 		}
+		if (Workers == Upgrades[Upgrade.MaxWorkers][Level])
+		{
+			return;
+		}
+		Workers++;
+		GameLogistics.WorkingCitizens++;
 	}
 	
 	public void OnFoodTimerTimeout()
@@ -63,7 +68,7 @@ public abstract partial class Production : AbstractPlaceable
 	public void UpdateInfo()
 	{
 		var textLabel = (RichTextLabel) InfoBox.GetChild(0).GetChild(0);
-		textLabel.Text = "Workers: " + Workers;
+		textLabel.Text = "Workers: " + Workers + "/" + Upgrades["MaxWorkers"][Level];
 	}
 
 

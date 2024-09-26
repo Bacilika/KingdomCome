@@ -32,11 +32,6 @@ public partial class Npc : CharacterBody2D
 		timerOut = true;
 	}
 
-	public void MoveHome()
-	{
-		
-	}
-
 	private void TurnOnAudio(bool on)
 	{
 		if (on)
@@ -106,7 +101,6 @@ public partial class Npc : CharacterBody2D
 			workPosition = Work.Position;
 			setDestination(workPosition);
 		}
-
 	}
 
 	public bool IsEmployed()

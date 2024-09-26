@@ -38,6 +38,7 @@ wait_time = 30.0
 autostart = true
 
 [node name="HouseSprite" type="AnimatedSprite2D" parent="."]
+z_index = 1
 sprite_frames = SubResource("SpriteFrames_wjt6n")
 
 [node name="CollisionShape1" type="CollisionShape2D" parent="."]

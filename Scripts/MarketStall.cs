@@ -12,6 +12,7 @@ public partial class MarketStall : Production
 		_timer = GetNode<Timer>("FoodTimer");
 		_timer.Start();
 		Price = 20000;
+		InfoBox.Connect(PlaceableInfo.SignalName.OnChooseWare, Callable.From(OnChooseWare));
 		Upgrades = new Dictionary<string, List<int>>
 		{
 			{Upgrade.Cost, [5000, 3000, 3000]}, {Upgrade.MaxWorkers, [5, 7, 10]},
@@ -20,13 +21,17 @@ public partial class MarketStall : Production
 			{Upgrade.WoodBackOnDelete, [3, 7, 15]}, {Upgrade.StoneBackOnDelete, [3, 7, 15]},
 			{Upgrade.WoodMoveCost, [2, 5, 10]}, {Upgrade.StoneMoveCost, [2, 5, 10]}
 		};
-		var place = GetNode<PlaceableInfo>("PlaceableInfo");
-		var button = place.GetNode<Button>("ChooseWareButton");
+		var button = InfoBox.GetNode<Button>("InfoBox/ChooseWareButton");
 		button.Visible = true;
 	}
 	
 	public override void ProduceItem()
 	{
 		GameLogistics._money++;
+	}
+
+	public void OnChooseWare()
+	{
+		
 	}
 }

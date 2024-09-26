@@ -53,6 +53,7 @@ text = "Move"
 
 [node name="ChooseWareButton" type="Button" parent="InfoBox"]
 visible = false
+layout_mode = 0
 offset_left = 46.0
 offset_top = 45.0
 offset_right = 156.0

@@ -30,7 +30,6 @@ size = Vector2(57, 55)
 script = ExtResource("1_tdre6")
 
 [node name="HouseSprite" type="AnimatedSprite2D" parent="."]
-visible = false
 sprite_frames = SubResource("SpriteFrames_gy8eo")
 frame = 1
 frame_progress = 0.429671

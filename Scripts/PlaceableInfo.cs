@@ -9,14 +9,22 @@ public partial class PlaceableInfo : Control
 	public delegate void OnDeleteEventHandler();
 	[Signal]
 	public delegate void OnUpgradeEventHandler();
-	[Signal]
+	[Signal]	
 	public delegate void OnMoveEventHandler();
+	[Signal]	
+	public delegate void OnChooseWareEventHandler();
 	public override void _Process(double delta)
 	{
 	}
 	
 	public void OnButtonDownPressed(){
 				GD.Print("button down");
+	}
+
+	public void OnChooseWareButtonPressed()
+	{
+		EmitSignal(SignalName.OnChooseWare);
+
 	}
 	
 	public void OnDeleteButtonPressed()

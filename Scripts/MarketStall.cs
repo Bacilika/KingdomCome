@@ -20,11 +20,13 @@ public partial class MarketStall : Production
 			{Upgrade.WoodBackOnDelete, [3, 7, 15]}, {Upgrade.StoneBackOnDelete, [3, 7, 15]},
 			{Upgrade.WoodMoveCost, [2, 5, 10]}, {Upgrade.StoneMoveCost, [2, 5, 10]}
 		};
+		var place = GetNode<PlaceableInfo>("PlaceableInfo");
+		var button = place.GetNode<Button>("ChooseWareButton");
+		button.Visible = true;
 	}
 	
 	public override void ProduceItem()
 	{
-		GameLogistics.Food++;
+		GameLogistics._money++;
 	}
-
 }

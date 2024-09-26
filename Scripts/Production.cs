@@ -24,6 +24,12 @@ public abstract partial class Production : AbstractPlaceable
 		UpdateInfo();
 	}
 
+	public void GatherResource()
+	{
+		ProduceItem();
+		PlayAnimation();
+	}
+
 	public abstract void ProduceItem();
 	public abstract override void _Ready_instance();
 
@@ -64,6 +70,13 @@ public abstract partial class Production : AbstractPlaceable
 	{
 		var textLabel = (RichTextLabel) InfoBox.GetChild(0).GetChild(0);
 		textLabel.Text = "Workers: " + Workers;
+	}
+	public void PlayAnimation()
+	{
+		var animatedSprite = GetNode<AnimatedSprite2D>("Animation");
+		animatedSprite.TextureRepeat = TextureRepeatEnum.Disabled;
+		animatedSprite.Play();
+		
 	}
 
 

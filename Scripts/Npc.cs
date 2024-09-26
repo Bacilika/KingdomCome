@@ -68,7 +68,7 @@ public partial class Npc : CharacterBody2D
 						Vector2 new_vel =  (GlobalPosition.DirectionTo(nextPos) * _speed);
 						Velocity = new_vel;
 						MoveAndSlide();
-						Work.ProduceItem();
+						Work.GatherResource();
 						
 					}
 				}

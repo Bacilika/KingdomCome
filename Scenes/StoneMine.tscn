@@ -1,10 +1,17 @@
-[gd_scene load_steps=8 format=3 uid="uid://b88wabyfmkyij"]
+[gd_scene load_steps=16 format=3 uid="uid://b88wabyfmkyij"]
 
 [ext_resource type="Script" path="res://Scripts/StoneMine.cs" id="1_72tjo"]
 [ext_resource type="Texture2D" uid="uid://b8kak80j2u1tt" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Rocks/Rock_Brown_11.png" id="3_abk76"]
 [ext_resource type="PackedScene" uid="uid://biil4p82w3tjw" path="res://Scenes/PlaceableInfo.tscn" id="3_fiyya"]
 [ext_resource type="Texture2D" uid="uid://w6cj7fy1l373" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Rocks/Rock_Brown_12.png" id="4_6kwlr"]
 [ext_resource type="Texture2D" uid="uid://c2em0yxe3sv6d" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Rocks/Rock_Brown_10.png" id="5_vdxdq"]
+[ext_resource type="Texture2D" uid="uid://dt1kbfdm7dk2a" path="res://Sprites/Extra/addResource1.png" id="6_6eg7y"]
+[ext_resource type="Texture2D" uid="uid://co3y7ufhufouh" path="res://Sprites/Extra/addResource2.png" id="7_3ybne"]
+[ext_resource type="Texture2D" uid="uid://bpp4m7x6k6cyf" path="res://Sprites/Extra/addResource3.png" id="8_xheei"]
+[ext_resource type="Texture2D" uid="uid://bjtqfmauw1cfk" path="res://Sprites/Extra/addResource4.png" id="9_sdy4i"]
+[ext_resource type="Texture2D" uid="uid://bh7bofwv2v6rn" path="res://Sprites/Extra/addResource5.png" id="10_671s8"]
+[ext_resource type="Texture2D" uid="uid://c2s5x2ag6prrg" path="res://Sprites/Extra/addResource6.png" id="11_28p5x"]
+[ext_resource type="Texture2D" uid="uid://epbdr1v164x7" path="res://Sprites/Extra/addResource8.png" id="12_ylvfk"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4rn2q"]
 radius = 18.0
@@ -25,6 +32,35 @@ animations = [{
 "loop": true,
 "name": &"default",
 "speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_thwig"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_6eg7y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_3ybne")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_xheei")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_sdy4i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_671s8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_28p5x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_ylvfk")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
 }]
 
 [node name="StoneMine" type="Area2D"]
@@ -55,6 +91,10 @@ offset_left = 2.0
 offset_top = 6.0
 offset_right = 210.0
 offset_bottom = 190.0
+
+[node name="Animation" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -56)
+sprite_frames = SubResource("SpriteFrames_thwig")
 
 [connection signal="area_entered" from="." to="." method="OnAreaEntered"]
 [connection signal="area_exited" from="." to="." method="OnAreaExited"]

@@ -22,6 +22,7 @@ public abstract partial class AbstractPlaceable : Area2D
 	private double _time;
 	private bool _move;
 	protected int HouseholdHappiness;
+	public bool hasMoved = false;
 
 	[Signal]
 	public delegate void OnMoveBuildingEventHandler(AbstractPlaceable building);
@@ -152,6 +153,7 @@ public abstract partial class AbstractPlaceable : Area2D
 		InfoBox.Visible = false;
 		IsPlaced = false;
 		EmitSignal(SignalName.OnMoveBuilding, this);
+		hasMoved = true;
 	}
 
 	private void ActivateHitbox(int level)

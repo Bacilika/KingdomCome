@@ -190,7 +190,6 @@ public partial class GameLogistics: Node2D
 		_object = building;
 		_containBuilding = false;
 		IsPlaceMode = true;
-		
 	}
 	
 	private void PlaceRoad()

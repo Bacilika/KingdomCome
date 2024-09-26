@@ -79,7 +79,6 @@ theme_override_font_sizes/font_size = 27
 text = "Day: 0"
 
 [node name="GameStats" type="GridContainer" parent="MenuCanvasLayer/Container"]
-visible = false
 layout_mode = 2
 offset_left = 18.0
 offset_top = 38.0

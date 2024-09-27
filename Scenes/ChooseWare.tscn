@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://ud23v844segc"]
+[gd_scene load_steps=9 format=3 uid="uid://ud23v844segc"]
 
 [ext_resource type="Script" path="res://Scripts/ChooseWare.cs" id="1_v17v8"]
 [ext_resource type="Texture2D" uid="uid://b5llsw0d3srcl" path="res://Sprites/Extra/InfoBoxSprite.png" id="2_ccpbf"]
@@ -7,6 +7,9 @@
 [ext_resource type="Texture2D" uid="uid://djxd7hx3cidkj" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Props/HayStack_1.png" id="5_qnub7"]
 [ext_resource type="Texture2D" uid="uid://k1l38nx1komj" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Props/Logs_2.png" id="6_rbphx"]
 [ext_resource type="Texture2D" uid="uid://dh26funj7lt16" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Rocks/Rock_Brown_5.png" id="7_8o4ev"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_qg5yy"]
+resource_name = "SellItem"
 
 [node name="ChooseWare" type="Control"]
 z_index = 2
@@ -38,6 +41,8 @@ offset_left = 110.0
 offset_top = 132.0
 offset_right = 179.0
 offset_bottom = 168.0
+toggle_mode = true
+button_group = SubResource("ButtonGroup_qg5yy")
 icon = ExtResource("3_xvgnl")
 icon_alignment = 1
 expand_icon = true
@@ -48,6 +53,7 @@ offset_left = 25.0
 offset_top = 131.0
 offset_right = 94.0
 offset_bottom = 169.0
+toggle_mode = true
 icon = ExtResource("4_e6x52")
 icon_alignment = 1
 expand_icon = true
@@ -72,6 +78,7 @@ icon_alignment = 1
 expand_icon = true
 
 [node name="SellStoneButton" type="Button" parent="InfoBox"]
+layout_mode = 0
 offset_left = 109.0
 offset_top = 40.0
 offset_right = 178.0

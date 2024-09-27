@@ -94,6 +94,9 @@ public partial class GameLogistics: Node2D
 							placedBuilding.OnBuildingUpgrade += UpgradeBuilding;
 							Shop.placeAudio.Play();
 							_containBuilding = true;
+							_object?.QueueFree();
+							_roadObject?.QueueFree();
+							ResetModes();
 					}
 					else
 					{

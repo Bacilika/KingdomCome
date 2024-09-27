@@ -21,8 +21,11 @@ public abstract partial class Production : AbstractPlaceable
 
 	public void GatherResource()
 	{
-		ProduceItem();
-		PlayAnimation();
+		if (GetWorkers() > 0)
+		{
+			ProduceItem();
+			PlayAnimation();	
+		}
 	}
 
 	public abstract void ProduceItem();

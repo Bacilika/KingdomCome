@@ -14,15 +14,11 @@ public abstract partial class Production : AbstractPlaceable
 
 	protected override void Tick()
 	{
-		
-		if (!HasMaxEmployees && GameLogistics.HasUnemployedCitizens())
+		if ( _timer is not null && _timer.IsStopped())
 		{
-			if ( _timer is not null && _timer.IsStopped())
-			{
-				_timer.Start();
-			}
+			_timer.Start();
 		}
-		UpdateInfo();
+	UpdateInfo();
 	}
 
 	public abstract void ProduceItem();
@@ -35,12 +31,9 @@ public abstract partial class Production : AbstractPlaceable
 
 	public void EmployWorker()
 	{
-		if (Workers == Upgrades[Upgrade.MaxWorkers][Level]-1)
-		{
-			HasMaxEmployees = true;
-		}
 		if (Workers == Upgrades[Upgrade.MaxWorkers][Level])
 		{
+			HasMaxEmployees = true;
 			return;
 		}
 		Workers++;

@@ -23,6 +23,8 @@ public abstract partial class AbstractPlaceable : Area2D
 	private bool _move;
 	protected int HouseholdHappiness;
 	public bool hasMoved = false;
+	public ChooseWare WareBox;
+
 
 	[Signal]
 	public delegate void OnMoveBuildingEventHandler(AbstractPlaceable building);
@@ -45,14 +47,28 @@ public abstract partial class AbstractPlaceable : Area2D
 		InfoBox.Connect(PlaceableInfo.SignalName.OnDelete, Callable.From(OnDelete));
 		InfoBox.Connect(PlaceableInfo.SignalName.OnUpgrade, Callable.From(OnUpgrade));
 		InfoBox.Connect(PlaceableInfo.SignalName.OnMove, Callable.From(OnMove));
+
+
 		
 		Monitoring = true;
 		Monitorable = true;
 		InfoBox.Visible = false;
 		InfoBox.MoveToFront();
+		WareBox	= InfoBox.GetNode<ChooseWare>("ChooseWare");
+		WareBox.Visible = false;
+		var _button = InfoBox.GetNode<Button>("InfoBox/ChooseWareButton");
+		if (this is MarketStall)
+		{
+			_button.Visible = true;
+		}
+		else
+		{
+			_button.Visible = false;
+		}
 		
 		_Ready_instance();
 		SetObjectValues();
+
 	}
 
 	public override void _Process(double delta)

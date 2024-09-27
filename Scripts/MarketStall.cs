@@ -7,7 +7,6 @@ public partial class MarketStall : Production
 {
 	protected ChooseWare WareBox;
 	private Button _button;
-	private List<String> _sellableItems = new (["Iron", "Meat", "Wheat", "Stone", "Wood"]);
 	public int itemToSell;
 
 	public override void _Ready_instance()
@@ -17,8 +16,6 @@ public partial class MarketStall : Production
 		_timer.Start();
 		Price = 20000;
 		InfoBox.Connect(PlaceableInfo.SignalName.OnChooseWare, Callable.From(OnChooseWare));
-		_button = InfoBox.GetNode<Button>("InfoBox/ChooseWareButton");
-		_button.Visible = true;
 		Upgrades = new Dictionary<string, List<int>>
 		{
 			{Upgrade.Cost, [5000, 3000, 3000]}, {Upgrade.MaxWorkers, [5, 7, 10]},
@@ -29,7 +26,6 @@ public partial class MarketStall : Production
 		};
 		WareBox = InfoBox.GetNode<ChooseWare>("ChooseWare");
 		WareBox.Connect(ChooseWare.SignalName.OnSellIron, Callable.From(OnSellIron));
-		WareBox.Visible = false;
 	}
 	
 

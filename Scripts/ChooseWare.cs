@@ -19,12 +19,10 @@ public partial class ChooseWare : Control
 
 	public void OnSellIronButtonPressed()
 	{
-		Console.WriteLine("OnSellIronButtonPressed");
 		EmitSignal(SignalName.OnSellIron);
 	}
 	public void OnSellMeatButtonPressed()
 	{
-		Console.WriteLine("OnSellMeatButtonPressed");
 		EmitSignal(SignalName.OnSellMeat);
 
 	}
@@ -47,7 +45,7 @@ public partial class ChooseWare : Control
 	
 	private void OnMouseEntered()
 	{
-		Console.WriteLine("Entered!!");
+		Focused = true;
 	}
 	private void OnMouseExited()
 	{

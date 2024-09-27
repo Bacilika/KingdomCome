@@ -129,7 +129,7 @@ public abstract partial class AbstractPlaceable : Area2D
 			}
 			else //if building is not focused
 			{
-				if (!InfoBox.Focused) //and infobox is not focused
+				if (!InfoBox.Focused && !WareBox.Focused) //and infobox is not focused
 				{
 					InfoBox.Visible = false;
 				}

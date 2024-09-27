@@ -9,6 +9,7 @@ public partial class MarketStall : Production
 	private Button _button;
 	public string itemToSell = null;
 	private bool sell = false;
+	private int price;
 
 	public override void _Ready_instance()
 	{
@@ -43,8 +44,7 @@ public partial class MarketStall : Production
 		{
 			if (GameLogistics.Resources[itemToSell] > 0)
 			{
-				Console.WriteLine(GameLogistics.Resources[itemToSell]);
-				GameLogistics.Resources["Money"]++;
+				GameLogistics.Resources["Money"] += price;
 				GameLogistics.Resources[itemToSell]--;
 			}
 		}
@@ -58,7 +58,34 @@ public partial class MarketStall : Production
 	public void OnSellIron()
 	{
 		itemToSell = "Iron";
-		Console.WriteLine(itemToSell);
 		sell = true;
+		price = 10;
+	}
+	public void OnSellMeat()
+	{
+		itemToSell = "Food";
+		sell = true;
+		price = 2;
+	}
+	
+	public void OnSellWheat()
+	{
+		itemToSell = "Food";
+		sell = true;
+		price = 3;
+	}
+	
+	public void OnSellStone()
+	{
+		itemToSell = "Stone";
+		sell = true;
+		price = 1;
+	}
+	
+	public void OnSellWood()
+	{
+		itemToSell = "Wood";
+		sell = true;
+		price = 1;
 	}
 }

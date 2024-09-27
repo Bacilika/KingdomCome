@@ -8,8 +8,8 @@
 z_index = 2
 layout_mode = 3
 anchors_preset = 0
-offset_right = 208.0
-offset_bottom = 184.0
+offset_right = 213.0
+offset_bottom = 185.0
 script = ExtResource("1_snswj")
 
 [node name="InfoBox" type="TextureRect" parent="."]

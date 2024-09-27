@@ -42,9 +42,9 @@ public partial class GameLogistics: Node2D
 
 		Resources = new System.Collections.Generic.Dictionary<string, int>
 		{
-			{ "Money", 100000 }, { "Citizens", 0 }, { "Happiness", 0 }, { "Food", 0 }, { "Stone", 100 }, { "Iron", 0 },
+			{ "Money", 100000 }, { "Citizens", 0 }, { "Happiness", 0 }, { "Food", 0 }, { "Stone", 100 }, { "Iron", 5 },
 			{ "WorkingCitizens", 0 },
-			{ "Water", 0 }, { "Wood",100 }
+			{ "Water", 0 }, { "Wood", 100 }
 	};
 	}
 

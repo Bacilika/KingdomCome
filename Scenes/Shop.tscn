@@ -18,7 +18,7 @@
 [node name="Shop" type="Control"]
 layout_mode = 3
 anchors_preset = 0
-offset_left = -256.0
+offset_left = -482.0
 offset_top = -64.0
 offset_right = 128.0
 offset_bottom = 104.0

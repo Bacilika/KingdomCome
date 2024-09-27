@@ -162,6 +162,7 @@ disabled = true
 wait_time = 10.042
 
 [node name="GrassWalking" type="AudioStreamPlayer2D" parent="."]
+z_index = 1
 stream = ExtResource("3_kh5mf")
 
 [connection signal="timeout" from="WorkTimer" to="." method="OnWorkTimerTimeout"]

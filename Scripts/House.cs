@@ -47,7 +47,7 @@ public partial class House : LivingSpaces
 			if (Rnd.RandiRange(0, _growth) == 0)
 			{
 				Inhabitants++;
-				GameLogistics.Citizens++;
+				GameLogistics.Resources["Citizens"]++;
 				PlayAnimation();
 				EmitSignal(SignalName.OnCreateNpc, this);
 			}
@@ -68,7 +68,4 @@ public partial class House : LivingSpaces
 	{
 		InfoBox.UpdateInfo("Inhabitants: " + Inhabitants + "/" +Upgrades[Upgrade.MaxInhabitants][Level]);
 	}
-	
-
-
 }

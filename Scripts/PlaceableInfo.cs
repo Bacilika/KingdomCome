@@ -17,6 +17,8 @@ public partial class PlaceableInfo : Control
 	public delegate void OnUpgradeEventHandler();
 	[Signal]
 	public delegate void OnMoveEventHandler();
+	[Signal]	
+	public delegate void OnChooseWareEventHandler();
 	public override void _Process(double delta)
 	{
 		
@@ -34,6 +36,12 @@ public partial class PlaceableInfo : Control
 
 	public void OnButtonDownPressed(){
 				GD.Print("button down");
+	}
+
+	public void OnChooseWareButtonPressed()
+	{
+		EmitSignal(SignalName.OnChooseWare);
+
 	}
 	
 	public void OnDeleteButtonPressed()
@@ -77,6 +85,4 @@ public partial class PlaceableInfo : Control
 	{
 		TextLabel.Text = text;
 	}
-
-
 }

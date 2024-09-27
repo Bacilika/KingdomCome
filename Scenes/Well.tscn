@@ -38,6 +38,7 @@ wait_time = 30.0
 autostart = true
 
 [node name="HouseSprite" type="AnimatedSprite2D" parent="."]
+z_index = 1
 position = Vector2(-0.681819, 0.5)
 scale = Vector2(2.31818, 2.31818)
 sprite_frames = SubResource("SpriteFrames_wjt6n")

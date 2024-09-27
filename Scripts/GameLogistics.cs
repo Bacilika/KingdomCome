@@ -15,16 +15,8 @@ public partial class GameLogistics: Node2D
 	public static bool IsPlaceMode;
 	private bool _roadPlaceMode;
 	private bool _containBuilding;
-	public static int _money = 50000;
-	public static int Citizens;
-	public static int Happiness;
-	public static int Food;
-	public static int Stone = 2000;
-	public static int Wood = 2000;
-	public static int Water;
-	public static int Iron;
-	public static int WorkingCitizens;
 	public static int Day = 0;
+	public static System.Collections.Generic.Dictionary<string, int> Resources; 
 	public static bool dragging;
 	public static bool Move;
 	private PackedScene _roadScene = ResourceLoader.Load<PackedScene>("res://Scenes/Road.tscn");
@@ -47,6 +39,13 @@ public partial class GameLogistics: Node2D
 		
 		_houses = _gameMap._placedHouses;
 		_productions = _gameMap._placedProduction;
+
+		Resources = new System.Collections.Generic.Dictionary<string, int>
+		{
+			{ "Money", 100000 }, { "Citizens", 0 }, { "Happiness", 0 }, { "Food", 0 }, { "Stone", 100 }, { "Iron", 5 },
+			{ "WorkingCitizens", 0 },
+			{ "Water", 0 }, { "Wood", 100 }
+	};
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -85,9 +84,9 @@ public partial class GameLogistics: Node2D
 				{
 					if (!Move )
 					{
-							_money -= _object.GetPrice();
-							Wood -= _object.Upgrades[Upgrade.WoodCost][_object.Level];
-							Stone -= _object.Upgrades[Upgrade.StoneCost][_object.Level];
+							Resources["Money"] -= _object.GetPrice();
+							Resources["Wood"] -= _object.Upgrades[Upgrade.WoodCost][_object.Level];
+							Resources["Stone"] -= _object.Upgrades[Upgrade.StoneCost][_object.Level];
 							var placedNode = _object.Duplicate();
 							EmitSignal(SignalName.HousePlaced, placedNode); //Emitted to GameMap
 							var placedBuilding = (AbstractPlaceable)placedNode;
@@ -111,7 +110,6 @@ public partial class GameLogistics: Node2D
 			_object?.QueueFree();
 			_roadObject?.QueueFree();
 			ResetModes();
-			
 		}
 		if (@event.IsActionReleased(Inputs.LeftClick))
 		{
@@ -121,7 +119,7 @@ public partial class GameLogistics: Node2D
 
 	public static bool HasUnemployedCitizens()
 	{
-		return WorkingCitizens < Citizens;
+		return Resources["WorkingCitizens"] < Resources["Citizens"];
 	}
 	
 
@@ -149,8 +147,8 @@ public partial class GameLogistics: Node2D
 		}
 		if (!Move)
 		{
-			return _building.Upgrades[Upgrade.WoodCost][_building.Level] <= Wood &&
-				   _building.Upgrades[Upgrade.StoneCost][_building.Level] <= Stone;
+			return _building.Upgrades[Upgrade.WoodCost][_building.Level] <= Resources["Wood"] &&
+				   _building.Upgrades[Upgrade.StoneCost][_building.Level] <= Resources["Stone"];
 		}
 		// add cost for moving house here
 		else
@@ -176,8 +174,8 @@ public partial class GameLogistics: Node2D
 	{
 		if(CanAfford(building))
 		{
-			Stone -= building.Upgrades[Upgrade.StoneCost][building.Level];
-			Wood -= building.Upgrades[Upgrade.WoodCost][building.Level];
+			Resources["Stone"] -= building.Upgrades[Upgrade.StoneCost][building.Level];
+			Resources["Wood"] -= building.Upgrades[Upgrade.WoodCost][building.Level];
 			building.SetObjectValues();
 		}
 		else
@@ -205,7 +203,7 @@ public partial class GameLogistics: Node2D
 			var gridPosition = _roadLayer.LocalToMap( GetGlobalMousePosition());
 			_roadPositions.Add(gridPosition);
 			_roadLayer.SetCellsTerrainConnect( _roadPositions, 0, 0);
-			_money -= _roadPrice;
+			Resources["Money"] -= _roadPrice;
 
 		}
 	}

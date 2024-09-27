@@ -9,8 +9,6 @@ public partial class IronMine : Production
 	public override void _Ready_instance()
 	{
 		ProductionRate = 2;
-		_timer = GetNode<Timer>("FoodTimer");
-		_timer.Start();
 		Price = 20000;
 		Upgrades = new Dictionary<string, List<int>>
 		{
@@ -24,6 +22,6 @@ public partial class IronMine : Production
 	
 	public override void ProduceItem()
 	{
-		GameLogistics.Iron++;
+		GameLogistics.Resources["Iron"]++;
 	}
 }

@@ -9,6 +9,8 @@ public partial class Npc : CharacterBody2D
 	private NavigationAgent2D _navigation;
 	private float _speed = 100;
 	public Vector2 startPos;
+	private Vector2 homePosition;
+	private Vector2 workPosition;
 	private bool _ready;
 	private Timer _timer;
 	private bool timerOut = false;
@@ -23,10 +25,8 @@ public partial class Npc : CharacterBody2D
 	public override void _Ready()
 	{
 		_navigation = GetNode<NavigationAgent2D>("NavigationAgent2D");
-		Console.WriteLine();
 		_timer = GetNode<Timer>("WorkTimer");
 		_walkingOnGrassSound = GetNode<AudioStreamPlayer2D>("GrassWalking");
-		
 	}
 
 	public void OnWorkTimerTimeout()
@@ -73,7 +73,6 @@ public partial class Npc : CharacterBody2D
 						Velocity = new_vel;
 						MoveAndSlide();
 						Work.GatherResource();
-						
 					}
 				}
 
@@ -91,6 +90,7 @@ public partial class Npc : CharacterBody2D
 	public void SetStartPos(Vector2 pos)
 	{
 		startPos = pos;
+		homePosition = startPos;
 	}
 
 	public void GetJob(Production production)
@@ -99,9 +99,9 @@ public partial class Npc : CharacterBody2D
 		{
 			Work = production;
 			production.EmployWorker(this);
-			setDestination(Work.Position);
+			workPosition = Work.Position;
+			setDestination(workPosition);
 		}
-
 	}
 
 	public bool IsEmployed()
@@ -118,6 +118,22 @@ public partial class Npc : CharacterBody2D
 
 	public void setDestination(Vector2 destPos)
 	{
+		if (startPos == homePosition)
+		{
+			destPos = workPosition;
+		}
+		else
+		{
+			destPos = homePosition;
+		}
+		if (Home.hasMoved)
+		{
+			homePosition = Home.Position;
+		}
+		if (Work.hasMoved)
+		{
+			workPosition = Home.Position;
+		}
 		_navigation.SetTargetPosition(destPos);
 		_navigation.GetNextPathPosition();
 		_ready = true;

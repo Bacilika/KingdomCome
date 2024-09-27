@@ -70,6 +70,7 @@ animations = [{
 
 [node name="House" type="Area2D"]
 physics_interpolation_mode = 2
+z_index = 1
 script = ExtResource("1_y1wo4")
 
 [node name="HouseSprite" type="AnimatedSprite2D" parent="."]

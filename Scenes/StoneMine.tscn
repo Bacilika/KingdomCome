@@ -65,6 +65,7 @@ animations = [{
 
 [node name="StoneMine" type="Area2D"]
 physics_interpolation_mode = 2
+z_index = 1
 script = ExtResource("1_72tjo")
 
 [node name="CollisionShape0" type="CollisionShape2D" parent="."]

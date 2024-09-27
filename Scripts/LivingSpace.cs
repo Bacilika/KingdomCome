@@ -9,7 +9,7 @@ public abstract partial class LivingSpaces : AbstractPlaceable
 	
 	protected override void OnDelete()
 	{
-		GameLogistics.Citizens-= Inhabitants;
+		GameLogistics.Resources["Citizens"]-= Inhabitants;
 		for (int i = People.Count-1; i > 0; i--)
 		{
 			var npc = People[i];
@@ -19,8 +19,8 @@ public abstract partial class LivingSpaces : AbstractPlaceable
 		
 		QueueFree();
 		//GameMenu.Money += Upgrades["MoneyBackOnDelete"][Level];
-		GameLogistics.Wood += Upgrades["WoodBackOnDelete"][Level];
-		GameLogistics.Stone += Upgrades["StoneBackOnDelete"][Level];
+		GameLogistics.Resources["Wood"] += Upgrades["WoodBackOnDelete"][Level];
+		GameLogistics.Resources["Stone"] += Upgrades["StoneBackOnDelete"][Level];
 		Shop.deleteAudio.Play();
 	}
 }

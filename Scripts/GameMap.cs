@@ -22,28 +22,30 @@ public partial class GameMap : Node2D
 	
 	public override void _Ready()
 	{
-		Console.WriteLine(GetWorld2D().GetNavigationMap());
-		Console.WriteLine(GetNode<NavigationRegion2D>("NavigationRegion2D").GetNavigationMap());
 		_foodTimer = GetNode<Timer>("EatFoodTimer");
 		_dayTimer = GetNode<Timer>("DayTimer");
 		_dayTimer.Start();
 		var gameLogistics = GetNode<GameLogistics>("GameLogistics");
 		gameLogistics.HousePlaced += PlaceHouse;
 		_music = GetNode<AudioStreamPlayer2D>("BackgroundMusic");
-		//_music.Play();
+		_music.Play();
 		var nav = GetNode<NavigationRegion2D>("NavigationRegion2D");
 		nav.BakeNavigationPolygon();
-		Console.WriteLine(nav.IsBaking());
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
 		_timeSinceLastTick += delta;
-		if (GameLogistics.Food > 0 && GameLogistics.Citizens > 0)
+		if (GameLogistics.Resources["Food"] > 0 && GameLogistics.Resources["Wood"] > 0)
 		{
 			_foodTimer.Start();
 			hungry = 0;
+		}
+
+		if (_timeSinceLastTick > 1 && GameLogistics.Resources["Citizens"] > GameLogistics.Resources["WorkingCitizens"]) //there are unemployed
+		{
+			GiveJobToNpcs();
 		}
 	}
 
@@ -51,7 +53,6 @@ public partial class GameMap : Node2D
 	{
 		_music.Seek(0);
 		_music.Play();
-		Console.WriteLine("Music");
 	}
 
 	private void OnEatFoodTimerTimedout()
@@ -93,19 +94,39 @@ public partial class GameMap : Node2D
 		npc.Position = house.Position;
 		npc.SetStartPos(npc.Position);
 		Citizens.Add(npc);
+		
 		npc.OnJobChange += OnSelectJob;
 		house.MoveToFront();
 		house.InfoBox.MoveToFront();
 
 	}
 
+	private void GiveJobToNpcs()
+	{
+		foreach (var citizen in Citizens)
+		{
+			if(citizen.IsEmployed()) continue;
+			Production closestJob = null;
+			foreach (var job in _placedProduction)
+			{
+				if(job.HasMaxEmployees())continue;
+				//if jop is closer
+				closestJob = job;
+			}
+
+			if (closestJob is not null)
+			{
+				citizen.GetJob(closestJob);
+				closestJob.EmployWorker(citizen);
+			}
+		}
+	}
 	public void OnSelectJob(Npc npc)
 	{
 		JobSelectMode = true;
 		NpcJobSelect = npc;
 		GameMenu.GameMode.Text = "Job Selection Mode";
 	}
-	
 	
 	
 	public static void MoveHouse(Node2D nodeObject, Vector2 position)
@@ -115,15 +136,14 @@ public partial class GameMap : Node2D
 		placeable.Position = position;
 		//Fix
 		Shop.placeAudio.Play();
-		Console.WriteLine("Audio");
 	}
 
 	private void OnDayTimerTimeout()
 	{
 		GameLogistics.Day += 1;
-		if (GameLogistics.Food > 0)
+		if (GameLogistics.Resources["Food"] > 0)
 		{
-			GameLogistics.Food -= 1;
+			GameLogistics.Resources["Food"] -= 1;
 		}
 		GameMenu.UpdateMenuInfo();
 	}

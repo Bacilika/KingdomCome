@@ -4,12 +4,14 @@
 [ext_resource type="Script" path="res://Scripts/PlaceableInfo.cs" id="1_snswj"]
 [ext_resource type="FontFile" uid="uid://dul1t3v440c7s" path="res://Deutsch.ttf" id="3_uwas0"]
 [ext_resource type="PackedScene" uid="uid://dyq8jku2xq8kr" path="res://Scenes/CitizenInfo.tscn" id="4_yc7qr"]
+[ext_resource type="PackedScene" uid="uid://ud23v844segc" path="res://Scenes/ChooseWare.tscn" id="3_j5mfn"]
 
 [node name="PlaceableInfo" type="Control"]
+z_index = 2
 layout_mode = 3
 anchors_preset = 0
-offset_right = 208.0
-offset_bottom = 184.0
+offset_right = 213.0
+offset_bottom = 185.0
 script = ExtResource("1_snswj")
 
 [node name="InfoBox" type="TextureRect" parent="."]
@@ -79,6 +81,21 @@ theme_override_fonts/font = ExtResource("3_uwas0")
 theme_override_font_sizes/font_size = 17
 text = "Move"
 
+[node name="ChooseWareButton" type="Button" parent="InfoBox"]
+visible = false
+layout_mode = 0
+offset_left = 46.0
+offset_top = 45.0
+offset_right = 156.0
+offset_bottom = 76.0
+text = "Choose Ware"
+
+[node name="ChooseWare" parent="." instance=ExtResource("3_j5mfn")]
+offset_left = 213.0
+offset_top = 2.0
+offset_right = 421.0
+offset_bottom = 186.0
+
 [connection signal="mouse_entered" from="." to="." method="OnMouseEntered"]
 [connection signal="mouse_exited" from="." to="." method="OnMouseExited"]
 [connection signal="mouse_entered" from="InfoBox/HouseInfo/ButtonContainer/DeleteButton" to="." method="OnMouseEntered"]
@@ -90,3 +107,6 @@ text = "Move"
 [connection signal="mouse_entered" from="InfoBox/HouseInfo/ButtonContainer/Move" to="." method="OnMouseEntered"]
 [connection signal="mouse_exited" from="InfoBox/HouseInfo/ButtonContainer/Move" to="." method="OnMouseExited"]
 [connection signal="pressed" from="InfoBox/HouseInfo/ButtonContainer/Move" to="." method="OnMoveButtonPressed"]
+[connection signal="mouse_entered" from="InfoBox/ChooseWareButton" to="." method="OnMouseEntered"]
+[connection signal="mouse_exited" from="InfoBox/ChooseWareButton" to="." method="OnMouseExited"]
+[connection signal="pressed" from="InfoBox/ChooseWareButton" to="." method="OnChooseWareButtonPressed"]

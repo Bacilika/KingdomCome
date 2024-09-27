@@ -25,6 +25,9 @@ public abstract partial class AbstractPlaceable : Area2D
 	protected RandomNumberGenerator Rnd = new ();
 	public List<Npc> People = [];
 	
+	public bool hasMoved = false;
+	public ChooseWare WareBox;
+
 
 	[Signal]
 	public delegate void OnMoveBuildingEventHandler(AbstractPlaceable building);
@@ -53,6 +56,17 @@ public abstract partial class AbstractPlaceable : Area2D
 		Monitorable = true;
 		InfoBox.Visible = false;
 		InfoBox.MoveToFront();
+		WareBox	= InfoBox.GetNode<ChooseWare>("ChooseWare");
+		WareBox.Visible = false;
+		var _button = InfoBox.GetNode<Button>("InfoBox/ChooseWareButton");
+		if (this is MarketStall)
+		{
+			_button.Visible = true;
+		}
+		else
+		{
+			_button.Visible = false;
+		}
 		
 		_Ready_instance();
 		SetObjectValues();
@@ -137,7 +151,7 @@ public abstract partial class AbstractPlaceable : Area2D
 			}
 			else //if building is not focused
 			{
-				if (!InfoBox.Focused) //and infobox is not focused
+				if (!InfoBox.Focused && !WareBox.Focused) //and infobox is not focused
 				{
 					InfoBox.Visible = false;
 				}
@@ -167,13 +181,11 @@ public abstract partial class AbstractPlaceable : Area2D
 
 				SetObjectValues();
 				Shop.placeAudio.Play();
-
 			}
 			else
 			{
 				GD.Print("Collision when trying to upgrade");
 				ActivateHitbox(Level); //return to old hitbox
-
 			}
 		}
 	}
@@ -182,6 +194,7 @@ public abstract partial class AbstractPlaceable : Area2D
 		InfoBox.Visible = false;
 		IsPlaced = false;
 		EmitSignal(SignalName.OnMoveBuilding, this);
+		hasMoved = true;
 	}
 
 	private void ActivateHitbox(int level)

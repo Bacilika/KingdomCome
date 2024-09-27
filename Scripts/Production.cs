@@ -1,25 +1,20 @@
 using Godot;
 using System;
+using System.Net;
 using Scripts.Constants;
 
 public abstract partial class Production : AbstractPlaceable
 {
 	private int _food;
 	protected Timer _timer;
-	
-	
 	protected int ProductionRate = 10; // 1/ProductionRate % chance to produce item by 1 each tick. 
-
-	
+	[Signal]
+	public delegate void LookingForWorkersEventHandler(Production production);
 	protected override void Tick()
 	{
-		
-		if (!HasMaxEmployees() && GameLogistics.HasUnemployedCitizens())
+		if ( _timer is not null && _timer.IsStopped())
 		{
-			if ( _timer is not null && _timer.IsStopped())
-			{
-				_timer.Start();
-			}
+			_timer.Start();
 		}
 		UpdateInfo();
 	}
@@ -38,10 +33,6 @@ public abstract partial class Production : AbstractPlaceable
 		return People.Count;
 	}
 
-
-	[Signal]
-	public delegate void LookingForWorkersEventHandler(Production production);
-
 	public bool HasMaxEmployees()
 	{
 		return GetWorkers() >= Upgrades[Upgrade.MaxWorkers][Level];
@@ -56,19 +47,18 @@ public abstract partial class Production : AbstractPlaceable
 		}
 		else
 		{
-			GameLogistics.WorkingCitizens++;
+			GameLogistics.Resources["WorkingCitizens"]++;
 
 			People.Add(npc);
 			npc.GetJob(this);
 			return true;
 		}
-
 	}
 	
 	public void OnFoodTimerTimeout()
 	{
 		_food++;
-		GameLogistics.Food++;
+		ProduceItem();
 		float time = 15 - GetWorkers();
 		_timer.Start(time);
 	}
@@ -80,9 +70,9 @@ public abstract partial class Production : AbstractPlaceable
 			var npc = People[i];
 			npc.OnDelete();
 		}
-		GameLogistics.WorkingCitizens -= GetWorkers();
-		GameLogistics.Wood += Upgrades[Upgrade.WoodBackOnDelete][Level];
-		GameLogistics.Stone += Upgrades[Upgrade.StoneBackOnDelete][Level];
+		GameLogistics.Resources["WorkingCitizens"] -= GetWorkers();
+		GameLogistics.Resources["Wood"] += Upgrades[Upgrade.WoodBackOnDelete][Level];
+		GameLogistics.Resources["Stone"] += Upgrades[Upgrade.StoneBackOnDelete][Level];
 		Shop.deleteAudio.Play();
 		QueueFree();
 	}
@@ -91,7 +81,4 @@ public abstract partial class Production : AbstractPlaceable
 	{
 		InfoBox.UpdateInfo("Workers: " + GetWorkers());
 	}
-	
-
-
 }

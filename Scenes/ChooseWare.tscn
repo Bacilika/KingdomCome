@@ -1,0 +1,100 @@
+[gd_scene load_steps=8 format=3 uid="uid://ud23v844segc"]
+
+[ext_resource type="Script" path="res://Scripts/ChooseWare.cs" id="1_v17v8"]
+[ext_resource type="Texture2D" uid="uid://b5llsw0d3srcl" path="res://Sprites/Extra/InfoBoxSprite.png" id="2_ccpbf"]
+[ext_resource type="Texture2D" uid="uid://bh2ubymqjqclg" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Ruins/Bricks_Intact_4.png" id="3_xvgnl"]
+[ext_resource type="Texture2D" uid="uid://bpyfaiky4t688" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Props/Mushroom_1.png" id="4_e6x52"]
+[ext_resource type="Texture2D" uid="uid://djxd7hx3cidkj" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Props/HayStack_1.png" id="5_qnub7"]
+[ext_resource type="Texture2D" uid="uid://k1l38nx1komj" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Props/Logs_2.png" id="6_rbphx"]
+[ext_resource type="Texture2D" uid="uid://dh26funj7lt16" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Rocks/Rock_Brown_5.png" id="7_8o4ev"]
+
+[node name="ChooseWare" type="Control"]
+z_index = 2
+layout_mode = 3
+anchors_preset = 0
+offset_right = 208.0
+offset_bottom = 184.0
+script = ExtResource("1_v17v8")
+
+[node name="InfoBox" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 208.0
+offset_bottom = 184.0
+mouse_filter = 2
+texture = ExtResource("2_ccpbf")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="InfoBox"]
+layout_mode = 0
+offset_left = 213.0
+offset_top = 19.0
+offset_right = 405.0
+offset_bottom = 187.0
+mouse_filter = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+
+[node name="SellIronButton" type="Button" parent="InfoBox"]
+layout_mode = 0
+offset_left = 110.0
+offset_top = 132.0
+offset_right = 179.0
+offset_bottom = 168.0
+icon = ExtResource("3_xvgnl")
+icon_alignment = 1
+expand_icon = true
+
+[node name="SellMeatButton" type="Button" parent="InfoBox"]
+layout_mode = 0
+offset_left = 25.0
+offset_top = 131.0
+offset_right = 94.0
+offset_bottom = 169.0
+icon = ExtResource("4_e6x52")
+icon_alignment = 1
+expand_icon = true
+
+[node name="SellWheatButton" type="Button" parent="InfoBox"]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 86.0
+offset_right = 93.0
+offset_bottom = 128.0
+icon = ExtResource("5_qnub7")
+icon_alignment = 1
+
+[node name="SellWoodButton" type="Button" parent="InfoBox"]
+layout_mode = 0
+offset_left = 108.0
+offset_top = 87.0
+offset_right = 177.0
+offset_bottom = 124.0
+icon = ExtResource("6_rbphx")
+icon_alignment = 1
+expand_icon = true
+
+[node name="SellStoneButton" type="Button" parent="InfoBox"]
+offset_left = 109.0
+offset_top = 40.0
+offset_right = 178.0
+offset_bottom = 77.0
+toggle_mode = true
+icon = ExtResource("7_8o4ev")
+icon_alignment = 1
+expand_icon = true
+
+[connection signal="mouse_entered" from="." to="." method="OnMouseEntered"]
+[connection signal="mouse_exited" from="." to="." method="OnMouseExited"]
+[connection signal="mouse_entered" from="InfoBox/SellIronButton" to="." method="OnMouseEntered"]
+[connection signal="mouse_exited" from="InfoBox/SellIronButton" to="." method="OnMouseExited"]
+[connection signal="pressed" from="InfoBox/SellIronButton" to="." method="OnSellIronButtonPressed"]
+[connection signal="mouse_entered" from="InfoBox/SellMeatButton" to="." method="OnMouseEntered"]
+[connection signal="mouse_exited" from="InfoBox/SellMeatButton" to="." method="OnMouseExited"]
+[connection signal="pressed" from="InfoBox/SellMeatButton" to="." method="OnSellMeatButtonPressed"]
+[connection signal="mouse_entered" from="InfoBox/SellWheatButton" to="." method="OnMouseEntered"]
+[connection signal="mouse_exited" from="InfoBox/SellWheatButton" to="." method="OnMouseExited"]
+[connection signal="pressed" from="InfoBox/SellWheatButton" to="." method="OnSellWheatButtonPressed"]
+[connection signal="mouse_entered" from="InfoBox/SellWoodButton" to="." method="OnMouseEntered"]
+[connection signal="mouse_exited" from="InfoBox/SellWoodButton" to="." method="OnMouseExited"]
+[connection signal="pressed" from="InfoBox/SellWoodButton" to="." method="OnSellWoodButtonPressed"]
+[connection signal="mouse_entered" from="InfoBox/SellStoneButton" to="." method="OnMouseEntered"]
+[connection signal="mouse_exited" from="InfoBox/SellStoneButton" to="." method="OnMouseExited"]
+[connection signal="pressed" from="InfoBox/SellStoneButton" to="." method="OnSellStoneButtonPressed"]

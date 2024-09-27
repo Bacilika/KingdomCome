@@ -68,6 +68,7 @@ public partial class GameLogistics: Node2D
 		IsPlaceMode = true;
 		_roadObject = _roadScene.Instantiate<Road>();
 		GetParent().AddChild(_roadObject);
+		GameMenu.GameMode.Text = "Road Placing Mode";
 	}
 
 	public override void _Input(InputEvent @event)
@@ -137,6 +138,7 @@ public partial class GameLogistics: Node2D
 		IsPlaceMode = false;
 		_roadPlaceMode = false;
 		Move = false;
+		GameMenu.GameMode.Text = "";
 	}
 
 	public bool CanAfford(AbstractPlaceable building = null)
@@ -164,6 +166,7 @@ public partial class GameLogistics: Node2D
 		_containBuilding = false;
 		Move = true;
 		IsPlaceMode = true;
+		GameMenu.GameMode.Text = "Building Move Mode";
 	}
 
 	public void SetContainsBuilding(bool status)
@@ -192,6 +195,8 @@ public partial class GameLogistics: Node2D
 		_object = building;
 		_containBuilding = false;
 		IsPlaceMode = true;
+		GameMenu.GameMode.Text = "Build Mode";
+		
 	}
 	
 	private void PlaceRoad()

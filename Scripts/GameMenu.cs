@@ -14,6 +14,7 @@ public partial class GameMenu : Control
 
 	
 	private static Godot.Collections.Dictionary<string, Label> _gameStatLabels;
+	public static Label GameMode;
 	
 	[Signal]
 	public delegate void HousePlacedEventHandler(Node2D house);
@@ -21,12 +22,13 @@ public partial class GameMenu : Control
 	
 	public override void _Ready()
 	{
+		GameMode = GetNode<Label>("MenuCanvasLayer/CurrentGameMode");
 		var currentScale = (Vector2)GetTree().Root.Size / GetTree().Root.MinSize;
 		var container = GetNode<Control>("MenuCanvasLayer/Container");
 		container.Scale = currentScale;
 		var statLabels = GetNode<GridContainer>("MenuCanvasLayer/Container/GameStats");
 		ButtonPress = GetNode<AudioStreamPlayer2D>("ButtonPressedSound");
-		ButtonPress.Play();
+		ButtonPress?.Play();
 		_gameStatLabels = new Godot.Collections.Dictionary<string, Label> { 
 			{"money", statLabels.GetNode<Label>("Money") },
 			{"food", statLabels.GetNode<Label>("Food") },

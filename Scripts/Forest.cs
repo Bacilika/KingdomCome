@@ -52,7 +52,7 @@ public partial class Forest : Area2D
 			} while (cantPlace);
 			
 			var treeSprite = tree.GetNode<AnimatedSprite2D>("AnimatedSprite2D");
-			treeSprite.Frame = rnd.RandiRange(0, 14);
+			treeSprite.Frame = rnd.RandiRange(0, treeSprite.SpriteFrames.GetFrameCount("default")-1);
 			var height = treeSprite.SpriteFrames.GetFrameTexture("default", treeSprite.Frame).GetHeight();
 			treeSprite.Position = new Vector2(0, -height/2);
 			trees.Add(tree);

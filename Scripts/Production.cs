@@ -5,53 +5,72 @@ using Scripts.Constants;
 
 public abstract partial class Production : AbstractPlaceable
 {
-	protected int Workers;
 	private int _food;
 	protected Timer _timer;
-	public bool HasMaxEmployees;
-	protected RandomNumberGenerator Rnd = new ();
 	protected int ProductionRate = 10; // 1/ProductionRate % chance to produce item by 1 each tick. 
-
+	[Signal]
+	public delegate void LookingForWorkersEventHandler(Production production);
 	protected override void Tick()
 	{
 		if ( _timer is not null && _timer.IsStopped())
 		{
 			_timer.Start();
 		}
-	UpdateInfo();
+		UpdateInfo();
+	}
+
+	public void GatherResource()
+	{
+		ProduceItem();
+		PlayAnimation();
 	}
 
 	public abstract void ProduceItem();
 	public abstract override void _Ready_instance();
 
-
-	[Signal]
-	public delegate void LookingForWorkersEventHandler(Production production);
-	
-
-	public void EmployWorker()
+	public int GetWorkers()
 	{
-		if (Workers == Upgrades[Upgrade.MaxWorkers][Level])
+		return People.Count;
+	}
+
+	public bool HasMaxEmployees()
+	{
+		return GetWorkers() >= Upgrades[Upgrade.MaxWorkers][Level];
+	}
+
+	public bool EmployWorker(Npc npc)
+	{
+		if (HasMaxEmployees())
 		{
-			HasMaxEmployees = true;
-			return;
+			Console.WriteLine("Workplace is full");
+			return false;
 		}
-		Workers++;
-		GameLogistics.Resources["WorkingCitizens"]++;
+		else
+		{
+			GameLogistics.Resources["WorkingCitizens"]++;
+
+			People.Add(npc);
+			npc.GetJob(this);
+			return true;
+		}
 	}
 	
 	public void OnFoodTimerTimeout()
 	{
 		_food++;
 		ProduceItem();
-		float time = 15 - Workers;
+		float time = 15 - GetWorkers();
 		_timer.Start(time);
 	}
 	
 	protected override void OnDelete()
 	{
-		GameLogistics.Resources["WorkingCitizens"] -= Workers;
-		//GameMenu.Money += Upgrades["MoneyBackOnDelete"][Level];
+		for (int i = People.Count-1; i > 0; i--)
+		{
+			var npc = People[i];
+			npc.OnDelete();
+		}
+		GameLogistics.Resources["WorkingCitizens"] -= GetWorkers();
 		GameLogistics.Resources["Wood"] += Upgrades[Upgrade.WoodBackOnDelete][Level];
 		GameLogistics.Resources["Stone"] += Upgrades[Upgrade.StoneBackOnDelete][Level];
 		Shop.deleteAudio.Play();
@@ -60,9 +79,6 @@ public abstract partial class Production : AbstractPlaceable
 	
 	public void UpdateInfo()
 	{
-		var textLabel = (RichTextLabel) InfoBox.GetChild(0).GetChild(0);
-		textLabel.Text = "Workers: " + Workers + "/" + Upgrades["MaxWorkers"][Level];
+		InfoBox.UpdateInfo("Workers: " + GetWorkers());
 	}
-
-
 }

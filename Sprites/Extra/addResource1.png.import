@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://o80rtv7te3j4"
-path="res://.godot/imported/Atlas_Castle_Building-export.png-3bc0174a5f0e55a8323ed03caca86fe5.ctex"
+uid="uid://dt1kbfdm7dk2a"
+path="res://.godot/imported/addResource1.png-4a94eef8a6fed4b96ead12dcf1dbec9d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Extra/Atlas_Castle_Building-export.png"
-dest_files=["res://.godot/imported/Atlas_Castle_Building-export.png-3bc0174a5f0e55a8323ed03caca86fe5.ctex"]
+source_file="res://Sprites/Extra/addResource1.png"
+dest_files=["res://.godot/imported/addResource1.png-4a94eef8a6fed4b96ead12dcf1dbec9d.ctex"]
 
 [params]
 

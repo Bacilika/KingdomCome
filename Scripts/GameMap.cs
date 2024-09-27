@@ -13,6 +13,9 @@ public partial class GameMap : Node2D
 	public List<House> _placedHouses = [];
 	public List<Production> _placedProduction = [];
 	public List<Npc> Citizens = [];
+	//for job selection
+	public static bool JobSelectMode;
+	public static Npc NpcJobSelect;
 
 	private double _timeSinceLastTick;
 	
@@ -87,10 +90,15 @@ public partial class GameMap : Node2D
 		var npc = NPCScene.Instantiate<Npc>();
 		AddChild(npc);
 		npc.Home = house;
+		house.MoveIntoHouse(npc);
 		npc.Position = house.Position;
 		npc.SetStartPos(npc.Position);
 		Citizens.Add(npc);
 		
+		npc.OnJobChange += OnSelectJob;
+		house.MoveToFront();
+		house.InfoBox.MoveToFront();
+
 	}
 
 	private void GiveJobToNpcs()
@@ -101,7 +109,7 @@ public partial class GameMap : Node2D
 			Production closestJob = null;
 			foreach (var job in _placedProduction)
 			{
-				if(job.HasMaxEmployees)continue;
+				if(job.HasMaxEmployees())continue;
 				//if jop is closer
 				closestJob = job;
 			}
@@ -109,9 +117,15 @@ public partial class GameMap : Node2D
 			if (closestJob is not null)
 			{
 				citizen.GetJob(closestJob);
-				closestJob.EmployWorker();
+				closestJob.EmployWorker(citizen);
 			}
 		}
+	}
+	public void OnSelectJob(Npc npc)
+	{
+		JobSelectMode = true;
+		NpcJobSelect = npc;
+		GameMenu.GameMode.Text = "Job Selection Mode";
 	}
 	
 	

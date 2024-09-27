@@ -38,4 +38,6 @@ public static class Upgrade
 	public const string StoneBackOnDelete = "StoneBackOnDelete";
 	public const string WoodMoveCost = "WoodMoveCost";
 	public const string StoneMoveCost = "StoneMoveCost";
+	public const string MaxInhabitants = "MaxInhabitants";
+	public const string Workers = "Workers";
 }

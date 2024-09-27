@@ -22,6 +22,6 @@ public partial class IronMine : Production
 	
 	public override void ProduceItem()
 	{
-		GameLogistics.Iron++;
+		GameLogistics.Resources["Iron"]++;
 	}
 }

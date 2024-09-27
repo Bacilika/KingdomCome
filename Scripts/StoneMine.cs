@@ -5,7 +5,6 @@ using Scripts.Constants;
 
 public partial class StoneMine : Production
 {
-	private int _stone;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready_instance()
 	{
@@ -22,8 +21,7 @@ public partial class StoneMine : Production
 	
 	public override void ProduceItem()
 	{
-		_stone++;
-		GameLogistics.Stone++;
+		GameLogistics.Resources["Stone"]++;
 	}
 
 }

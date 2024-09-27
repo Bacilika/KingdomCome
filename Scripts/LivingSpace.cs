@@ -9,11 +9,11 @@ public abstract partial class LivingSpaces : AbstractPlaceable
 	
 	protected override void OnDelete()
 	{
-		GameLogistics.Citizens-= Citizens;
+		GameLogistics.Resources["Citizens"]-= Citizens;
 		QueueFree();
 		//GameMenu.Money += Upgrades["MoneyBackOnDelete"][Level];
-		GameLogistics.Wood += Upgrades["WoodBackOnDelete"][Level];
-		GameLogistics.Stone += Upgrades["StoneBackOnDelete"][Level];
+		GameLogistics.Resources["Wood"] += Upgrades["WoodBackOnDelete"][Level];
+		GameLogistics.Resources["Stone"] += Upgrades["StoneBackOnDelete"][Level];
 		Shop.deleteAudio.Play();
 	}
 }

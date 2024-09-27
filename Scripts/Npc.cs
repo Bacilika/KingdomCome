@@ -22,7 +22,6 @@ public partial class Npc : CharacterBody2D
 	public override void _Ready()
 	{
 		_navigation = GetNode<NavigationAgent2D>("NavigationAgent2D");
-		Console.WriteLine();
 		_timer = GetNode<Timer>("WorkTimer");
 		_walkingOnGrassSound = GetNode<AudioStreamPlayer2D>("GrassWalking");
 	}

@@ -19,8 +19,6 @@ public partial class GameMap : Node2D
 	
 	public override void _Ready()
 	{
-		Console.WriteLine(GetWorld2D().GetNavigationMap());
-		Console.WriteLine(GetNode<NavigationRegion2D>("NavigationRegion2D").GetNavigationMap());
 		_foodTimer = GetNode<Timer>("EatFoodTimer");
 		_dayTimer = GetNode<Timer>("DayTimer");
 		_dayTimer.Start();
@@ -30,20 +28,19 @@ public partial class GameMap : Node2D
 		_music.Play();
 		var nav = GetNode<NavigationRegion2D>("NavigationRegion2D");
 		nav.BakeNavigationPolygon();
-		Console.WriteLine(nav.IsBaking());
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
 		_timeSinceLastTick += delta;
-		if (GameLogistics.Food > 0 && GameLogistics.Citizens > 0)
+		if (GameLogistics.Resources["Food"] > 0 && GameLogistics.Resources["Wood"] > 0)
 		{
 			_foodTimer.Start();
 			hungry = 0;
 		}
 
-		if (_timeSinceLastTick > 1 && GameLogistics.Citizens > GameLogistics.WorkingCitizens) //there are unemployed
+		if (_timeSinceLastTick > 1 && GameLogistics.Resources["Citizens"] > GameLogistics.Resources["WorkingCitizens"]) //there are unemployed
 		{
 			GiveJobToNpcs();
 		}
@@ -53,7 +50,6 @@ public partial class GameMap : Node2D
 	{
 		_music.Seek(0);
 		_music.Play();
-		Console.WriteLine("Music");
 	}
 
 	private void OnEatFoodTimerTimedout()
@@ -94,7 +90,6 @@ public partial class GameMap : Node2D
 		npc.Position = house.Position;
 		npc.SetStartPos(npc.Position);
 		Citizens.Add(npc);
-		Console.WriteLine(Citizens.Count);
 		
 	}
 
@@ -127,15 +122,14 @@ public partial class GameMap : Node2D
 		placeable.Position = position;
 		//Fix
 		Shop.placeAudio.Play();
-		Console.WriteLine("Audio");
 	}
 
 	private void OnDayTimerTimeout()
 	{
 		GameLogistics.Day += 1;
-		if (GameLogistics.Food > 0)
+		if (GameLogistics.Resources["Food"] > 0)
 		{
-			GameLogistics.Food -= 1;
+			GameLogistics.Resources["Food"] -= 1;
 		}
 		GameMenu.UpdateMenuInfo();
 	}

@@ -21,6 +21,6 @@ public partial class WoodCutter : Production
 	}
 	public override void ProduceItem()
 	{
-		GameLogistics.Wood++;
+		GameLogistics.Resources["Wood"]++;
 	}
 }

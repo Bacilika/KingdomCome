@@ -25,7 +25,7 @@ public partial class FarmHouse : Production
 	public override void ProduceItem()
 	{
 		_food++;
-		GameLogistics.Food++;
+		GameLogistics.Resources["Food"]++;
 	}
 
 }

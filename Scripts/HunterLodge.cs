@@ -24,7 +24,7 @@ public partial class HunterLodge : Production
 	
 	public override void ProduceItem()
 	{
-		GameLogistics.Food++;
+		GameLogistics.Resources["Food"]++;
 	}
 	
 }

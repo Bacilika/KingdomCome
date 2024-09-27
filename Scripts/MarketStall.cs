@@ -7,7 +7,8 @@ public partial class MarketStall : Production
 {
 	protected ChooseWare WareBox;
 	private Button _button;
-	public int itemToSell;
+	public string itemToSell = null;
+	private bool sell = false;
 
 	public override void _Ready_instance()
 	{
@@ -35,11 +36,18 @@ public partial class MarketStall : Production
 		
 		UpdateInfo();
 	}
-	
+
 	public override void ProduceItem()
 	{
-		GameLogistics._money++;
-		itemToSell--;
+		if (sell && itemToSell != null)
+		{
+			if (GameLogistics.Resources[itemToSell] > 0)
+			{
+				Console.WriteLine(GameLogistics.Resources[itemToSell]);
+				GameLogistics.Resources["Money"]++;
+				GameLogistics.Resources[itemToSell]--;
+			}
+		}
 	}
 
 	public void OnChooseWare()
@@ -49,6 +57,8 @@ public partial class MarketStall : Production
 
 	public void OnSellIron()
 	{
-		itemToSell = GameLogistics.Iron;
+		itemToSell = "Iron";
+		Console.WriteLine(itemToSell);
+		sell = true;
 	}
 }

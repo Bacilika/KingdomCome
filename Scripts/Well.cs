@@ -23,7 +23,7 @@ public partial class Well : Production
 	
 	public override void ProduceItem()
 	{
-		GameLogistics.Water++;
+		GameLogistics.Resources["Water"]++;
 	}
 
 }

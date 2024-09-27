@@ -45,7 +45,7 @@ public partial class House : LivingSpaces
 			if (habitantGrowth.RandiRange(0, _growth) ==0)
 			{
 				Citizens++;
-				GameLogistics.Citizens++;
+				GameLogistics.Resources["Citizens"]++;
 				EmitSignal(SignalName.OnCreateNpc, this);
 			}
 		}

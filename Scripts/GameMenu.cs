@@ -49,16 +49,16 @@ public partial class GameMenu : Control
 
 	public static void UpdateMenuInfo()
 	{
-		_gameStatLabels["money"].Text = "Money: " + GameLogistics._money;
-		_gameStatLabels["citizens"].Text = "Citizens: " + GameLogistics.Citizens;
-		_gameStatLabels["happiness"].Text = "Happiness: " + GameLogistics.Happiness;
-		_gameStatLabels["food"].Text = "Food: " + GameLogistics.Food;
-		_gameStatLabels["stone"].Text = "Stone: " + GameLogistics.Stone;
+		_gameStatLabels["money"].Text = "Money: " + GameLogistics.Resources["Money"];
+		_gameStatLabels["citizens"].Text = "Citizens: " + GameLogistics.Resources["Citizens"];
+		_gameStatLabels["happiness"].Text = "Happiness: " + GameLogistics.Resources["Happiness"];
+		_gameStatLabels["food"].Text = "Food: " + GameLogistics.Resources["Food"];
+		_gameStatLabels["stone"].Text = "Stone: " + GameLogistics.Resources["Stone"];
 		_gameStatLabels["day"].Text = "Day " + GameLogistics.Day;
-		_gameStatLabels["wood"].Text = "Wood: " + GameLogistics.Wood;
-		_gameStatLabels["Employed"].Text = "Employed: " + GameLogistics.WorkingCitizens;
-		_gameStatLabels["Iron"].Text = "Iron: " + GameLogistics.WorkingCitizens;
-		_gameStatLabels["Water"].Text = "Water: " + GameLogistics.WorkingCitizens;
+		_gameStatLabels["wood"].Text = "Wood: " + GameLogistics.Resources["Wood"];
+		_gameStatLabels["Employed"].Text = "Employed: " + GameLogistics.Resources["WorkingCitizens"];
+		_gameStatLabels["Iron"].Text = "Iron: " + GameLogistics.Resources["Iron"];
+		_gameStatLabels["Water"].Text = "Water: " + GameLogistics.Resources["Water"];
 	}
 
 

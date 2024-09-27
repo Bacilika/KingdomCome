@@ -37,7 +37,7 @@ public abstract partial class Production : AbstractPlaceable
 			return;
 		}
 		Workers++;
-		GameLogistics.WorkingCitizens++;
+		GameLogistics.Resources["WorkingCitizens"]++;
 	}
 	
 	public void OnFoodTimerTimeout()
@@ -50,10 +50,10 @@ public abstract partial class Production : AbstractPlaceable
 	
 	protected override void OnDelete()
 	{
-		GameLogistics.WorkingCitizens -= Workers;
+		GameLogistics.Resources["WorkingCitizens"] -= Workers;
 		//GameMenu.Money += Upgrades["MoneyBackOnDelete"][Level];
-		GameLogistics.Wood += Upgrades[Upgrade.WoodBackOnDelete][Level];
-		GameLogistics.Stone += Upgrades[Upgrade.StoneBackOnDelete][Level];
+		GameLogistics.Resources["Wood"] += Upgrades[Upgrade.WoodBackOnDelete][Level];
+		GameLogistics.Resources["Stone"] += Upgrades[Upgrade.StoneBackOnDelete][Level];
 		Shop.deleteAudio.Play();
 		QueueFree();
 	}

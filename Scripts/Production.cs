@@ -50,7 +50,7 @@ public abstract partial class Production : AbstractPlaceable
 	public void OnFoodTimerTimeout()
 	{
 		_food++;
-		GameLogistics.Food++;
+		ProduceItem();
 		float time = 15 - Workers;
 		_timer.Start(time);
 	}

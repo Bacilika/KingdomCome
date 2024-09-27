@@ -3,8 +3,8 @@ using System;
 
 public partial class PlaceableInfo : Control
 {
+	public bool Focused;
 	
-	public bool Focused; 
 	[Signal]
 	public delegate void OnDeleteEventHandler();
 	[Signal]

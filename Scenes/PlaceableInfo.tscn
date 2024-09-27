@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://biil4p82w3tjw"]
+[gd_scene load_steps=4 format=3 uid="uid://biil4p82w3tjw"]
 
 [ext_resource type="Texture2D" uid="uid://b5llsw0d3srcl" path="res://Sprites/Extra/InfoBoxSprite.png" id="1_1dfka"]
 [ext_resource type="Script" path="res://Scripts/PlaceableInfo.cs" id="1_snswj"]
+[ext_resource type="PackedScene" uid="uid://ud23v844segc" path="res://Scenes/ChooseWare.tscn" id="3_j5mfn"]
 
 [node name="PlaceableInfo" type="Control"]
 z_index = 2
@@ -59,6 +60,12 @@ offset_top = 45.0
 offset_right = 156.0
 offset_bottom = 76.0
 text = "Choose Ware"
+
+[node name="ChooseWare" parent="." instance=ExtResource("3_j5mfn")]
+offset_left = 213.0
+offset_top = 2.0
+offset_right = 421.0
+offset_bottom = 186.0
 
 [connection signal="mouse_entered" from="." to="." method="OnMouseEntered"]
 [connection signal="mouse_exited" from="." to="." method="OnMouseExited"]

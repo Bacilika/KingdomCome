@@ -5,7 +5,11 @@ using Scripts.Constants;
 
 public partial class MarketStall : Production
 {
-	// Called when the node enters the scene tree for the first time.
+	protected ChooseWare WareBox;
+	private Button _button;
+	private List<String> _sellableItems = new (["Iron", "Meat", "Wheat", "Stone", "Wood"]);
+	public int itemToSell;
+
 	public override void _Ready_instance()
 	{
 		ProductionRate = 2;
@@ -13,6 +17,8 @@ public partial class MarketStall : Production
 		_timer.Start();
 		Price = 20000;
 		InfoBox.Connect(PlaceableInfo.SignalName.OnChooseWare, Callable.From(OnChooseWare));
+		_button = InfoBox.GetNode<Button>("InfoBox/ChooseWareButton");
+		_button.Visible = true;
 		Upgrades = new Dictionary<string, List<int>>
 		{
 			{Upgrade.Cost, [5000, 3000, 3000]}, {Upgrade.MaxWorkers, [5, 7, 10]},
@@ -21,17 +27,32 @@ public partial class MarketStall : Production
 			{Upgrade.WoodBackOnDelete, [3, 7, 15]}, {Upgrade.StoneBackOnDelete, [3, 7, 15]},
 			{Upgrade.WoodMoveCost, [2, 5, 10]}, {Upgrade.StoneMoveCost, [2, 5, 10]}
 		};
-		var button = InfoBox.GetNode<Button>("InfoBox/ChooseWareButton");
-		button.Visible = true;
+		WareBox = InfoBox.GetNode<ChooseWare>("ChooseWare");
+		WareBox.Connect(ChooseWare.SignalName.OnSellIron, Callable.From(OnSellIron));
+		WareBox.Visible = false;
+	}
+	
+
+	
+	protected override void Tick()
+	{
+		
+		UpdateInfo();
 	}
 	
 	public override void ProduceItem()
 	{
 		GameLogistics._money++;
+		itemToSell--;
 	}
 
 	public void OnChooseWare()
 	{
-		
+		WareBox.Visible = !WareBox.Visible;
+	}
+
+	public void OnSellIron()
+	{
+		itemToSell = GameLogistics.Iron;
 	}
 }

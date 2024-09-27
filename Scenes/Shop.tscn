@@ -77,6 +77,7 @@ theme_override_font_sizes/font_size = 22
 text = "Production"
 
 [node name="ShopItemNode" type="Control" parent="BuildTabButtons/Production"]
+visible = false
 anchors_preset = 0
 offset_left = -471.0
 offset_top = -48.0

@@ -4,17 +4,17 @@ using Scripts.Constants;
 
 public abstract partial class Production : AbstractPlaceable
 {
-	protected int Workers;
 	private int _food;
 	protected Timer _timer;
-	public bool HasMaxEmployees;
-	protected RandomNumberGenerator Rnd = new ();
+	
+	
 	protected int ProductionRate = 10; // 1/ProductionRate % chance to produce item by 1 each tick. 
 
+	
 	protected override void Tick()
 	{
 		
-		if (!HasMaxEmployees && GameLogistics.HasUnemployedCitizens())
+		if (!HasMaxEmployees() && GameLogistics.HasUnemployedCitizens())
 		{
 			if ( _timer is not null && _timer.IsStopped())
 			{
@@ -33,33 +33,54 @@ public abstract partial class Production : AbstractPlaceable
 	public abstract void ProduceItem();
 	public abstract override void _Ready_instance();
 
+	public int GetWorkers()
+	{
+		return People.Count;
+	}
+
 
 	[Signal]
 	public delegate void LookingForWorkersEventHandler(Production production);
-	
 
-	public void EmployWorker()
+	public bool HasMaxEmployees()
 	{
-		Workers++;
-		GameLogistics.WorkingCitizens++;
-		if (Workers == Upgrades[Upgrade.MaxWorkers][Level])
+		return GetWorkers() >= Upgrades[Upgrade.MaxWorkers][Level];
+	}
+
+	public bool EmployWorker(Npc npc)
+	{
+		if (HasMaxEmployees())
 		{
-			HasMaxEmployees = true;
+			Console.WriteLine("Workplace is full");
+			return false;
 		}
+		else
+		{
+			GameLogistics.WorkingCitizens++;
+
+			People.Add(npc);
+			npc.GetJob(this);
+			return true;
+		}
+
 	}
 	
 	public void OnFoodTimerTimeout()
 	{
 		_food++;
 		GameLogistics.Food++;
-		float time = 15 - Workers;
+		float time = 15 - GetWorkers();
 		_timer.Start(time);
 	}
 	
 	protected override void OnDelete()
 	{
-		GameLogistics.WorkingCitizens -= Workers;
-		//GameMenu.Money += Upgrades["MoneyBackOnDelete"][Level];
+		for (int i = People.Count-1; i > 0; i--)
+		{
+			var npc = People[i];
+			npc.OnDelete();
+		}
+		GameLogistics.WorkingCitizens -= GetWorkers();
 		GameLogistics.Wood += Upgrades[Upgrade.WoodBackOnDelete][Level];
 		GameLogistics.Stone += Upgrades[Upgrade.StoneBackOnDelete][Level];
 		Shop.deleteAudio.Play();
@@ -68,16 +89,9 @@ public abstract partial class Production : AbstractPlaceable
 	
 	public void UpdateInfo()
 	{
-		var textLabel = (RichTextLabel) InfoBox.GetChild(0).GetChild(0);
-		textLabel.Text = "Workers: " + Workers;
+		InfoBox.UpdateInfo("Workers: " + GetWorkers());
 	}
-	public void PlayAnimation()
-	{
-		var animatedSprite = GetNode<AnimatedSprite2D>("Animation");
-		animatedSprite.TextureRepeat = TextureRepeatEnum.Disabled;
-		animatedSprite.Play();
-		
-	}
+	
 
 
 }

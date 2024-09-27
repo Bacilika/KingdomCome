@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://b65krkl35tdig"]
+[gd_scene load_steps=8 format=3 uid="uid://b7ydnji8nlrtu"]
 
 [ext_resource type="Script" path="res://Scripts/MarketStall.cs" id="1_tdre6"]
 [ext_resource type="Texture2D" uid="uid://hbex1b218kay" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Props/Wood_Cart_2.png" id="2_o1vwq"]

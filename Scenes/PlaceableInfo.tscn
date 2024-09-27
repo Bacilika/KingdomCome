@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://biil4p82w3tjw"]
+[gd_scene load_steps=5 format=3 uid="uid://biil4p82w3tjw"]
 
 [ext_resource type="Texture2D" uid="uid://b5llsw0d3srcl" path="res://Sprites/Extra/InfoBoxSprite.png" id="1_1dfka"]
 [ext_resource type="Script" path="res://Scripts/PlaceableInfo.cs" id="1_snswj"]
+[ext_resource type="FontFile" uid="uid://dul1t3v440c7s" path="res://Deutsch.ttf" id="3_uwas0"]
+[ext_resource type="PackedScene" uid="uid://dyq8jku2xq8kr" path="res://Scenes/CitizenInfo.tscn" id="4_yc7qr"]
 
 [node name="PlaceableInfo" type="Control"]
 layout_mode = 3
@@ -17,47 +19,74 @@ offset_bottom = 184.0
 mouse_filter = 2
 texture = ExtResource("1_1dfka")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="InfoBox"]
+[node name="CitizenInfo" parent="InfoBox" instance=ExtResource("4_yc7qr")]
+visible = false
+layout_mode = 2
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 11.0
+offset_top = 6.0
+offset_right = 11.0
+offset_bottom = 38.0
+
+[node name="HouseInfo" type="Control" parent="InfoBox"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="InfoBox/HouseInfo"]
 layout_mode = 0
 offset_left = 8.0
 offset_top = 8.0
 offset_right = 200.0
-offset_bottom = 176.0
+offset_bottom = 40.0
 mouse_filter = 2
 theme_override_colors/default_color = Color(0, 0, 0, 1)
+text = "Habitants:"
 
-[node name="DeleteButton" type="Button" parent="InfoBox"]
+[node name="CitizenPortraitContainer" type="BoxContainer" parent="InfoBox/HouseInfo"]
 layout_mode = 0
-offset_left = 116.0
-offset_top = 139.0
-offset_right = 175.0
-offset_bottom = 170.0
+offset_left = 8.0
+offset_top = 64.0
+offset_right = 200.0
+offset_bottom = 96.0
+
+[node name="ButtonContainer" type="HBoxContainer" parent="InfoBox/HouseInfo"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 144.0
+offset_right = 192.0
+offset_bottom = 176.0
+theme_override_constants/separation = 13
+alignment = 1
+
+[node name="DeleteButton" type="Button" parent="InfoBox/HouseInfo/ButtonContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_uwas0")
+theme_override_font_sizes/font_size = 17
 text = "Delete"
 
-[node name="UpgradeButton" type="Button" parent="InfoBox"]
-layout_mode = 0
-offset_left = 17.0
-offset_top = 140.0
-offset_right = 92.0
-offset_bottom = 171.0
+[node name="UpgradeButton" type="Button" parent="InfoBox/HouseInfo/ButtonContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_uwas0")
+theme_override_font_sizes/font_size = 17
 text = "Upgrade"
 
-[node name="Move" type="Button" parent="InfoBox"]
-layout_mode = 0
-offset_left = 61.0
-offset_top = 90.0
-offset_right = 136.0
-offset_bottom = 121.0
+[node name="Move" type="Button" parent="InfoBox/HouseInfo/ButtonContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_uwas0")
+theme_override_font_sizes/font_size = 17
 text = "Move"
 
 [connection signal="mouse_entered" from="." to="." method="OnMouseEntered"]
 [connection signal="mouse_exited" from="." to="." method="OnMouseExited"]
-[connection signal="mouse_entered" from="InfoBox/DeleteButton" to="." method="OnMouseEntered"]
-[connection signal="mouse_exited" from="InfoBox/DeleteButton" to="." method="OnMouseExited"]
-[connection signal="pressed" from="InfoBox/DeleteButton" to="." method="OnDeleteButtonPressed"]
-[connection signal="mouse_entered" from="InfoBox/UpgradeButton" to="." method="OnMouseEntered"]
-[connection signal="mouse_exited" from="InfoBox/UpgradeButton" to="." method="OnMouseExited"]
-[connection signal="pressed" from="InfoBox/UpgradeButton" to="." method="OnUpgradeButtonPressed"]
-[connection signal="mouse_entered" from="InfoBox/Move" to="." method="OnMouseEntered"]
-[connection signal="mouse_exited" from="InfoBox/Move" to="." method="OnMouseExited"]
-[connection signal="pressed" from="InfoBox/Move" to="." method="OnMoveButtonPressed"]
+[connection signal="mouse_entered" from="InfoBox/HouseInfo/ButtonContainer/DeleteButton" to="." method="OnMouseEntered"]
+[connection signal="mouse_exited" from="InfoBox/HouseInfo/ButtonContainer/DeleteButton" to="." method="OnMouseExited"]
+[connection signal="pressed" from="InfoBox/HouseInfo/ButtonContainer/DeleteButton" to="." method="OnDeleteButtonPressed"]
+[connection signal="mouse_entered" from="InfoBox/HouseInfo/ButtonContainer/UpgradeButton" to="." method="OnMouseEntered"]
+[connection signal="mouse_exited" from="InfoBox/HouseInfo/ButtonContainer/UpgradeButton" to="." method="OnMouseExited"]
+[connection signal="pressed" from="InfoBox/HouseInfo/ButtonContainer/UpgradeButton" to="." method="OnUpgradeButtonPressed"]
+[connection signal="mouse_entered" from="InfoBox/HouseInfo/ButtonContainer/Move" to="." method="OnMouseEntered"]
+[connection signal="mouse_exited" from="InfoBox/HouseInfo/ButtonContainer/Move" to="." method="OnMouseExited"]
+[connection signal="pressed" from="InfoBox/HouseInfo/ButtonContainer/Move" to="." method="OnMoveButtonPressed"]

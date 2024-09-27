@@ -2,12 +2,14 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.IO.Pipes;
+using Scripts.Constants;
 
 public partial class House : LivingSpaces
 {
-	private RandomNumberGenerator habitantGrowth = new ();
 	private int _growth = 5; // 1/_growth% chance to increase habitants by 1 each tick. 
-	private Npc Npc;	
+	private Npc Npc;
+	
+	
 	
 	[Signal]
 	public delegate void OnCreateNpcEventHandler(House house);
@@ -18,16 +20,16 @@ public partial class House : LivingSpaces
 		Price = 5000;
 		Upgrades = new Dictionary<string, List<int>>
 		{
-			{ "Cost", [5000, 3000, 3000] }, 
-			{ "MaxInhabitants", [5, 7, 10] },
-			{ "Workers", [5, 7, 10] },
-			{ "WoodCost", [5, 7, 10] },
-			{ "StoneCost", [5, 7, 10]}, 
-			{"MoneyBackOnDelete", [4000, 2000, 2000] },
-			{"WoodBackOnDelete", [3, 7, 15]},
-			{"StoneBackOnDelete", [3, 7, 15]}, 
-			{"WoodMoveCost", [2, 5, 10]}, 
-			{"StoneMoveCost", [2, 5, 10]}
+			{ Upgrade.Cost, [5000, 3000, 3000] }, 
+			{ Upgrade.MaxInhabitants, [5, 7, 10] },
+			{ Upgrade.Workers, [5, 7, 10] },
+			{ Upgrade.WoodCost, [5, 7, 10] },
+			{ Upgrade.StoneCost, [5, 7, 10]}, 
+			{Upgrade.MoneyBackOnDelete, [4000, 2000, 2000] },
+			{Upgrade.WoodBackOnDelete, [3, 7, 15]},
+			{Upgrade.StoneBackOnDelete, [3, 7, 15]}, 
+			{Upgrade.WoodMoveCost, [2, 5, 10]}, 
+			{Upgrade.StoneMoveCost, [2, 5, 10]}
 		};
 	}
 
@@ -40,24 +42,33 @@ public partial class House : LivingSpaces
 	
 	protected override void Tick()
 	{
-		if (Citizens < Upgrades["MaxInhabitants"][Level])
+		if (Inhabitants < Upgrades[Upgrade.MaxInhabitants][Level])
 		{
-			if (habitantGrowth.RandiRange(0, _growth) ==0)
+			if (Rnd.RandiRange(0, _growth) == 0)
 			{
-				Citizens++;
+				Inhabitants++;
 				GameLogistics.Citizens++;
+				PlayAnimation();
 				EmitSignal(SignalName.OnCreateNpc, this);
 			}
 		}
 		UpdateInfo();
 	}
 
+	public void MoveIntoHouse(Npc npc)
+	{
+		People.Add(npc);
+		var npcPortrait = InfoBox.CitizenPortrait.Instantiate<CitizenPortraitButton>();
+		npcPortrait.npc = npc;
+		InfoBox.PortraitContainer.AddChild(npcPortrait);
+	}
+
 
 	public void UpdateInfo()
 	{
-		var textLabel = (RichTextLabel) InfoBox.GetChild(0).GetChild(0);
-		textLabel.Text = "Citizens: " + Citizens + "/" +Upgrades["MaxInhabitants"][Level] ;
+		InfoBox.UpdateInfo("Inhabitants: " + Inhabitants + "/" +Upgrades[Upgrade.MaxInhabitants][Level]);
 	}
+	
 
 
 }

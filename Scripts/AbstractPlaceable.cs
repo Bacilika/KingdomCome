@@ -9,19 +9,22 @@ public abstract partial class AbstractPlaceable : Area2D
 {
 	public bool IsPlaced;
 	private bool _isFocused;
-	protected PlaceableInfo InfoBox;
+	public PlaceableInfo InfoBox;
 	protected int Price;
 	public int Level;
 	protected int WoodCost;
 	protected int StoneCost;
 	private int _maxLevel = 2;
-	protected int Citizens;
+	protected int Inhabitants;
 	private CollisionShape2D _hitbox;
 	public Dictionary<string, List<int>> Upgrades; 
 	protected AnimatedSprite2D AnimatedSprite;
 	private double _time;
 	private bool _move;
 	protected int HouseholdHappiness;
+	protected RandomNumberGenerator Rnd = new ();
+	public List<Npc> People = [];
+	
 
 	[Signal]
 	public delegate void OnMoveBuildingEventHandler(AbstractPlaceable building);
@@ -38,6 +41,7 @@ public abstract partial class AbstractPlaceable : Area2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+
 		InfoBox = GetNode<PlaceableInfo>("PlaceableInfo");
 		AnimatedSprite = GetNode<AnimatedSprite2D>("HouseSprite");
 		
@@ -52,6 +56,11 @@ public abstract partial class AbstractPlaceable : Area2D
 		
 		_Ready_instance();
 		SetObjectValues();
+	}
+
+	public string GetBuildingName()
+	{
+		return GetType().Name;
 	}
 
 	public override void _Process(double delta)
@@ -108,7 +117,23 @@ public abstract partial class AbstractPlaceable : Area2D
 		{
 			if (_isFocused) //if mouse is on Building
 			{
-				InfoBox.Visible = !InfoBox.Visible;
+				if (GameMap.JobSelectMode && this is Production production)
+				{
+					var employed = production.EmployWorker(GameMap.NpcJobSelect);
+					if (employed)
+					{
+						GameMap.JobSelectMode = false;
+						InfoBox.HideNpcInfo();
+						GameMenu.GameMode.Text = "";
+					}
+				}
+				else
+				{
+					InfoBox.Visible = !InfoBox.Visible;
+					InfoBox.HideNpcInfo();
+					InfoBox.MoveToFront();
+				}
+				
 			}
 			else //if building is not focused
 			{
@@ -121,6 +146,11 @@ public abstract partial class AbstractPlaceable : Area2D
 					InfoBox.Focused = true;
 				}
 			}
+		}
+
+		if (@event.IsActionPressed(Inputs.RightClick))
+		{
+			GameMap.JobSelectMode = false;
 		}
 	}
 
@@ -156,7 +186,6 @@ public abstract partial class AbstractPlaceable : Area2D
 
 	private void ActivateHitbox(int level)
 	{
-		GD.Print("Activating hitbox for level: " + level);
 		foreach (var child in GetChildren())
 		{
 			if (child is CollisionShape2D shape2D)
@@ -188,5 +217,12 @@ public abstract partial class AbstractPlaceable : Area2D
 		await Task.Delay(100);
 		GD.Print( GetOverlappingAreas().Count);
 		return !HasOverlappingAreas();
+	}
+	public void PlayAnimation()
+	{
+		var animatedSprite = GetNode<AnimatedSprite2D>("Animation");
+		
+		animatedSprite.Play();
+		
 	}
 }

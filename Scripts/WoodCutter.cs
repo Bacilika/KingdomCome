@@ -7,6 +7,7 @@ public partial class WoodCutter : Production
 {
 	public override void _Ready_instance()
 	{
+		
 		_timer = GetNode<Timer>("WoodTimer");
 		Price = 20000;
 

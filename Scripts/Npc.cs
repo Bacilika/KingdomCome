@@ -15,6 +15,9 @@ public partial class Npc : CharacterBody2D
 	private RandomNumberGenerator _rnd = new ();
 	private AudioStreamPlayer2D _walkingOnGrassSound;
 	
+	[Signal]
+	public delegate void OnJobChangeEventHandler(Npc npc);
+	
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -23,6 +26,7 @@ public partial class Npc : CharacterBody2D
 		Console.WriteLine();
 		_timer = GetNode<Timer>("WorkTimer");
 		_walkingOnGrassSound = GetNode<AudioStreamPlayer2D>("GrassWalking");
+		
 	}
 
 	public void OnWorkTimerTimeout()
@@ -94,7 +98,7 @@ public partial class Npc : CharacterBody2D
 		if (Work is null)
 		{
 			Work = production;
-			production.EmployWorker();
+			production.EmployWorker(this);
 			setDestination(Work.Position);
 		}
 
@@ -103,6 +107,13 @@ public partial class Npc : CharacterBody2D
 	public bool IsEmployed()
 	{
 		return Work != null;
+	}
+
+	public void OnDelete()
+	{
+		Work?.People.Remove(this);
+		Home.People.Remove(this);
+		QueueFree();
 	}
 
 	public void setDestination(Vector2 destPos)

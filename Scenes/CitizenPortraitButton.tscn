@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://r01ed13rhf6t"]
+
+[ext_resource type="Texture2D" uid="uid://bnr631t1td44f" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Character/CharacterPortrait.png" id="1_h3yft"]
+[ext_resource type="Script" path="res://Scripts/CitizenPortraitButton.cs" id="2_53t42"]
+
+[node name="CitizenPortraitButton" type="Button"]
+offset_right = 26.0
+offset_bottom = 34.0
+icon = ExtResource("1_h3yft")
+flat = true
+vertical_icon_alignment = 0
+script = ExtResource("2_53t42")
+
+[connection signal="mouse_entered" from="." to="." method="OnMouseEntered"]
+[connection signal="mouse_exited" from="." to="." method="OnMouseExited"]
+[connection signal="pressed" from="." to="." method="OnPortraitPressed"]

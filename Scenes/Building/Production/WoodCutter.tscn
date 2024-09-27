@@ -1,0 +1,97 @@
+[gd_scene load_steps=16 format=3 uid="uid://p3qfaqnaffh1"]
+
+[ext_resource type="Script" path="res://Scripts/Building/Production/WoodCutter.cs" id="1_a236h"]
+[ext_resource type="Texture2D" uid="uid://cdobuvg0qs8c7" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/House_BlueBricks_Wood_1.png" id="2_pnnxm"]
+[ext_resource type="Texture2D" uid="uid://dtrwqwsj3j73g" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/House_BlueBricks_Wood_5.png" id="3_lhmgw"]
+[ext_resource type="Texture2D" uid="uid://bdv4a833mig63" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/House_BlueBricks_Wood_7.png" id="4_nv3p3"]
+[ext_resource type="PackedScene" uid="uid://biil4p82w3tjw" path="res://Scenes/Building/PlaceableInfo.tscn" id="5_h81m2"]
+[ext_resource type="Texture2D" uid="uid://dt1kbfdm7dk2a" path="res://Sprites/Extra/addResource1.png" id="5_r8goj"]
+[ext_resource type="Texture2D" uid="uid://co3y7ufhufouh" path="res://Sprites/Extra/addResource2.png" id="6_3c0s2"]
+[ext_resource type="Texture2D" uid="uid://bpp4m7x6k6cyf" path="res://Sprites/Extra/addResource3.png" id="7_20uxw"]
+[ext_resource type="Texture2D" uid="uid://bjtqfmauw1cfk" path="res://Sprites/Extra/addResource4.png" id="8_aqjvy"]
+[ext_resource type="Texture2D" uid="uid://bh7bofwv2v6rn" path="res://Sprites/Extra/addResource5.png" id="9_86na0"]
+[ext_resource type="Texture2D" uid="uid://c2s5x2ag6prrg" path="res://Sprites/Extra/addResource6.png" id="10_8vqsl"]
+[ext_resource type="Texture2D" uid="uid://epbdr1v164x7" path="res://Sprites/Extra/addResource8.png" id="11_0f8tr"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gy8eo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_pnnxm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_lhmgw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_nv3p3")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cews5"]
+size = Vector2(153, 108.5)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pfse0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_r8goj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_3c0s2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_20uxw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_aqjvy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_86na0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_8vqsl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_0f8tr")
+}],
+"loop": false,
+"name": &"default",
+"speed": 6.0
+}]
+
+[node name="WoodCutter" type="Area2D"]
+script = ExtResource("1_a236h")
+
+[node name="HouseSprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_gy8eo")
+
+[node name="CollisionShape0" type="CollisionShape2D" parent="."]
+position = Vector2(1, 1.5)
+shape = SubResource("RectangleShape2D_cews5")
+
+[node name="WoodTimer" type="Timer" parent="."]
+wait_time = 10.0
+
+[node name="CollisionShape1" type="CollisionShape2D" parent="."]
+position = Vector2(2, 0.5)
+shape = SubResource("RectangleShape2D_cews5")
+
+[node name="CollisionShape2" type="CollisionShape2D" parent="."]
+position = Vector2(-1.5, 2.75)
+shape = SubResource("RectangleShape2D_cews5")
+
+[node name="Animation" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -72)
+sprite_frames = SubResource("SpriteFrames_pfse0")
+
+[node name="PlaceableInfo" parent="." instance=ExtResource("5_h81m2")]
+visible = false
+
+[connection signal="area_entered" from="." to="." method="OnAreaEntered"]
+[connection signal="area_exited" from="." to="." method="OnAreaExited"]
+[connection signal="mouse_entered" from="." to="." method="OnMouseEntered"]
+[connection signal="mouse_exited" from="." to="." method="OnMouseExited"]
+[connection signal="timeout" from="WoodTimer" to="." method="OnWoodTimerTimeout"]

@@ -8,5 +8,6 @@
   <ItemGroup>
     <Folder Include="Audio\" />
     <Folder Include="Scenes\" />
+    <Folder Include="Scripts\Game\OverLay\" />
   </ItemGroup>
 </Project>

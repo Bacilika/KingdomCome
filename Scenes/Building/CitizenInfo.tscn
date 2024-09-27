@@ -1,0 +1,49 @@
+[gd_scene load_steps=3 format=3 uid="uid://dyq8jku2xq8kr"]
+
+[ext_resource type="Script" path="res://Scripts/Building/CitizenInfo.cs" id="1_5tojb"]
+[ext_resource type="FontFile" uid="uid://dul1t3v440c7s" path="res://Deutsch.ttf" id="2_gsgww"]
+
+[node name="CitizenInfo" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_5tojb")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_right = 192.0
+offset_bottom = 192.0
+text = "Happiness: Happy
+Job: Uemployed
+"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = -1.0
+offset_top = 142.0
+offset_right = 192.0
+offset_bottom = 167.0
+alignment = 1
+
+[node name="Return" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_gsgww")
+theme_override_font_sizes/font_size = 15
+text = "Return"
+
+[node name="ChangeJob" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_gsgww")
+theme_override_font_sizes/font_size = 15
+text = "Change job"
+expand_icon = true
+
+[connection signal="mouse_entered" from="HBoxContainer/Return" to="." method="OnMouseEntered"]
+[connection signal="mouse_exited" from="HBoxContainer/Return" to="." method="OnMouseExited"]
+[connection signal="pressed" from="HBoxContainer/Return" to="." method="OnReturnButtonPressed"]
+[connection signal="mouse_entered" from="HBoxContainer/ChangeJob" to="." method="OnMouseEntered"]
+[connection signal="mouse_exited" from="HBoxContainer/ChangeJob" to="." method="OnMouseExited"]
+[connection signal="pressed" from="HBoxContainer/ChangeJob" to="." method="OnChangeJobButtonPressed"]

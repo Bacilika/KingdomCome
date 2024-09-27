@@ -1,0 +1,97 @@
+[gd_scene load_steps=16 format=3 uid="uid://wank2qp84pto"]
+
+[ext_resource type="Script" path="res://Scripts/Building/Production/HunterLodge.cs" id="1_6cilf"]
+[ext_resource type="Texture2D" uid="uid://ds2amcmwp0pcr" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/WatchTower_BlueBricks_Wood_1.png" id="3_3xuwo"]
+[ext_resource type="PackedScene" uid="uid://biil4p82w3tjw" path="res://Scenes/Building/PlaceableInfo.tscn" id="3_llus8"]
+[ext_resource type="Texture2D" uid="uid://bnw66upebmeji" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/WatchTower_RedWood_Stone_1.png" id="4_vy0wx"]
+[ext_resource type="Texture2D" uid="uid://dt1kbfdm7dk2a" path="res://Sprites/Extra/addResource1.png" id="5_f5inu"]
+[ext_resource type="Texture2D" uid="uid://c471nqu3aeebi" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/WatchTower_Wood_Stone_1.png" id="5_jld3l"]
+[ext_resource type="Texture2D" uid="uid://co3y7ufhufouh" path="res://Sprites/Extra/addResource2.png" id="6_t27hh"]
+[ext_resource type="Texture2D" uid="uid://bpp4m7x6k6cyf" path="res://Sprites/Extra/addResource3.png" id="7_bul5p"]
+[ext_resource type="Texture2D" uid="uid://bjtqfmauw1cfk" path="res://Sprites/Extra/addResource4.png" id="8_87vlq"]
+[ext_resource type="Texture2D" uid="uid://bh7bofwv2v6rn" path="res://Sprites/Extra/addResource5.png" id="9_lkfmg"]
+[ext_resource type="Texture2D" uid="uid://c2s5x2ag6prrg" path="res://Sprites/Extra/addResource6.png" id="10_b7rp1"]
+[ext_resource type="Texture2D" uid="uid://epbdr1v164x7" path="res://Sprites/Extra/addResource8.png" id="11_js1et"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cews5"]
+size = Vector2(67, 139)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wjt6n"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_3xuwo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_vy0wx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_jld3l")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6fe6w"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_f5inu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_t27hh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_bul5p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_87vlq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_lkfmg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_b7rp1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_js1et")
+}],
+"loop": false,
+"name": &"default",
+"speed": 6.0
+}]
+
+[node name="HunterLodge" type="Area2D"]
+script = ExtResource("1_6cilf")
+
+[node name="CollisionShape0" type="CollisionShape2D" parent="."]
+position = Vector2(-1.5, 3.5)
+shape = SubResource("RectangleShape2D_cews5")
+
+[node name="FoodTimer" type="Timer" parent="."]
+wait_time = 30.0
+autostart = true
+
+[node name="HouseSprite" type="AnimatedSprite2D" parent="."]
+z_index = 1
+sprite_frames = SubResource("SpriteFrames_wjt6n")
+
+[node name="CollisionShape1" type="CollisionShape2D" parent="."]
+position = Vector2(-2, -2)
+shape = SubResource("RectangleShape2D_cews5")
+
+[node name="CollisionShape2" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_cews5")
+
+[node name="Animation" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -88)
+sprite_frames = SubResource("SpriteFrames_6fe6w")
+
+[node name="PlaceableInfo" parent="." instance=ExtResource("3_llus8")]
+
+[connection signal="area_entered" from="." to="." method="OnAreaEntered"]
+[connection signal="area_exited" from="." to="." method="OnAreaExited"]
+[connection signal="mouse_entered" from="." to="." method="OnMouseEntered"]
+[connection signal="mouse_exited" from="." to="." method="OnMouseExited"]
+[connection signal="timeout" from="FoodTimer" to="." method="OnFoodTimerTimeout"]

@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://bnchddcs6bxed"]
+
+[ext_resource type="Script" path="res://Scripts/Other/Road.cs" id="1_1eofc"]
+[ext_resource type="Texture2D" uid="uid://bidh0o15gfkct" path="res://Sprites/Extra/Road2.png" id="2_nwith"]
+
+[node name="Road" type="Node2D"]
+script = ExtResource("1_1eofc")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
+texture = ExtResource("2_nwith")

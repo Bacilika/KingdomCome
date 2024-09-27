@@ -1,0 +1,71 @@
+[gd_scene load_steps=16 format=3 uid="uid://nu6jhgqr0vxv"]
+
+[ext_resource type="Script" path="res://Scripts/Other/Tree.cs" id="1_3jgtr"]
+[ext_resource type="Texture2D" uid="uid://do23rcgddh7bq" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Trees and Bushes/Tree_Dark_2.png" id="1_ris5x"]
+[ext_resource type="Texture2D" uid="uid://crvxucjeymr2e" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Trees and Bushes/Tree_Dark_1.png" id="2_rohm5"]
+[ext_resource type="Texture2D" uid="uid://xb1xvocvt2ts" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Trees and Bushes/Tree_Dark_4.png" id="5_xxtp5"]
+[ext_resource type="Texture2D" uid="uid://cku0uxntnpbhd" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Trees and Bushes/Tree_Dark_5.png" id="6_ode18"]
+[ext_resource type="Texture2D" uid="uid://q1cmkhnkfi8j" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Trees and Bushes/Tree_Emerald_1.png" id="7_ehi5w"]
+[ext_resource type="Texture2D" uid="uid://47lxl0fy55re" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Trees and Bushes/Tree_Emerald_2.png" id="8_8h3kr"]
+[ext_resource type="Texture2D" uid="uid://b2ke4vdo8cjvv" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Trees and Bushes/Tree_Emerald_4.png" id="10_u1hf2"]
+[ext_resource type="Texture2D" uid="uid://si3jaqvbicmu" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Trees and Bushes/Tree_Emerald_5.png" id="11_jc227"]
+[ext_resource type="Texture2D" uid="uid://4np8a6ubbuoa" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Trees and Bushes/Tree_Light_1.png" id="12_cft0j"]
+[ext_resource type="Texture2D" uid="uid://oq52rt2i0xi5" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Trees and Bushes/Tree_Light_2.png" id="13_1r1ul"]
+[ext_resource type="Texture2D" uid="uid://bvdt8bln84wfl" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Trees and Bushes/Tree_Light_4.png" id="15_hmg44"]
+[ext_resource type="Texture2D" uid="uid://b5fh5n4ce6xxk" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Trees and Bushes/Tree_Light_5.png" id="16_tpr3a"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wtgb7"]
+radius = 24.0832
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_q03nc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("12_cft0j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_jc227")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_ris5x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_rohm5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_ode18")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_tpr3a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_xxtp5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_ehi5w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_8h3kr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_u1hf2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_1r1ul")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_hmg44")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Tree" type="Area2D"]
+script = ExtResource("1_3jgtr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_wtgb7")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_q03nc")

@@ -9,7 +9,7 @@ public abstract partial class Production : AbstractPlaceable
 	protected Timer _timer;
 	protected int ProductionRate = 10; // 1/ProductionRate % chance to produce item by 1 each tick. 
 	[Signal]
-	public delegate void LookingForWorkersEventHandler(Production production);
+	public delegate void LookingForWorkersEventHandler(Productions production);
 	protected override void Tick()
 	{
 		if ( _timer is not null && _timer.IsStopped())

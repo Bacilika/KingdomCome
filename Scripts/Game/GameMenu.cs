@@ -30,14 +30,14 @@ public partial class GameMenu : Control
 		ButtonPress = GetNode<AudioStreamPlayer2D>("ButtonPressedSound");
 		ButtonPress?.Play();
 		_gameStatLabels = new Godot.Collections.Dictionary<string, Label> { 
-			{"money", statLabels.GetNode<Label>("Money") },
-			{"food", statLabels.GetNode<Label>("Food") },
-			{"citizens", statLabels.GetNode<Label>("Citizens") },
-			{"stone",statLabels.GetNode<Label>("Stone")}, 
-			{"happiness",statLabels.GetNode<Label>("Happiness")},
-			{"day",GetNode<Label>("MenuCanvasLayer/Container/Day")},
-			{"wood",statLabels.GetNode<Label>("Wood")},
-			{"Employed",statLabels.GetNode<Label>("Employed")},
+			{"Money", statLabels.GetNode<Label>("Money") },
+			{"Food", statLabels.GetNode<Label>("Food") },
+			{"Citizens", statLabels.GetNode<Label>("Citizens") },
+			{"Stone",statLabels.GetNode<Label>("Stone")}, 
+			{"Happiness",statLabels.GetNode<Label>("Happiness")},
+			{"Day",GetNode<Label>("MenuCanvasLayer/Container/Day")},
+			{"Wood",statLabels.GetNode<Label>("Wood")},
+			{"WorkingCitizens",statLabels.GetNode<Label>("Employed")},
 			{"Iron",statLabels.GetNode<Label>("Iron")},
 			{"Water",statLabels.GetNode<Label>("Water")}
 		};
@@ -51,17 +51,54 @@ public partial class GameMenu : Control
 
 	public static void UpdateMenuInfo()
 	{
-		_gameStatLabels["money"].Text = "Money: " + GameLogistics.Resources["Money"];
-		_gameStatLabels["citizens"].Text = "Citizens: " + GameLogistics.Resources["Citizens"];
-		_gameStatLabels["happiness"].Text = "Happiness: " + GameLogistics.Resources["Happiness"];
-		_gameStatLabels["food"].Text = "Food: " + GameLogistics.Resources["Food"];
-		_gameStatLabels["stone"].Text = "Stone: " + GameLogistics.Resources["Stone"];
-		_gameStatLabels["day"].Text = "Day " + GameLogistics.Day;
-		_gameStatLabels["wood"].Text = "Wood: " + GameLogistics.Resources["Wood"];
-		_gameStatLabels["Employed"].Text = "Employed: " + GameLogistics.Resources["WorkingCitizens"];
-		_gameStatLabels["Iron"].Text = "Iron: " + GameLogistics.Resources["Iron"];
-		_gameStatLabels["Water"].Text = "Water: " + GameLogistics.Resources["Water"];
+		var red = new Color("#801917");
+		foreach (var item in _gameStatLabels)
+		{
+			int value;
+
+			switch (item.Key)
+			{
+				case "Day":
+				{
+					value = GameLogistics.Day;
+					break;
+				}
+				case "WorkingCitizens":
+				{
+					value = GameLogistics.Resources["WorkingCitizens"];
+					if (value < GameLogistics.Resources["Citizens"])
+					{
+						item.Value.Set("theme_override_colors/font_color", red);
+					}
+					else
+					{
+						item.Value.Set("theme_override_colors/font_color", new Color(1, 1, 1));
+					}
+					
+					break;
+				}
+				case "Citizens":
+				{
+					value = GameLogistics.Resources["Citizens"];
+					break;
+				}
+				default:
+				{
+					value = GameLogistics.Resources[item.Key];
+					if (value == 0)
+					{
+						item.Value.Set("theme_override_colors/font_color", red);
+					}
+					else
+					{
+						item.Value.Set("theme_override_colors/font_color", new Color(1, 1, 1));
+					}
+
+					break;
+				}
+			}
+			item.Value.Text = item.Key + ": " + value;
+		}
+
 	}
-
-
 }

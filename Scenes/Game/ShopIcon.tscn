@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=3 uid="uid://tigupmam0oos"]
+
+[ext_resource type="Texture2D" uid="uid://dpra1a442td71" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/Bridge_Stone_1.png" id="1_kkxtc"]
+
+[node name="ShopIcon" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Icon" type="TextureButton" parent="."]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 0
+offset_right = 58.0
+offset_bottom = 72.0
+texture_normal = ExtResource("1_kkxtc")
+
+[node name="Text" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = -24.0
+offset_top = 72.0
+offset_right = 80.0
+offset_bottom = 128.0
+text = "Wood:
+Stone:"

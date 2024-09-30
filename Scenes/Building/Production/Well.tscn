@@ -14,7 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://epbdr1v164x7" path="res://Sprites/Extra/addResource8.png" id="12_0t4co"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cews5"]
-size = Vector2(116, 167)
+size = Vector2(50, 70)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_wjt6n"]
 animations = [{
@@ -66,7 +66,8 @@ animations = [{
 script = ExtResource("1_6e8l0")
 
 [node name="CollisionShape0" type="CollisionShape2D" parent="."]
-position = Vector2(-1.5, 0)
+visible = false
+position = Vector2(-1, -1.5)
 shape = SubResource("RectangleShape2D_cews5")
 
 [node name="FoodTimer" type="Timer" parent="."]
@@ -75,18 +76,19 @@ autostart = true
 
 [node name="HouseSprite" type="AnimatedSprite2D" parent="."]
 z_index = 1
-position = Vector2(-0.681819, 0.5)
-scale = Vector2(2.31818, 2.31818)
+position = Vector2(-9.53674e-07, 9.53674e-07)
+scale = Vector2(1.03846, 1.03846)
 sprite_frames = SubResource("SpriteFrames_wjt6n")
 frame = 2
-frame_progress = 0.431191
+frame_progress = 0.967713
 
 [node name="CollisionShape1" type="CollisionShape2D" parent="."]
-position = Vector2(0, -0.5)
+visible = false
+position = Vector2(0, -1.5)
 shape = SubResource("RectangleShape2D_cews5")
 
 [node name="CollisionShape2" type="CollisionShape2D" parent="."]
-position = Vector2(0, -0.5)
+visible = false
 shape = SubResource("RectangleShape2D_cews5")
 
 [node name="Animation" type="AnimatedSprite2D" parent="."]

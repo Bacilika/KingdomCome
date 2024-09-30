@@ -59,7 +59,7 @@ public partial class GameMenu : Control
 		_gameStatLabels["day"].Text = "Day " + GameLogistics.Day;
 		_gameStatLabels["wood"].Text = "Wood: " + GameLogistics.Resources["Wood"];
 		_gameStatLabels["Employed"].Text = "Employed: " + GameLogistics.Resources["WorkingCitizens"];
-		_gameStatLabels["Iron"].Text = "Iron: " + GameLogistics.Resources["Iron"];
+		_gameStatLabels["Iron"].Text = "  : " + GameLogistics.Resources["Iron"];
 		_gameStatLabels["Water"].Text = "Water: " + GameLogistics.Resources["Water"];
 	}
 

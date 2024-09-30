@@ -95,7 +95,10 @@ public partial class Shop : Control
 		}
 		var house = _shopItems[type].Instantiate<AbstractPlaceable>();
 		EmitSignal(SignalName.OnBuildingButtonPressed, house);
-		
+	}
+
+	public static void OnHuntingButtonMouseEntered()
+	{
 		
 	}
 }

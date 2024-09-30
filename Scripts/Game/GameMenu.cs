@@ -9,12 +9,13 @@ using Scripts.Constants;
 public partial class GameMenu : Control
 {
 	// Called when the node enters the scene tree for the first time.
-	
+
 	public static AudioStreamPlayer2D ButtonPress;
 
-	
+
 	private static Godot.Collections.Dictionary<string, Label> _gameStatLabels;
 	public static Label GameMode;
+	public static Label Day;
 	
 	[Signal]
 	public delegate void HousePlacedEventHandler(Node2D house);
@@ -22,6 +23,7 @@ public partial class GameMenu : Control
 	
 	public override void _Ready()
 	{
+		Day = GetNode<Label>("MenuCanvasLayer/Container/Day");
 		GameMode = GetNode<Label>("MenuCanvasLayer/CurrentGameMode");
 		var currentScale = (Vector2)GetTree().Root.Size / GetTree().Root.MinSize;
 		var container = GetNode<Control>("MenuCanvasLayer/Container");
@@ -30,16 +32,15 @@ public partial class GameMenu : Control
 		ButtonPress = GetNode<AudioStreamPlayer2D>("ButtonPressedSound");
 		ButtonPress?.Play();
 		_gameStatLabels = new Godot.Collections.Dictionary<string, Label> { 
-			{"Money", statLabels.GetNode<Label>("Money") },
-			{"Food", statLabels.GetNode<Label>("Food") },
-			{"Citizens", statLabels.GetNode<Label>("Citizens") },
-			{"Stone",statLabels.GetNode<Label>("Stone")}, 
-			{"Happiness",statLabels.GetNode<Label>("Happiness")},
-			{"Day",GetNode<Label>("MenuCanvasLayer/Container/Day")},
-			{"Wood",statLabels.GetNode<Label>("Wood")},
-			{"WorkingCitizens",statLabels.GetNode<Label>("Employed")},
-			{"Iron",statLabels.GetNode<Label>("Iron")},
-			{"Water",statLabels.GetNode<Label>("Water")}
+			{"Money", statLabels.GetNode<TextureRect>("Money").GetNode<Label>("Value") },
+			{"Food", statLabels.GetNode<TextureRect>("Food").GetNode<Label>("Value") },
+			{"Citizens", statLabels.GetNode<TextureRect>("Citizens").GetNode<Label>("Value") },
+			{"Stone",statLabels.GetNode<TextureRect>("Stone").GetNode<Label>("Value")}, 
+			{"Happiness",statLabels.GetNode<TextureRect>("Happiness").GetNode<Label>("Value")},
+			{"Wood",statLabels.GetNode<TextureRect>("Wood").GetNode<Label>("Value")},
+			{"UnEmployed",statLabels.GetNode<TextureRect>("UnEmployed").GetNode<Label>("Value")},
+			{"Iron",statLabels.GetNode<TextureRect>("Iron").GetNode<Label>("Value")},
+			{"Water",statLabels.GetNode<TextureRect>("Water").GetNode<Label>("Value")}
 		};
 	}
 
@@ -52,29 +53,18 @@ public partial class GameMenu : Control
 	public static void UpdateMenuInfo()
 	{
 		var red = new Color("#801917");
+		
+		Day.Text = "Day: " + GameLogistics.Day;
+		
 		foreach (var item in _gameStatLabels)
 		{
 			int value;
 
 			switch (item.Key)
 			{
-				case "Day":
+				case "UnEmployed":
 				{
-					value = GameLogistics.Day;
-					break;
-				}
-				case "WorkingCitizens":
-				{
-					value = GameLogistics.Resources["WorkingCitizens"];
-					if (value < GameLogistics.Resources["Citizens"])
-					{
-						item.Value.Set("theme_override_colors/font_color", red);
-					}
-					else
-					{
-						item.Value.Set("theme_override_colors/font_color", new Color(1, 1, 1));
-					}
-					
+					value = GameLogistics.Resources["UnEmployed"];
 					break;
 				}
 				case "Citizens":
@@ -97,7 +87,8 @@ public partial class GameMenu : Control
 					break;
 				}
 			}
-			item.Value.Text = item.Key + ": " + value;
+			
+			item.Value.Text =": " + value;
 		}
 
 	}

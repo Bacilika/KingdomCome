@@ -50,7 +50,7 @@ public abstract partial class Production : AbstractPlaceable
 		}
 		else
 		{
-			GameLogistics.Resources["WorkingCitizens"]++;
+			GameLogistics.Resources["UnEmployed"]--;
 
 			People.Add(npc);
 			npc.GetJob(this);
@@ -73,7 +73,7 @@ public abstract partial class Production : AbstractPlaceable
 			var npc = People[i];
 			npc.OnDelete();
 		}
-		GameLogistics.Resources["WorkingCitizens"] -= GetWorkers();
+		GameLogistics.Resources["UnEmployed"] += GetWorkers();
 		GameLogistics.Resources["Wood"] += Upgrades[Upgrade.WoodBackOnDelete][Level];
 		GameLogistics.Resources["Stone"] += Upgrades[Upgrade.StoneBackOnDelete][Level];
 		Shop.deleteAudio.Play();

@@ -17,8 +17,6 @@ public partial class Shop : Control
 	//Make overall level. If level > x, unlock certain buildings. 
 	private bool _locked = true;
 
-
-
 	[Signal]
 	public delegate void OnBuildingButtonPressedEventHandler(AbstractPlaceable type);
 

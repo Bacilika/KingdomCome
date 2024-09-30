@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://b7mukvq5n5mpd"]
+
+[ext_resource type="Texture2D" uid="uid://ix7jp6wv7jpb" path="res://Sprites/Extra/Icons/Sign1.png" id="1_tqe1k"]
+[ext_resource type="FontFile" uid="uid://dul1t3v440c7s" path="res://Deutsch.ttf" id="2_fkfy5"]
+
+[node name="GameStat" type="TextureRect"]
+custom_minimum_size = Vector2(40, 20)
+offset_right = 40.0
+offset_bottom = 20.0
+scale = Vector2(0.642857, 0.5)
+texture = ExtResource("1_tqe1k")
+stretch_mode = 2
+
+[node name="Value" type="Label" parent="."]
+layout_mode = 0
+offset_left = 56.0
+offset_top = 4.0
+offset_right = 193.0
+offset_bottom = 38.0
+scale = Vector2(0.642857, 0.705128)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_fkfy5")
+theme_override_font_sizes/font_size = 25
+text = ": 0"

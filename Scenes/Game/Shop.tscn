@@ -48,12 +48,13 @@ text = "Housing"
 script = ExtResource("5_3m6vu")
 
 [node name="ShopItemNode" type="BoxContainer" parent="BuildTabButtons/Houses"]
+visible = false
+layout_direction = 3
 layout_mode = 0
-offset_left = -215.0
-offset_top = -8.0
-offset_right = -23.0
-offset_bottom = 56.0
-theme_override_constants/separation = 64
+offset_left = 149.0
+offset_top = -72.0
+offset_right = 637.0
+offset_bottom = -7.0
 
 [node name="Productions" type="Button" parent="BuildTabButtons"]
 layout_mode = 2
@@ -63,69 +64,15 @@ text = "Production"
 script = ExtResource("6_rv706")
 
 [node name="ShopItemNode" type="BoxContainer" parent="BuildTabButtons/Productions"]
-layout_direction = 2
+visible = false
+layout_direction = 3
 layout_mode = 0
-offset_left = -471.0
-offset_top = -47.0
-offset_right = -23.0
-offset_bottom = 17.0
+offset_left = 149.0
+offset_top = -111.0
+offset_right = 637.0
+offset_bottom = -47.0
 mouse_filter = 2
 theme_override_constants/separation = 64
-
-[node name="ShipItemNames" type="GridContainer" parent="BuildTabButtons/Production/ShopItemNode"]
-offset_left = -39.0
-offset_top = 68.0
-offset_right = 636.0
-offset_bottom = 97.0
-mouse_filter = 2
-theme_override_constants/h_separation = 14
-theme_override_constants/v_separation = 7
-columns = 7
-
-[node name="FarmHouse" type="Label" parent="BuildTabButtons/Production/ShopItemNode/ShipItemNames"]
-layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 11
-text = "FarmHouse"
-
-[node name="Food" type="Label" parent="BuildTabButtons/Production/ShopItemNode/ShipItemNames"]
-layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 11
-text = "Market Stall"
-
-[node name="Ironmine" type="Label" parent="BuildTabButtons/Production/ShopItemNode/ShipItemNames"]
-layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 11
-text = "Ironmine"
-
-[node name="Well" type="Label" parent="BuildTabButtons/Production/ShopItemNode/ShipItemNames"]
-layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 11
-text = "  Well "
-
-[node name="Stonemine" type="Label" parent="BuildTabButtons/Production/ShopItemNode/ShipItemNames"]
-layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 11
-text = "Stonemine"
-
-[node name="Woodcutter" type="Label" parent="BuildTabButtons/Production/ShopItemNode/ShipItemNames"]
-layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 11
-text = "Woodcutter
-"
-
-[node name="Hunter cabin" type="Label" parent="BuildTabButtons/Production/ShopItemNode/ShipItemNames"]
-layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 11
-text = "Hunter cabin"
 
 [node name="Decorations" type="Button" parent="BuildTabButtons"]
 layout_mode = 2
@@ -135,11 +82,13 @@ text = "Decoration"
 script = ExtResource("15_sneyw")
 
 [node name="ShopItemNode" type="BoxContainer" parent="BuildTabButtons/Decorations"]
+visible = false
+layout_direction = 3
 layout_mode = 0
-offset_left = -407.0
-offset_top = -88.0
-offset_right = -23.0
-offset_bottom = -24.0
+offset_left = 149.0
+offset_top = -147.0
+offset_right = 629.0
+offset_bottom = -83.0
 
 [node name="Roads" type="Button" parent="BuildTabButtons"]
 layout_mode = 2
@@ -149,11 +98,13 @@ text = "Road"
 script = ExtResource("16_ubte4")
 
 [node name="ShopItemNode" type="BoxContainer" parent="BuildTabButtons/Roads"]
+visible = false
+layout_direction = 3
 layout_mode = 0
-offset_left = -399.0
-offset_top = -126.0
-offset_right = -23.0
-offset_bottom = -62.0
+offset_left = 141.0
+offset_top = -183.0
+offset_right = 621.0
+offset_bottom = -119.0
 
 [connection signal="pressed" from="BuildTabButtons/Houses" to="." method="OnBuildTabPressed" binds= ["Houses"]]
 [connection signal="pressed" from="BuildTabButtons/Productions" to="." method="OnBuildTabPressed" binds= ["Productions"]]

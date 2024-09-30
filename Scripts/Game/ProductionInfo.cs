@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
+
+
 public partial class ProductionInfo : Control
 {
 	private RichTextLabel _title;
@@ -11,8 +13,18 @@ public partial class ProductionInfo : Control
 	private Dictionary<String, List<String>> _productionInfo = new()
 	
 	{
-		{"HuntingButton", ["Hunters Lodge", //HunterLodge.Upgrades["WoodCost"][0].ToString(), HunterLodge.Upgrades["StoneCost"][0].ToString(), 
-		"Station for hunters to gather and hunt. Produces meat."]}
+		{"HuntingButton", ["Hunters Lodge", "1", "1", 
+			"Station for hunters to gather and hunt. Produces meat."]},
+		{"WellButton", ["Well", "1", "1", 
+			"Allows citizens to get water."]},
+		{"IronMineButton", ["IronMine", "1", "1", 
+			"Mine for iron"]},
+		{"MarketStallButton", ["MarketStall", "1", "1", 
+			"Market stall to sell"]},
+		{"StoneButton", ["StoneMine", "1", "1", 
+			"Mine for producing stone"]},
+		{"WoodButton", ["WoodCutter", "1", "1", 
+			"Produces wood"]}
 	};
 	public override void _Ready()
 	{
@@ -27,8 +39,8 @@ public partial class ProductionInfo : Control
 		var parent = GetParent();
 		Console.WriteLine(parent.Name);
 		_title.Text = _productionInfo[parent.Name][0];
-		//_resources.Text = "Wood: " + _productionInfo[parent.Name][1] + " Stone: " + _productionInfo[parent.Name][2];
-		_description.Text = _productionInfo[parent.Name][1];
+		_resources.Text = "Cost: Wood: " + _productionInfo[parent.Name][1] + " Stone: " + _productionInfo[parent.Name][2];
+		_description.Text = _productionInfo[parent.Name][3];
 	}
 
 

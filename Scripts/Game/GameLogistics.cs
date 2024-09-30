@@ -46,6 +46,7 @@ public partial class GameLogistics: Node2D
 			{ "WorkingCitizens", 0 },
 			{ "Water", 0 }, { "Wood", 100 }
 	};
+		
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -84,6 +85,9 @@ public partial class GameLogistics: Node2D
 				{
 					if (!Move )
 					{
+						var UpgradesClass = _object.GetType().Name;
+						Console.WriteLine(UpgradesClass);
+							
 							Resources["Money"] -= _object.GetPrice();
 							Resources["Wood"] -= _object.Upgrades[Upgrade.WoodCost][_object.Level];
 							Resources["Stone"] -= _object.Upgrades[Upgrade.StoneCost][_object.Level];

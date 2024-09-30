@@ -27,6 +27,8 @@ public abstract partial class AbstractPlaceable : Area2D
 	
 	public bool hasMoved = false;
 	public ChooseWare WareBox;
+	
+	
 
 
 	[Signal]
@@ -39,7 +41,7 @@ public abstract partial class AbstractPlaceable : Area2D
 	protected abstract void Tick();
 	public abstract void _Ready_instance();
 	protected abstract void OnDelete();
-
+	
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()

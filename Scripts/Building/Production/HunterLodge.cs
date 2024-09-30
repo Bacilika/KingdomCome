@@ -5,7 +5,6 @@ using Scripts.Constants;
 
 public partial class HunterLodge : Production
 {
-	public Dictionary<string, List<int>> Upgrades;
 	public override void _Ready_instance()
 	{
 		ProductionRate = 2;

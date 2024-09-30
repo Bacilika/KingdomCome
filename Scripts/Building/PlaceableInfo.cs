@@ -11,6 +11,8 @@ public partial class PlaceableInfo : Control
 	public CitizenInfo CitizenInfo;
 	public Control HouseInfo;
 	public RichTextLabel TextLabel;
+	public RichTextLabel TypeLabel;
+
 	[Signal]
 	public delegate void OnDeleteEventHandler();
 	[Signal]
@@ -27,6 +29,7 @@ public partial class PlaceableInfo : Control
 	public override void _Ready()
 	{
 		TextLabel = GetNode<RichTextLabel>("InfoBox/HouseInfo/RichTextLabel");
+		TypeLabel = GetNode<RichTextLabel>("InfoBox/HouseInfo/Type");
 		PortraitContainer = GetNode<BoxContainer>("InfoBox/HouseInfo/CitizenPortraitContainer");
 		CitizenPortrait = ResourceLoader.Load<PackedScene>("res://Scenes/Building/CitizenPortraitButton.tscn");
 		CitizenInfo = GetNode<CitizenInfo>("InfoBox/CitizenInfo");
@@ -81,8 +84,9 @@ public partial class PlaceableInfo : Control
 		
 	}
 
-	public void UpdateInfo(string text)
+	public void UpdateInfo(string text, String type)
 	{
+		TypeLabel.Text = type;
 		TextLabel.Text = text;
 	}
 }

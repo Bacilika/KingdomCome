@@ -82,6 +82,6 @@ public abstract partial class Production : AbstractPlaceable
 	
 	public void UpdateInfo()
 	{
-		InfoBox.UpdateInfo("Workers: " + GetWorkers());
+		InfoBox.UpdateInfo( "Workers: " + GetWorkers(), this.GetType().Name );
 	}
 }

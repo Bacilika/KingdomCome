@@ -117,6 +117,13 @@ icon = ExtResource("5_3wji3")
 flat = true
 expand_icon = true
 
+[node name="ProductionInfo" parent="BuildTabButtons/Production/ShopItemNode/StoneButton" instance=ExtResource("9_t50xm")]
+visible = false
+offset_left = -168.0
+offset_top = -185.0
+offset_right = 38.0
+offset_bottom = -1.0
+
 [node name="HuntingButton" type="Button" parent="BuildTabButtons/Production/ShopItemNode"]
 layout_mode = 1
 anchors_preset = 6
@@ -158,6 +165,13 @@ icon = ExtResource("9_iefcy")
 flat = true
 expand_icon = true
 
+[node name="ProductionInfo" parent="BuildTabButtons/Production/ShopItemNode/WoodButton" instance=ExtResource("9_t50xm")]
+visible = false
+offset_left = -168.0
+offset_top = -185.0
+offset_right = 38.0
+offset_bottom = -1.0
+
 [node name="WellButton" type="Button" parent="BuildTabButtons/Production/ShopItemNode"]
 layout_mode = 1
 anchors_preset = 6
@@ -175,6 +189,13 @@ icon = ExtResource("11_m0aoq")
 flat = true
 expand_icon = true
 
+[node name="ProductionInfo" parent="BuildTabButtons/Production/ShopItemNode/WellButton" instance=ExtResource("9_t50xm")]
+visible = false
+offset_left = -168.0
+offset_top = -185.0
+offset_right = 38.0
+offset_bottom = -1.0
+
 [node name="IronMineButton" type="Button" parent="BuildTabButtons/Production/ShopItemNode"]
 layout_mode = 1
 anchors_preset = 6
@@ -191,6 +212,13 @@ grow_vertical = 2
 icon = ExtResource("12_3dnmg")
 flat = true
 expand_icon = true
+
+[node name="ProductionInfo" parent="BuildTabButtons/Production/ShopItemNode/IronMineButton" instance=ExtResource("9_t50xm")]
+visible = false
+offset_left = -168.0
+offset_top = -185.0
+offset_right = 38.0
+offset_bottom = -1.0
 
 [node name="MarketStallButton" type="Button" parent="BuildTabButtons/Production/ShopItemNode"]
 layout_mode = 1
@@ -210,7 +238,15 @@ flat = true
 icon_alignment = 1
 expand_icon = true
 
+[node name="ProductionInfo" parent="BuildTabButtons/Production/ShopItemNode/MarketStallButton" instance=ExtResource("9_t50xm")]
+visible = false
+offset_left = -168.0
+offset_top = -185.0
+offset_right = 38.0
+offset_bottom = -1.0
+
 [node name="ShipItemNames" type="GridContainer" parent="BuildTabButtons/Production/ShopItemNode"]
+layout_mode = 0
 offset_left = -39.0
 offset_top = 68.0
 offset_right = 636.0
@@ -304,7 +340,17 @@ expand_icon = true
 
 [connection signal="pressed" from="BuildTabButtons/Houses" to="." method="OnBuildTabPressed" binds= ["Houses"]]
 [connection signal="pressed" from="BuildTabButtons/Production" to="." method="OnBuildTabPressed" binds= ["Production"]]
+[connection signal="mouse_entered" from="BuildTabButtons/Production/ShopItemNode/StoneButton" to="." method="OnHuntingButtonMouseEntered" binds= ["StoneButton"]]
+[connection signal="mouse_exited" from="BuildTabButtons/Production/ShopItemNode/StoneButton" to="." method="OnHuntingButtonMouseExited"]
 [connection signal="mouse_entered" from="BuildTabButtons/Production/ShopItemNode/HuntingButton" to="." method="OnHuntingButtonMouseEntered" binds= ["HuntingButton"]]
 [connection signal="mouse_exited" from="BuildTabButtons/Production/ShopItemNode/HuntingButton" to="." method="OnHuntingButtonMouseExited"]
+[connection signal="mouse_entered" from="BuildTabButtons/Production/ShopItemNode/WoodButton" to="." method="OnHuntingButtonMouseEntered" binds= ["WoodButton"]]
+[connection signal="mouse_exited" from="BuildTabButtons/Production/ShopItemNode/WoodButton" to="." method="OnHuntingButtonMouseExited"]
+[connection signal="mouse_entered" from="BuildTabButtons/Production/ShopItemNode/WellButton" to="." method="OnHuntingButtonMouseEntered" binds= ["WellButton"]]
+[connection signal="mouse_exited" from="BuildTabButtons/Production/ShopItemNode/WellButton" to="." method="OnHuntingButtonMouseExited"]
+[connection signal="mouse_entered" from="BuildTabButtons/Production/ShopItemNode/IronMineButton" to="." method="OnHuntingButtonMouseEntered" binds= ["IronMineButton"]]
+[connection signal="mouse_exited" from="BuildTabButtons/Production/ShopItemNode/IronMineButton" to="." method="OnHuntingButtonMouseExited"]
+[connection signal="mouse_entered" from="BuildTabButtons/Production/ShopItemNode/MarketStallButton" to="." method="OnHuntingButtonMouseEntered" binds= ["MarketStallButton"]]
+[connection signal="mouse_exited" from="BuildTabButtons/Production/ShopItemNode/MarketStallButton" to="." method="OnHuntingButtonMouseExited"]
 [connection signal="pressed" from="BuildTabButtons/Decorations" to="." method="OnBuildTabPressed" binds= ["Decorations"]]
 [connection signal="pressed" from="BuildTabButtons/Roads" to="." method="OnBuildTabPressed" binds= ["Roads"]]

@@ -1,6 +1,7 @@
 #nullable enable
 using Godot;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Scripts.Constants;
 
@@ -97,6 +98,8 @@ public partial class Shop : Control
 		var house = _shopItems[type].Instantiate<AbstractPlaceable>();
 		EmitSignal(SignalName.OnBuildingButtonPressed, house);
 	}
+
+	private Dictionary<String, List<String>> _hunterProductionInfo;
 
 	public void OnHuntingButtonMouseEntered(string buttonPath)
 	{

@@ -37,14 +37,26 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="RichTextLabel" type="RichTextLabel" parent="InfoBox/HouseInfo"]
-layout_mode = 0
-offset_left = 8.0
-offset_top = 8.0
-offset_right = 200.0
-offset_bottom = 40.0
+[node name="Type" type="RichTextLabel" parent="InfoBox/HouseInfo"]
+offset_left = 11.0
+offset_top = 9.0
+offset_right = 203.0
+offset_bottom = 41.0
 mouse_filter = 2
 theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/italics_font_size = 0
+text = "Type"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="InfoBox/HouseInfo"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 51.0
+offset_right = 202.0
+offset_bottom = 83.0
+mouse_filter = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/mono_font_size = 21
+theme_override_font_sizes/normal_font_size = 18
 text = "Habitants:"
 
 [node name="CitizenPortraitContainer" type="BoxContainer" parent="InfoBox/HouseInfo"]
@@ -82,12 +94,11 @@ theme_override_font_sizes/font_size = 17
 text = "Move"
 
 [node name="ChooseWareButton" type="Button" parent="InfoBox"]
-visible = false
 layout_mode = 0
-offset_left = 46.0
-offset_top = 45.0
-offset_right = 156.0
-offset_bottom = 76.0
+offset_left = 49.0
+offset_top = 75.0
+offset_right = 159.0
+offset_bottom = 106.0
 text = "Choose Ware"
 
 [node name="ChooseWare" parent="." instance=ExtResource("3_j5mfn")]

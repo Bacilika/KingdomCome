@@ -1,9 +1,9 @@
 [gd_scene load_steps=16 format=3 uid="uid://b7ydnji8nlrtu"]
 
 [ext_resource type="Script" path="res://Scripts/Building/Production/MarketStall.cs" id="1_tdre6"]
-[ext_resource type="Texture2D" uid="uid://hbex1b218kay" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Props/Wood_Cart_2.png" id="2_o1vwq"]
 [ext_resource type="Texture2D" uid="uid://d4dxackhgjuth" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/MarketStand_Small_1.png" id="3_qfx01"]
 [ext_resource type="Texture2D" uid="uid://q1igvln154pw" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/MarketStand_Large_1.png" id="4_kosqo"]
+[ext_resource type="Texture2D" uid="uid://c57h0x84n1rif" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/MarketStand_Large_2.png" id="4_utr85"]
 [ext_resource type="PackedScene" uid="uid://biil4p82w3tjw" path="res://Scenes/Building/PlaceableInfo.tscn" id="5_k5x2f"]
 [ext_resource type="Texture2D" uid="uid://dt1kbfdm7dk2a" path="res://Sprites/Extra/addResource1.png" id="6_135vx"]
 [ext_resource type="Texture2D" uid="uid://co3y7ufhufouh" path="res://Sprites/Extra/addResource2.png" id="7_csaeo"]
@@ -17,13 +17,13 @@
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_o1vwq")
-}, {
-"duration": 1.0,
 "texture": ExtResource("3_qfx01")
 }, {
 "duration": 1.0,
 "texture": ExtResource("4_kosqo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_utr85")
 }],
 "loop": true,
 "name": &"default",

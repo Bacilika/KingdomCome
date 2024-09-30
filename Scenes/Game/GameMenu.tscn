@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=4 uid="uid://25kpv3trjyvk"]
+[gd_scene load_steps=9 format=4 uid="uid://25kpv3trjyvk"]
 
 [ext_resource type="Script" path="res://Scripts/Game/GameMenu.cs" id="1_dev6f"]
 [ext_resource type="Texture2D" uid="uid://o80rtv7te3j4" path="res://Sprites/Atlas_Castle_Building-export.png" id="2_k8sk1"]
 [ext_resource type="FontFile" uid="uid://dul1t3v440c7s" path="res://Deutsch.ttf" id="3_d13wb"]
 [ext_resource type="PackedScene" uid="uid://dlbb4eje8p5k2" path="res://Scenes/Game/Shop.tscn" id="4_nmxg4"]
+[ext_resource type="Texture2D" uid="uid://bh2ubymqjqclg" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Ruins/Bricks_Intact_4.png" id="5_gso7j"]
 [ext_resource type="AudioStream" uid="uid://b51ml7us3al4e" path="res://Audio/ButtonPressed.mp3" id="5_hysb5"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fyhtp"]
@@ -145,7 +146,7 @@ layout_mode = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("3_d13wb")
 theme_override_font_sizes/font_size = 19
-text = "Iron: 0"
+text = "   : 0"
 
 [node name="Water" type="Label" parent="MenuCanvasLayer/Container/GameStats"]
 layout_mode = 2
@@ -159,6 +160,16 @@ offset_left = 656.0
 offset_top = -61.0
 offset_right = 1266.0
 offset_bottom = 107.0
+
+[node name="IronImage" type="Button" parent="MenuCanvasLayer/Container"]
+layout_mode = 0
+offset_left = 253.0
+offset_top = 60.0
+offset_right = 290.0
+offset_bottom = 96.0
+icon = ExtResource("5_gso7j")
+flat = true
+expand_icon = true
 
 [node name="CurrentGameMode" type="Label" parent="MenuCanvasLayer"]
 offset_top = -50.0

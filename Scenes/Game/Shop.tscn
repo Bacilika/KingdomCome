@@ -72,6 +72,61 @@ offset_bottom = 17.0
 mouse_filter = 2
 theme_override_constants/separation = 64
 
+[node name="ShipItemNames" type="GridContainer" parent="BuildTabButtons/Production/ShopItemNode"]
+offset_left = -39.0
+offset_top = 68.0
+offset_right = 636.0
+offset_bottom = 97.0
+mouse_filter = 2
+theme_override_constants/h_separation = 14
+theme_override_constants/v_separation = 7
+columns = 7
+
+[node name="FarmHouse" type="Label" parent="BuildTabButtons/Production/ShopItemNode/ShipItemNames"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 11
+text = "FarmHouse"
+
+[node name="Food" type="Label" parent="BuildTabButtons/Production/ShopItemNode/ShipItemNames"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 11
+text = "Market Stall"
+
+[node name="Ironmine" type="Label" parent="BuildTabButtons/Production/ShopItemNode/ShipItemNames"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 11
+text = "Ironmine"
+
+[node name="Well" type="Label" parent="BuildTabButtons/Production/ShopItemNode/ShipItemNames"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 11
+text = "  Well "
+
+[node name="Stonemine" type="Label" parent="BuildTabButtons/Production/ShopItemNode/ShipItemNames"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 11
+text = "Stonemine"
+
+[node name="Woodcutter" type="Label" parent="BuildTabButtons/Production/ShopItemNode/ShipItemNames"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 11
+text = "Woodcutter
+"
+
+[node name="Hunter cabin" type="Label" parent="BuildTabButtons/Production/ShopItemNode/ShipItemNames"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 11
+text = "Hunter cabin"
+
 [node name="Decorations" type="Button" parent="BuildTabButtons"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("4_f5p4c")

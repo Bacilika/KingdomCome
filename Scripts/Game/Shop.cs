@@ -64,4 +64,8 @@ public partial class Shop : Control
 			}
 		}
 	}
+	public static void OnHuntingButtonMouseEntered()
+	{
+		
+	}
 }

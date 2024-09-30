@@ -19,6 +19,7 @@ mouse_filter = 2
 texture = ExtResource("2_b7sor")
 
 [node name="Title" type="RichTextLabel" parent="InfoBox"]
+layout_mode = 0
 offset_left = 12.0
 offset_top = 8.0
 offset_right = 200.0
@@ -28,6 +29,7 @@ theme_override_colors/default_color = Color(0, 0, 0, 1)
 text = "Title"
 
 [node name="Resources" type="RichTextLabel" parent="InfoBox"]
+layout_mode = 0
 offset_left = 11.0
 offset_top = 39.0
 offset_right = 198.0

@@ -8,9 +8,10 @@ public partial class PlaceableInfo : Control
 	public bool Focused;
 	public PackedScene CitizenPortrait;
 	public BoxContainer PortraitContainer;
-	public CitizenInfo CitizenInfo;
-	public Control HouseInfo;
-	public RichTextLabel TextLabel;
+	private CitizenInfo _citizenInfo;
+	private Control _houseInfo;
+	private RichTextLabel _textLabel;
+	private Label _buildingName;
 	[Signal]
 	public delegate void OnDeleteEventHandler();
 	[Signal]
@@ -26,11 +27,12 @@ public partial class PlaceableInfo : Control
 
 	public override void _Ready()
 	{
-		TextLabel = GetNode<RichTextLabel>("InfoBox/HouseInfo/RichTextLabel");
+		_buildingName = GetNode<Label>("InfoBox/HouseInfo/BuildingName");
+		_textLabel = GetNode<RichTextLabel>("InfoBox/HouseInfo/RichTextLabel");
 		PortraitContainer = GetNode<BoxContainer>("InfoBox/HouseInfo/CitizenPortraitContainer");
 		CitizenPortrait = ResourceLoader.Load<PackedScene>("res://Scenes/Building/CitizenPortraitButton.tscn");
-		CitizenInfo = GetNode<CitizenInfo>("InfoBox/CitizenInfo");
-		HouseInfo = GetNode<Control>("InfoBox/HouseInfo");
+		_citizenInfo = GetNode<CitizenInfo>("InfoBox/CitizenInfo");
+		_houseInfo = GetNode<Control>("InfoBox/HouseInfo");
 
 	}
 
@@ -61,14 +63,14 @@ public partial class PlaceableInfo : Control
 
 	public void ShowNpcInfo(Npc npc)
 	{
-		HouseInfo.Visible = false;
-		CitizenInfo.Visible = true;
-		CitizenInfo.SetInfo(npc);
+		_houseInfo.Visible = false;
+		_citizenInfo.Visible = true;
+		_citizenInfo.SetInfo(npc);
 	}
 	public void HideNpcInfo()
 	{
-		HouseInfo.Visible = true;
-		CitizenInfo.Visible = false;
+		_houseInfo.Visible = true;
+		_citizenInfo.Visible = false;
 	}
 
 	private void OnMouseEntered()
@@ -81,8 +83,9 @@ public partial class PlaceableInfo : Control
 		
 	}
 
-	public void UpdateInfo(string text)
+	public void UpdateInfo(string buildingName,string text)
 	{
-		TextLabel.Text = text;
+		_buildingName.Text = buildingName;
+		_textLabel.Text = text;
 	}
 }

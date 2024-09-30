@@ -116,7 +116,7 @@ public partial class GameMap : Node2D
 
 			if (closestJob is not null)
 			{
-				citizen.GetJob(closestJob);
+				//citizen.GetJob(closestJob);
 				closestJob.EmployWorker(citizen);
 			}
 		}

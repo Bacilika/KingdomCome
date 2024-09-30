@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class Npc : CharacterBody2D
 {
@@ -9,8 +10,12 @@ public partial class Npc : CharacterBody2D
 	private NavigationAgent2D _navigation;
 	private float _speed = 100;
 	public Vector2 startPos;
+	public string Happiness = "Happy";
+	public Texture2D Sprite;
+	private AnimatedSprite2D _animation;
 	private Vector2 homePosition;
 	private Vector2 workPosition;
+	private Vector2 destination;
 	private bool _ready;
 	private Timer _timer;
 	private bool timerOut;
@@ -22,9 +27,12 @@ public partial class Npc : CharacterBody2D
 	
 	public override void _Ready()
 	{
+		_animation = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+		Sprite = _animation.SpriteFrames.GetFrameTexture("walkUp", 0);
 		_navigation = GetNode<NavigationAgent2D>("NavigationAgent2D");
 		_timer = GetNode<Timer>("WorkTimer");
 		_walkingOnGrassSound = GetNode<AudioStreamPlayer2D>("GrassWalking");
+		destination = homePosition;
 	}
 
 	public void OnWorkTimerTimeout()
@@ -51,8 +59,9 @@ public partial class Npc : CharacterBody2D
 				return;
 			}
 
-			if (_navigation.DistanceToTarget() < 1)
+			if (_navigation.DistanceToTarget() < 10)
 			{
+				_animation.Stop();
 				if (_timer.IsStopped())
 				{
 					_timer.Start();
@@ -62,7 +71,7 @@ public partial class Npc : CharacterBody2D
 				{
 					if (_rnd.RandiRange(0, 10)==0) //to make their movement a bit less monotone
 					{
-						setDestination(startPos);
+						setDestination();
 						startPos = GetGlobalPosition();
 						timerOut = false;
 						_timer.Stop();
@@ -70,7 +79,9 @@ public partial class Npc : CharacterBody2D
 						Vector2 new_vel =  (GlobalPosition.DirectionTo(nextPos) * _speed);
 						Velocity = new_vel;
 						MoveAndSlide();
-						Work.GatherResource();
+						_animation.Play();
+						
+						if(destination == homePosition) Work.GatherResource();
 					}
 				}
 
@@ -81,7 +92,32 @@ public partial class Npc : CharacterBody2D
 				Vector2 new_vel =  (GlobalPosition.DirectionTo(nextPos) * _speed);
 				Velocity = new_vel;
 				MoveAndSlide();
+				_animation.Animation = GetDirection();
 			}
+		}
+	}
+
+	private string GetDirection()
+	{
+
+		var angle = Velocity.Angle();
+		var angleToDegrees = angle * 180 / Math.PI;
+		List<int> right1 = [0,45];
+		List<int> right2 = [0,-45];
+		List<int> up = [45, 135];
+		List<int> left1 = [135, 180];
+		List<int> left2 = [-180, -135];
+		List<int> down = [-135, -45];
+		switch (angleToDegrees)
+		{
+			case >= 45 and < 135:
+				return "walkUp";
+			case >= -135 and < -45:
+				return "walkDown";
+			case >= 0 and < 45 or < 0 and >= -45:
+				return "walkRight";
+			default:
+				return "walkLeft";
 		}
 	}
 
@@ -91,15 +127,18 @@ public partial class Npc : CharacterBody2D
 		homePosition = startPos;
 	}
 
-	public void GetJob(Production production)
+	public bool GetJob(Production production)
 	{
 		if (Work is null)
 		{
 			Work = production;
-			production.EmployWorker(this);
+			//production.EmployWorker(this);
 			workPosition = Work.Position;
-			setDestination(workPosition);
+			setDestination();
+			return true;
 		}
+
+		return false;
 	}
 
 	public bool IsEmployed()
@@ -114,25 +153,20 @@ public partial class Npc : CharacterBody2D
 		QueueFree();
 	}
 
-	public void setDestination(Vector2 destPos)
+	public void setDestination()
 	{
-		if (startPos == homePosition)
-		{
-			destPos = workPosition;
-		}
-		else
-		{
-			destPos = homePosition;
-		}
 		if (Home.hasMoved)
 		{
 			homePosition = Home.Position;
 		}
 		if (Work.hasMoved)
 		{
-			workPosition = Home.Position;
+			workPosition = Work.Position;
 		}
-		_navigation.SetTargetPosition(destPos);
+		
+		destination = destination == homePosition ? workPosition : homePosition;
+	
+		_navigation.SetTargetPosition(destination);
 		_navigation.GetNextPathPosition();
 		_ready = true;
 		TurnOnAudio(true);

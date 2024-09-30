@@ -147,7 +147,7 @@ public partial class GameLogistics: Node2D
 		if (!Move)
 		{
 			return _building.Upgrades[Upgrade.WoodCost][_building.Level] <= Resources["Wood"] &&
-			       _building.Upgrades[Upgrade.StoneCost][_building.Level] <= Resources["Stone"];
+				   _building.Upgrades[Upgrade.StoneCost][_building.Level] <= Resources["Stone"];
 		}
 		// add cost for moving house here
 		else

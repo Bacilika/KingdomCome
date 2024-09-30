@@ -66,6 +66,6 @@ public partial class House : LivingSpaces
 
 	public void UpdateInfo()
 	{
-		InfoBox.UpdateInfo("Inhabitants: " + Inhabitants + "/" +Upgrades[Upgrade.MaxInhabitants][Level]);
+		InfoBox.UpdateInfo(GetBuildingName(),"Inhabitants: " + Inhabitants + "/" +Upgrades[Upgrade.MaxInhabitants][Level]);
 	}
 }

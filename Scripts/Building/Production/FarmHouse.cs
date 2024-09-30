@@ -5,10 +5,12 @@ using Scripts.Constants;
 
 public partial class FarmHouse : Production
 {
+	
 	private int _food;
 	
 	public override void _Ready_instance()
 	{
+		Producing = "Food";
 		_timer = GetNode<Timer>("FoodTimer");
 		Price = 20000;
 		Upgrades = new Dictionary<string, List<int>>

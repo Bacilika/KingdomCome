@@ -5,12 +5,14 @@ public partial class CitizenInfo : Control
 {
 	public Npc CitizenNpc;
 	public PlaceableInfo InfoBox;
+	private TextureRect _icon;
 
 
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		_icon = GetNode<TextureRect>("TextureRect");
 		InfoBox = GetParent().GetParent<PlaceableInfo>();
 	}
 
@@ -28,15 +30,17 @@ public partial class CitizenInfo : Control
 			work = CitizenNpc.Work.GetBuildingName();
 		}
 		
-		var textLabel = GetNode<RichTextLabel>("RichTextLabel");
-		textLabel.Text = "Work: " + work;
+		var textLabel = GetNode<Label>("RichTextLabel");
+		textLabel.Text =  work + 
+						  "\nHappiness: " + npc.Happiness;
+
+		_icon.Texture = npc.Sprite;
 
 
 	}
 
 	public void OnChangeJobButtonPressed()
 	{
-		Console.WriteLine("Changing Job");
 		CitizenNpc.EmitSignal(Npc.SignalName.OnJobChange, CitizenNpc);
 	}
 

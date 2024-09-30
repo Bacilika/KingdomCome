@@ -16,6 +16,8 @@ public partial class Shop : Control
 	private List<AbstractShopIconContainer> _shopTabs;
 	//Make overall level. If level > x, unlock certain buildings. 
 	private bool _locked = true;
+	private Control _productionInfo;
+
 
 	[Signal]
 	public delegate void OnBuildingButtonPressedEventHandler(AbstractPlaceable type);
@@ -62,8 +64,15 @@ public partial class Shop : Control
 			}
 		}
 	}
-	public static void OnHuntingButtonMouseEntered()
+	public void OnHuntingButtonMouseEntered(string buttonPath)
 	{
-		
+		var button = GetNode<Button>("BuildTabButtons/Production/ShopItemNode/" + buttonPath);
+		_productionInfo = button.GetNode<Control>("ProductionInfo");
+		_productionInfo.Visible = true;
+	}
+
+	public void OnHuntingButtonMouseExited()
+	{
+		_productionInfo.Visible = false;
 	}
 }

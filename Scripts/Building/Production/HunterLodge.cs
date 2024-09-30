@@ -5,14 +5,14 @@ using Scripts.Constants;
 
 public partial class HunterLodge : Production
 {
-	// Called when the node enters the scene tree for the first time.
+	public Dictionary<string, List<int>> Upgrades;
 	public override void _Ready_instance()
 	{
 		ProductionRate = 2;
 		_timer = GetNode<Timer>("FoodTimer");
 		_timer.Start();
 		Price = 20000;
-		Upgrades = new Dictionary<string, List<int>>
+		Upgrades = new ()
 		{
 			{Upgrade.Cost, [5000, 3000, 3000]}, {Upgrade.MaxWorkers, [5, 7, 10]},
 			{Upgrade.Inhabitants, [0, 0, 0]}, {Upgrade.WoodCost, [1, 1, 1]},

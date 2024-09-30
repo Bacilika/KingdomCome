@@ -220,7 +220,6 @@ public abstract partial class AbstractPlaceable : Area2D
 	public void SetObjectValues()
 	{
 		AnimatedSprite.Frame = Level;
-		Price = Upgrades["Cost"][Level];
 		ActivateHitbox(Level);
 	}
 

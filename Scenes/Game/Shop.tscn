@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dlbb4eje8p5k2"]
+[gd_scene load_steps=15 format=3 uid="uid://dlbb4eje8p5k2"]
 
 [ext_resource type="Script" path="res://Scripts/Game/Shop.cs" id="1_1o3pr"]
 [ext_resource type="AudioStream" uid="uid://dj5f1kt2yx1yb" path="res://Audio/DeleteBuilding.mp3" id="2_eaaiu"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://ljxctder1g5t" path="res://Sprites/Extra/Road.png" id="7_g4svy"]
 [ext_resource type="Texture2D" uid="uid://ds2amcmwp0pcr" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/WatchTower_BlueBricks_Wood_1.png" id="7_oo1vr"]
 [ext_resource type="Texture2D" uid="uid://cdobuvg0qs8c7" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/House_BlueBricks_Wood_1.png" id="9_iefcy"]
+[ext_resource type="PackedScene" uid="uid://3falldunylfw" path="res://Scenes/Game/ProductionInfo.tscn" id="9_t50xm"]
 [ext_resource type="AudioStream" uid="uid://bg6kys8wlkqcn" path="res://Audio/PlaceBuilding.mp3" id="9_woy45"]
 [ext_resource type="Texture2D" uid="uid://dqgtiysashmi4" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/Well_BlueBricks_Stone.png" id="11_m0aoq"]
 [ext_resource type="Texture2D" uid="uid://dqll61u34ddet" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Props/Banner_1.png" id="12_3dnmg"]
@@ -75,7 +76,6 @@ theme_override_font_sizes/font_size = 22
 text = "Production"
 
 [node name="ShopItemNode" type="Control" parent="BuildTabButtons/Production"]
-visible = false
 anchors_preset = 0
 offset_left = -471.0
 offset_top = -48.0
@@ -133,6 +133,13 @@ grow_vertical = 2
 icon = ExtResource("7_oo1vr")
 flat = true
 expand_icon = true
+
+[node name="ProductionInfo" parent="BuildTabButtons/Production/ShopItemNode/HuntingButton" instance=ExtResource("9_t50xm")]
+visible = false
+offset_left = -168.0
+offset_top = -185.0
+offset_right = 38.0
+offset_bottom = -1.0
 
 [node name="WoodButton" type="Button" parent="BuildTabButtons/Production/ShopItemNode"]
 layout_mode = 1
@@ -297,5 +304,7 @@ expand_icon = true
 
 [connection signal="pressed" from="BuildTabButtons/Houses" to="." method="OnBuildTabPressed" binds= ["Houses"]]
 [connection signal="pressed" from="BuildTabButtons/Production" to="." method="OnBuildTabPressed" binds= ["Production"]]
+[connection signal="mouse_entered" from="BuildTabButtons/Production/ShopItemNode/HuntingButton" to="." method="OnHuntingButtonMouseEntered" binds= ["HuntingButton"]]
+[connection signal="mouse_exited" from="BuildTabButtons/Production/ShopItemNode/HuntingButton" to="." method="OnHuntingButtonMouseExited"]
 [connection signal="pressed" from="BuildTabButtons/Decorations" to="." method="OnBuildTabPressed" binds= ["Decorations"]]
 [connection signal="pressed" from="BuildTabButtons/Roads" to="." method="OnBuildTabPressed" binds= ["Roads"]]

@@ -14,7 +14,7 @@ public partial class Shop : Control
 	private int _roadPrice = 100;
 	//Make overall level. If level > x, unlock certain buildings. 
 	private bool _locked = true;
-
+	private Control _productionInfo;
 
 
 	[Signal]
@@ -57,6 +57,7 @@ public partial class Shop : Control
 
 		placeAudio = GetNode<AudioStreamPlayer2D>("PlaceBuildingAudio");
 		deleteAudio = GetNode<AudioStreamPlayer2D>("DeleteBuildingAudio");
+		
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -97,8 +98,15 @@ public partial class Shop : Control
 		EmitSignal(SignalName.OnBuildingButtonPressed, house);
 	}
 
-	public static void OnHuntingButtonMouseEntered()
+	public void OnHuntingButtonMouseEntered(string buttonPath)
 	{
-		
+		var button = GetNode<Button>("BuildTabButtons/Production/ShopItemNode/" + buttonPath);
+		_productionInfo = button.GetNode<Control>("ProductionInfo");
+		_productionInfo.Visible = true;
+	}
+
+	public void OnHuntingButtonMouseExited()
+	{
+		_productionInfo.Visible = false;
 	}
 }

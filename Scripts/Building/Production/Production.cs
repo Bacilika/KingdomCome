@@ -9,7 +9,7 @@ public abstract partial class Production : AbstractPlaceable
 	protected Timer _timer;
 	protected int ProductionRate = 10; // 1/ProductionRate % chance to produce item by 1 each tick. 
 	[Signal]
-	public delegate void LookingForWorkersEventHandler(Production production);
+	public delegate void LookingForWorkersEventHandler(Productions production);
 	protected override void Tick()
 	{
 		if ( _timer is not null && _timer.IsStopped())
@@ -50,7 +50,7 @@ public abstract partial class Production : AbstractPlaceable
 		}
 		else
 		{
-			GameLogistics.Resources["WorkingCitizens"]++;
+			GameLogistics.Resources["UnEmployed"]--;
 
 			People.Add(npc);
 			npc.GetJob(this);
@@ -73,7 +73,7 @@ public abstract partial class Production : AbstractPlaceable
 			var npc = People[i];
 			npc.OnDelete();
 		}
-		GameLogistics.Resources["WorkingCitizens"] -= GetWorkers();
+		GameLogistics.Resources["UnEmployed"] += GetWorkers();
 		GameLogistics.Resources["Wood"] += Upgrades[Upgrade.WoodBackOnDelete][Level];
 		GameLogistics.Resources["Stone"] += Upgrades[Upgrade.StoneBackOnDelete][Level];
 		Shop.deleteAudio.Play();

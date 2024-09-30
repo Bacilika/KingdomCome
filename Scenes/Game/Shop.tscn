@@ -1,19 +1,14 @@
-[gd_scene load_steps=15 format=3 uid="uid://dlbb4eje8p5k2"]
+[gd_scene load_steps=10 format=3 uid="uid://dlbb4eje8p5k2"]
 
 [ext_resource type="Script" path="res://Scripts/Game/Shop.cs" id="1_1o3pr"]
 [ext_resource type="AudioStream" uid="uid://dj5f1kt2yx1yb" path="res://Audio/DeleteBuilding.mp3" id="2_eaaiu"]
-[ext_resource type="Texture2D" uid="uid://cc1ypnuadgjre" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/House_RedWood_Stone_2.png" id="2_s6jgi"]
-[ext_resource type="Texture2D" uid="uid://dbsqgn5x7uxof" path="res://Art/Buildings/House_Hay_Stone_1.png" id="3_vymuh"]
 [ext_resource type="FontFile" uid="uid://dul1t3v440c7s" path="res://Deutsch.ttf" id="4_f5p4c"]
-[ext_resource type="Texture2D" uid="uid://dryjqgjq5rfkk" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Rocks/Rock_Gray_1.png" id="5_3wji3"]
-[ext_resource type="Texture2D" uid="uid://ljxctder1g5t" path="res://Sprites/Extra/Road.png" id="7_g4svy"]
-[ext_resource type="Texture2D" uid="uid://ds2amcmwp0pcr" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/WatchTower_BlueBricks_Wood_1.png" id="7_oo1vr"]
-[ext_resource type="Texture2D" uid="uid://cdobuvg0qs8c7" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/House_BlueBricks_Wood_1.png" id="9_iefcy"]
+[ext_resource type="Script" path="res://Scripts/Game/Shop/Houses.cs" id="5_3m6vu"]
+[ext_resource type="Script" path="res://Scripts/Game/Shop/Productions.cs" id="6_rv706"]
 [ext_resource type="PackedScene" uid="uid://3falldunylfw" path="res://Scenes/Game/ProductionInfo.tscn" id="9_t50xm"]
 [ext_resource type="AudioStream" uid="uid://bg6kys8wlkqcn" path="res://Audio/PlaceBuilding.mp3" id="9_woy45"]
-[ext_resource type="Texture2D" uid="uid://dqgtiysashmi4" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/Well_BlueBricks_Stone.png" id="11_m0aoq"]
-[ext_resource type="Texture2D" uid="uid://dqll61u34ddet" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Props/Banner_1.png" id="12_3dnmg"]
-[ext_resource type="Texture2D" uid="uid://d4dxackhgjuth" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/MarketStand_Small_1.png" id="13_tk7b3"]
+[ext_resource type="Script" path="res://Scripts/Game/Shop/Decorations.cs" id="15_sneyw"]
+[ext_resource type="Script" path="res://Scripts/Game/Shop/Roads.cs" id="16_ubte4"]
 
 [node name="Shop" type="Control"]
 layout_mode = 3
@@ -51,292 +46,66 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("4_f5p4c")
 theme_override_font_sizes/font_size = 24
 text = "Housing"
+script = ExtResource("5_3m6vu")
 
-[node name="ShopItemNode" type="Control" parent="BuildTabButtons/Houses"]
+[node name="ShopItemNode" type="BoxContainer" parent="BuildTabButtons/Houses"]
 visible = false
-anchors_preset = 0
-offset_left = -215.0
-offset_top = -8.0
-offset_right = -23.0
-offset_bottom = 56.0
-
-[node name="HouseButton" type="Button" parent="BuildTabButtons/Houses/ShopItemNode"]
+layout_direction = 3
 layout_mode = 0
-offset_left = 128.0
-offset_right = 192.0
-offset_bottom = 64.0
-icon = ExtResource("3_vymuh")
-flat = true
-expand_icon = true
+offset_left = 149.0
+offset_top = -72.0
+offset_right = 637.0
+offset_bottom = -7.0
 
-[node name="Production" type="Button" parent="BuildTabButtons"]
+[node name="Productions" type="Button" parent="BuildTabButtons"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("4_f5p4c")
 theme_override_font_sizes/font_size = 22
 text = "Production"
+script = ExtResource("6_rv706")
 
-[node name="ShopItemNode" type="Control" parent="BuildTabButtons/Production"]
-anchors_preset = 0
-offset_left = -471.0
-offset_top = -48.0
-offset_right = -23.0
-offset_bottom = 16.0
-mouse_filter = 2
-
-[node name="FarmButton" type="Button" parent="BuildTabButtons/Production/ShopItemNode"]
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -488.0
-offset_top = -18.0
-offset_right = -419.0
-offset_bottom = 34.0
-grow_horizontal = 0
-grow_vertical = 2
-icon = ExtResource("2_s6jgi")
-flat = true
-expand_icon = true
-
-[node name="StoneButton" type="Button" parent="BuildTabButtons/Production/ShopItemNode"]
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -216.0
-offset_top = -13.0
-offset_right = -165.0
-offset_bottom = 34.0
-grow_horizontal = 0
-grow_vertical = 2
-icon = ExtResource("5_3wji3")
-flat = true
-expand_icon = true
-
-[node name="ProductionInfo" parent="BuildTabButtons/Production/ShopItemNode/StoneButton" instance=ExtResource("9_t50xm")]
+[node name="ShopItemNode" type="BoxContainer" parent="BuildTabButtons/Productions"]
 visible = false
-offset_left = -168.0
-offset_top = -185.0
-offset_right = 38.0
-offset_bottom = -1.0
-
-[node name="HuntingButton" type="Button" parent="BuildTabButtons/Production/ShopItemNode"]
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -57.0
-offset_top = -35.0
-offset_right = -18.0
-offset_bottom = 35.0
-grow_horizontal = 0
-grow_vertical = 2
-icon = ExtResource("7_oo1vr")
-flat = true
-expand_icon = true
-
-[node name="ProductionInfo" parent="BuildTabButtons/Production/ShopItemNode/HuntingButton" instance=ExtResource("9_t50xm")]
-visible = false
-offset_left = -168.0
-offset_top = -185.0
-offset_right = 38.0
-offset_bottom = -1.0
-
-[node name="WoodButton" type="Button" parent="BuildTabButtons/Production/ShopItemNode"]
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -151.0
-offset_top = -26.0
-offset_right = -95.0
-offset_bottom = 38.0
-grow_horizontal = 0
-grow_vertical = 2
-icon = ExtResource("9_iefcy")
-flat = true
-expand_icon = true
-
-[node name="ProductionInfo" parent="BuildTabButtons/Production/ShopItemNode/WoodButton" instance=ExtResource("9_t50xm")]
-visible = false
-offset_left = -168.0
-offset_top = -185.0
-offset_right = 38.0
-offset_bottom = -1.0
-
-[node name="WellButton" type="Button" parent="BuildTabButtons/Production/ShopItemNode"]
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -273.0
-offset_top = -25.0
-offset_right = -225.0
-offset_bottom = 34.0
-grow_horizontal = 0
-grow_vertical = 2
-icon = ExtResource("11_m0aoq")
-flat = true
-expand_icon = true
-
-[node name="ProductionInfo" parent="BuildTabButtons/Production/ShopItemNode/WellButton" instance=ExtResource("9_t50xm")]
-visible = false
-offset_left = -168.0
-offset_top = -185.0
-offset_right = 38.0
-offset_bottom = -1.0
-
-[node name="IronMineButton" type="Button" parent="BuildTabButtons/Production/ShopItemNode"]
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -323.0
-offset_top = -23.0
-offset_right = -293.0
-offset_bottom = 34.0
-grow_horizontal = 0
-grow_vertical = 2
-icon = ExtResource("12_3dnmg")
-flat = true
-expand_icon = true
-
-[node name="ProductionInfo" parent="BuildTabButtons/Production/ShopItemNode/IronMineButton" instance=ExtResource("9_t50xm")]
-visible = false
-offset_left = -168.0
-offset_top = -185.0
-offset_right = 38.0
-offset_bottom = -1.0
-
-[node name="MarketStallButton" type="Button" parent="BuildTabButtons/Production/ShopItemNode"]
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -408.0
-offset_top = -14.0
-offset_right = -345.0
-offset_bottom = 32.0
-grow_horizontal = 0
-grow_vertical = 2
-icon = ExtResource("13_tk7b3")
-flat = true
-icon_alignment = 1
-expand_icon = true
-
-[node name="ProductionInfo" parent="BuildTabButtons/Production/ShopItemNode/MarketStallButton" instance=ExtResource("9_t50xm")]
-visible = false
-offset_left = -168.0
-offset_top = -185.0
-offset_right = 38.0
-offset_bottom = -1.0
-
-[node name="ShipItemNames" type="GridContainer" parent="BuildTabButtons/Production/ShopItemNode"]
+layout_direction = 3
 layout_mode = 0
-offset_left = -39.0
-offset_top = 68.0
-offset_right = 636.0
-offset_bottom = 97.0
+offset_left = 149.0
+offset_top = -111.0
+offset_right = 637.0
+offset_bottom = -47.0
 mouse_filter = 2
-theme_override_constants/h_separation = 14
-theme_override_constants/v_separation = 7
-columns = 7
-
-[node name="FarmHouse" type="Label" parent="BuildTabButtons/Production/ShopItemNode/ShipItemNames"]
-layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 11
-text = "FarmHouse"
-
-[node name="Food" type="Label" parent="BuildTabButtons/Production/ShopItemNode/ShipItemNames"]
-layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 11
-text = "Market Stall"
-
-[node name="Ironmine" type="Label" parent="BuildTabButtons/Production/ShopItemNode/ShipItemNames"]
-layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 11
-text = "Ironmine"
-
-[node name="Well" type="Label" parent="BuildTabButtons/Production/ShopItemNode/ShipItemNames"]
-layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 11
-text = "  Well "
-
-[node name="Stonemine" type="Label" parent="BuildTabButtons/Production/ShopItemNode/ShipItemNames"]
-layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 11
-text = "Stonemine"
-
-[node name="Woodcutter" type="Label" parent="BuildTabButtons/Production/ShopItemNode/ShipItemNames"]
-layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 11
-text = "Woodcutter
-"
-
-[node name="Hunter cabin" type="Label" parent="BuildTabButtons/Production/ShopItemNode/ShipItemNames"]
-layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 11
-text = "Hunter cabin"
+theme_override_constants/separation = 64
 
 [node name="Decorations" type="Button" parent="BuildTabButtons"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("4_f5p4c")
 theme_override_font_sizes/font_size = 22
 text = "Decoration"
+script = ExtResource("15_sneyw")
 
-[node name="ShopItemNode" type="Control" parent="BuildTabButtons/Decorations"]
+[node name="ShopItemNode" type="BoxContainer" parent="BuildTabButtons/Decorations"]
 visible = false
-anchors_preset = 0
-offset_left = -407.0
-offset_top = -88.0
-offset_right = -23.0
-offset_bottom = -24.0
+layout_direction = 3
+layout_mode = 0
+offset_left = 149.0
+offset_top = -147.0
+offset_right = 629.0
+offset_bottom = -83.0
 
 [node name="Roads" type="Button" parent="BuildTabButtons"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("4_f5p4c")
 theme_override_font_sizes/font_size = 22
 text = "Road"
+script = ExtResource("16_ubte4")
 
-[node name="ShopItemNode" type="Control" parent="BuildTabButtons/Roads"]
+[node name="ShopItemNode" type="BoxContainer" parent="BuildTabButtons/Roads"]
 visible = false
-anchors_preset = 0
-offset_left = -399.0
-offset_top = -126.0
-offset_right = -23.0
-offset_bottom = -62.0
-
-[node name="RoadButton" type="Button" parent="BuildTabButtons/Roads/ShopItemNode"]
+layout_direction = 3
 layout_mode = 0
-offset_left = 312.0
-offset_right = 368.0
-offset_bottom = 64.0
-icon = ExtResource("7_g4svy")
-flat = true
-expand_icon = true
+offset_left = 141.0
+offset_top = -183.0
+offset_right = 621.0
+offset_bottom = -119.0
 
 [connection signal="pressed" from="BuildTabButtons/Houses" to="." method="OnBuildTabPressed" binds= ["Houses"]]
 [connection signal="pressed" from="BuildTabButtons/Production" to="." method="OnBuildTabPressed" binds= ["Production"]]
@@ -352,5 +121,6 @@ expand_icon = true
 [connection signal="mouse_exited" from="BuildTabButtons/Production/ShopItemNode/IronMineButton" to="." method="OnHuntingButtonMouseExited"]
 [connection signal="mouse_entered" from="BuildTabButtons/Production/ShopItemNode/MarketStallButton" to="." method="OnHuntingButtonMouseEntered" binds= ["MarketStallButton"]]
 [connection signal="mouse_exited" from="BuildTabButtons/Production/ShopItemNode/MarketStallButton" to="." method="OnHuntingButtonMouseExited"]
+[connection signal="pressed" from="BuildTabButtons/Productions" to="." method="OnBuildTabPressed" binds= ["Productions"]]
 [connection signal="pressed" from="BuildTabButtons/Decorations" to="." method="OnBuildTabPressed" binds= ["Decorations"]]
 [connection signal="pressed" from="BuildTabButtons/Roads" to="." method="OnBuildTabPressed" binds= ["Roads"]]

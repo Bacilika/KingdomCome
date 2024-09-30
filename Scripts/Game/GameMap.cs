@@ -42,7 +42,7 @@ public partial class GameMap : Node2D
 			hungry = 0;
 		}
 
-		if (_timeSinceLastTick > 1 && GameLogistics.Resources["Citizens"] > GameLogistics.Resources["WorkingCitizens"]) //there are unemployed
+		if (GameLogistics.Resources["UnEmployed"] > 0) //there are unemployed
 		{
 			GiveJobToNpcs();
 		}
@@ -93,6 +93,7 @@ public partial class GameMap : Node2D
 		npc.Position = house.Position;
 		npc.SetStartPos(npc.Position);
 		Citizens.Add(npc);
+		GameLogistics.Resources["UnEmployed"]++;
 		
 		npc.OnJobChange += OnSelectJob;
 		house.MoveToFront();

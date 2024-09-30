@@ -12,13 +12,13 @@ public abstract partial class AbstractPlaceable : Area2D
 	public PlaceableInfo InfoBox;
 	protected int Price;
 	public int Level;
-	protected int WoodCost;
-	protected int StoneCost;
+	public int WoodCost;
+	public int StoneCost;
 	private int _maxLevel = 2;
 	protected int Inhabitants;
 	private CollisionShape2D _hitbox;
 	public Dictionary<string, List<int>> Upgrades; 
-	protected AnimatedSprite2D AnimatedSprite;
+	public AnimatedSprite2D AnimatedSprite;
 	private double _time;
 	private bool _move;
 	protected int HouseholdHappiness;

@@ -43,7 +43,7 @@ public partial class GameLogistics: Node2D
 		Resources = new System.Collections.Generic.Dictionary<string, int>
 		{
 			{ "Money", 100000 }, { "Citizens", 0 }, { "Happiness", 0 }, { "Food", 0 }, { "Stone", 100 }, { "Iron", 5 },
-			{ "WorkingCitizens", 0 },
+			{ "UnEmployed", 0 },
 			{ "Water", 0 }, { "Wood", 100 }
 	};
 		
@@ -99,8 +99,6 @@ public partial class GameLogistics: Node2D
 							placedBuilding.OnBuildingUpgrade += UpgradeBuilding;
 							Shop.placeAudio.Play();
 							_containBuilding = true;
-							_object?.QueueFree();
-							_roadObject?.QueueFree();
 							ResetModes();
 					}
 					else
@@ -114,8 +112,6 @@ public partial class GameLogistics: Node2D
 		}
 		if (@event.IsActionPressed((Inputs.RightClick)))
 		{
-			_object?.QueueFree();
-			_roadObject?.QueueFree();
 			ResetModes();
 		}
 		if (@event.IsActionReleased(Inputs.LeftClick))
@@ -126,7 +122,7 @@ public partial class GameLogistics: Node2D
 
 	public static bool HasUnemployedCitizens()
 	{
-		return Resources["WorkingCitizens"] < Resources["Citizens"];
+		return Resources["UnEmployed"] > 0;
 	}
 	
 

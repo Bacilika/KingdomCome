@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://tigupmam0oos"]
+
+[ext_resource type="FontFile" uid="uid://dul1t3v440c7s" path="res://Deutsch.ttf" id="1_5eyj1"]
+[ext_resource type="Texture2D" uid="uid://ydjrrgbkgcr3" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Props/Table_1.png" id="1_8xm4i"]
+
+[node name="ShopIcon" type="TextureButton"]
+offset_right = 72.0
+offset_bottom = 88.0
+texture_normal = ExtResource("1_8xm4i")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Text" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.091
+anchor_bottom = 1.091
+offset_top = -0.00801086
+offset_right = 64.0
+offset_bottom = 48.992
+grow_horizontal = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_5eyj1")
+text = "Wood:
+Stone:"
+horizontal_alignment = 1

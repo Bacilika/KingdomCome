@@ -1,11 +1,19 @@
-[gd_scene load_steps=9 format=4 uid="uid://25kpv3trjyvk"]
+[gd_scene load_steps=17 format=4 uid="uid://25kpv3trjyvk"]
 
 [ext_resource type="Script" path="res://Scripts/Game/GameMenu.cs" id="1_dev6f"]
 [ext_resource type="Texture2D" uid="uid://o80rtv7te3j4" path="res://Sprites/Atlas_Castle_Building-export.png" id="2_k8sk1"]
 [ext_resource type="FontFile" uid="uid://dul1t3v440c7s" path="res://Deutsch.ttf" id="3_d13wb"]
+[ext_resource type="PackedScene" uid="uid://b7mukvq5n5mpd" path="res://GameStat.tscn" id="4_2bxld"]
 [ext_resource type="PackedScene" uid="uid://dlbb4eje8p5k2" path="res://Scenes/Game/Shop.tscn" id="4_nmxg4"]
-[ext_resource type="Texture2D" uid="uid://bh2ubymqjqclg" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Ruins/Bricks_Intact_4.png" id="5_gso7j"]
 [ext_resource type="AudioStream" uid="uid://b51ml7us3al4e" path="res://Audio/ButtonPressed.mp3" id="5_hysb5"]
+[ext_resource type="Texture2D" uid="uid://ocbp46wni417" path="res://Sprites/Extra/Icons/Sign2.png" id="6_v7o1e"]
+[ext_resource type="Texture2D" uid="uid://fgflcwfg7ymo" path="res://Sprites/Extra/Icons/Sign3.png" id="7_k3pbr"]
+[ext_resource type="Texture2D" uid="uid://bg65o6c0eh1bw" path="res://Sprites/Extra/Icons/Sign4.png" id="8_mbmc5"]
+[ext_resource type="Texture2D" uid="uid://cda3k1x7wfasp" path="res://Sprites/Extra/Icons/Sign5.png" id="9_0d0hb"]
+[ext_resource type="Texture2D" uid="uid://oy5wxt57vaiu" path="res://Sprites/Extra/Icons/Sign6.png" id="10_jbmre"]
+[ext_resource type="Texture2D" uid="uid://wecbgst7xike" path="res://Sprites/Extra/Icons/Sign7.png" id="11_hpum0"]
+[ext_resource type="Texture2D" uid="uid://5fcgde8yoegf" path="res://Sprites/Extra/Icons/Sign8.png" id="12_onvdd"]
+[ext_resource type="Texture2D" uid="uid://c55yx5br1mqso" path="res://Sprites/Extra/Icons/Sign9.png" id="13_fmjcf"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fyhtp"]
 texture = ExtResource("2_k8sk1")
@@ -61,115 +69,83 @@ grow_vertical = 0
 mouse_filter = 2
 
 [node name="MenuBar" type="TileMapLayer" parent="MenuCanvasLayer/Container"]
-position = Vector2(4, -600)
-tile_map_data = PackedByteArray("AAAAABMAAAABAAYAAAAAABQAAAABAAYAAAAAABUAAAABAAcAAAABABMAAAACAAYAAAABABQAAAACAAYAAAABABUAAAACAAcAAAACABMAAAACAAYAAAACABQAAAACAAYAAAADABMAAAACAAYAAAADABQAAAACAAYAAAADABUAAAACAAcAAAAEABQAAAACAAYAAAAEABUAAAACAAcAAAAFABMAAAACAAUAAAAFABQAAAACAAYAAAAFABUAAAACAAcAAAAGABMAAAACAAUAAAAGABQAAAACAAYAAAAGABUAAAACAAcAAAAHABMAAAACAAUAAAAHABQAAAACAAYAAAAHABUAAAACAAcAAAAIABMAAAACAAUAAAAIABQAAAACAAYAAAAIABUAAAACAAcAAAAJABMAAAACAAUAAAAJABQAAAACAAYAAAAJABUAAAACAAcAAAAKABMAAAACAAUAAAAKABQAAAACAAYAAAAKABUAAAACAAcAAAALABMAAAACAAUAAAALABQAAAACAAYAAAALABUAAAACAAcAAAAMABMAAAACAAUAAAAMABQAAAACAAYAAAAMABUAAAACAAcAAAANABMAAAACAAUAAAANABQAAAACAAYAAAANABUAAAACAAcAAAAOABMAAAACAAUAAAAOABQAAAACAAYAAAAOABUAAAACAAcAAAAPABMAAAACAAUAAAAPABQAAAACAAYAAAAPABUAAAACAAcAAAAQABMAAAACAAUAAAAQABQAAAACAAYAAAAQABUAAAACAAcAAAARABMAAAACAAUAAAARABQAAAACAAYAAAARABUAAAACAAcAAAASABMAAAACAAUAAAASABQAAAACAAYAAAASABUAAAACAAcAAAATABMAAAACAAUAAAATABQAAAACAAYAAAATABUAAAACAAcAAAAUABMAAAACAAUAAAAUABQAAAACAAYAAAAUABUAAAACAAcAAAAVABMAAAACAAUAAAAVABQAAAACAAYAAAAVABUAAAACAAcAAAAWABMAAAACAAUAAAAWABQAAAACAAYAAAAWABUAAAACAAcAAAAXABMAAAACAAUAAAAXABQAAAACAAYAAAAXABUAAAACAAcAAAAYABMAAAACAAUAAAAYABQAAAACAAYAAAAYABUAAAACAAcAAAAZABMAAAACAAUAAAAZABQAAAACAAYAAAAZABUAAAACAAcAAAAaABMAAAACAAUAAAAaABQAAAACAAYAAAAaABUAAAACAAcAAAAbABMAAAACAAUAAAAbABQAAAACAAYAAAAbABUAAAACAAcAAAAcABMAAAACAAUAAAAcABQAAAACAAYAAAAcABUAAAACAAcAAAAdABMAAAACAAUAAAAdABQAAAACAAYAAAAdABUAAAACAAcAAAAeABMAAAACAAUAAAAeABQAAAACAAYAAAAeABUAAAACAAcAAAAfABMAAAACAAUAAAAfABQAAAACAAYAAAAfABUAAAACAAcAAAAgABMAAAACAAUAAAAgABQAAAACAAYAAAAgABUAAAACAAcAAAAhABMAAAACAAUAAAAhABQAAAACAAYAAAAhABUAAAACAAcAAAAiABMAAAACAAUAAAAiABQAAAACAAYAAAAiABUAAAACAAcAAAAjABMAAAAFAAsAAAAjABQAAAACAAYAAAAjABUAAAACAAcAAAAkABMAAAACAAYAAAAkABQAAAACAAYAAAAkABUAAAACAAcAAAAlABMAAAACAAYAAAAlABQAAAACAAYAAAAlABUAAAACAAcAAAAmABMAAAACAAYAAAAmABQAAAACAAYAAAAmABUAAAACAAcAAAAnABMAAAADAAYAAAAnABQAAAADAAYAAAAnABUAAAADAAcAAAAAABIAAAABAAYAAAAAABEAAAABAAYAAAABABIAAAACAAYAAAABABEAAAACAAYAAAAEABIAAAABAAYAABAEABEAAAABAAYAABADABIAAAACAAYAAAADABEAAAACAAYAAAACABEAAAACAAYAAAACABIAAAACAAYAAAAAABAAAAABAAUAAAABABAAAAACAAUAAAACABAAAAACAAUAAAADABAAAAACAAUAAAAEABAAAAADAAUAAAAnABIAAAADAAYAAAAnABEAAAADAAYAAAAnABAAAAADAAUAAAAlABIAAAACAAYAAAAmABIAAAACAAYAAAAkABIAAAACAAYAAAAlABEAAAACAAYAAAAmABEAAAACAAYAAAAkABEAAAACAAYAAAAjABIAAAABAAYAAAAjABEAAAABAAYAAAAmABAAAAACAAUAAAAlABAAAAACAAUAAAAkABAAAAACAAUAAAAjABAAAAABAAUAAAAEABMAAAAFAAsAABACABUAAAACAAcAAAA=")
+position = Vector2(8, -600)
+tile_map_data = PackedByteArray("AAAAABMAAAABAAYAAAAAABQAAAABAAYAAAAAABUAAAABAAcAAAABABMAAAACAAYAAAABABQAAAACAAYAAAABABUAAAACAAcAAAACABMAAAACAAYAAAACABQAAAACAAYAAAADABMAAAACAAYAAAADABQAAAACAAYAAAADABUAAAACAAcAAAAEABQAAAACAAYAAAAEABUAAAACAAcAAAAFABMAAAACAAYAAAAFABQAAAACAAYAAAAFABUAAAACAAcAAAAGABMAAAACAAYAAAAGABQAAAACAAYAAAAGABUAAAACAAcAAAAHABMAAAACAAYAAAAHABQAAAACAAYAAAAHABUAAAACAAcAAAAIABMAAAACAAYAAAAIABQAAAACAAYAAAAIABUAAAACAAcAAAAJABMAAAACAAYAAAAJABQAAAACAAYAAAAJABUAAAACAAcAAAAKABMAAAACAAYAAAAKABQAAAACAAYAAAAKABUAAAACAAcAAAALABMAAAACAAYAAAALABQAAAACAAYAAAALABUAAAACAAcAAAAMABMAAAACAAYAAAAMABQAAAACAAYAAAAMABUAAAACAAcAAAANABMAAAACAAYAAAANABQAAAACAAYAAAANABUAAAACAAcAAAAOABMAAAACAAYAAAAOABQAAAACAAYAAAAOABUAAAACAAcAAAAPABMAAAACAAYAAAAPABQAAAACAAYAAAAPABUAAAACAAcAAAAQABMAAAACAAYAAAAQABQAAAACAAYAAAAQABUAAAACAAcAAAARABMAAAACAAYAAAARABQAAAACAAYAAAARABUAAAACAAcAAAASABMAAAACAAYAAAASABQAAAACAAYAAAASABUAAAACAAcAAAATABMAAAACAAYAAAATABQAAAACAAYAAAATABUAAAACAAcAAAAUABMAAAACAAYAAAAUABQAAAACAAYAAAAUABUAAAACAAcAAAAVABMAAAACAAYAAAAVABQAAAACAAYAAAAVABUAAAACAAcAAAAWABMAAAACAAYAAAAWABQAAAACAAYAAAAWABUAAAACAAcAAAAXABMAAAACAAYAAAAXABQAAAACAAYAAAAXABUAAAACAAcAAAAYABMAAAACAAYAAAAYABQAAAACAAYAAAAYABUAAAACAAcAAAAZABMAAAACAAYAAAAZABQAAAACAAYAAAAZABUAAAACAAcAAAAaABMAAAACAAYAAAAaABQAAAACAAYAAAAaABUAAAACAAcAAAAbABMAAAACAAYAAAAbABQAAAACAAYAAAAbABUAAAACAAcAAAAcABMAAAACAAYAAAAcABQAAAACAAYAAAAcABUAAAACAAcAAAAdABMAAAACAAYAAAAdABQAAAACAAYAAAAdABUAAAACAAcAAAAeABMAAAACAAYAAAAeABQAAAACAAYAAAAeABUAAAACAAcAAAAfABMAAAACAAYAAAAfABQAAAACAAYAAAAfABUAAAACAAcAAAAgABMAAAACAAYAAAAgABQAAAACAAYAAAAgABUAAAACAAcAAAAhABMAAAACAAYAAAAhABQAAAACAAYAAAAhABUAAAACAAcAAAAiABMAAAACAAYAAAAiABQAAAACAAYAAAAiABUAAAACAAcAAAAjABMAAAACAAYAAAAjABQAAAACAAYAAAAjABUAAAACAAcAAAAkABMAAAACAAYAAAAkABQAAAACAAYAAAAkABUAAAACAAcAAAAlABMAAAACAAYAAAAlABQAAAACAAYAAAAlABUAAAACAAcAAAAmABMAAAACAAYAAAAmABQAAAACAAYAAAAmABUAAAACAAcAAAAnABMAAAADAAYAAAAnABQAAAADAAYAAAAnABUAAAADAAcAAAAAABIAAAABAAYAAAAAABEAAAABAAYAAAABABIAAAACAAYAAAABABEAAAACAAYAAAAEABIAAAAHAAsAAAAEABEAAAABAAYAABADABIAAAACAAYAAAADABEAAAACAAYAAAACABEAAAACAAYAAAACABIAAAACAAYAAAAAABAAAAABAAUAAAABABAAAAACAAUAAAACABAAAAACAAUAAAADABAAAAACAAUAAAAEABAAAAADAAUAAAAnABIAAAADAAYAAAAnABEAAAADAAYAAAAnABAAAAADAAUAAAAlABIAAAACAAYAAAAmABIAAAACAAYAAAAkABIAAAACAAYAAAAlABEAAAACAAYAAAAmABEAAAACAAYAAAAkABEAAAACAAYAAAAjABIAAAAHAAsAABAjABEAAAABAAYAAAAmABAAAAACAAUAAAAlABAAAAACAAUAAAAkABAAAAACAAUAAAAjABAAAAABAAUAAAAEABMAAAACAAYAAAACABUAAAACAAcAAAAFABIAAAACAAUAAAAGABIAAAACAAUAAAAHABIAAAACAAUAAAAIABIAAAACAAUAAAAJABIAAAACAAUAAAAKABIAAAACAAUAAAALABIAAAACAAUAAAAMABIAAAACAAUAAAANABIAAAACAAUAAAAOABIAAAACAAUAAAAPABIAAAACAAUAAAAQABIAAAACAAUAAAARABIAAAACAAUAAAASABIAAAACAAUAAAATABIAAAACAAUAAAAUABIAAAACAAUAAAAVABIAAAACAAUAAAAWABIAAAACAAUAAAAXABIAAAACAAUAAAAYABIAAAACAAUAAAAZABIAAAACAAUAAAAaABIAAAACAAUAAAAbABIAAAACAAUAAAAcABIAAAACAAUAAAAdABIAAAACAAUAAAAeABIAAAACAAUAAAAfABIAAAACAAUAAAAgABIAAAACAAUAAAAhABIAAAACAAUAAAAiABIAAAACAAUAAAA=")
 tile_set = SubResource("TileSet_et3qr")
 rendering_quadrant_size = 32
 collision_enabled = false
 
 [node name="Day" type="Label" parent="MenuCanvasLayer/Container"]
-layout_mode = 2
-offset_left = 40.0
+layout_mode = 0
+offset_left = 48.0
 offset_top = -32.0
-offset_right = 119.0
-offset_bottom = 8.0
-size_flags_horizontal = 0
+offset_right = 96.0
+offset_bottom = -9.0
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("3_d13wb")
-theme_override_font_sizes/font_size = 27
+theme_override_font_sizes/font_size = 26
 text = "Day: 0"
 
 [node name="GameStats" type="GridContainer" parent="MenuCanvasLayer/Container"]
 layout_mode = 2
-offset_left = 18.0
-offset_top = 38.0
-offset_right = 724.0
-offset_bottom = 118.0
+offset_left = 23.0
+offset_top = 19.0
+offset_right = 827.0
+offset_bottom = 84.0
 mouse_filter = 2
-theme_override_constants/h_separation = 40
+theme_override_constants/h_separation = 80
 theme_override_constants/v_separation = 7
 columns = 5
 
-[node name="Citizens" type="Label" parent="MenuCanvasLayer/Container/GameStats"]
+[node name="Citizens" parent="MenuCanvasLayer/Container/GameStats" instance=ExtResource("4_2bxld")]
 layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("3_d13wb")
-theme_override_font_sizes/font_size = 19
-text = "Habitants: 0"
+tooltip_text = "Citizens"
 
-[node name="Food" type="Label" parent="MenuCanvasLayer/Container/GameStats"]
+[node name="Food" parent="MenuCanvasLayer/Container/GameStats" instance=ExtResource("4_2bxld")]
 layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("3_d13wb")
-theme_override_font_sizes/font_size = 19
-text = "Food: 0"
+tooltip_text = "Food"
+texture = ExtResource("6_v7o1e")
 
-[node name="Money" type="Label" parent="MenuCanvasLayer/Container/GameStats"]
+[node name="Money" parent="MenuCanvasLayer/Container/GameStats" instance=ExtResource("4_2bxld")]
 layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("3_d13wb")
-theme_override_font_sizes/font_size = 19
-text = "Moneys: 0"
+tooltip_text = "Money"
+texture = ExtResource("7_k3pbr")
 
-[node name="Happiness" type="Label" parent="MenuCanvasLayer/Container/GameStats"]
+[node name="Happiness" parent="MenuCanvasLayer/Container/GameStats" instance=ExtResource("4_2bxld")]
 layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("3_d13wb")
-theme_override_font_sizes/font_size = 19
-text = "Happiness: 0"
+tooltip_text = "Happiness"
+texture = ExtResource("8_mbmc5")
 
-[node name="Employed" type="Label" parent="MenuCanvasLayer/Container/GameStats"]
+[node name="UnEmployed" parent="MenuCanvasLayer/Container/GameStats" instance=ExtResource("4_2bxld")]
 layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("3_d13wb")
-theme_override_font_sizes/font_size = 19
-text = "Employed: 0"
+tooltip_text = "Unemployed"
+texture = ExtResource("9_0d0hb")
 
-[node name="Stone" type="Label" parent="MenuCanvasLayer/Container/GameStats"]
+[node name="Stone" parent="MenuCanvasLayer/Container/GameStats" instance=ExtResource("4_2bxld")]
 layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("3_d13wb")
-theme_override_font_sizes/font_size = 19
-text = "Stone: 0"
+tooltip_text = "Stone"
+texture = ExtResource("10_jbmre")
 
-[node name="Wood" type="Label" parent="MenuCanvasLayer/Container/GameStats"]
+[node name="Wood" parent="MenuCanvasLayer/Container/GameStats" instance=ExtResource("4_2bxld")]
 layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("3_d13wb")
-theme_override_font_sizes/font_size = 19
-text = "Wood: 0"
+tooltip_text = "Wood"
+texture = ExtResource("11_hpum0")
 
-[node name="Iron" type="Label" parent="MenuCanvasLayer/Container/GameStats"]
+[node name="Iron" parent="MenuCanvasLayer/Container/GameStats" instance=ExtResource("4_2bxld")]
 layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("3_d13wb")
-theme_override_font_sizes/font_size = 19
-text = "   : 0"
+tooltip_text = "Iron"
+texture = ExtResource("12_onvdd")
 
-[node name="Water" type="Label" parent="MenuCanvasLayer/Container/GameStats"]
+[node name="Water" parent="MenuCanvasLayer/Container/GameStats" instance=ExtResource("4_2bxld")]
 layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("3_d13wb")
-theme_override_font_sizes/font_size = 19
-text = "Water: 0"
+tooltip_text = "Water"
+texture = ExtResource("13_fmjcf")
 
 [node name="Shop" parent="MenuCanvasLayer/Container" instance=ExtResource("4_nmxg4")]
 offset_left = 656.0
 offset_top = -61.0
 offset_right = 1266.0
 offset_bottom = 107.0
-
-[node name="IronImage" type="Button" parent="MenuCanvasLayer/Container"]
-layout_mode = 0
-offset_left = 253.0
-offset_top = 60.0
-offset_right = 290.0
-offset_bottom = 96.0
-icon = ExtResource("5_gso7j")
-flat = true
-expand_icon = true
 
 [node name="CurrentGameMode" type="Label" parent="MenuCanvasLayer"]
 offset_top = -50.0

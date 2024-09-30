@@ -11,7 +11,7 @@ public partial class HunterLodge : Production
 		_timer = GetNode<Timer>("FoodTimer");
 		_timer.Start();
 		Price = 20000;
-		Upgrades = new ()
+		Upgrades = new Dictionary<string, List<int>>
 		{
 			{Upgrade.Cost, [5000, 3000, 3000]}, {Upgrade.MaxWorkers, [5, 7, 10]},
 			{Upgrade.Inhabitants, [0, 0, 0]}, {Upgrade.WoodCost, [1, 1, 1]},

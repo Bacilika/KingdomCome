@@ -26,6 +26,10 @@ window/stretch/scale_mode="integer"
 
 project/assembly_name="KingdomCome"
 
+[gui]
+
+timers/tooltip_delay_sec=0.1
+
 [input]
 
 camera_up={

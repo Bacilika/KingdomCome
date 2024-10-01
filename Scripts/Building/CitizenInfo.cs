@@ -6,6 +6,7 @@ public partial class CitizenInfo : Control
 	public Npc CitizenNpc;
 	public PlaceableInfo InfoBox;
 	private TextureRect _icon;
+	public TextureRect Background;
 
 
 	
@@ -13,7 +14,8 @@ public partial class CitizenInfo : Control
 	public override void _Ready()
 	{
 		_icon = GetNode<TextureRect>("TextureRect");
-		InfoBox = GetParent().GetParent<PlaceableInfo>();
+		Background = GetNode<TextureRect>("CitizenBackground");
+		
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -24,6 +26,8 @@ public partial class CitizenInfo : Control
 	public void SetInfo(Npc npc)
 	{
 		CitizenNpc = npc;
+		
+		npc.SetInfo();
 		var work = "Unemployed";
 		if (CitizenNpc.Work is not null)
 		{
@@ -32,11 +36,9 @@ public partial class CitizenInfo : Control
 		
 		var textLabel = GetNode<Label>("RichTextLabel");
 		textLabel.Text =  work + 
-						  "\nHappiness: " + npc.Happiness;
+						  "\nHappiness: " +  npc.Happiness;
 
 		_icon.Texture = npc.Sprite;
-
-
 	}
 
 	public void OnChangeJobButtonPressed()

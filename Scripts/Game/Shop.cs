@@ -37,27 +37,6 @@ public partial class Shop : Control
 			{"Well", ResourceLoader.Load<PackedScene>("res://Scenes/Building/Production/Well.tscn")},
 			{"MarketStall", ResourceLoader.Load<PackedScene>("res://Scenes/Building/Production/MarketStall.tscn")}
 		};
-		_buildButtons = GetNode<GridContainer>("BuildTabButtons");
-		var house = GetNode<Button>("BuildTabButtons/Houses/ShopItemNode/HouseButton");
-		house.Connect(Signals.Pressed, Callable.From(() => {OnBuildButtonPressed("House", "BuildTabButtons/Houses/ShopItemNode/HouseButton" ); }));
-		var farmHouse = GetNode<Button>("BuildTabButtons/Production/ShopItemNode/FarmButton");
-		farmHouse.Connect(Signals.Pressed, Callable.From(() => {OnBuildButtonPressed("FarmHouse", "BuildTabButtons/Production/ShopItemNode/FarmButton"); }));
-		farmHouse.Disabled = _locked;
-		var stoneMine = GetNode<Button>("BuildTabButtons/Production/ShopItemNode/StoneButton");
-		stoneMine.Connect(Signals.Pressed, Callable.From(() => {OnBuildButtonPressed("StoneMine","BuildTabButtons/Production/ShopItemNode/StoneButton"); }));
-		var road = GetNode<Button>("BuildTabButtons/Roads/ShopItemNode/RoadButton");
-		road.Connect(Signals.Pressed, Callable.From(() => {OnBuildButtonPressed("Road","BuildTabButtons/Roads/ShopItemNode/RoadButton"); }));
-		var huntersLodge = GetNode<Button>("BuildTabButtons/Production/ShopItemNode/HuntingButton");
-		huntersLodge.Connect(Signals.Pressed, Callable.From(() => {OnBuildButtonPressed("HunterLodge","BuildTabButtons/Production/ShopItemNode/HuntingButton"); }));
-		var woodCutter = GetNode<Button>("BuildTabButtons/Production/ShopItemNode/WoodButton");
-		woodCutter.Connect(Signals.Pressed, Callable.From(() => {OnBuildButtonPressed("WoodCutter","BuildTabButtons/Production/ShopItemNode/WoodButton"); }));
-		var marketStall = GetNode<Button>("BuildTabButtons/Production/ShopItemNode/MarketStallButton");
-		marketStall.Connect(Signals.Pressed, Callable.From(() => {OnBuildButtonPressed("MarketStall","BuildTabButtons/Production/ShopItemNode/MarketStallButton"); }));
-		var well = GetNode<Button>("BuildTabButtons/Production/ShopItemNode/WellButton");
-		well.Connect(Signals.Pressed, Callable.From(() => {OnBuildButtonPressed("Well","BuildTabButtons/Production/ShopItemNode/WellButton"); }));
-		var ironMine = GetNode<Button>("BuildTabButtons/Production/ShopItemNode/IronMineButton");
-		ironMine.Connect(Signals.Pressed, Callable.From(() => {OnBuildButtonPressed("IronMine","BuildTabButtons/Production/ShopItemNode/IronMineButton"); }));
-
 		placeAudio = GetNode<AudioStreamPlayer2D>("PlaceBuildingAudio");
 		deleteAudio = GetNode<AudioStreamPlayer2D>("DeleteBuildingAudio");
 		

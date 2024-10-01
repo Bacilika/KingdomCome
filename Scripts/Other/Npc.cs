@@ -1,11 +1,13 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using Scripts.Constants;
 
 public partial class Npc : CharacterBody2D
 {
 	public House Home;
 	public Production Work;
+	private bool _focused;
 	private bool isUnemployed = true;
 	private NavigationAgent2D _navigation;
 	private float _speed = 100;
@@ -21,18 +23,30 @@ public partial class Npc : CharacterBody2D
 	private bool timerOut;
 	private RandomNumberGenerator _rnd = new ();
 	private AudioStreamPlayer2D _walkingOnGrassSound;
+	public CitizenInfo CitizenInfo;
 	
 	[Signal]
 	public delegate void OnJobChangeEventHandler(Npc npc);
 	
 	public override void _Ready()
 	{
+		
 		_animation = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 		Sprite = _animation.SpriteFrames.GetFrameTexture("walkUp", 0);
 		_navigation = GetNode<NavigationAgent2D>("NavigationAgent2D");
 		_timer = GetNode<Timer>("WorkTimer");
 		_walkingOnGrassSound = GetNode<AudioStreamPlayer2D>("GrassWalking");
 		destination = homePosition;
+		CitizenInfo = GetNode<CitizenInfo>("CitizenInfo");
+		CitizenInfo.SetInfo(this);
+		CitizenInfo.GetNode<HBoxContainer>("HBoxContainer").Visible = false;
+		CitizenInfo.Visible = false;
+	}
+
+	public void SetInfo()
+	{
+		CitizenInfo.Position = Position;
+		CitizenInfo.Background.Visible = true;
 	}
 
 	public void OnWorkTimerTimeout()
@@ -102,12 +116,6 @@ public partial class Npc : CharacterBody2D
 
 		var angle = Velocity.Angle();
 		var angleToDegrees = angle * 180 / Math.PI;
-		List<int> right1 = [0,45];
-		List<int> right2 = [0,-45];
-		List<int> up = [45, 135];
-		List<int> left1 = [135, 180];
-		List<int> left2 = [-180, -135];
-		List<int> down = [-135, -45];
 		switch (angleToDegrees)
 		{
 			case >= 45 and < 135:
@@ -170,5 +178,33 @@ public partial class Npc : CharacterBody2D
 		_navigation.GetNextPathPosition();
 		_ready = true;
 		TurnOnAudio(true);
+	}
+
+	public void OnMouseEntered()
+	{
+		Console.WriteLine("MouseEntered");
+		_focused = true;
+	}
+
+	public void OnMouseExited()
+	{
+		Console.WriteLine("MouseExited");
+		_focused = false;
+	}
+
+	public override void _Input(InputEvent @event)
+	{
+		if (_focused && @event.IsActionPressed(Inputs.LeftClick))
+		{
+			CitizenInfo.Visible = !CitizenInfo.Visible;
+			CitizenInfo.Position = Position;
+			CitizenInfo.SetInfo(this);
+			
+		}
+		else if(@event.IsActionPressed(Inputs.LeftClick))
+		{
+			CitizenInfo.Visible = false;
+		}
+		
 	}
 }

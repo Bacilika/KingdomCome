@@ -8,7 +8,7 @@ public partial class MainMenu : Control
 	public Vector2 CurrentScale { get; set; }
 	public override void _Ready()
 	{
-		GetTree().Root.Mode = Window.ModeEnum.Maximized;
+		//GetTree().Root.Mode = Window.ModeEnum.Maximized;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

@@ -19,8 +19,17 @@ offset_top = -0.00801086
 offset_right = 64.0
 offset_bottom = 48.992
 grow_horizontal = 2
+scale = Vector2(1.25885, 0.766534)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("1_5eyj1")
 text = "Wood:
 Stone:"
 horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(2.00028, 2.21403)
+color = Color(1, 0, 0, 0.52549)

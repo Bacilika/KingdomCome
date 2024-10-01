@@ -71,7 +71,7 @@ public abstract partial class AbstractShopIconContainer : Button
 
 	public void OnRoadButtonPressed(Road road)
 	{
-		GameShop.EmitSignal(Shop.SignalName.OnRoadBuild);
+		GameShop.EmitSignal(Shop.SignalName.OnRoadBuild, road);
 	}
 
 	public void OnShopIconPressed(AbstractPlaceable item)

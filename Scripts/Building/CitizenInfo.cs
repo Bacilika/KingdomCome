@@ -36,7 +36,8 @@ public partial class CitizenInfo : Control
 		
 		var textLabel = GetNode<Label>("RichTextLabel");
 		textLabel.Text =  work + 
-						  "\nHappiness: " +  npc.Happiness;
+						  "\nHappiness: " + GameLogistics.ConvertHappiness(npc.Happiness)
+						  + "\n" + npc.GetUnhappyReason();
 
 		_icon.Texture = npc.Sprite;
 	}

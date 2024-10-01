@@ -39,7 +39,8 @@ public abstract partial class AbstractShopIconContainer : Button
 			RemoveChild(product);
 			Stock.Add(shopIcon);
 			shopIcon.Pressed +=() => { OnShopIconPressed(product);};
-			//shopIcon.MouseEntered += () => {OnMoseEntered(product); };
+			shopIcon.MouseEntered += () => {OnMouseEntered(product, shopIcon); };
+			shopIcon.MouseExited += () => {OnMouseExited(shopIcon); };
 		}
 
 		if (this is Roads)
@@ -63,12 +64,30 @@ public abstract partial class AbstractShopIconContainer : Button
 				Stock.Add(shopIcon);
 				RemoveChild(road);
 				shopIcon.Pressed += () => { OnRoadButtonPressed(road);};
-
+				shopIcon.MouseEntered += () => { OnMouseEntered(road);};
 
 			}
 		}
 	}
 
+	public void OnMouseEntered(Road road)
+	{
+		
+	}
+	
+	public void OnMouseEntered(AbstractPlaceable product, TextureButton shopIcon)
+	{
+		var info = shopIcon.GetNode<ProductionInfo>("ProductionInfo");
+		info.setInfo(product);
+		info.Visible = true;
+	}
+
+	public void OnMouseExited(TextureButton shopIcon)
+	{
+		var info = shopIcon.GetNode<ProductionInfo>("ProductionInfo");
+		info.Visible = false;
+	}
+	
 	public void OnRoadButtonPressed(Road road)
 	{
 		GameShop.EmitSignal(Shop.SignalName.OnRoadBuild, road);

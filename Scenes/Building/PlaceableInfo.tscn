@@ -24,6 +24,7 @@ texture = ExtResource("1_1dfka")
 [node name="CitizenInfo" parent="InfoBox" instance=ExtResource("4_yc7qr")]
 visible = false
 layout_mode = 2
+anchors_preset = 0
 offset_left = 8.0
 offset_top = 8.0
 offset_right = 200.0
@@ -97,9 +98,9 @@ text = "Move"
 [node name="ChooseWareButton" type="Button" parent="InfoBox"]
 layout_mode = 0
 offset_left = 49.0
-offset_top = 75.0
+offset_top = 100.0
 offset_right = 159.0
-offset_bottom = 106.0
+offset_bottom = 131.0
 text = "Choose Ware"
 
 [node name="ChooseWare" parent="." instance=ExtResource("3_j5mfn")]

@@ -16,6 +16,7 @@ public partial class GameMap : Node2D
 	//for job selection
 	public static bool JobSelectMode;
 	public static Npc NpcJobSelect;
+	public static int Level = 1;
 
 	private double _timeSinceLastTick;
 	
@@ -74,9 +75,7 @@ public partial class GameMap : Node2D
 		}
 		else if(placeable is Production production)
 		{
-			
 			_placedProduction.Add(production);
-			
 		}
 		placeable.IsPlaced = true;
 		placeable.Position = GetGlobalMousePosition();
@@ -98,7 +97,11 @@ public partial class GameMap : Node2D
 		npc.OnJobChange += OnSelectJob;
 		house.MoveToFront();
 		house.InfoBox.MoveToFront();
-
+		if (Citizens.Count % 10 == 0)
+		{
+			Level++;
+			GameMenu.updateLevel(Level.ToString());
+		}
 	}
 
 	private void GiveJobToNpcs()

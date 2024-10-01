@@ -11,7 +11,6 @@ public partial class PlaceableInfo : Control
 	private CitizenInfo _citizenInfo;
 	private Control _houseInfo;
 	private RichTextLabel _textLabel;
-	public RichTextLabel TypeLabel;
 	private Label _buildingName;
 	[Signal]
 	public delegate void OnDeleteEventHandler();
@@ -31,7 +30,6 @@ public partial class PlaceableInfo : Control
 		_buildingName = GetNode<Label>("InfoBox/HouseInfo/BuildingName");
 		_textLabel = GetNode<RichTextLabel>("InfoBox/HouseInfo/RichTextLabel");
 		//TextLabel = GetNode<RichTextLabel>("InfoBox/HouseInfo/RichTextLabel");
-		//TypeLabel = GetNode<RichTextLabel>("InfoBox/HouseInfo/Type");
 		PortraitContainer = GetNode<BoxContainer>("InfoBox/HouseInfo/CitizenPortraitContainer");
 		CitizenPortrait = ResourceLoader.Load<PackedScene>("res://Scenes/Building/CitizenPortraitButton.tscn");
 		_citizenInfo = GetNode<CitizenInfo>("InfoBox/CitizenInfo");
@@ -71,7 +69,6 @@ public partial class PlaceableInfo : Control
 	{
 		_houseInfo.Visible = false;
 		_citizenInfo.Visible = true;
-		
 		_citizenInfo.SetInfo(npc);
 	}
 	public void HideNpcInfo()

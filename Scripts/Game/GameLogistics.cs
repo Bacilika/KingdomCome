@@ -45,8 +45,7 @@ public partial class GameLogistics: Node2D
 			{ "Money", 100000 }, { "Citizens", 0 }, { "Happiness", 0 }, { "Food", 0 }, { "Stone", 100 }, { "Iron", 5 },
 			{ "UnEmployed", 0 },
 			{ "Water", 0 }, { "Wood", 100 }
-	};
-		
+		};
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -66,6 +65,23 @@ public partial class GameLogistics: Node2D
 			_roadObject.Position = GetGlobalMousePosition();
 		}
 		
+	}
+
+	public static String ConvertHappiness(int happiness)
+	{
+		switch (happiness)
+		{
+			case <= 2:
+				return "Very unhappy";
+			case >= 3 and <= 4:
+				return "Unhappy";
+			case >= 5 and <= 6:
+				return "Neutral";
+			case >= 7 and <= 8:
+				return "Happy";
+			default:
+				return "Verry happy";
+		}
 	}
 
 	private void OnRoadBuild(Road road)

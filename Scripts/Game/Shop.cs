@@ -19,7 +19,6 @@ public partial class Shop : Control
 	private bool _locked = true;
 	private Control _productionInfo;
 
-
 	[Signal]
 	public delegate void OnBuildingButtonPressedEventHandler(AbstractPlaceable type);
 
@@ -37,6 +36,7 @@ public partial class Shop : Control
 			{"Well", ResourceLoader.Load<PackedScene>("res://Scenes/Building/Production/Well.tscn")},
 			{"MarketStall", ResourceLoader.Load<PackedScene>("res://Scenes/Building/Production/MarketStall.tscn")}
 		};
+
 		placeAudio = GetNode<AudioStreamPlayer2D>("PlaceBuildingAudio");
 		deleteAudio = GetNode<AudioStreamPlayer2D>("DeleteBuildingAudio");
 		
@@ -46,10 +46,11 @@ public partial class Shop : Control
 			GetNode<AbstractShopIconContainer>("BuildTabButtons/Roads")];
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
+
 	public override void _Process(double delta)
 	{
 	}
+	
 	public void OnBuildTabPressed(string tabPath)
 	{
 		foreach (var tab in _shopTabs)
@@ -63,16 +64,5 @@ public partial class Shop : Control
 				tab.HideStock();
 			}
 		}
-	}
-	public void OnHuntingButtonMouseEntered(string buttonPath)
-	{
-		var button = GetNode<Button>("BuildTabButtons/Production/ShopItemNode/" + buttonPath);
-		_productionInfo = button.GetNode<Control>("ProductionInfo");
-		_productionInfo.Visible = true;
-	}
-
-	public void OnHuntingButtonMouseExited()
-	{
-		_productionInfo.Visible = false;
 	}
 }

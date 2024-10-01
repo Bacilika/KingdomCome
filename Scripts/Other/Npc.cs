@@ -12,7 +12,8 @@ public partial class Npc : CharacterBody2D
 	private NavigationAgent2D _navigation;
 	private float _speed = 100;
 	public Vector2 startPos;
-	public string Happiness = "Happy";
+	public int Happiness = 10;
+	
 	public Texture2D Sprite;
 	private AnimatedSprite2D _animation;
 	private Vector2 homePosition;
@@ -24,13 +25,13 @@ public partial class Npc : CharacterBody2D
 	private RandomNumberGenerator _rnd = new ();
 	private AudioStreamPlayer2D _walkingOnGrassSound;
 	public CitizenInfo CitizenInfo;
+	public HashSet<string> unhappyReasons = new();
 	
 	[Signal]
 	public delegate void OnJobChangeEventHandler(Npc npc);
 	
 	public override void _Ready()
 	{
-		
 		_animation = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 		Sprite = _animation.SpriteFrames.GetFrameTexture("walkUp", 0);
 		_navigation = GetNode<NavigationAgent2D>("NavigationAgent2D");
@@ -63,6 +64,12 @@ public partial class Npc : CharacterBody2D
 		}
 		_walkingOnGrassSound.Stop();
 	}
+
+	public override void _Process(double delta)
+	{
+		calculateHappiness();
+	}
+
 	
 	public override void _PhysicsProcess(double delta)
 	{
@@ -129,16 +136,42 @@ public partial class Npc : CharacterBody2D
 		}
 	}
 
+	public void calculateHappiness()
+	{
+		var temphappiness = 10;
+		if (!IsEmployed())
+		{
+			temphappiness -= 5;
+			unhappyReasons.Add("Unemployed (-5)");
+		}
+		Happiness = temphappiness;
+	}
+
+	public String GetUnhappyReason()
+	{
+		string unhappyReason = "";
+		foreach (var i in unhappyReasons)
+		{
+			unhappyReason += i + "\n";
+		}
+		return unhappyReason;
+	}
+
 	public void SetStartPos(Vector2 pos)
 	{
 		startPos = pos;
 		homePosition = startPos;
 	}
 
-	public bool GetJob(Production production)
+	public bool GetJob(Production production, bool change = false)
 	{
-		if (Work is null)
+		if (Work is null || change)
 		{
+
+			if (Work is not null)
+			{
+				Work.RemoveWorker(this);
+			}
 			Work = production;
 			//production.EmployWorker(this);
 			workPosition = Work.Position;

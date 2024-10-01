@@ -138,6 +138,7 @@ public abstract partial class AbstractPlaceable : Area2D
 					var employed = production.EmployWorker(GameMap.NpcJobSelect);
 					if (employed)
 					{
+						GameMap.NpcJobSelect.Work = production;
 						GameMap.JobSelectMode = false;
 						InfoBox.HideNpcInfo();
 						GameMenu.GameMode.Text = "";

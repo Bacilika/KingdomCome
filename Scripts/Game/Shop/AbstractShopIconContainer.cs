@@ -39,6 +39,7 @@ public abstract partial class AbstractShopIconContainer : Button
 			RemoveChild(product);
 			Stock.Add(shopIcon);
 			shopIcon.Pressed +=() => { OnShopIconPressed(product);};
+			//shopIcon.MouseEntered += () => {OnMoseEntered(product); };
 		}
 
 		if (this is Roads)
@@ -50,9 +51,9 @@ public abstract partial class AbstractShopIconContainer : Button
 				var shopIcon = ShopIconScene.Instantiate<TextureButton>();
 				var text = shopIcon.GetNode<Label>("Text");
 				var containerHeight = ShopIconContainer.Size.Y;
-				var scale = containerHeight / productImage.GetSize().Y;
+				var scale = containerHeight / (productImage.GetSize().Y) ;
 				var size = scale * productImage.GetSize().X;
-			                                              
+			
 				shopIcon.SetCustomMinimumSize(new Vector2(size,0));
 				shopIcon.TextureNormal = productImage;
 				text.Text = "Price: " + 50;
@@ -70,7 +71,7 @@ public abstract partial class AbstractShopIconContainer : Button
 
 	public void OnRoadButtonPressed(Road road)
 	{
-		GameShop.EmitSignal(Shop.SignalName.OnRoadBuild, road);
+		GameShop.EmitSignal(Shop.SignalName.OnRoadBuild);
 	}
 
 	public void OnShopIconPressed(AbstractPlaceable item)

@@ -155,7 +155,7 @@ public partial class GameLogistics: Node2D
 	public void ResetModes()
 	{
 		if(_roadObject != null) GetParent().RemoveChild(_roadObject);
-		if(_object != null) GetParent().RemoveChild(_object);
+		if(_object != null && !Move) GetParent().RemoveChild(_object);
 		_object = null;
 		_roadObject = null;
 		IsPlaceMode = false;

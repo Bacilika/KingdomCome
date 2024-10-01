@@ -31,6 +31,10 @@ public partial class GameMenu : Control
 		var statLabels = GetNode<GridContainer>("MenuCanvasLayer/Container/GameStats");
 		ButtonPress = GetNode<AudioStreamPlayer2D>("ButtonPressedSound");
 		ButtonPress?.Play();
+		if (GetParent().GetTree().Root.Mode == Window.ModeEnum.Maximized)
+		{
+			Console.WriteLine("Maximised");
+		}
 		_gameStatLabels = new Godot.Collections.Dictionary<string, Label> { 
 			{"Money", statLabels.GetNode<TextureRect>("Money").GetNode<Label>("Value") },
 			{"Food", statLabels.GetNode<TextureRect>("Food").GetNode<Label>("Value") },

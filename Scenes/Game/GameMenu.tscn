@@ -58,14 +58,17 @@ follow_viewport_scale = 3.877
 
 [node name="Container" type="Control" parent="MenuCanvasLayer"]
 layout_mode = 3
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = -8.0
-offset_top = -154.0
-offset_right = 1272.0
-offset_bottom = -50.0
+anchor_left = -0.006
+anchor_top = 0.922
+anchor_right = 1.001
+anchor_bottom = 0.922
+offset_left = -0.32
+offset_top = -109.08
+offset_right = -4.28003
+offset_bottom = -5.08002
 grow_vertical = 0
+size_flags_horizontal = 6
+size_flags_vertical = 10
 mouse_filter = 2
 
 [node name="MenuBar" type="TileMapLayer" parent="MenuCanvasLayer/Container"]
@@ -148,15 +151,24 @@ offset_right = 1266.0
 offset_bottom = 107.0
 
 [node name="CurrentGameMode" type="Label" parent="MenuCanvasLayer"]
-offset_top = -50.0
-offset_right = 1272.0
-offset_bottom = 6.0
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.0543125
+anchor_right = 0.5
+anchor_bottom = 0.0543125
+offset_left = -634.0
+offset_top = -78.76
+offset_right = 638.0
+offset_bottom = 6.24
+size_flags_horizontal = 4
+size_flags_vertical = 0
 theme_override_colors/font_color = Color(0.380392, 0, 0, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("3_d13wb")
 theme_override_font_sizes/font_size = 42
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="ButtonPressedSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("5_hysb5")

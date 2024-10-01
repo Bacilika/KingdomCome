@@ -24,7 +24,6 @@ texture = ExtResource("1_1dfka")
 [node name="CitizenInfo" parent="InfoBox" instance=ExtResource("4_yc7qr")]
 visible = false
 layout_mode = 2
-anchors_preset = 0
 offset_left = 8.0
 offset_top = 8.0
 offset_right = 200.0

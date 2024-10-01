@@ -1,7 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://t7nggb4rjbow"]
+[gd_scene load_steps=4 format=3 uid="uid://tigupmam0oos"]
 
 [ext_resource type="FontFile" uid="uid://dul1t3v440c7s" path="res://Deutsch.ttf" id="1_5eyj1"]
-[ext_resource type="Texture2D" uid="uid://ydjrrgbkgcr3" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Rock Slopes/Props/Table_1.png" id="1_8xm4i"]
+[ext_resource type="Texture2D" uid="uid://ydjrrgbkgcr3" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Props/Table_1.png" id="1_8xm4i"]
 [ext_resource type="PackedScene" uid="uid://3falldunylfw" path="res://Scenes/Game/ProductionInfo.tscn" id="3_46c2o"]
 
 [node name="ShopIcon" type="TextureButton"]
@@ -33,9 +33,11 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 scale = Vector2(2.00028, 2.21403)
+mouse_filter = 2
 color = Color(1, 0, 0, 0.52549)
 
 [node name="ProductionInfo" parent="." instance=ExtResource("3_46c2o")]
+visible = false
 offset_left = -70.0
 offset_top = -199.0
 offset_right = 143.0

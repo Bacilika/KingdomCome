@@ -16,6 +16,7 @@ public partial class GameMenu : Control
 	private static Godot.Collections.Dictionary<string, Label> _gameStatLabels;
 	public static Label GameMode;
 	public static Label Day;
+	public static Label Level;
 	
 	[Signal]
 	public delegate void HousePlacedEventHandler(Node2D house);
@@ -24,6 +25,7 @@ public partial class GameMenu : Control
 	public override void _Ready()
 	{
 		Day = GetNode<Label>("MenuCanvasLayer/Container/Day");
+		Level = GetNode<Label>("MenuCanvasLayer/Container/Level");
 		GameMode = GetNode<Label>("MenuCanvasLayer/CurrentGameMode");
 		var currentScale = (Vector2)GetTree().Root.Size / GetTree().Root.MinSize;
 		var container = GetNode<Control>("MenuCanvasLayer/Container");
@@ -48,6 +50,11 @@ public partial class GameMenu : Control
 	public override void _Process(double delta)
 	{
 		UpdateMenuInfo();
+	}
+
+	public static void updateLevel(String updatedLevel)
+	{
+		Level.Text = "Level: " + updatedLevel;
 	}
 
 	public static void UpdateMenuInfo()

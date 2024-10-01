@@ -13,17 +13,19 @@ public partial class ProductionInfo : Control
 	private Dictionary<String, List<String>> _productionInfo = new()
 	
 	{
-		{"HuntingButton", ["Hunters Lodge", "1", "1", 
+		{"HunterLodge", ["Hunters Lodge", "1", "1", 
 			"Station for hunters to gather and hunt. Produces meat."]},
-		{"WellButton", ["Well", "1", "1", 
+		{"Well", ["Well", "1", "1", 
 			"Allows citizens to get water."]},
-		{"IronMineButton", ["IronMine", "1", "1", 
+		{"IronMine", ["IronMine", "1", "1", 
 			"Mine for iron"]},
-		{"MarketStallButton", ["MarketStall", "1", "1", 
+		{"MarketStall", ["MarketStall", "1", "1", 
 			"Market stall to sell"]},
-		{"StoneButton", ["StoneMine", "1", "1", 
+		{"StoneMine", ["StoneMine", "1", "1", 
 			"Mine for producing stone"]},
-		{"WoodButton", ["WoodCutter", "1", "1", 
+		{"WoodCutter", ["WoodCutter", "1", "1", 
+			"Produces wood"]},
+		{"FarmHouse", ["WoodCutter", "1", "1", 
 			"Produces wood"]}
 	};
 	public override void _Ready()
@@ -31,15 +33,13 @@ public partial class ProductionInfo : Control
 		_title = GetNode<RichTextLabel>("InfoBox/Title");
 		_resources = GetNode<RichTextLabel>("InfoBox/Resources");
 		_description = GetNode<RichTextLabel>("InfoBox/Description");
-		setInfo();
 	}
 
-	public void setInfo()
+	public void setInfo(AbstractPlaceable parent)
 	{
-		var parent = GetParent();
-		_title.Text = _productionInfo[parent.Name][0];
-		_resources.Text = "Cost: Wood: " + _productionInfo[parent.Name][1] + " Stone: " + _productionInfo[parent.Name][2];
-		_description.Text = _productionInfo[parent.Name][3];
+		_title.Text = parent.GetBuildingName();
+		_resources.Text = "Cost: Wood: " + _productionInfo[parent.GetBuildingName()][1] + " Stone: " + _productionInfo[parent.GetBuildingName()][2];
+		_description.Text = _productionInfo[parent.GetBuildingName()][3];
 	}
 
 

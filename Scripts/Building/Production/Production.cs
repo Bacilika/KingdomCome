@@ -51,7 +51,7 @@ public abstract partial class Production : AbstractPlaceable
 		}
 		else
 		{
-			var employed = npc.GetJob(this);
+			var employed = npc.GetJob(this, true);
 			if (employed)
 			{
 				GameLogistics.Resources["UnEmployed"]--;
@@ -59,6 +59,11 @@ public abstract partial class Production : AbstractPlaceable
 			}
 			return true;
 		}
+	}
+
+	public void RemoveWorker(Npc npc)
+	{
+		People.Remove(npc);
 	}
 	
 	public void OnFoodTimerTimeout()

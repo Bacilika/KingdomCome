@@ -24,6 +24,7 @@ public abstract partial class AbstractPlaceable : Area2D
 	protected int HouseholdHappiness;
 	protected RandomNumberGenerator Rnd = new ();
 	public List<Npc> People = [];
+	private bool isUnlocked = false;
 	
 	public bool hasMoved = false;
 	public ChooseWare WareBox;
@@ -180,6 +181,11 @@ public abstract partial class AbstractPlaceable : Area2D
 				GD.Print("No collision");
 				ActivateHitbox(Level); //return to old hitbox
 				Level++;
+				if (this is House)
+				{
+					GetNode<AnimatedSprite2D>("HouseSprite").SetAnimation("default");
+					GetNode<AnimatedSprite2D>("HouseSprite").Pause();
+				}
 				EmitSignal(SignalName.OnBuildingUpgrade, this);
 
 				SetObjectValues();

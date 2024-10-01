@@ -61,6 +61,8 @@ public partial class House : LivingSpaces
 		var npcPortrait = InfoBox.CitizenPortrait.Instantiate<CitizenPortraitButton>();
 		npcPortrait.npc = npc;
 		InfoBox.PortraitContainer.AddChild(npcPortrait);
+		GetNode<AnimatedSprite2D>("HouseSprite").SetAnimation("Level 1 people inside");
+		GetNode<AnimatedSprite2D>("HouseSprite").Play();
 	}
 
 

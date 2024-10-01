@@ -25,7 +25,6 @@ public partial class ProductionInfo : Control
 	public void setInfo()
 	{
 		var parent = GetParent();
-		Console.WriteLine(parent.Name);
 		_title.Text = _productionInfo[parent.Name][0];
 		//_resources.Text = "Wood: " + _productionInfo[parent.Name][1] + " Stone: " + _productionInfo[parent.Name][2];
 		_description.Text = _productionInfo[parent.Name][1];

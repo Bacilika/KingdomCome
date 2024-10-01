@@ -24,8 +24,6 @@ public partial class MainMenu : Control
 	public void OnStartGamePressed()
 	{
 		GetTree().ChangeSceneToFile("res://Scenes/Game/GameMap.tscn");
-		Console.WriteLine("start");
-		Console.WriteLine("start2");
 
 	}
 	public void OnQuitPressed()

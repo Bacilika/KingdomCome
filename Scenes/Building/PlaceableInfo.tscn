@@ -24,47 +24,48 @@ texture = ExtResource("1_1dfka")
 [node name="CitizenInfo" parent="InfoBox" instance=ExtResource("4_yc7qr")]
 visible = false
 layout_mode = 2
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 11.0
-offset_top = 6.0
-offset_right = 11.0
-offset_bottom = 38.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 200.0
+offset_bottom = 176.0
 
 [node name="HouseInfo" type="Control" parent="InfoBox"]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Type" type="RichTextLabel" parent="InfoBox/HouseInfo"]
-offset_left = 11.0
-offset_top = 9.0
-offset_right = 203.0
-offset_bottom = 41.0
-mouse_filter = 2
-theme_override_colors/default_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/italics_font_size = 0
-text = "Type"
+[node name="BuildingName" type="Label" parent="InfoBox/HouseInfo"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 200.0
+offset_bottom = 40.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_uwas0")
+theme_override_font_sizes/font_size = 26
+text = "Building"
+horizontal_alignment = 1
 
 [node name="RichTextLabel" type="RichTextLabel" parent="InfoBox/HouseInfo"]
 layout_mode = 0
-offset_left = 10.0
-offset_top = 51.0
-offset_right = 202.0
-offset_bottom = 83.0
+offset_left = 8.0
+offset_top = 56.0
+offset_right = 200.0
+offset_bottom = 96.0
 mouse_filter = 2
-theme_override_colors/default_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/mono_font_size = 21
-theme_override_font_sizes/normal_font_size = 18
-text = "Habitants:"
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("3_uwas0")
+theme_override_font_sizes/normal_font_size = 21
+text = "Building info"
+fit_content = true
+scroll_active = false
 
 [node name="CitizenPortraitContainer" type="BoxContainer" parent="InfoBox/HouseInfo"]
 layout_mode = 0
 offset_left = 8.0
-offset_top = 64.0
+offset_top = 104.0
 offset_right = 200.0
-offset_bottom = 96.0
+offset_bottom = 136.0
 
 [node name="ButtonContainer" type="HBoxContainer" parent="InfoBox/HouseInfo"]
 layout_mode = 0

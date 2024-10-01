@@ -5,6 +5,7 @@ using Scripts.Constants;
 
 public abstract partial class Production : AbstractPlaceable
 {
+	protected string Producing;
 	private int _food;
 	protected Timer _timer;
 	protected int ProductionRate = 10; // 1/ProductionRate % chance to produce item by 1 each tick. 
@@ -50,10 +51,12 @@ public abstract partial class Production : AbstractPlaceable
 		}
 		else
 		{
-			GameLogistics.Resources["UnEmployed"]--;
-
-			People.Add(npc);
-			npc.GetJob(this);
+			var employed = npc.GetJob(this);
+			if (employed)
+			{
+				GameLogistics.Resources["UnEmployed"]--;
+				People.Add(npc);
+			}
 			return true;
 		}
 	}
@@ -82,6 +85,9 @@ public abstract partial class Production : AbstractPlaceable
 	
 	public void UpdateInfo()
 	{
-		InfoBox.UpdateInfo( "Workers: " + GetWorkers(), this.GetType().Name );
+		
+		var info = "Produces " + Producing +
+				   "\nWorkers: " + GetWorkers() + "/" + Upgrades[Upgrade.MaxWorkers][Level];
+		InfoBox.UpdateInfo(GetBuildingName(),info);
 	}
 }

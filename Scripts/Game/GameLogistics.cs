@@ -35,7 +35,7 @@ public partial class GameLogistics: Node2D
 		var gameMenu = _gameMap.GetNode<Control>("GameMenu");
 		var shop = gameMenu.GetNode<Shop>("MenuCanvasLayer/Container/Shop");
 		shop.OnBuildingButtonPressed += BuildBuilding;
-		shop.Connect(Shop.SignalName.OnRoadBuild,Callable.From(OnRoadBuild));
+		shop.OnRoadBuild += OnRoadBuild;
 		
 		_houses = _gameMap._placedHouses;
 		_productions = _gameMap._placedProduction;
@@ -60,14 +60,19 @@ public partial class GameLogistics: Node2D
 		{
 			_object.Position = GetGlobalMousePosition();
 		}
+
+		if (_roadObject is not null)
+		{
+			_roadObject.Position = GetGlobalMousePosition();
+		}
 		
 	}
 
-	private void OnRoadBuild()
+	private void OnRoadBuild(Road road)
 	{
 		_roadPlaceMode = true;
 		IsPlaceMode = true;
-		_roadObject = _roadScene.Instantiate<Road>();
+		_roadObject = road;
 		GetParent().AddChild(_roadObject);
 		GameMenu.GameMode.Text = "Road Placing Mode";
 	}
@@ -133,12 +138,15 @@ public partial class GameLogistics: Node2D
 
 	public void ResetModes()
 	{
+		if(_roadObject != null) GetParent().RemoveChild(_roadObject);
+		if(_object != null) GetParent().RemoveChild(_object);
 		_object = null;
 		_roadObject = null;
 		IsPlaceMode = false;
 		_roadPlaceMode = false;
 		Move = false;
 		GameMenu.GameMode.Text = "";
+		
 	}
 
 	public bool CanAfford(AbstractPlaceable building = null)
@@ -151,7 +159,7 @@ public partial class GameLogistics: Node2D
 		if (!Move)
 		{
 			return _building.Upgrades[Upgrade.WoodCost][_building.Level] <= Resources["Wood"] &&
-			       _building.Upgrades[Upgrade.StoneCost][_building.Level] <= Resources["Stone"];
+				   _building.Upgrades[Upgrade.StoneCost][_building.Level] <= Resources["Stone"];
 		}
 		// add cost for moving house here
 		else

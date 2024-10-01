@@ -1,11 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://dlbb4eje8p5k2"]
+[gd_scene load_steps=9 format=3 uid="uid://dlbb4eje8p5k2"]
 
 [ext_resource type="Script" path="res://Scripts/Game/Shop.cs" id="1_1o3pr"]
 [ext_resource type="AudioStream" uid="uid://dj5f1kt2yx1yb" path="res://Audio/DeleteBuilding.mp3" id="2_eaaiu"]
 [ext_resource type="FontFile" uid="uid://dul1t3v440c7s" path="res://Deutsch.ttf" id="4_f5p4c"]
 [ext_resource type="Script" path="res://Scripts/Game/Shop/Houses.cs" id="5_3m6vu"]
 [ext_resource type="Script" path="res://Scripts/Game/Shop/Productions.cs" id="6_rv706"]
-[ext_resource type="PackedScene" uid="uid://3falldunylfw" path="res://Scenes/Game/ProductionInfo.tscn" id="9_t50xm"]
 [ext_resource type="AudioStream" uid="uid://bg6kys8wlkqcn" path="res://Audio/PlaceBuilding.mp3" id="9_woy45"]
 [ext_resource type="Script" path="res://Scripts/Game/Shop/Decorations.cs" id="15_sneyw"]
 [ext_resource type="Script" path="res://Scripts/Game/Shop/Roads.cs" id="16_ubte4"]

@@ -8,6 +8,7 @@ public partial class IronMine : Production
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready_instance()
 	{
+		Producing = "Iron";
 		ProductionRate = 2;
 		Price = 20000;
 		Upgrades = new Dictionary<string, List<int>>

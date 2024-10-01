@@ -25,7 +25,6 @@ public partial class CitizenPortraitButton : Control
 
 	public void OnPortraitPressed()
 	{
-		Console.WriteLine("Portrait pressed");
 		EmitSignal(SignalName.OnNpcPressed, npc);
 
 	}

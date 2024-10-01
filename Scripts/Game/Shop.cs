@@ -24,7 +24,7 @@ public partial class Shop : Control
 	public delegate void OnBuildingButtonPressedEventHandler(AbstractPlaceable type);
 
 	[Signal]
-	public delegate void OnRoadBuildEventHandler();
+	public delegate void OnRoadBuildEventHandler(Road road);
 	public override void _Ready()
 	{
 		_shopItems = new Godot.Collections.Dictionary<string, PackedScene> { 

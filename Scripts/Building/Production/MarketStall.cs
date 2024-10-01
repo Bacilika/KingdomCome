@@ -13,6 +13,7 @@ public partial class MarketStall : Production
 
 	public override void _Ready_instance()
 	{
+		Producing = "Iron";
 		ProductionRate = 2;
 		_timer = GetNode<Timer>("FoodTimer");
 		_timer.Start();

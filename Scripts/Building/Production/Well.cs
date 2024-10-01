@@ -7,6 +7,7 @@ public partial class Well : Production
 {
 	public override void _Ready_instance()
 	{
+		Producing = "Water";
 		ProductionRate = 2;
 		_timer = GetNode<Timer>("FoodTimer");
 		_timer.Start();

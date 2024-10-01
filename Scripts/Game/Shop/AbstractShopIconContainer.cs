@@ -41,6 +41,10 @@ public abstract partial class AbstractShopIconContainer : Button
 			shopIcon.Pressed +=() => { OnShopIconPressed(product);};
 			shopIcon.MouseEntered += () => {OnMouseEntered(product, shopIcon); };
 			shopIcon.MouseExited += () => {OnMouseExited(shopIcon); };
+			if (!product.isUnlocked)
+			{
+				shopIcon.Disabled = true;
+			}
 		}
 
 		if (this is Roads)

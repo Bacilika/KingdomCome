@@ -24,7 +24,7 @@ public abstract partial class AbstractPlaceable : Area2D
 	protected int HouseholdHappiness;
 	protected RandomNumberGenerator Rnd = new ();
 	public List<Npc> People = [];
-	private bool isUnlocked = false;
+	public bool isUnlocked = false;
 	
 	public bool hasMoved = false;
 	public ChooseWare WareBox;

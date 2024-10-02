@@ -99,6 +99,8 @@ public abstract partial class AbstractPlaceable : Area2D
 	
 	private void OnMouseEntered()
 	{
+		Console.WriteLine("hej");
+
 		if(IsPlaced)
 		{
 			_isFocused = true;

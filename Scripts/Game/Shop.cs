@@ -43,7 +43,8 @@ public partial class Shop : Control
 		_shopTabs = [GetNode<AbstractShopIconContainer>("BuildTabButtons/Houses"),
 			GetNode<AbstractShopIconContainer>("BuildTabButtons/Productions"),
 			GetNode<AbstractShopIconContainer>("BuildTabButtons/Decorations"),
-			GetNode<AbstractShopIconContainer>("BuildTabButtons/Roads")];
+			GetNode<AbstractShopIconContainer>("BuildTabButtons/Roads"), 
+			GetNode<AbstractShopIconContainer>("BuildTabButtons/Activities")];
 	}
 
 
@@ -57,6 +58,7 @@ public partial class Shop : Control
 		{
 			if (tab.Name == tabPath)
 			{
+				Console.WriteLine(tab.Name);
 				tab.ShowStock();
 			}
 			else

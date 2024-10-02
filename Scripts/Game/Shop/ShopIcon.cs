@@ -51,7 +51,7 @@ public partial class ShopIcon : Control
 		Icon.MouseExited += OnMouseExited;
 		if (!product.isUnlocked)
 		{
-			Icon.Disabled = true;
+			Icon.Disabled = false;
 		}
 
 		

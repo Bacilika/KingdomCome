@@ -215,13 +215,11 @@ public partial class Npc : CharacterBody2D
 
 	public void OnMouseEntered()
 	{
-		Console.WriteLine("MouseEntered");
 		_focused = true;
 	}
 
 	public void OnMouseExited()
 	{
-		Console.WriteLine("MouseExited");
 		_focused = false;
 	}
 

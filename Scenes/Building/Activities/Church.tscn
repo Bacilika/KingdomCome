@@ -1,0 +1,54 @@
+[gd_scene load_steps=8 format=3 uid="uid://yxdhoqqdeoar"]
+
+[ext_resource type="Script" path="res://Scripts/Building/Activities/Church.cs" id="1_o4few"]
+[ext_resource type="Texture2D" uid="uid://b2bj71d0ehacj" path="res://Sprites/Extra/Buildings/Church.png" id="2_q13qg"]
+[ext_resource type="Texture2D" uid="uid://bdcpp7chqhrh5" path="res://Sprites/The Fan-tasy Tileset - Castles and Fortresses/Art/Buildings/MarketStand_Large_1.png" id="3_04cps"]
+[ext_resource type="Texture2D" uid="uid://k8twinkacwml" path="res://Sprites/The Fan-tasy Tileset - Castles and Fortresses/Art/Buildings/MarketStand_Large_2.png" id="4_4beca"]
+[ext_resource type="PackedScene" uid="uid://biil4p82w3tjw" path="res://Scenes/Building/PlaceableInfo.tscn" id="5_cjv45"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ttjxn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_q13qg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_04cps")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_4beca")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iafax"]
+size = Vector2(290, 191)
+
+[node name="Church" type="Area2D"]
+script = ExtResource("1_o4few")
+
+[node name="HouseSprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(1.52588e-05, 1.52588e-05)
+scale = Vector2(0.203125, 0.203125)
+sprite_frames = SubResource("SpriteFrames_ttjxn")
+
+[node name="CollisionShape0" type="CollisionShape2D" parent="."]
+position = Vector2(1, -0.5)
+shape = SubResource("RectangleShape2D_iafax")
+
+[node name="CollisionShape1" type="CollisionShape2D" parent="."]
+position = Vector2(2, -1)
+shape = SubResource("RectangleShape2D_iafax")
+
+[node name="CollisionShape2" type="CollisionShape2D" parent="."]
+position = Vector2(3, -1.5)
+shape = SubResource("RectangleShape2D_iafax")
+
+[node name="PlaceableInfo" parent="." instance=ExtResource("5_cjv45")]
+
+[connection signal="area_entered" from="." to="." method="OnAreaEntered"]
+[connection signal="area_exited" from="." to="." method="OnAreaExited"]
+[connection signal="mouse_entered" from="." to="." method="OnMouseEntered"]
+[connection signal="mouse_exited" from="." to="." method="OnMouseExited"]

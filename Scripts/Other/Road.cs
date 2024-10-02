@@ -1,14 +1,26 @@
 using Godot;
 using System;
 
-public partial class Road : Node2D
+public partial class Road : AbstractPlaceable
 {
-	// Called when the node enters the scene tree for the first time.
+	protected override void Tick()
+	{
+		
+	}
+	public override void _Ready_instance()
+	{
+		Price = 100;
+	}
+	protected override void OnDelete()
+	{
+	
+	}
 	public override void _Ready()
 	{
+		
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
+
 	public override void _Process(double delta)
 	{
 	}

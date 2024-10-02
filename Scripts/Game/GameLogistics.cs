@@ -20,7 +20,7 @@ public partial class GameLogistics: Node2D
 	public static bool dragging;
 	public static bool Move;
 	private PackedScene _roadScene = ResourceLoader.Load<PackedScene>("res://Scenes/Other/Road.tscn");
-	private int _roadPrice = 100;
+	public static int RoadPrice = 100;
 	private Array<Vector2I> _roadPositions = [];
 	private TileMapLayer _roadLayer;
 	
@@ -230,7 +230,7 @@ public partial class GameLogistics: Node2D
 			var gridPosition = _roadLayer.LocalToMap( GetGlobalMousePosition());
 			_roadPositions.Add(gridPosition);
 			_roadLayer.SetCellsTerrainConnect( _roadPositions, 0, 0);
-			Resources["Money"] -= _roadPrice;
+			Resources["Money"] -= RoadPrice;
 
 		}
 	}

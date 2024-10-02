@@ -28,7 +28,9 @@ public partial class ProductionInfo : Control
 		{"FarmHouse", ["WoodCutter",  
 			"Produces wood"]},
 		{"House", ["House",
-			"A place for citizens to live"]}
+			"A place for citizens to live"]},
+		{"Road", ["Road",
+			"A road for citizens to walk on"]}
 	};
 	public override void _Ready()
 	{
@@ -37,11 +39,21 @@ public partial class ProductionInfo : Control
 		_description = GetNode<RichTextLabel>("InfoBox/Description");
 	}
 
-	public void setInfo(AbstractPlaceable parent)
+	public void setInfo(Node2D parent)
 	{
-		_title.Text =  _productionInfo[parent.GetBuildingName()][0];
-		_resources.Text = $"Cost: {parent.CostToString()}";
-		_description.Text = _productionInfo[parent.GetBuildingName()][1];
+		if (parent is AbstractPlaceable placeable)
+		{
+			_title.Text =  _productionInfo[placeable.GetBuildingName()][0];
+			_resources.Text = $"Cost: {placeable.CostToString()}";
+			_description.Text = _productionInfo[placeable.GetBuildingName()][1];
+		}
+		else //Road
+		{
+			_title.Text =  _productionInfo["Road"][0];
+			_resources.Text = $"Cost: {GameLogistics.RoadPrice}";
+			_description.Text = _productionInfo["Road"][1];
+		}
+
 	}
 
 

@@ -1,5 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://tigupmam0oos"]
+[gd_scene load_steps=4 format=3 uid="uid://tigupmam0oos"]
 
+[ext_resource type="Script" path="res://Scripts/Game/Shop/ShopIcon.cs" id="1_6r730"]
 [ext_resource type="Texture2D" uid="uid://c4muudq8iontq" path="res://Art/Buildings/Well_Hay_Stone.png" id="2_jia2y"]
 [ext_resource type="PackedScene" uid="uid://3falldunylfw" path="res://Scenes/Game/ProductionInfo.tscn" id="3_46c2o"]
 
@@ -9,6 +10,7 @@ anchor_left = -0.00625
 anchor_right = -0.00625
 offset_right = 64.0
 offset_bottom = 88.0
+script = ExtResource("1_6r730")
 metadata/_edit_use_anchors_ = true
 
 [node name="TextureButton" type="TextureButton" parent="."]
@@ -22,8 +24,8 @@ stretch_mode = 0
 
 [node name="ColorRect" type="ColorRect" parent="TextureButton"]
 layout_mode = 2
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 20.0
+offset_bottom = 18.0
 scale = Vector2(2.00028, 2.21403)
 mouse_filter = 2
 color = Color(1, 0, 0, 0.52549)

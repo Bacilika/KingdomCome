@@ -167,6 +167,7 @@ z_index = 1
 stream = ExtResource("3_kh5mf")
 
 [node name="CitizenInfo" parent="." instance=ExtResource("4_pwgeb")]
+visible = false
 
 [connection signal="mouse_entered" from="." to="." method="OnMouseEntered"]
 [connection signal="mouse_exited" from="." to="." method="OnMouseExited"]

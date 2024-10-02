@@ -172,6 +172,11 @@ public abstract partial class AbstractPlaceable : Area2D
 		}
 	}
 
+	public string CostToString()
+	{
+		return $"Wood: {Upgrades[Upgrade.WoodCost][Level]}, Stone: {Upgrades[Upgrade.StoneCost][Level]}";
+	}
+
 	private async void OnUpgrade()
 	{
 		if (Level <_maxLevel)

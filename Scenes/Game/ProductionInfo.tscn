@@ -1,47 +1,61 @@
-[gd_scene load_steps=3 format=3 uid="uid://3falldunylfw"]
+[gd_scene load_steps=4 format=3 uid="uid://3falldunylfw"]
 
 [ext_resource type="Script" path="res://Scripts/Game/ProductionInfo.cs" id="1_6kduo"]
 [ext_resource type="Texture2D" uid="uid://b5llsw0d3srcl" path="res://Sprites/Extra/InfoBoxSprite.png" id="2_b7sor"]
+[ext_resource type="FontFile" uid="uid://4apkhqisib11" path="res://BLKCHCRY.TTF" id="3_36nn4"]
 
 [node name="ProductionInfo" type="Control"]
 z_index = 2
+clip_contents = true
 layout_mode = 3
 anchors_preset = 0
-offset_right = 213.0
-offset_bottom = 185.0
+offset_right = 136.0
+offset_bottom = 136.0
 script = ExtResource("1_6kduo")
 
 [node name="InfoBox" type="TextureRect" parent="."]
 layout_mode = 0
-offset_right = 208.0
-offset_bottom = 184.0
+offset_right = 136.0
+offset_bottom = 136.0
 mouse_filter = 2
 texture = ExtResource("2_b7sor")
 
 [node name="Title" type="RichTextLabel" parent="InfoBox"]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0294118
+anchor_right = 0.0294118
 offset_left = 12.0
 offset_top = 8.0
-offset_right = 200.0
+offset_right = 128.0
 offset_bottom = 40.0
 mouse_filter = 2
 theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("3_36nn4")
+theme_override_font_sizes/bold_italics_font_size = 1
+theme_override_font_sizes/normal_font_size = 22
 text = "Title"
+metadata/_edit_use_anchors_ = true
 
 [node name="Resources" type="RichTextLabel" parent="InfoBox"]
 layout_mode = 0
 offset_left = 11.0
 offset_top = 39.0
-offset_right = 198.0
-offset_bottom = 69.0
+offset_right = 128.0
+offset_bottom = 80.0
 mouse_filter = 2
 theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("3_36nn4")
+theme_override_font_sizes/normal_font_size = 15
 text = "Resources"
+scroll_active = false
 
 [node name="Description" type="RichTextLabel" parent="InfoBox"]
 layout_mode = 0
 offset_left = 12.0
-offset_top = 71.0
-offset_right = 195.0
-offset_bottom = 164.0
+offset_top = 80.0
+offset_right = 120.0
+offset_bottom = 128.0
+theme_override_fonts/normal_font = ExtResource("3_36nn4")
+theme_override_font_sizes/normal_font_size = 16
 text = "Description"

@@ -48,7 +48,6 @@ text = "Housing"
 script = ExtResource("5_3m6vu")
 
 [node name="ShopItemNode" type="BoxContainer" parent="BuildTabButtons/Houses"]
-visible = false
 layout_direction = 3
 layout_mode = 0
 offset_left = 149.0

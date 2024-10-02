@@ -79,6 +79,7 @@ rendering_quadrant_size = 32
 collision_enabled = false
 
 [node name="Level" type="Label" parent="MenuCanvasLayer/Container"]
+layout_mode = 0
 offset_left = 48.0
 offset_top = -64.0
 offset_right = 124.0

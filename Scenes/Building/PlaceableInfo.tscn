@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://biil4p82w3tjw"]
+[gd_scene load_steps=7 format=3 uid="uid://biil4p82w3tjw"]
 
 [ext_resource type="Texture2D" uid="uid://b5llsw0d3srcl" path="res://Sprites/Extra/InfoBoxSprite.png" id="1_1dfka"]
 [ext_resource type="Script" path="res://Scripts/Building/PlaceableInfo.cs" id="1_snswj"]
 [ext_resource type="PackedScene" uid="uid://ud23v844segc" path="res://Scenes/Building/Production/ChooseWare.tscn" id="3_j5mfn"]
 [ext_resource type="FontFile" uid="uid://dul1t3v440c7s" path="res://Deutsch.ttf" id="3_uwas0"]
 [ext_resource type="PackedScene" uid="uid://dyq8jku2xq8kr" path="res://Scenes/Building/CitizenInfo.tscn" id="4_yc7qr"]
+[ext_resource type="FontFile" uid="uid://4apkhqisib11" path="res://BLKCHCRY.TTF" id="5_w1epv"]
 
 [node name="PlaceableInfo" type="Control"]
 z_index = 2
@@ -54,7 +55,7 @@ offset_right = 200.0
 offset_bottom = 96.0
 mouse_filter = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_fonts/normal_font = ExtResource("3_uwas0")
+theme_override_fonts/normal_font = ExtResource("5_w1epv")
 theme_override_font_sizes/normal_font_size = 21
 text = "Building info"
 fit_content = true

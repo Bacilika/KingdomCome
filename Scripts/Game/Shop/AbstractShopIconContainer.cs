@@ -23,24 +23,24 @@ public abstract partial class AbstractShopIconContainer : Button
 		{
 			AddChild(product);
 			var productImage = product.AnimatedSprite.SpriteFrames.GetFrameTexture("default",0);
-			var shopIcon = ShopIconScene.Instantiate<TextureButton>();
-			var text = shopIcon.GetNode<Label>("Text");
+			var shopIconControl = ShopIconScene.Instantiate<Control>();
+			var shopIcon = shopIconControl.GetNode<TextureButton>("TextureButton");
+			var colorRect = shopIcon.GetNode<ColorRect>("ColorRect");
+			
 			var containerHeight = ShopIconContainer.Size.Y;
 			var scale = containerHeight / productImage.GetSize().Y;
 			var size = scale * productImage.GetSize().X;
 			
-			shopIcon.SetCustomMinimumSize(new Vector2(size,0));
+			shopIconControl.SetCustomMinimumSize(new Vector2(size,0));
+			colorRect.Size = new Vector2(size, containerHeight);
+			colorRect.Position = shopIcon.Position;
 			shopIcon.TextureNormal = productImage;
-			text.Text = "Wood: " + product.Upgrades[Upgrade.WoodCost][0] + 
-			            "\nStone: " + product.Upgrades[Upgrade.StoneCost][0];
-			text.Position = new Vector2(shopIcon.Position.X, text.Position.Y);
-			text.Size = new Vector2(shopIcon.Size.X, text.Size.Y);
-			ShopIconContainer.AddChild(shopIcon);
+			ShopIconContainer.AddChild(shopIconControl);
 			RemoveChild(product);
-			Stock.Add(shopIcon);
+			Stock.Add(shopIconControl);
 			shopIcon.Pressed +=() => { OnShopIconPressed(product);};
-			shopIcon.MouseEntered += () => {OnMouseEntered(product, shopIcon); };
-			shopIcon.MouseExited += () => {OnMouseExited(shopIcon); };
+			shopIcon.MouseEntered += () => {OnMouseEntered(product, shopIconControl); };
+			shopIcon.MouseExited += () => {OnMouseExited(shopIconControl); };
 			if (!product.isUnlocked)
 			{
 				shopIcon.Disabled = true;
@@ -53,18 +53,16 @@ public abstract partial class AbstractShopIconContainer : Button
 			{
 				AddChild(road);
 				var productImage = road.GetNode<Sprite2D>("Sprite2D").Texture;
-				var shopIcon = ShopIconScene.Instantiate<TextureButton>();
-				var text = shopIcon.GetNode<Label>("Text");
+				var shopIconControl = ShopIconScene.Instantiate<Control>();
+				var shopIcon = shopIconControl.GetNode<TextureButton>("TextureButton");
+
 				var containerHeight = ShopIconContainer.Size.Y;
 				var scale = containerHeight / (productImage.GetSize().Y) ;
 				var size = scale * productImage.GetSize().X;
 			
 				shopIcon.SetCustomMinimumSize(new Vector2(size,0));
 				shopIcon.TextureNormal = productImage;
-				text.Text = "Price: " + 50;
-				text.Position = new Vector2(shopIcon.Position.X, text.Position.Y);
-				text.Size = new Vector2(shopIcon.Size.X, text.Size.Y);
-				ShopIconContainer.AddChild(shopIcon);
+				ShopIconContainer.AddChild(shopIconControl);
 				Stock.Add(shopIcon);
 				RemoveChild(road);
 				shopIcon.Pressed += () => { OnRoadButtonPressed(road);};
@@ -79,16 +77,16 @@ public abstract partial class AbstractShopIconContainer : Button
 		
 	}
 	
-	public void OnMouseEntered(AbstractPlaceable product, TextureButton shopIcon)
+	public void OnMouseEntered(AbstractPlaceable product, Control shopIconControl)
 	{
-		var info = shopIcon.GetNode<ProductionInfo>("ProductionInfo");
+		var info = shopIconControl.GetNode<ProductionInfo>("ProductionInfo");
 		info.setInfo(product);
 		info.Visible = true;
 	}
 
-	public void OnMouseExited(TextureButton shopIcon)
+	public void OnMouseExited( Control shopIconControl)
 	{
-		var info = shopIcon.GetNode<ProductionInfo>("ProductionInfo");
+		var info = shopIconControl.GetNode<ProductionInfo>("ProductionInfo");
 		info.Visible = false;
 	}
 	

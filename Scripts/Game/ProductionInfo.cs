@@ -13,20 +13,22 @@ public partial class ProductionInfo : Control
 	private Dictionary<String, List<String>> _productionInfo = new()
 	
 	{
-		{"HunterLodge", ["Hunters Lodge", "1", "1", 
+		{"HunterLodge", ["Hunters Lodge", 
 			"Station for hunters to gather and hunt. Produces meat."]},
-		{"Well", ["Well", "1", "1", 
+		{"Well", ["Well", 
 			"Allows citizens to get water."]},
-		{"IronMine", ["IronMine", "1", "1", 
+		{"IronMine", ["IronMine",  
 			"Mine for iron"]},
-		{"MarketStall", ["MarketStall", "1", "1", 
+		{"MarketStall", ["MarketStall", 
 			"Market stall to sell"]},
-		{"StoneMine", ["StoneMine", "1", "1", 
+		{"StoneMine", ["StoneMine",  
 			"Mine for producing stone"]},
-		{"WoodCutter", ["WoodCutter", "1", "1", 
+		{"WoodCutter", ["WoodCutter", 
 			"Produces wood"]},
-		{"FarmHouse", ["WoodCutter", "1", "1", 
-			"Produces wood"]}
+		{"FarmHouse", ["WoodCutter",  
+			"Produces wood"]},
+		{"House", ["House",
+			"A place for citizens to live"]}
 	};
 	public override void _Ready()
 	{
@@ -37,9 +39,9 @@ public partial class ProductionInfo : Control
 
 	public void setInfo(AbstractPlaceable parent)
 	{
-		_title.Text = parent.GetBuildingName();
-		_resources.Text = "Cost: Wood: " + _productionInfo[parent.GetBuildingName()][1] + " Stone: " + _productionInfo[parent.GetBuildingName()][2];
-		_description.Text = _productionInfo[parent.GetBuildingName()][3];
+		_title.Text =  _productionInfo[parent.GetBuildingName()][0];
+		_resources.Text = $"Cost: {parent.CostToString()}";
+		_description.Text = _productionInfo[parent.GetBuildingName()][1];
 	}
 
 

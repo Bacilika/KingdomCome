@@ -29,6 +29,8 @@ public abstract partial class AbstractPlaceable : Area2D
 	public bool hasMoved = false;
 	public ChooseWare WareBox;
 	public int PlayerLevel = 0;
+	public string BuildingName;
+	public string BuildingDescription;
 	
 	
 

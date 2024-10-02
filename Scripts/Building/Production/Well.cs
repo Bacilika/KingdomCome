@@ -7,6 +7,9 @@ public partial class Well : Production
 {
 	public override void _Ready_instance()
 	{
+		BuildingName = "Well";
+		BuildingDescription = "Allows citizens to get water";
+		
 		Producing = "Water";
 		ProductionRate = 2;
 		_timer = GetNode<Timer>("FoodTimer");

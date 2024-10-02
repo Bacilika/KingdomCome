@@ -10,6 +10,8 @@ public partial class FarmHouse : Production
 	
 	public override void _Ready_instance()
 	{
+		BuildingName = "Barn";
+		BuildingDescription = "A Barn that produces food";
 		Producing = "Food";
 		_timer = GetNode<Timer>("FoodTimer");
 		Price = 20000;

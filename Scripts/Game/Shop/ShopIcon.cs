@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Threading.Tasks;
 
 public partial class ShopIcon : Control
 {
@@ -33,7 +34,6 @@ public partial class ShopIcon : Control
 		Product = product;
 		Shop = shop;
 		Texture2D productImage;
-			
 		productImage = product.AnimatedSprite.SpriteFrames.GetFrameTexture("default",0);
 		
 		

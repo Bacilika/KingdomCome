@@ -7,6 +7,8 @@ public partial class WoodCutter : Production
 {
 	public override void _Ready_instance()
 	{
+		BuildingName = "WoodCutter";
+		BuildingDescription = "Place for citizen to chop wood";
 		Producing = "Wood";
 		_timer = GetNode<Timer>("WoodTimer");
 		Price = 20000;

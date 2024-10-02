@@ -11,6 +11,7 @@ public abstract partial class AbstractShopIconContainer : Button
 	public BoxContainer ShopIconContainer;
 	public List<ShopIcon> Stock = [];
 	public Shop GameShop;
+
 	public override void _Ready()
 	{
 		

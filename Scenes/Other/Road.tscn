@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://bnchddcs6bxed"]
+[gd_scene load_steps=6 format=3 uid="uid://bnchddcs6bxed"]
 
 [ext_resource type="Script" path="res://Scripts/Other/Road.cs" id="1_1eofc"]
 [ext_resource type="Texture2D" uid="uid://bidh0o15gfkct" path="res://Sprites/Extra/Road2.png" id="2_nwith"]
+[ext_resource type="PackedScene" uid="uid://biil4p82w3tjw" path="res://Scenes/Building/PlaceableInfo.tscn" id="3_4thjy"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_0hmsi"]
 animations = [{
@@ -27,3 +28,5 @@ sprite_frames = SubResource("SpriteFrames_0hmsi")
 [node name="CollisionShape1" type="CollisionShape2D" parent="."]
 position = Vector2(-0.5, 0)
 shape = SubResource("RectangleShape2D_3xi38")
+
+[node name="PlaceableInfo" parent="." instance=ExtResource("3_4thjy")]

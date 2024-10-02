@@ -13,6 +13,9 @@ public partial class MarketStall : Production
 
 	public override void _Ready_instance()
 	{
+		BuildingName = "Market Stall";
+		BuildingDescription = "Market stall to sell resources";
+		
 		Producing = "Iron";
 		ProductionRate = 2;
 		_timer = GetNode<Timer>("FoodTimer");

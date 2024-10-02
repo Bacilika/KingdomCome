@@ -17,6 +17,8 @@ public partial class House : LivingSpaces
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready_instance()
 	{
+		BuildingName = "House";
+		BuildingDescription = "A place for citizens to live";
 		Price = 5000;
 		Upgrades = new Dictionary<string, List<int>>
 		{

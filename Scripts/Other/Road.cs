@@ -17,7 +17,8 @@ public partial class Road : AbstractPlaceable
 	}
 	public override void _Ready()
 	{
-		
+		BuildingName = "Road";
+		BuildingDescription = "Road for citizens to walk on";
 	}
 
 

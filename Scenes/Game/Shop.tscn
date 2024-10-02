@@ -6,12 +6,12 @@
 [ext_resource type="Script" path="res://Scripts/Game/Shop/Houses.cs" id="5_3m6vu"]
 [ext_resource type="Texture2D" uid="uid://ncak4duw1smn" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/House_RedWood_Stone_1.png" id="5_h6tgk"]
 [ext_resource type="Script" path="res://Scripts/Game/Shop/Productions.cs" id="6_rv706"]
-[ext_resource type="Texture2D" uid="uid://cbh8kp0bh3y5c" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Props/Chopped_Tree_2.png" id="7_04p2k"]
-[ext_resource type="Texture2D" uid="uid://k0v4p0r7ajiq" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Props/Plant_Sunflower.png" id="9_veiw5"]
+[ext_resource type="Texture2D" uid="uid://cbh8kp0bh3y5c" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Rock Slopes/Props/Chopped_Tree_2.png" id="7_04p2k"]
+[ext_resource type="Texture2D" uid="uid://k0v4p0r7ajiq" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Rock Slopes/Props/Plant_Sunflower.png" id="9_veiw5"]
 [ext_resource type="Script" path="res://Scripts/Game/Shop/Activities.cs" id="9_vpmg5"]
 [ext_resource type="AudioStream" uid="uid://bg6kys8wlkqcn" path="res://Audio/PlaceBuilding.mp3" id="9_woy45"]
 [ext_resource type="Texture2D" uid="uid://bidh0o15gfkct" path="res://Sprites/Extra/Road2.png" id="11_efofr"]
-[ext_resource type="Texture2D" uid="uid://dc0hj4nbqycfn" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Props/StreetDecorations_1.png" id="13_um2nw"]
+[ext_resource type="Texture2D" uid="uid://dc0hj4nbqycfn" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Rock Slopes/Props/StreetDecorations_1.png" id="13_um2nw"]
 [ext_resource type="Script" path="res://Scripts/Game/Shop/Decorations.cs" id="15_sneyw"]
 [ext_resource type="Script" path="res://Scripts/Game/Shop/Roads.cs" id="16_ubte4"]
 
@@ -137,13 +137,12 @@ expand_icon = true
 script = ExtResource("9_vpmg5")
 
 [node name="ShopItemNode" type="BoxContainer" parent="BuildTabButtons/Activities"]
-visible = false
 layout_direction = 3
 layout_mode = 0
-offset_left = 56.0
-offset_top = -111.0
-offset_right = 536.0
-offset_bottom = -47.0
+offset_left = -71.0
+offset_top = -101.0
+offset_right = 409.0
+offset_bottom = -37.0
 
 [connection signal="pressed" from="BuildTabButtons/Houses" to="." method="OnBuildTabPressed" binds= ["Houses"]]
 [connection signal="pressed" from="BuildTabButtons/Productions" to="." method="OnBuildTabPressed" binds= ["Productions"]]

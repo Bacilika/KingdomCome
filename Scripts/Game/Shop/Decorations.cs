@@ -6,6 +6,7 @@ public partial class Decorations : AbstractShopIconContainer
 	
 	public override void AddProducts()
 	{
-		
+		Products = [ResourceLoader.Load<PackedScene>("res://Scenes/Building/Decoration/Flowerbed.tscn").Instantiate<Flowerbed>()];
+
 	}
 }

@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using KingdomCome.Scripts.Building.Activities;
 using Scripts.Constants;
 
 public partial class Npc : CharacterBody2D
@@ -181,6 +182,7 @@ public partial class Npc : CharacterBody2D
 
 		return false;
 	}
+	
 
 	public bool IsEmployed()
 	{

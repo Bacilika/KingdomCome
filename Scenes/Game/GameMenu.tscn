@@ -1,6 +1,7 @@
-[gd_scene load_steps=17 format=3 uid="uid://25kpv3trjyvk"]
+[gd_scene load_steps=18 format=3 uid="uid://25kpv3trjyvk"]
 
 [ext_resource type="Script" path="res://Scripts/Game/GameMenu.cs" id="1_dev6f"]
+[ext_resource type="Theme" uid="uid://c2femp2uxsefw" path="res://Themes/Theme.tres" id="1_vgcun"]
 [ext_resource type="Texture2D" uid="uid://o80rtv7te3j4" path="res://Sprites/Atlas_Castle_Building-export.png" id="2_k8sk1"]
 [ext_resource type="FontFile" uid="uid://dul1t3v440c7s" path="res://Deutsch.ttf" id="3_d13wb"]
 [ext_resource type="PackedScene" uid="uid://b7mukvq5n5mpd" path="res://GameStat.tscn" id="4_2bxld"]
@@ -45,8 +46,8 @@ sources/0 = SubResource("TileSetAtlasSource_fyhtp")
 y_sort_enabled = true
 layout_mode = 3
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 1280.0
+offset_bottom = 640.0
 size_flags_vertical = 8
 mouse_filter = 2
 script = ExtResource("1_dev6f")
@@ -105,11 +106,12 @@ offset_left = 9.0
 offset_top = -530.0
 offset_right = 1288.0
 offset_bottom = -490.0
+theme = ExtResource("1_vgcun")
 color = Color(0.188235, 0.188235, 0.188235, 0.72549)
 
 [node name="GameStats" type="GridContainer" parent="MenuCanvasLayer/Container"]
 layout_mode = 2
-offset_left = 50.0
+offset_left = 16.0
 offset_top = -523.0
 offset_right = 1279.0
 offset_bottom = -419.0

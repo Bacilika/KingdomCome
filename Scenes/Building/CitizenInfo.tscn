@@ -8,8 +8,8 @@
 [node name="CitizenInfo" type="Control"]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 176.0
-offset_bottom = 184.0
+offset_right = 192.0
+offset_bottom = 208.0
 script = ExtResource("1_5tojb")
 
 [node name="CitizenBackground" type="TextureRect" parent="."]

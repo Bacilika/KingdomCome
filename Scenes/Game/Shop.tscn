@@ -1,20 +1,23 @@
-[gd_scene load_steps=10 format=3 uid="uid://dlbb4eje8p5k2"]
+[gd_scene load_steps=11 format=3 uid="uid://dlbb4eje8p5k2"]
 
 [ext_resource type="Script" path="res://Scripts/Game/Shop.cs" id="1_1o3pr"]
 [ext_resource type="AudioStream" uid="uid://dj5f1kt2yx1yb" path="res://Audio/DeleteBuilding.mp3" id="2_eaaiu"]
+[ext_resource type="Theme" uid="uid://c2femp2uxsefw" path="res://Themes/Theme.tres" id="4_h681q"]
 [ext_resource type="Script" path="res://Scripts/Game/Shop/Houses.cs" id="5_3m6vu"]
 [ext_resource type="Script" path="res://Scripts/Game/Shop/Productions.cs" id="6_rv706"]
-[ext_resource type="PackedScene" uid="uid://tigupmam0oos" path="res://Scenes/Game/ShopIcon.tscn" id="9_oie8x"]
 [ext_resource type="Script" path="res://Scripts/Game/Shop/Activities.cs" id="9_vpmg5"]
 [ext_resource type="AudioStream" uid="uid://bg6kys8wlkqcn" path="res://Audio/PlaceBuilding.mp3" id="9_woy45"]
 [ext_resource type="Script" path="res://Scripts/Game/Shop/Decorations.cs" id="15_sneyw"]
 [ext_resource type="Script" path="res://Scripts/Game/Shop/Roads.cs" id="16_ubte4"]
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_ok3r1"]
+
 [node name="Shop" type="Control"]
 layout_mode = 3
 anchors_preset = 0
-offset_top = -128.0
-offset_right = 944.0
+offset_right = 768.0
+offset_bottom = 128.0
+theme = ExtResource("4_h681q")
 script = ExtResource("1_1o3pr")
 
 [node name="DeleteBuildingAudio" type="AudioStreamPlayer2D" parent="."]
@@ -32,12 +35,13 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -240.0
-offset_top = -120.0
-offset_right = 240.0
+offset_left = -205.5
+offset_top = -112.0
+offset_right = 205.5
 grow_horizontal = 2
 grow_vertical = 0
 mouse_filter = 0
+theme_override_icons/menu = SubResource("ViewportTexture_ok3r1")
 current_tab = 0
 tabs_position = 1
 clip_tabs = false
@@ -49,9 +53,6 @@ script = ExtResource("5_3m6vu")
 metadata/_tab_index = 0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="BuildTabButtons/Houses"]
-layout_mode = 2
-
-[node name="ShopIcon" parent="BuildTabButtons/Houses/HBoxContainer" instance=ExtResource("9_oie8x")]
 layout_mode = 2
 
 [node name="Productions" type="ScrollContainer" parent="BuildTabButtons"]

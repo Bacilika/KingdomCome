@@ -6,10 +6,9 @@
 
 [node name="ShopIcon" type="Control"]
 layout_mode = 3
-anchor_right = 0.0125
-anchor_bottom = 0.025
-offset_right = 40.0
-offset_bottom = 48.0
+anchors_preset = 0
+offset_right = 56.0
+offset_bottom = 64.0
 script = ExtResource("1_6r730")
 metadata/_edit_use_anchors_ = true
 
@@ -32,3 +31,4 @@ mouse_filter = 2
 color = Color(1, 0, 0, 0.52549)
 
 [node name="ProductionInfo" parent="." instance=ExtResource("3_46c2o")]
+visible = false

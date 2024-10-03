@@ -38,7 +38,6 @@ public partial class ShopIcon : Control
 		
 		
 		var containerHeight = Size.Y;
-		var size = containerHeight / productImage.GetSize().Y * productImage.GetSize().X;
 		var minimum = new Vector2(containerHeight, containerHeight);
 		SetCustomMinimumSize(minimum);
 		Icon.SetCustomMinimumSize(minimum);

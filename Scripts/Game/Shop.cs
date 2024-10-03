@@ -7,8 +7,6 @@ using Scripts.Constants;
 
 public partial class Shop : Control
 {
-	private Godot.Collections.Dictionary<string, PackedScene> _shopItems;
-	// Called when the node enters the scene tree for the first time.
 	private GridContainer _buildButtons;
 	public static AudioStreamPlayer2D placeAudio;
 	public static AudioStreamPlayer2D deleteAudio;
@@ -26,16 +24,7 @@ public partial class Shop : Control
 	public delegate void OnRoadBuildEventHandler(Road road);
 	public override void _Ready()
 	{
-		_shopItems = new Godot.Collections.Dictionary<string, PackedScene> { 
-			{ "House", ResourceLoader.Load<PackedScene>("res://Scenes/Building/LivingSpace/House.tscn") },
-			{"FarmHouse", ResourceLoader.Load<PackedScene>("res://Scenes/Building/Production/FarmHouse.tscn")},
-			{"StoneMine", ResourceLoader.Load<PackedScene>("res://Scenes/Building/Production/StoneMine.tscn")},
-			{"HunterLodge", ResourceLoader.Load<PackedScene>("res://Scenes/Building/Production/HunterLodge.tscn")},
-			{"WoodCutter", ResourceLoader.Load<PackedScene>("res://Scenes/Building/Production/WoodCutter.tscn")},
-			{"IronMine", ResourceLoader.Load<PackedScene>("res://Scenes/Building/Production/IronMine.tscn")},
-			{"Well", ResourceLoader.Load<PackedScene>("res://Scenes/Building/Production/Well.tscn")},
-			{"MarketStall", ResourceLoader.Load<PackedScene>("res://Scenes/Building/Production/MarketStall.tscn")}
-		};
+
 
 		placeAudio = GetNode<AudioStreamPlayer2D>("PlaceBuildingAudio");
 		deleteAudio = GetNode<AudioStreamPlayer2D>("DeleteBuildingAudio");
@@ -50,21 +39,5 @@ public partial class Shop : Control
 
 	public override void _Process(double delta)
 	{
-	}
-	
-	public void OnBuildTabPressed(string tabPath)
-	{
-		foreach (var tab in _shopTabs)
-		{
-			if (tab.Name == tabPath)
-			{
-				Console.WriteLine(tab.Name);
-				tab.ShowStock();
-			}
-			else
-			{
-				tab.HideStock();
-			}
-		}
 	}
 }

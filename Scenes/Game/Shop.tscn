@@ -1,27 +1,21 @@
-[gd_scene load_steps=15 format=3 uid="uid://dlbb4eje8p5k2"]
+[gd_scene load_steps=9 format=3 uid="uid://dlbb4eje8p5k2"]
 
 [ext_resource type="Script" path="res://Scripts/Game/Shop.cs" id="1_1o3pr"]
 [ext_resource type="AudioStream" uid="uid://dj5f1kt2yx1yb" path="res://Audio/DeleteBuilding.mp3" id="2_eaaiu"]
-[ext_resource type="FontFile" uid="uid://dul1t3v440c7s" path="res://Deutsch.ttf" id="4_f5p4c"]
 [ext_resource type="Script" path="res://Scripts/Game/Shop/Houses.cs" id="5_3m6vu"]
-[ext_resource type="Texture2D" uid="uid://ncak4duw1smn" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/House_RedWood_Stone_1.png" id="5_h6tgk"]
 [ext_resource type="Script" path="res://Scripts/Game/Shop/Productions.cs" id="6_rv706"]
-[ext_resource type="Texture2D" uid="uid://cbh8kp0bh3y5c" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Props/Chopped_Tree_2.png" id="7_04p2k"]
-[ext_resource type="Texture2D" uid="uid://k0v4p0r7ajiq" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Props/Plant_Sunflower.png" id="9_veiw5"]
 [ext_resource type="Script" path="res://Scripts/Game/Shop/Activities.cs" id="9_vpmg5"]
 [ext_resource type="AudioStream" uid="uid://bg6kys8wlkqcn" path="res://Audio/PlaceBuilding.mp3" id="9_woy45"]
-[ext_resource type="Texture2D" uid="uid://bidh0o15gfkct" path="res://Sprites/Extra/Road2.png" id="11_efofr"]
-[ext_resource type="Texture2D" uid="uid://dc0hj4nbqycfn" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Props/StreetDecorations_1.png" id="13_um2nw"]
 [ext_resource type="Script" path="res://Scripts/Game/Shop/Decorations.cs" id="15_sneyw"]
 [ext_resource type="Script" path="res://Scripts/Game/Shop/Roads.cs" id="16_ubte4"]
 
 [node name="Shop" type="Control"]
 layout_mode = 3
 anchors_preset = 0
-offset_left = -482.0
-offset_top = -64.0
-offset_right = 128.0
-offset_bottom = 104.0
+offset_left = -24.0
+offset_top = 40.0
+offset_right = 616.0
+offset_bottom = 112.0
 script = ExtResource("1_1o3pr")
 
 [node name="DeleteBuildingAudio" type="AudioStreamPlayer2D" parent="."]
@@ -30,7 +24,7 @@ stream = ExtResource("2_eaaiu")
 [node name="PlaceBuildingAudio" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("9_woy45")
 
-[node name="BuildTabButtons" type="HBoxContainer" parent="."]
+[node name="BuildTabButtons" type="TabContainer" parent="."]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 1
 anchors_preset = 7
@@ -38,115 +32,56 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -188.0
-offset_top = -60.0
-offset_right = 280.0
+offset_left = -232.0
+offset_top = -112.0
+offset_right = 248.0
+offset_bottom = 4.0
 grow_horizontal = 2
 grow_vertical = 0
 mouse_filter = 0
-theme_override_constants/separation = 17
+current_tab = 3
+tabs_position = 1
 
-[node name="Houses" type="Button" parent="BuildTabButtons"]
-custom_minimum_size = Vector2(60, 60)
+[node name="Houses" type="ScrollContainer" parent="BuildTabButtons"]
+visible = false
 layout_mode = 2
-theme_override_fonts/font = ExtResource("4_f5p4c")
-theme_override_font_sizes/font_size = 24
-icon = ExtResource("5_h6tgk")
-flat = true
-expand_icon = true
 script = ExtResource("5_3m6vu")
+metadata/_tab_index = 0
 
-[node name="ShopItemNode" type="BoxContainer" parent="BuildTabButtons/Houses"]
-visible = false
-layout_direction = 3
-layout_mode = 0
-offset_left = -450.0
-offset_top = -89.0
-offset_right = 38.0
-offset_bottom = -24.0
-
-[node name="Productions" type="Button" parent="BuildTabButtons"]
-custom_minimum_size = Vector2(60, 60)
+[node name="HBoxContainer" type="HBoxContainer" parent="BuildTabButtons/Houses"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("4_f5p4c")
-theme_override_font_sizes/font_size = 22
-icon = ExtResource("7_04p2k")
-flat = true
-expand_icon = true
+
+[node name="Productions" type="ScrollContainer" parent="BuildTabButtons"]
+visible = false
+layout_mode = 2
 script = ExtResource("6_rv706")
+metadata/_tab_index = 1
 
-[node name="ShopItemNode" type="BoxContainer" parent="BuildTabButtons/Productions"]
-visible = false
-layout_direction = 3
-layout_mode = 0
-offset_left = -321.0
-offset_top = -94.0
-offset_right = 167.0
-offset_bottom = -30.0
-mouse_filter = 2
-theme_override_constants/separation = 64
-
-[node name="Decorations" type="Button" parent="BuildTabButtons"]
-custom_minimum_size = Vector2(60, 60)
+[node name="HBoxContainer" type="HBoxContainer" parent="BuildTabButtons/Productions"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("4_f5p4c")
-theme_override_font_sizes/font_size = 22
-icon = ExtResource("9_veiw5")
-flat = true
-icon_alignment = 1
-expand_icon = true
+
+[node name="Decorations" type="ScrollContainer" parent="BuildTabButtons"]
+visible = false
+layout_mode = 2
 script = ExtResource("15_sneyw")
+metadata/_tab_index = 2
 
-[node name="ShopItemNode" type="BoxContainer" parent="BuildTabButtons/Decorations"]
-visible = false
-layout_direction = 3
-layout_mode = 0
-offset_left = -193.0
-offset_top = -99.0
-offset_right = 287.0
-offset_bottom = -35.0
-
-[node name="Roads" type="Button" parent="BuildTabButtons"]
-custom_minimum_size = Vector2(60, 60)
+[node name="HBoxContainer" type="HBoxContainer" parent="BuildTabButtons/Decorations"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("4_f5p4c")
-theme_override_font_sizes/font_size = 22
-icon = ExtResource("11_efofr")
-flat = true
-expand_icon = true
+
+[node name="Roads" type="ScrollContainer" parent="BuildTabButtons"]
+layout_mode = 2
 script = ExtResource("16_ubte4")
+metadata/_tab_index = 3
 
-[node name="ShopItemNode" type="BoxContainer" parent="BuildTabButtons/Roads"]
-visible = false
-layout_direction = 3
-layout_mode = 0
-offset_left = -57.0
-offset_top = -96.0
-offset_right = 423.0
-offset_bottom = -32.0
-
-[node name="Activities" type="Button" parent="BuildTabButtons"]
-custom_minimum_size = Vector2(60, 60)
+[node name="HBoxContainer" type="HBoxContainer" parent="BuildTabButtons/Roads"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("4_f5p4c")
-theme_override_font_sizes/font_size = 22
-icon = ExtResource("13_um2nw")
-flat = true
-icon_alignment = 1
-expand_icon = true
-script = ExtResource("9_vpmg5")
 
-[node name="ShopItemNode" type="BoxContainer" parent="BuildTabButtons/Activities"]
+[node name="Activities" type="ScrollContainer" parent="BuildTabButtons"]
 visible = false
-layout_direction = 3
-layout_mode = 0
-offset_left = 56.0
-offset_top = -111.0
-offset_right = 536.0
-offset_bottom = -47.0
+layout_mode = 2
+script = ExtResource("9_vpmg5")
+metadata/_tab_index = 4
 
-[connection signal="pressed" from="BuildTabButtons/Houses" to="." method="OnBuildTabPressed" binds= ["Houses"]]
-[connection signal="pressed" from="BuildTabButtons/Productions" to="." method="OnBuildTabPressed" binds= ["Productions"]]
-[connection signal="pressed" from="BuildTabButtons/Decorations" to="." method="OnBuildTabPressed" binds= ["Decorations"]]
-[connection signal="pressed" from="BuildTabButtons/Roads" to="." method="OnBuildTabPressed" binds= ["Roads"]]
-[connection signal="pressed" from="BuildTabButtons/Activities" to="." method="OnBuildTabPressed" binds= ["Activities"]]
+[node name="HBoxContainer" type="HBoxContainer" parent="BuildTabButtons/Activities"]
+layout_mode = 2

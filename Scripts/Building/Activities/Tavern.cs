@@ -22,4 +22,20 @@ public partial class Tavern : AbstractActivity
 			{Upgrade.StoneMoveCost, [2, 5, 10]}
 		};
 	}
+
+	public override void ProduceItem()
+	{
+		if (GameLogistics.Resources["Food"] > 0 && GameLogistics.Resources["Water"] > 0)
+		{
+			GameLogistics.Resources["Food"]--;
+			GameLogistics.Resources["Water"]--;
+			IsOpen = true;
+		}
+		else
+		{
+			IsOpen = false;
+		}
+
+	}
+
 }

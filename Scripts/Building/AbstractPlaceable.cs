@@ -252,6 +252,11 @@ public abstract partial class AbstractPlaceable : Area2D
 	public void PlayAnimation()
 	{
 		var animatedSprite = GetNode<AnimatedSprite2D>("Animation");
-		animatedSprite.Play();
+
+		if (animatedSprite is not null)
+		{
+			animatedSprite.Play();
+		}
+
 	}
 }

@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using KingdomCome.Scripts.Building.Activities;
 
 public partial class GameMap : Node2D
 {
@@ -13,6 +14,7 @@ public partial class GameMap : Node2D
 	public List<House> _placedHouses = [];
 	public List<Production> _placedProduction = [];
 	public List<Npc> Citizens = [];
+	public static List<AbstractActivity> _placedActivities = [];
 	//for job selection
 	public static bool JobSelectMode;
 	public static Npc NpcJobSelect;
@@ -73,7 +75,11 @@ public partial class GameMap : Node2D
 			house.OnCreateNpc += PlaceNpc;
 			_placedHouses.Add(house);
 		}
-		else if(placeable is Production production)
+		else if(placeable is AbstractActivity activity)
+		{
+			_placedActivities.Add(activity);
+		}
+		if(placeable is Production production)
 		{
 			_placedProduction.Add(production);
 		}

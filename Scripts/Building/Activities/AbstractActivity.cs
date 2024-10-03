@@ -3,10 +3,12 @@ using Scripts.Constants;
 
 namespace KingdomCome.Scripts.Building.Activities;
 
-public abstract partial class AbstractActivity: AbstractPlaceable
+public abstract partial class AbstractActivity: Production
 {
     
     public abstract override void _Ready_instance();
+    public abstract override void ProduceItem();
+    public bool IsOpen = true; 
 
     protected override void Tick()
     {
@@ -56,7 +58,7 @@ public abstract partial class AbstractActivity: AbstractPlaceable
         }
         else
         {
-            /*
+            
             var employed = npc.GetJob(this, true);
             if (employed)
             {
@@ -64,10 +66,9 @@ public abstract partial class AbstractActivity: AbstractPlaceable
                 People.Add(npc);
             }
             return true;
-            */
+            
             
         }
-        return false;
     }
     
 }

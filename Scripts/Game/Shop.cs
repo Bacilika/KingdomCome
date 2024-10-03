@@ -15,7 +15,6 @@ public partial class Shop : Control
 	private List<AbstractShopIconContainer> _shopTabs;
 	//Make overall level. If level > x, unlock certain buildings. 
 	private bool _locked = true;
-	private Control _productionInfo;
 
 	[Signal]
 	public delegate void OnBuildingButtonPressedEventHandler(AbstractPlaceable type);

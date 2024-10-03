@@ -1,7 +1,16 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using KingdomCome.Scripts.Building.Activities;
 using Scripts.Constants;
+
+public class MoodReason
+{
+	public string Reason { get; set; }
+	public int Happiness { get; set; }
+	
+}
 
 public partial class Npc : CharacterBody2D
 {
@@ -22,32 +31,47 @@ public partial class Npc : CharacterBody2D
 	private bool _ready;
 	private Timer _timer;
 	private bool timerOut;
-	private RandomNumberGenerator _rnd = new ();
+	private RandomNumberGenerator _rnd = new (); 
 	private AudioStreamPlayer2D _walkingOnGrassSound;
-	public CitizenInfo CitizenInfo;
-	public HashSet<string> unhappyReasons = new();
+	public CitizenInfo Info;
+	public Dictionary<string, MoodReason> moodReasons;
+
+	private AnimatedSprite2D _hitAnimation;
+
+	private Vector2 _activityPosition;
 	
 	[Signal]
 	public delegate void OnJobChangeEventHandler(Npc npc);
 	
 	public override void _Ready()
 	{
-		_animation = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+		_animation = GetNode<AnimatedSprite2D>("WalkingAnimation");
 		Sprite = _animation.SpriteFrames.GetFrameTexture("walkUp", 0);
+		_hitAnimation = GetNode<AnimatedSprite2D>("IronAnimation");
+		_hitAnimation.Visible = false;
+		_hitAnimation.Stop();
+		
 		_navigation = GetNode<NavigationAgent2D>("NavigationAgent2D");
 		_timer = GetNode<Timer>("WorkTimer");
 		_walkingOnGrassSound = GetNode<AudioStreamPlayer2D>("GrassWalking");
 		destination = homePosition;
-		CitizenInfo = GetNode<CitizenInfo>("CitizenInfo");
-		CitizenInfo.SetInfo(this);
-		CitizenInfo.GetNode<HBoxContainer>("HBoxContainer").Visible = false;
-		CitizenInfo.Visible = false;
+		Info = GetNode<CitizenInfo>("CitizenInfo");
+		Info.SetInfo(this);
+		Info.GetNode<HBoxContainer>("HBoxContainer").Visible = false;
+		Info.Visible = false;
+
+
+		moodReasons = new()
+		{
+			{ "Work", new MoodReason() },
+			{ "Activity", new MoodReason() }
+		};
 	}
 
 	public void SetInfo()
 	{
-		CitizenInfo.Position = Position;
-		CitizenInfo.Background.Visible = true;
+		Info.Position = Position;
+		Info.Background.Visible = true;
 	}
 
 	public void OnWorkTimerTimeout()
@@ -68,6 +92,10 @@ public partial class Npc : CharacterBody2D
 	public override void _Process(double delta)
 	{
 		calculateHappiness();
+		if (Info is not null && Info.Visible)
+		{
+			SetInfo();
+		}
 	}
 
 	
@@ -87,11 +115,26 @@ public partial class Npc : CharacterBody2D
 				{
 					_timer.Start();
 					TurnOnAudio(false);
+					if (Work is StoneMine && destination == workPosition)
+					{
+						_animation.Stop();
+						_animation.Visible = false;
+						_hitAnimation.Visible = true;
+						_hitAnimation.Play();
+					}
 				}
 				if (timerOut)
 				{
 					if (_rnd.RandiRange(0, 10)==0) //to make their movement a bit less monotone
 					{
+						if (Work is StoneMine or IronMine)
+						{
+							_hitAnimation.Stop();
+							_hitAnimation.Visible = false;
+							_animation.Visible = true;
+							_animation.Play();
+							
+						}
 						setDestination();
 						startPos = GetGlobalPosition();
 						timerOut = false;
@@ -138,22 +181,27 @@ public partial class Npc : CharacterBody2D
 
 	public void calculateHappiness()
 	{
-		var temphappiness = 10;
-		if (!IsEmployed())
+		var temphappiness = 5;
+		foreach (var reason in moodReasons)
 		{
-			temphappiness -= 5;
-			unhappyReasons.Add("Unemployed (-5)");
+			temphappiness += reason.Value.Happiness;
 		}
+
 		Happiness = temphappiness;
 	}
 
 	public String GetUnhappyReason()
 	{
 		string unhappyReason = "";
-		foreach (var i in unhappyReasons)
+
+		if (moodReasons is not null)
 		{
-			unhappyReason += i + "\n";
+			foreach (var reason in moodReasons)
+			{
+				unhappyReason += reason.Value.Reason + "\n";
+			}
 		}
+
 		return unhappyReason;
 	}
 
@@ -175,12 +223,15 @@ public partial class Npc : CharacterBody2D
 			Work = production;
 			//production.EmployWorker(this);
 			workPosition = Work.Position;
+			moodReasons["Work"].Reason = "Has work";
+			moodReasons["Work"].Happiness = 1;
 			setDestination();
 			return true;
 		}
 
 		return false;
 	}
+	
 
 	public bool IsEmployed()
 	{
@@ -204,8 +255,43 @@ public partial class Npc : CharacterBody2D
 		{
 			workPosition = Work.Position;
 		}
-		
-		destination = destination == homePosition ? workPosition : homePosition;
+
+		if (_rnd.RandiRange(0, 3) == 0 && destination == workPosition && GameMap._placedActivities.Count > 0)
+		{
+			AbstractActivity activity = null;
+			int counter = 0;
+			do
+			{
+				var i = _rnd.RandiRange(0, GameMap._placedActivities.Count - 1);
+				activity = GameMap._placedActivities[i];
+				counter++;
+			} while (!activity.IsOpen && counter < 5);
+
+			if (activity.IsOpen)
+			{
+				destination = activity.Position;
+				moodReasons["Activity"].Reason = "enjoys" + activity.BuildingName;
+				moodReasons["Activity"].Happiness = 2;
+			}
+			else
+			{
+				destination = homePosition;
+				moodReasons["Activity"].Reason = "No avaliable activity";
+				moodReasons["Activity"].Happiness = -2;
+			}
+		}
+		else
+		{
+			if (destination == workPosition || destination == _activityPosition)
+			{
+				destination = homePosition;
+			}
+			else
+			{
+				destination = workPosition;
+			}
+
+		}
 	
 		_navigation.SetTargetPosition(destination);
 		_navigation.GetNextPathPosition();
@@ -227,14 +313,14 @@ public partial class Npc : CharacterBody2D
 	{
 		if (_focused && @event.IsActionPressed(Inputs.LeftClick))
 		{
-			CitizenInfo.Visible = !CitizenInfo.Visible;
-			CitizenInfo.Position = Position;
-			CitizenInfo.SetInfo(this);
+			Info.Visible = !Info.Visible;
+			Info.Position = Position;
+			Info.SetInfo(this);
 			
 		}
 		else if(@event.IsActionPressed(Inputs.LeftClick))
 		{
-			CitizenInfo.Visible = false;
+			Info.Visible = false;
 		}
 		
 	}

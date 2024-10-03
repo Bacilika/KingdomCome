@@ -1,0 +1,53 @@
+[gd_scene load_steps=8 format=3 uid="uid://clbv88re7qw6r"]
+
+[ext_resource type="Script" path="res://Scripts/Building/Activities/Tavern.cs" id="1_os2qy"]
+[ext_resource type="Texture2D" uid="uid://btymv775ghbsi" path="res://Sprites/Extra/Buildings/tavern1.webp" id="2_5l2k8"]
+[ext_resource type="Texture2D" uid="uid://8ebj3pmg1l3v" path="res://Sprites/Extra/Buildings/tavern3.png" id="3_t2bfw"]
+[ext_resource type="PackedScene" uid="uid://biil4p82w3tjw" path="res://Scenes/Building/PlaceableInfo.tscn" id="5_b51j2"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ttjxn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_5l2k8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_t2bfw")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iafax"]
+size = Vector2(149, 199)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2depp"]
+size = Vector2(200, 182)
+
+[node name="Tavern" type="Area2D"]
+script = ExtResource("1_os2qy")
+
+[node name="HouseSprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(-2.99995, -4.5)
+scale = Vector2(0.416557, 0.416557)
+sprite_frames = SubResource("SpriteFrames_ttjxn")
+frame = 1
+frame_progress = 0.182606
+
+[node name="CollisionShape0" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(-10.5, -0.5)
+shape = SubResource("RectangleShape2D_iafax")
+
+[node name="CollisionShape1" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(1, -8)
+shape = SubResource("RectangleShape2D_2depp")
+
+[node name="PlaceableInfo" parent="." instance=ExtResource("5_b51j2")]
+
+[connection signal="area_entered" from="." to="." method="OnAreaEntered"]
+[connection signal="area_exited" from="." to="." method="OnAreaExited"]
+[connection signal="mouse_entered" from="." to="." method="OnMouseEntered"]
+[connection signal="mouse_exited" from="." to="." method="OnMouseExited"]

@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 
 
 
-public partial class ProductionInfo : Control
+public partial class ProductionInfo : PopupPanel
 {
 	private RichTextLabel _title;
 	private RichTextLabel _resources;

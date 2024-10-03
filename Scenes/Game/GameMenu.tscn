@@ -166,7 +166,7 @@ texture = ExtResource("13_fmjcf")
 offset_left = 15.0
 offset_top = -10.0
 offset_right = 1287.0
-offset_bottom = 85.0
+offset_bottom = 93.0
 
 [node name="CurrentGameMode" type="Label" parent="MenuCanvasLayer"]
 anchors_preset = -1

@@ -42,11 +42,11 @@ public partial class ShopIcon : Control
 		var minimum = new Vector2(containerHeight, containerHeight);
 		SetCustomMinimumSize(minimum);
 		Icon.SetCustomMinimumSize(minimum);
-		CustomMinimumSize = Icon.Size;
-		Color.Size = new Vector2(size, containerHeight);
+		CustomMinimumSize = minimum;
+		Color.Size = new Vector2(containerHeight, containerHeight);
 		Color.Position = Icon.Position;
 		Icon.TextureNormal = productImage;
-		
+		_productInfo.Position = new Vector2I((int)GlobalPosition.X+160, (int) GlobalPosition.Y-120);
 		
 		Icon.Pressed += OnShopIconPressed;
 		Icon.MouseEntered += OnMouseEntered;

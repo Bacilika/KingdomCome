@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://clbv88re7qw6r"]
+[gd_scene load_steps=8 format=3 uid="uid://clbv88re7qw6r"]
 
 [ext_resource type="Script" path="res://Scripts/Building/Activities/Tavern.cs" id="1_os2qy"]
 [ext_resource type="Texture2D" uid="uid://btymv775ghbsi" path="res://Sprites/Extra/Buildings/tavern1.webp" id="2_5l2k8"]
@@ -20,7 +20,10 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iafax"]
-size = Vector2(302, 270)
+size = Vector2(149, 199)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2depp"]
+size = Vector2(200, 182)
 
 [node name="Tavern" type="Area2D"]
 script = ExtResource("1_os2qy")
@@ -30,21 +33,17 @@ position = Vector2(-2.99995, -4.5)
 scale = Vector2(0.416557, 0.416557)
 sprite_frames = SubResource("SpriteFrames_ttjxn")
 frame = 1
-frame_progress = 0.493265
+frame_progress = 0.182606
 
 [node name="CollisionShape0" type="CollisionShape2D" parent="."]
 visible = false
-position = Vector2(1, -0.5)
+position = Vector2(-10.5, -0.5)
 shape = SubResource("RectangleShape2D_iafax")
 
 [node name="CollisionShape1" type="CollisionShape2D" parent="."]
 visible = false
-position = Vector2(19, 3.5)
-shape = SubResource("RectangleShape2D_iafax")
-
-[node name="CollisionShape2" type="CollisionShape2D" parent="."]
-position = Vector2(-3, -7)
-shape = SubResource("RectangleShape2D_iafax")
+position = Vector2(1, -8)
+shape = SubResource("RectangleShape2D_2depp")
 
 [node name="PlaceableInfo" parent="." instance=ExtResource("5_b51j2")]
 

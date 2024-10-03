@@ -36,6 +36,8 @@ public partial class Npc : CharacterBody2D
 	public CitizenInfo Info;
 	public Dictionary<string, MoodReason> moodReasons;
 
+	private AnimatedSprite2D _hitAnimation;
+
 	private Vector2 _activityPosition;
 	
 	[Signal]
@@ -43,8 +45,12 @@ public partial class Npc : CharacterBody2D
 	
 	public override void _Ready()
 	{
-		_animation = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+		_animation = GetNode<AnimatedSprite2D>("WalkingAnimation");
 		Sprite = _animation.SpriteFrames.GetFrameTexture("walkUp", 0);
+		_hitAnimation = GetNode<AnimatedSprite2D>("IronAnimation");
+		_hitAnimation.Visible = false;
+		_hitAnimation.Stop();
+		
 		_navigation = GetNode<NavigationAgent2D>("NavigationAgent2D");
 		_timer = GetNode<Timer>("WorkTimer");
 		_walkingOnGrassSound = GetNode<AudioStreamPlayer2D>("GrassWalking");
@@ -54,11 +60,11 @@ public partial class Npc : CharacterBody2D
 		Info.GetNode<HBoxContainer>("HBoxContainer").Visible = false;
 		Info.Visible = false;
 
+
 		moodReasons = new()
 		{
 			{ "Work", new MoodReason() },
 			{ "Activity", new MoodReason() }
-
 		};
 	}
 
@@ -109,11 +115,26 @@ public partial class Npc : CharacterBody2D
 				{
 					_timer.Start();
 					TurnOnAudio(false);
+					if (Work is StoneMine && destination == workPosition)
+					{
+						_animation.Stop();
+						_animation.Visible = false;
+						_hitAnimation.Visible = true;
+						_hitAnimation.Play();
+					}
 				}
 				if (timerOut)
 				{
 					if (_rnd.RandiRange(0, 10)==0) //to make their movement a bit less monotone
 					{
+						if (Work is StoneMine or IronMine)
+						{
+							_hitAnimation.Stop();
+							_hitAnimation.Visible = false;
+							_animation.Visible = true;
+							_animation.Play();
+							
+						}
 						setDestination();
 						startPos = GetGlobalPosition();
 						timerOut = false;

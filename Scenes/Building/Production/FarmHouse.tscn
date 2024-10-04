@@ -74,14 +74,17 @@ frame_progress = 0.7408
 wait_time = 10.0
 
 [node name="CollisionShape1" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(-10.5, 2)
 shape = SubResource("RectangleShape2D_cews5")
 
 [node name="CollisionShape2" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(-0.5, 2)
 shape = SubResource("RectangleShape2D_cews5")
 
 [node name="CollisionShape0" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_cews5")
 

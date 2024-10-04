@@ -7,7 +7,7 @@ public partial class CitizenPortraitButton : Control
 	public PlaceableInfo InfoBox;
 	public override void _Ready()
 	{
-		InfoBox = GetParent().GetParent().GetParent().GetParent<PlaceableInfo>();
+		InfoBox = GetParent().GetParent().GetParent<PlaceableInfo>();
 	}
 	
 	public void OnPortraitPressed()

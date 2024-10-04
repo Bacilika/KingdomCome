@@ -12,18 +12,9 @@ public abstract partial class AbstractActivity: Production
 	{
 		UpdateInfo();
 	}
-	protected override void OnDelete()
+	protected override void OnDeleteInstance()
 	{
-		for (int i = People.Count-1; i > 0; i--)
-		{
-			var npc = People[i];
-			npc.OnDelete();
-		}
-		GameLogistics.Resources["UnEmployed"] += GetWorkers();
-		GameLogistics.Resources["Wood"] += Upgrades[Upgrade.WoodBackOnDelete][Level];
-		GameLogistics.Resources["Stone"] += Upgrades[Upgrade.StoneBackOnDelete][Level];
-		Shop.deleteAudio.Play();
-		QueueFree();
+		GameLogistics.Resources[GameResource.Unemployed] += GetWorkers();
 	}
 	
 	

@@ -5,22 +5,23 @@ using System.Runtime.Serialization;
 
 
 
-public partial class ProductionInfo : PopupPanel
+public partial class ProductionInfo : Panel
 {
 	private RichTextLabel _title;
 	private RichTextLabel _resources;
 	private RichTextLabel _description;
 	public override void _Ready()
 	{
-		_title = GetNode<RichTextLabel>("InfoBox/Title");
-		_resources = GetNode<RichTextLabel>("InfoBox/Resources");
-		_description = GetNode<RichTextLabel>("InfoBox/Description");
+		_title = GetNode<RichTextLabel>("Title");
+		_resources = GetNode<RichTextLabel>("Resources");
+		_description = GetNode<RichTextLabel>("Description");
+		
 	}
 
 	public void setInfo(AbstractPlaceable parent)
 	{
 		_title.Text =  parent.BuildingName;
-		_resources.Text = $"Cost: {parent.CostToString()}";
+		_resources.Text = $"Unlock at Level: {parent.PlayerLevel} \nCost: {parent.CostToString()}";
 		_description.Text = parent.BuildingDescription;
 
 

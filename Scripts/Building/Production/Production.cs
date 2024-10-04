@@ -62,7 +62,7 @@ public abstract partial class Production : AbstractPlaceable
 			
 			if (employed)
 			{
-				GameLogistics.Resources["UnEmployed"]--;
+				GameLogistics.Resources[GameResource.Unemployed]--;
 				People.Add(npc);
 			}
 			return true;
@@ -84,18 +84,8 @@ public abstract partial class Production : AbstractPlaceable
 		_timer.Start(time);
 	}
 	
-	protected override void OnDelete()
+	protected override void OnDeleteInstance()
 	{
-		for (int i = People.Count-1; i > 0; i--)
-		{
-			var npc = People[i];
-			npc.OnDelete();
-		}
-		GameLogistics.Resources["UnEmployed"] += GetWorkers();
-		GameLogistics.Resources["Wood"] += Upgrades[Upgrade.WoodBackOnDelete][Level];
-		GameLogistics.Resources["Stone"] += Upgrades[Upgrade.StoneBackOnDelete][Level];
-		Shop.deleteAudio.Play();
-		QueueFree();
 	}
 	
 	public void UpdateInfo()

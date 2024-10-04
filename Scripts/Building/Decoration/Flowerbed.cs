@@ -11,16 +11,21 @@ public partial class Flowerbed : AbstractPlaceable
 	{
 		Upgrades = new Dictionary<string, List<int>>
 		{
-			{ Upgrade.Cost, [5000, 3000, 3000] }, 
-			{ Upgrade.MaxInhabitants, [5, 7, 10] },
-			{ Upgrade.Workers, [5, 7, 10] },
-			{ Upgrade.WoodCost, [5, 7, 10] },
-			{ Upgrade.StoneCost, [5, 7, 10]}, 
-			{Upgrade.MoneyBackOnDelete, [4000, 2000, 2000] },
-			{Upgrade.WoodBackOnDelete, [3, 7, 15]},
-			{Upgrade.StoneBackOnDelete, [3, 7, 15]}, 
-			{Upgrade.WoodMoveCost, [2, 5, 10]}, 
-			{Upgrade.StoneMoveCost, [2, 5, 10]}
+		};
+		BuildCost = new Dictionary<string, List<int>>
+		{
+			{ GameResource.Wood, [5, 7, 10] },
+			{ GameResource.Stone, [5, 7, 10] },
+		};
+		MoveCost = new Dictionary<string, List<int>>
+		{
+			{ GameResource.Wood, [1, 2, 3] },
+			{ GameResource.Stone, [1, 2, 3] },
+		};
+		DeleteCost = new Dictionary<string, List<int>>
+		{
+			{ GameResource.Wood, [2, 3, 4] },
+			{ GameResource.Stone, [2, 3, 4] }
 		};
 		
 	}
@@ -32,13 +37,8 @@ public partial class Flowerbed : AbstractPlaceable
 	
 	
 	
-	protected override void OnDelete()
+	protected override void OnDeleteInstance()
 	{
-		QueueFree();
-		//GameMenu.Money += Upgrades["MoneyBackOnDelete"][Level];
-		GameLogistics.Resources["Wood"] += Upgrades["WoodBackOnDelete"][Level];
-		GameLogistics.Resources["Stone"] += Upgrades["StoneBackOnDelete"][Level];
-		Shop.deleteAudio.Play();
 	}
 
 }

@@ -9,31 +9,38 @@ public abstract partial class AbstractPlaceable : Area2D
 {
 	public bool IsPlaced;
 	private bool _isFocused;
-	public PlaceableInfo InfoBox;
+	private bool _move;
+	public bool isUnlocked = false;
+	public bool hasMoved;
+	
 	public int Level;
-	public int WoodCost;
-	public int StoneCost;
 	private int _maxLevel = 2;
 	protected int Inhabitants;
-	private CollisionShape2D _hitbox;
-	public Dictionary<string, List<int>> Upgrades; 
-	public AnimatedSprite2D AnimatedSprite;
-	private double _time;
-	private bool _move;
 	protected int HouseholdHappiness;
-	protected RandomNumberGenerator Rnd = new ();
-	public List<Npc> People = [];
-	public bool isUnlocked = false;
-	
-	public bool hasMoved = false;
-	public ChooseWare WareBox;
 	public int PlayerLevel = 0;
+	
+	private double _time;
+	
 	public string BuildingName;
 	public string BuildingDescription;
 	
+	public PlaceableInfo InfoBox;
+	public AnimatedSprite2D AnimatedSprite;
+	private CollisionShape2D _hitbox;
+	public ChooseWare WareBox;
+	public bool Colliding;
+	private Color _noModulation = new (1, 1, 1);
+	private Color _modulation = new (1, 0, 0);
 	
-
-
+	
+	public Dictionary<string, List<int>> Upgrades;
+	public Dictionary<string, List<int>> BuildCost;
+	public Dictionary<string, List<int>> MoveCost;
+	public Dictionary<string, List<int>> DeleteCost;
+	public List<Npc> People = [];
+	
+	protected RandomNumberGenerator Rnd = new ();
+	
 	[Signal]
 	public delegate void OnMoveBuildingEventHandler(AbstractPlaceable building);
 	[Signal]
@@ -43,13 +50,31 @@ public abstract partial class AbstractPlaceable : Area2D
 	
 	protected abstract void Tick();
 	public abstract void _Ready_instance();
-	protected abstract void OnDelete();
+	protected abstract void OnDeleteInstance();
+	public void OnDelete()
+	{
+		OnDeleteInstance();
+		for (int i = People.Count-1; i > 0; i--)
+		{
+			var npc = People[i];
+			npc.OnDelete();
+		}
+		
+		foreach (var cost in DeleteCost)
+		{
+			GameLogistics.Resources[cost.Key] -= cost.Value[Level];
+		}
+		Shop.deleteAudio.Play();
+		QueueFree();
+	}
+	
 	
 
+	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-
+		ZIndex = 2; //in front of Npc
 		InfoBox = GetNode<PlaceableInfo>("PlaceableInfo");
 		AnimatedSprite = GetNode<AnimatedSprite2D>("HouseSprite");
 		
@@ -63,7 +88,7 @@ public abstract partial class AbstractPlaceable : Area2D
 		InfoBox.MoveToFront();
 		WareBox	= InfoBox.GetNode<ChooseWare>("ChooseWare");
 		WareBox.Visible = false;
-		var _button = InfoBox.GetNode<Button>("InfoBox/ChooseWareButton");
+		var _button = InfoBox.GetNode<Button>("ChooseWareButton");
 		if (this is MarketStall)
 		{
 			_button.Visible = true;
@@ -86,6 +111,15 @@ public abstract partial class AbstractPlaceable : Area2D
 	{
 		if (IsPlaced)
 		{
+			if (Colliding)
+			{
+				AnimatedSprite.SelfModulate = _modulation;
+			}
+			else
+			{
+				AnimatedSprite.SelfModulate =_noModulation;
+			}
+			
 			_time += delta;
 			if (_time > 1)
 			{
@@ -98,7 +132,6 @@ public abstract partial class AbstractPlaceable : Area2D
 	
 	private void OnMouseEntered()
 	{
-		Console.WriteLine("hej");
 
 		if(IsPlaced)
 		{
@@ -113,16 +146,18 @@ public abstract partial class AbstractPlaceable : Area2D
 	
 	private void OnAreaEntered(Area2D other)
 	{
+		var building = (AbstractPlaceable)other;
+		building.Colliding = true;
 		if(IsPlaced)
 		{
-			GD.Print("Area entered");
 			EmitSignal(SignalName.OnAreaUpdated,true);
 		}			
 	}
 	
 	private void OnAreaExited(Area2D other)
 	{
-		GD.Print("area exited");
+		var building = (AbstractPlaceable)other;
+		building.Colliding = false;
 		EmitSignal(SignalName.OnAreaUpdated,false);
 	}
 	
@@ -173,7 +208,12 @@ public abstract partial class AbstractPlaceable : Area2D
 
 	public string CostToString()
 	{
-		return $"Wood: {Upgrades[Upgrade.WoodCost][Level]}, Stone: {Upgrades[Upgrade.StoneCost][Level]}";
+		string result = "";
+		foreach (var cost in BuildCost)
+		{
+			result += $"{cost.Key}: {cost.Value[Level]}\n";
+		}
+		return result;
 	}
 
 	private async void OnUpgrade()

@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using Scripts.Constants;
 
 public partial class CitizenInfo : Panel
 {
@@ -27,7 +28,7 @@ public partial class CitizenInfo : Panel
 	{
 		CitizenNpc = npc;
 		
-		var work = "Unemployed";
+		var work = GameResource.Unemployed;
 		if (CitizenNpc.Work is not null)
 		{
 			work = $" Work: {CitizenNpc.Work.GetBuildingName()}";

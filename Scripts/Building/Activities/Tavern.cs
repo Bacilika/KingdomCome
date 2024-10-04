@@ -12,7 +12,6 @@ public partial class Tavern : AbstractActivity
 	{
 		BuildingName = "Tavern";
 		BuildingDescription = "A place for citizens to gather and drink beer. Requires water and foot";
-		Price = 5000;
 		Upgrades = new Dictionary<string, List<int>>
 		{
 			{Upgrade.Cost, [5000, 3000, 3000]}, {Upgrade.MaxWorkers, [3, 5, 7]},

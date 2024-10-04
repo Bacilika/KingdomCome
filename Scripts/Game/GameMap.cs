@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using KingdomCome.Scripts.Building.Activities;
+using Scripts.Constants;
 
 public partial class GameMap : Node2D
 {
@@ -19,6 +20,7 @@ public partial class GameMap : Node2D
 	public static bool JobSelectMode;
 	public static Npc NpcJobSelect;
 	public static int Level = 1;
+	private GameMenu _gameMenu;
 
 	private double _timeSinceLastTick;
 	
@@ -29,15 +31,17 @@ public partial class GameMap : Node2D
 		_dayTimer = GetNode<Timer>("DayTimer");
 		_dayTimer.Start();
 		var gameLogistics = GetNode<GameLogistics>("GameLogistics");
-		gameLogistics.HousePlaced += PlaceHouse;
+		gameLogistics.HousePlaced += PlaceBuilding;
 		_music = GetNode<AudioStreamPlayer2D>("BackgroundMusic");
 		_music.Play();
 		var nav = GetNode<NavigationRegion2D>("NavigationRegion2D");
 		nav.BakeNavigationPolygon();
+		_gameMenu = GetNode<GameMenu>("GameMenu");
 	}
 	
 	public override void _Process(double delta)
 	{
+
 		_timeSinceLastTick += delta;
 		if (GameLogistics.Resources["Food"] > 0 && GameLogistics.Resources["Wood"] > 0)
 		{
@@ -67,7 +71,7 @@ public partial class GameMap : Node2D
 		}
 	}
 
-	public void PlaceHouse(Node2D nodeObject)
+	public void PlaceBuilding(Node2D nodeObject)
 	{
 		AbstractPlaceable placeable = (AbstractPlaceable) nodeObject;
 		if (placeable is House house)
@@ -85,24 +89,32 @@ public partial class GameMap : Node2D
 		}
 		placeable.IsPlaced = true;
 		placeable.Position = GetGlobalMousePosition();
+		placeable.ZIndex = 2;
 		AddChild(placeable);
 	}
 
 	public void PlaceNpc(House house)
 	{
 		var NPCScene = ResourceLoader.Load<PackedScene>("res://Scenes/Other/NPC.tscn");
+		var infoScene = ResourceLoader.Load<PackedScene>("res://Scenes/Building/CitizenInfo.tscn");
 		var npc = NPCScene.Instantiate<Npc>();
+		var info = infoScene.Instantiate<CitizenInfo>();
+		_gameMenu.CanvasLayer.AddChild(info);
+		info.Visible = false;
 		AddChild(npc);
+		
 		npc.Home = house;
 		house.MoveIntoHouse(npc);
 		npc.Position = house.Position;
 		npc.SetStartPos(npc.Position);
+		npc.Info = info;
+		house.InfoBox.MoveToFront();
+		npc.ZIndex = 1;
 		Citizens.Add(npc);
+		
 		GameLogistics.Resources["UnEmployed"]++;
 		
 		npc.OnJobChange += OnSelectJob;
-		house.MoveToFront();
-		house.InfoBox.MoveToFront();
 		if (Citizens.Count % 10 == 0)
 		{
 			Level++;
@@ -134,7 +146,7 @@ public partial class GameMap : Node2D
 	{
 		JobSelectMode = true;
 		NpcJobSelect = npc;
-		GameMenu.GameMode.Text = "Job Selection Mode";
+		GameMenu.GameMode.Text = GameMode.JobChange;
 	}
 	
 	

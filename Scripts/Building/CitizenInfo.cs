@@ -1,12 +1,12 @@
 using Godot;
 using System;
 
-public partial class CitizenInfo : Control
+public partial class CitizenInfo : Panel
 {
 	public Npc CitizenNpc;
-	public PlaceableInfo InfoBox;
 	private TextureRect _icon;
 	public TextureRect Background;
+	public bool focused = false;
 
 
 	
@@ -14,8 +14,8 @@ public partial class CitizenInfo : Control
 	public override void _Ready()
 	{
 		_icon = GetNode<TextureRect>("TextureRect");
-		Background = GetNode<TextureRect>("CitizenBackground");
-		
+		Position = new Vector2(0, 200);
+
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -27,11 +27,10 @@ public partial class CitizenInfo : Control
 	{
 		CitizenNpc = npc;
 		
-		npc.SetInfo();
 		var work = "Unemployed";
 		if (CitizenNpc.Work is not null)
 		{
-			work = CitizenNpc.Work.GetBuildingName();
+			work = $" Work: {CitizenNpc.Work.GetBuildingName()}";
 		}
 		
 		var textLabel = GetNode<Label>("RichTextLabel");
@@ -40,6 +39,7 @@ public partial class CitizenInfo : Control
 						  + "\n" + npc.GetUnhappyReason();
 
 		_icon.Texture = npc.Sprite;
+		MoveToFront();
 	}
 
 	public void OnChangeJobButtonPressed()
@@ -47,18 +47,13 @@ public partial class CitizenInfo : Control
 		CitizenNpc.EmitSignal(Npc.SignalName.OnJobChange, CitizenNpc);
 	}
 
-	public void OnReturnButtonPressed()
+	public void OnMouseEntered()
 	{
-		InfoBox.HideNpcInfo();
+		focused = true;
 	}
-	private void OnMouseEntered()
+
+	public void OnMouseExited()
 	{
-		InfoBox.Focused = true;
-		
-	}
-	private void OnMouseExited()
-	{
-		InfoBox.Focused = false;
-		
+		focused = false;
 	}
 }

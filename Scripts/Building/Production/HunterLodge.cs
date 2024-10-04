@@ -13,7 +13,7 @@ public partial class HunterLodge : Production
 		ProductionRate = 2;
 		_timer = GetNode<Timer>("FoodTimer");
 		_timer.Start();
-		Price = 20000;
+
 		Producing = "Food";
 		Upgrades = new Dictionary<string, List<int>>
 		{

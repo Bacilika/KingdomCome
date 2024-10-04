@@ -10,7 +10,6 @@ public abstract partial class AbstractPlaceable : Area2D
 	public bool IsPlaced;
 	private bool _isFocused;
 	public PlaceableInfo InfoBox;
-	protected int Price;
 	public int Level;
 	public int WoodCost;
 	public int StoneCost;
@@ -127,11 +126,6 @@ public abstract partial class AbstractPlaceable : Area2D
 		EmitSignal(SignalName.OnAreaUpdated,false);
 	}
 	
-	public int GetPrice()
-	{
-		return Price;
-	}
-	
 
 	public override void _Input(InputEvent @event)
 	{
@@ -235,6 +229,7 @@ public abstract partial class AbstractPlaceable : Area2D
 			}
 		}
 	}
+	
 	
 	public void SetObjectValues()
 	{

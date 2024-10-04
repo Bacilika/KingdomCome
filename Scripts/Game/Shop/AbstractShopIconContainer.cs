@@ -44,4 +44,12 @@ public abstract partial class AbstractShopIconContainer : ScrollContainer
 	public override void _Process(double delta)
 	{
 	}
+
+	public void UpdateStock(Dictionary<string,int>resources)
+	{
+		foreach (var item in Stock)
+		{
+			
+		}
+	}
 }

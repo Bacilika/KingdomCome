@@ -8,15 +8,12 @@ using Scripts.Constants;
 
 public partial class GameMenu : Control
 {
-	// Called when the node enters the scene tree for the first time.
-
 	public static AudioStreamPlayer2D ButtonPress;
-
-
 	private static Godot.Collections.Dictionary<string, Label> _gameStatLabels;
 	public static Label GameMode;
 	public static Label Day;
 	public static Label Level;
+	public CanvasLayer CanvasLayer;
 	
 	[Signal]
 	public delegate void HousePlacedEventHandler(Node2D house);
@@ -27,6 +24,7 @@ public partial class GameMenu : Control
 		Day = GetNode<Label>("MenuCanvasLayer/Container/Day");
 		Level = GetNode<Label>("MenuCanvasLayer/Container/Level");
 		GameMode = GetNode<Label>("MenuCanvasLayer/CurrentGameMode");
+		CanvasLayer = GetNode<CanvasLayer>("MenuCanvasLayer");
 		var currentScale = (Vector2)GetTree().Root.Size / GetTree().Root.MinSize;
 		var container = GetNode<Control>("MenuCanvasLayer/Container");
 		container.Scale = currentScale;

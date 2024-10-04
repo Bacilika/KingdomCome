@@ -24,7 +24,6 @@ public partial class Church : AbstractPlaceable
 	public override void _Ready_instance()
 	{
 		Console.WriteLine("Church instantiated");
-		Price = 5000;
 		Upgrades = new Dictionary<string, List<int>>
 		{
 			{ Upgrade.Cost, [5000, 3000, 3000] }, 

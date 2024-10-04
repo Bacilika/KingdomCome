@@ -46,18 +46,28 @@ public abstract partial class Production : AbstractPlaceable
 	{
 		if (HasMaxEmployees())
 		{
-			Console.WriteLine("Workplace is full");
 			return false;
 		}
 		else
 		{
-			var employed = npc.GetJob(this, true);
+			bool employed;
+			if (GameMenu.GameMode.Text == GameMode.JobChange)
+			{
+				employed = npc.GetJob(this, true);
+			}
+			else
+			{
+				employed = npc.GetJob(this);
+			}
+			
 			if (employed)
 			{
 				GameLogistics.Resources["UnEmployed"]--;
 				People.Add(npc);
 			}
 			return true;
+			
+			
 		}
 	}
 
@@ -90,9 +100,7 @@ public abstract partial class Production : AbstractPlaceable
 	
 	public void UpdateInfo()
 	{
-		
-		var info = "Produces " + Producing +
-				   "\nWorkers: " + GetWorkers() + "/" + Upgrades[Upgrade.MaxWorkers][Level];
+		var info = $"Produces  {Producing}\nWorkers: {GetWorkers()} / {Upgrades[Upgrade.MaxWorkers][Level]}";
 		InfoBox.UpdateInfo(GetBuildingName(),info);
 	}
 }

@@ -13,7 +13,6 @@ public partial class IronMine : Production
 		
 		Producing = "Iron";
 		ProductionRate = 2;
-		Price = 20000;
 		Upgrades = new Dictionary<string, List<int>>
 		{
 			{Upgrade.Cost, [5000, 3000, 3000]}, {Upgrade.MaxWorkers, [5, 7, 10]},

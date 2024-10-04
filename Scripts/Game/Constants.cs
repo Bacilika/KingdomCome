@@ -20,10 +20,12 @@ public static class Inputs
 	public const string CameraRight = "camera_right";
 }
 
-public static class Signals
+public static class GameMode
 {
-	public const string Pressed = "pressed";
-	public const string ItemSelected = "item_selected";
+	public const string JobChange = "Job Changing Mode";
+	public const string Build = "Build Mode";
+	public const string Move = "Move Building Mode";
+	public const string Road = "RoadPlacingMode";
 }
 
 public static class Upgrade
@@ -41,3 +43,4 @@ public static class Upgrade
 	public const string MaxInhabitants = "MaxInhabitants";
 	public const string Workers = "Workers";
 }
+

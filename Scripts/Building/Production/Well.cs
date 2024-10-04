@@ -14,7 +14,6 @@ public partial class Well : Production
 		ProductionRate = 2;
 		_timer = GetNode<Timer>("FoodTimer");
 		_timer.Start();
-		Price = 20000;
 		Upgrades = new Dictionary<string, List<int>>
 		{
 			{Upgrade.Cost, [5000, 3000, 3000]}, {Upgrade.MaxWorkers, [1, 2, 3]},

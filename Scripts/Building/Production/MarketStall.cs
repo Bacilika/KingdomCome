@@ -20,7 +20,6 @@ public partial class MarketStall : Production
 		ProductionRate = 2;
 		_timer = GetNode<Timer>("FoodTimer");
 		_timer.Start();
-		Price = 20000;
 		InfoBox.Connect(PlaceableInfo.SignalName.OnChooseWare, Callable.From(OnChooseWare));
 		Upgrades = new Dictionary<string, List<int>>
 		{

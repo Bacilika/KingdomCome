@@ -1,58 +1,49 @@
 [gd_scene load_steps=5 format=3 uid="uid://dyq8jku2xq8kr"]
 
 [ext_resource type="Script" path="res://Scripts/Building/CitizenInfo.cs" id="1_5tojb"]
+[ext_resource type="Theme" uid="uid://c2femp2uxsefw" path="res://Themes/Theme.tres" id="1_wgayp"]
 [ext_resource type="FontFile" uid="uid://dul1t3v440c7s" path="res://Deutsch.ttf" id="2_gsgww"]
 [ext_resource type="Texture2D" uid="uid://bnr631t1td44f" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Character/CharacterPortrait.png" id="3_pqspc"]
-[ext_resource type="Texture2D" uid="uid://b5llsw0d3srcl" path="res://Sprites/Extra/InfoBoxSprite.png" id="4_l7d13"]
 
-[node name="CitizenInfo" type="Control"]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 192.0
-offset_bottom = 208.0
+[node name="CitizenInfo" type="Panel"]
+offset_right = 136.0
+offset_bottom = 144.0
+theme = ExtResource("1_wgayp")
 script = ExtResource("1_5tojb")
 
-[node name="CitizenBackground" type="TextureRect" parent="."]
-layout_mode = 0
-offset_left = 193.0
-offset_top = 1.0
-offset_right = 215.0
-offset_bottom = 188.0
-scale = Vector2(-8.78988, 1.14823)
-texture = ExtResource("4_l7d13")
-expand_mode = 1
+[node name="TextureRect" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+offset_left = 43.0
+offset_top = 3.0
+offset_right = 93.0
+offset_bottom = 53.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+texture = ExtResource("3_pqspc")
 
 [node name="RichTextLabel" type="Label" parent="."]
-layout_mode = 0
-offset_top = 80.0
-offset_right = 192.0
-offset_bottom = 129.0
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("2_gsgww")
+layout_mode = 2
+offset_top = 54.0
+offset_right = 136.0
+offset_bottom = 93.0
 text = "Happiness: Happy
 Job: Uemployed
 "
 horizontal_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -96.5
-offset_top = -25.0
-offset_right = 96.5
+layout_mode = 2
+offset_left = 3.0
+offset_top = 118.0
+offset_right = 133.0
+offset_bottom = 136.0
 grow_horizontal = 2
 grow_vertical = 0
+size_flags_vertical = 8
+theme = ExtResource("1_wgayp")
 alignment = 1
-
-[node name="Return" type="Button" parent="HBoxContainer"]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("2_gsgww")
-theme_override_font_sizes/font_size = 15
-text = "Return"
 
 [node name="ChangeJob" type="Button" parent="HBoxContainer"]
 layout_mode = 2
@@ -61,21 +52,6 @@ theme_override_font_sizes/font_size = 15
 text = "Change job"
 expand_icon = true
 
-[node name="TextureRect" type="TextureRect" parent="."]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -28.0
-offset_top = 12.0
-offset_right = 36.0
-offset_bottom = 76.0
-grow_horizontal = 2
-texture = ExtResource("3_pqspc")
-
-[connection signal="mouse_entered" from="HBoxContainer/Return" to="." method="OnMouseEntered"]
-[connection signal="mouse_exited" from="HBoxContainer/Return" to="." method="OnMouseExited"]
-[connection signal="pressed" from="HBoxContainer/Return" to="." method="OnReturnButtonPressed"]
 [connection signal="mouse_entered" from="HBoxContainer/ChangeJob" to="." method="OnMouseEntered"]
 [connection signal="mouse_exited" from="HBoxContainer/ChangeJob" to="." method="OnMouseExited"]
 [connection signal="pressed" from="HBoxContainer/ChangeJob" to="." method="OnChangeJobButtonPressed"]

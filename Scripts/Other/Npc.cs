@@ -35,6 +35,7 @@ public partial class Npc : CharacterBody2D
 	private AudioStreamPlayer2D _walkingOnGrassSound;
 	public CitizenInfo Info;
 	public Dictionary<string, MoodReason> moodReasons;
+	private bool _stopped;
 
 	private AnimatedSprite2D _hitAnimation;
 
@@ -68,12 +69,6 @@ public partial class Npc : CharacterBody2D
 		};
 	}
 
-	public void SetInfo()
-	{
-		Info.Position = Position;
-		Info.Background.Visible = true;
-	}
-
 	public void OnWorkTimerTimeout()
 	{
 		timerOut = true;
@@ -94,7 +89,7 @@ public partial class Npc : CharacterBody2D
 		calculateHappiness();
 		if (Info is not null && Info.Visible)
 		{
-			SetInfo();
+			Info.SetInfo(this);
 		}
 	}
 
@@ -145,6 +140,7 @@ public partial class Npc : CharacterBody2D
 						MoveAndSlide();
 						_animation.Play();
 						
+						
 						if(destination == homePosition) Work.GatherResource();
 					}
 				}
@@ -152,11 +148,21 @@ public partial class Npc : CharacterBody2D
 			}
 			else
 			{
-				var nextPos = _navigation.GetNextPathPosition();
-				Vector2 new_vel =  (GlobalPosition.DirectionTo(nextPos) * _speed);
-				Velocity = new_vel;
-				MoveAndSlide();
-				_animation.Animation = GetDirection();
+				if (!_stopped)
+				{
+					TurnOnAudio(true);
+					_animation.Play();
+					var nextPos = _navigation.GetNextPathPosition();
+					Vector2 new_vel =  (GlobalPosition.DirectionTo(nextPos) * _speed);
+					Velocity = new_vel;
+					MoveAndSlide();
+					_animation.Animation = GetDirection();
+				}
+				else
+				{
+					_animation.Stop();
+					TurnOnAudio(false);
+				}
 			}
 		}
 	}
@@ -179,6 +185,13 @@ public partial class Npc : CharacterBody2D
 		}
 	}
 
+	public void ShowInfo()
+	{
+		Console.WriteLine("Npc info");
+		Info.SetInfo(this);
+		Info.Visible = true;
+	}
+
 	public void calculateHappiness()
 	{
 		var temphappiness = 5;
@@ -198,7 +211,12 @@ public partial class Npc : CharacterBody2D
 		{
 			foreach (var reason in moodReasons)
 			{
-				unhappyReason += reason.Value.Reason + "\n";
+				string happiness = reason.Value.Happiness.ToString();
+				if (reason.Value.Happiness > 0)
+				{
+					happiness = $"+{reason.Value.Happiness}";
+				}
+				unhappyReason += $"{reason.Value.Reason} ({happiness}) \n";
 			}
 		}
 
@@ -221,11 +239,14 @@ public partial class Npc : CharacterBody2D
 				Work.RemoveWorker(this);
 			}
 			Work = production;
-			//production.EmployWorker(this);
 			workPosition = Work.Position;
 			moodReasons["Work"].Reason = "Has work";
 			moodReasons["Work"].Happiness = 1;
-			setDestination();
+			if (!change)
+			{
+				setDestination();
+			}
+			
 			return true;
 		}
 
@@ -258,7 +279,7 @@ public partial class Npc : CharacterBody2D
 
 		if (_rnd.RandiRange(0, 3) == 0 && destination == workPosition && GameMap._placedActivities.Count > 0)
 		{
-			AbstractActivity activity = null;
+			AbstractActivity activity;
 			int counter = 0;
 			do
 			{
@@ -311,17 +332,18 @@ public partial class Npc : CharacterBody2D
 
 	public override void _Input(InputEvent @event)
 	{
-		if (_focused && @event.IsActionPressed(Inputs.LeftClick))
+		if (@event.IsActionPressed(Inputs.LeftClick))
 		{
-			Info.Visible = !Info.Visible;
-			Info.Position = Position;
-			Info.SetInfo(this);
-			
+			if (_focused || Info.focused)
+			{
+				ShowInfo();
+				_stopped = true;
+			}
+			else
+			{
+				Info.Visible = false;
+				_stopped = false;
+			}
 		}
-		else if(@event.IsActionPressed(Inputs.LeftClick))
-		{
-			Info.Visible = false;
-		}
-		
 	}
 }

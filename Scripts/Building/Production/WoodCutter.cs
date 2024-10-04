@@ -11,7 +11,6 @@ public partial class WoodCutter : Production
 		BuildingDescription = "Place for citizen to chop wood";
 		Producing = "Wood";
 		_timer = GetNode<Timer>("WoodTimer");
-		Price = 20000;
 
 		Upgrades = new Dictionary<string, List<int>>
 		{

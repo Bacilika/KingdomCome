@@ -19,7 +19,6 @@ public partial class House : LivingSpaces
 	{
 		BuildingName = "House";
 		BuildingDescription = "A place for citizens to live";
-		Price = 5000;
 		Upgrades = new Dictionary<string, List<int>>
 		{
 			{ Upgrade.Cost, [5000, 3000, 3000] }, 

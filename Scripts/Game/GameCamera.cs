@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 using Scripts.Constants;
 
 public partial class GameCamera : Camera2D
@@ -8,7 +9,7 @@ public partial class GameCamera : Camera2D
 	private Vector2 _dragStartCameraPosition = Vector2.Zero;
 	private Vector2 _dragStartMousePosition = Vector2.Zero;
 	private bool _isDragging;
-
+	private HashSet<string> _directionsPressed = [];
 	private Vector2 _zoom;
 	private const int ZoomMaxStep = 3;
 	private const int ZoomMinStep = 0;
@@ -18,9 +19,38 @@ public partial class GameCamera : Camera2D
 	{
 		get
 		{
-			return (int)(80 * (_zoomStep == 0 ? 0.5f : _zoomStep));
+			return (int)(10 * (_zoomStep == 0 ? 0.5f : _zoomStep));
 		}
 	}
+
+	private void MoveCamera(string direction)
+	{
+		switch (direction)
+		{
+			case "Up":
+			{
+				_position.Y -= PanStep;
+				break;
+			}
+			case "Down":
+			{
+				_position.Y += PanStep;
+				break;
+			}
+			case "Left":
+			{
+				_position.X -= PanStep;
+				break;
+			}
+			case "Right":
+			{
+				_position.X += PanStep;
+				break;
+			}
+				
+		}
+	}
+	
 
 	public override void _Ready()
 	{
@@ -35,6 +65,10 @@ public partial class GameCamera : Camera2D
 
 	public override void _Process(double delta)
 	{
+		foreach (var dir in _directionsPressed)
+		{
+			MoveCamera(dir);
+		}
 		var deltaFloat = (float)delta;
 		Zoom = Zoom.Lerp(_zoom, 20 * deltaFloat);
 		Position = Position.Lerp(_position, 20 * deltaFloat);
@@ -55,22 +89,40 @@ public partial class GameCamera : Camera2D
 		}
 
 		// Panning behaviour
-		if (@event.IsAction(Inputs.CameraLeft))
+		if (@event.IsActionPressed(Inputs.CameraLeft))
 		{
-			_position.X -= PanStep;
+			_directionsPressed.Add("Left");
 		}
-		if (@event.IsAction(Inputs.CameraRight))
+		if (@event.IsActionPressed(Inputs.CameraRight))
 		{
-			_position.X += PanStep;
+			_directionsPressed.Add("Right");
 		}
-		if (@event.IsAction(Inputs.CameraUp))
+		if (@event.IsActionPressed(Inputs.CameraUp))
 		{
-			_position.Y -= PanStep;
+			_directionsPressed.Add("Up");
 		}
-		if (@event.IsAction(Inputs.CameraDown))
+		if (@event.IsActionPressed(Inputs.CameraDown))
 		{
-			_position.Y += PanStep;
+			_directionsPressed.Add("Down");
 		}
+
+		if (@event.IsActionReleased(Inputs.CameraDown))
+		{
+			_directionsPressed.Remove("Down");
+		}
+		if (@event.IsActionReleased(Inputs.CameraUp))
+		{
+			_directionsPressed.Remove("Up");
+		}
+		if (@event.IsActionReleased(Inputs.CameraLeft))
+		{
+			_directionsPressed.Remove("Left");
+		}
+		if (@event.IsActionReleased(Inputs.CameraRight))
+		{
+			_directionsPressed.Remove("Right");
+		}
+
 
 		if (!_isDragging && @event.IsActionPressed(Inputs.CameraPan))
 		{

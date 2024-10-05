@@ -192,10 +192,12 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="ProductionInfo" parent="MenuCanvasLayer" instance=ExtResource("15_enu43")]
-offset_left = 480.0
-offset_top = 302.0
-offset_right = 784.0
-offset_bottom = 452.0
+visible = false
+offset_left = 488.0
+offset_top = 326.0
+offset_right = 792.0
+offset_bottom = 454.0
+size_flags_vertical = 8
 
 [node name="ButtonPressedSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("5_hysb5")

@@ -12,7 +12,7 @@ public partial class FarmHouse : Production
 	{
 		BuildingName = "Barn";
 		BuildingDescription = "A Barn that produces food";
-		Producing = "Food";
+		Producing = GameResource.Food;
 		_timer = GetNode<Timer>("FoodTimer");
 		PlayerLevel = 3;
 		Upgrades = new Dictionary<string, List<int>>

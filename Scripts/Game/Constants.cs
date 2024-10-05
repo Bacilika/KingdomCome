@@ -45,7 +45,6 @@ public static class GameResource
 	public const string Happiness = "Happiness";
 	public const string Unemployed = "Unemployed";
 	public const string Money = "Money";
-	
-	
 }
+
 

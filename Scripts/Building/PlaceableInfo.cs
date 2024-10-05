@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public partial class PlaceableInfo : Control
+public partial class PlaceableInfo : Panel
 {
 	
 	public bool Focused;
@@ -26,12 +26,11 @@ public partial class PlaceableInfo : Control
 
 	public override void _Ready()
 	{
-		_buildingName = GetNode<Label>("InfoBox/HouseInfo/BuildingName");
-		_textLabel = GetNode<RichTextLabel>("InfoBox/HouseInfo/RichTextLabel");
-		//TextLabel = GetNode<RichTextLabel>("InfoBox/HouseInfo/RichTextLabel");
-		PortraitContainer = GetNode<BoxContainer>("InfoBox/HouseInfo/CitizenPortraitContainer");
+		_buildingName = GetNode<Label>("HouseInfo/BuildingName");
+		_textLabel = GetNode<RichTextLabel>("HouseInfo/RichTextLabel");
+		PortraitContainer = GetNode<BoxContainer>("HouseInfo/CitizenPortraitContainer");
 		CitizenPortrait = ResourceLoader.Load<PackedScene>("res://Scenes/Building/CitizenPortraitButton.tscn");
-		_houseInfo = GetNode<Control>("InfoBox/HouseInfo");
+		_houseInfo = GetNode<Control>("HouseInfo");
 
 	}
 

@@ -22,6 +22,7 @@ public partial class Npc : CharacterBody2D
 	private float _speed = 100;
 	public Vector2 startPos;
 	public int Happiness = 10;
+	private bool _still;
 	
 	public Texture2D Sprite;
 	private AnimatedSprite2D _animation;
@@ -105,6 +106,7 @@ public partial class Npc : CharacterBody2D
 
 			if (_navigation.DistanceToTarget() < 10)
 			{
+				_still = true;
 				_animation.Stop();
 				if (_timer.IsStopped())
 				{
@@ -148,6 +150,7 @@ public partial class Npc : CharacterBody2D
 			}
 			else
 			{
+				_still = false;
 				if (!_stopped)
 				{
 					TurnOnAudio(true);
@@ -263,6 +266,16 @@ public partial class Npc : CharacterBody2D
 	{
 		Work?.People.Remove(this);
 		Home.People.Remove(this);
+		GameLogistics.Resources[GameResource.Citizens] -= 1;
+		if (Work is not null)
+		{
+			Work.People.Remove(this);
+			
+		}
+		else
+		{
+			GameLogistics.Resources[GameResource.Unemployed] -= 1;
+		}
 		QueueFree();
 	}
 
@@ -334,7 +347,7 @@ public partial class Npc : CharacterBody2D
 	{
 		if (@event.IsActionPressed(Inputs.LeftClick))
 		{
-			if (_focused || Info.focused)
+			if (_focused && !_still || Info.focused)
 			{
 				ShowInfo();
 				_stopped = true;

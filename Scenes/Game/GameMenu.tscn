@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://25kpv3trjyvk"]
+[gd_scene load_steps=19 format=3 uid="uid://25kpv3trjyvk"]
 
 [ext_resource type="Script" path="res://Scripts/Game/GameMenu.cs" id="1_dev6f"]
 [ext_resource type="Theme" uid="uid://c2femp2uxsefw" path="res://Themes/Theme.tres" id="1_vgcun"]
@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://wecbgst7xike" path="res://Sprites/Extra/Icons/Sign7.png" id="11_hpum0"]
 [ext_resource type="Texture2D" uid="uid://5fcgde8yoegf" path="res://Sprites/Extra/Icons/Sign8.png" id="12_onvdd"]
 [ext_resource type="Texture2D" uid="uid://c55yx5br1mqso" path="res://Sprites/Extra/Icons/Sign9.png" id="13_fmjcf"]
+[ext_resource type="PackedScene" uid="uid://3falldunylfw" path="res://Scenes/Game/ProductionInfo.tscn" id="15_enu43"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fyhtp"]
 texture = ExtResource("2_k8sk1")
@@ -139,7 +140,7 @@ layout_mode = 2
 tooltip_text = "Happiness"
 texture = ExtResource("8_mbmc5")
 
-[node name="UnEmployed" parent="MenuCanvasLayer/Container/GameStats" instance=ExtResource("4_2bxld")]
+[node name="Unemployed" parent="MenuCanvasLayer/Container/GameStats" instance=ExtResource("4_2bxld")]
 layout_mode = 2
 tooltip_text = "Unemployed"
 texture = ExtResource("9_0d0hb")
@@ -189,6 +190,12 @@ theme_override_font_sizes/font_size = 42
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
+
+[node name="ProductionInfo" parent="MenuCanvasLayer" instance=ExtResource("15_enu43")]
+offset_left = 480.0
+offset_top = 302.0
+offset_right = 784.0
+offset_bottom = 452.0
 
 [node name="ButtonPressedSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("5_hysb5")

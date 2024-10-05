@@ -7,8 +7,6 @@ using Scripts.Constants;
 public partial class GameLogistics: Node2D
 {
 	private GameMap _gameMap;
-	private List<LivingSpaces> _houses;
-	private List<Production> _productions;
 	
 	private AbstractPlaceable _object;
 	private Road _roadObject;
@@ -42,9 +40,11 @@ public partial class GameLogistics: Node2D
 
 		Resources = new System.Collections.Generic.Dictionary<string, int>
 		{
-			{ "Money", 100000 }, { "Citizens", 0 }, { "Happiness", 0 }, { "Food", 0 }, { "Stone", 100 }, { "Iron", 5 },
-			{ "UnEmployed", 0 },
-			{ "Water", 0 }, { "Wood", 100 }
+			{ GameResource.Money, 0 }, { GameResource.Citizens, 0 },
+			{ GameResource.Happiness, 0 }, { GameResource.Food, 0 },
+			{ GameResource.Stone, 100 }, { GameResource.Iron, 0 },
+			{ GameResource.Unemployed, 0 }, { GameResource.Water, 0 },
+			{ GameResource.Wood, 100 }
 		};
 	}
 
@@ -108,19 +108,16 @@ public partial class GameLogistics: Node2D
 					{
 						var UpgradesClass = _object.GetType().Name;
 						Console.WriteLine(UpgradesClass);
-							
-							//Resources["Money"] -= _object.GetPrice();
-							Resources["Wood"] -= _object.Upgrades[Upgrade.WoodCost][_object.Level];
-							Resources["Stone"] -= _object.Upgrades[Upgrade.StoneCost][_object.Level];
-							var placedNode = _object.Duplicate();
-							EmitSignal(SignalName.HousePlaced, placedNode); //Emitted to GameMap
-							var placedBuilding = (AbstractPlaceable)placedNode;
-							placedBuilding.OnMoveBuilding += OnMove;
-							placedBuilding.OnAreaUpdated += SetContainsBuilding;
-							placedBuilding.OnBuildingUpgrade += UpgradeBuilding;
-							Shop.placeAudio.Play();
-							_containBuilding = true;
-							ResetModes();
+						RemoveResources();
+						var placedNode = _object.Duplicate();
+						EmitSignal(SignalName.HousePlaced, placedNode); //Emitted to GameMap
+						var placedBuilding = (AbstractPlaceable)placedNode;
+						placedBuilding.OnMoveBuilding += OnMove;
+						placedBuilding.OnAreaUpdated += SetContainsBuilding;
+						placedBuilding.OnBuildingUpgrade += UpgradeBuilding;
+						Shop.placeAudio.Play();
+						_containBuilding = true;
+						ResetModes();
 					}
 					else
 					{
@@ -143,7 +140,7 @@ public partial class GameLogistics: Node2D
 
 	public static bool HasUnemployedCitizens()
 	{
-		return Resources["UnEmployed"] > 0;
+		return Resources[GameResource.Unemployed] > 0;
 	}
 	
 
@@ -174,8 +171,16 @@ public partial class GameLogistics: Node2D
 		}
 		if (!Move)
 		{
-			return _building.Upgrades[Upgrade.WoodCost][_building.Level] <= Resources["Wood"] &&
-				   _building.Upgrades[Upgrade.StoneCost][_building.Level] <= Resources["Stone"];
+			foreach (var cost in _building.BuildCost)
+			{
+				if (cost.Value[_building.Level] >= Resources[cost.Key])
+				{
+					return false;
+				}
+			}
+
+			return true;
+
 		}
 		// add cost for moving house here
 		else
@@ -201,13 +206,24 @@ public partial class GameLogistics: Node2D
 	{
 		if(CanAfford(building))
 		{
-			Resources["Stone"] -= building.Upgrades[Upgrade.StoneCost][building.Level];
-			Resources["Wood"] -= building.Upgrades[Upgrade.WoodCost][building.Level];
+			RemoveResources(building);
 			building.SetObjectValues();
 		}
 		else
 		{
 			building.Level--;
+		}
+	}
+
+	public void RemoveResources(AbstractPlaceable building = null)
+	{
+		if (building is null)
+		{
+			building = _object;
+		}
+		foreach (var cost in building.BuildCost)
+		{
+			Resources[cost.Key] -= cost.Value[building.Level];
 		}
 	}
 
@@ -230,7 +246,7 @@ public partial class GameLogistics: Node2D
 			var gridPosition = _roadLayer.LocalToMap( GetGlobalMousePosition());
 			_roadPositions.Add(gridPosition);
 			_roadLayer.SetCellsTerrainConnect( _roadPositions, 0, 0);
-			Resources["Money"] -= RoadPrice;
+			Resources[GameResource.Money] -= RoadPrice;
 
 		}
 	}

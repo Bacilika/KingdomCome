@@ -14,13 +14,14 @@ public partial class GameMenu : Control
 	public static Label Day;
 	public static Label Level;
 	public CanvasLayer CanvasLayer;
-	
+	public ProductionInfo ProductionInfo;
 	[Signal]
 	public delegate void HousePlacedEventHandler(Node2D house);
 	
 	
 	public override void _Ready()
 	{
+		ProductionInfo = GetNode<ProductionInfo>("MenuCanvasLayer/ProductionInfo");
 		Day = GetNode<Label>("MenuCanvasLayer/Container/Day");
 		Level = GetNode<Label>("MenuCanvasLayer/Container/Level");
 		GameMode = GetNode<Label>("MenuCanvasLayer/CurrentGameMode");
@@ -32,15 +33,15 @@ public partial class GameMenu : Control
 		ButtonPress = GetNode<AudioStreamPlayer2D>("ButtonPressedSound");
 		ButtonPress?.Play();
 		_gameStatLabels = new Godot.Collections.Dictionary<string, Label> { 
-			{"Money", statLabels.GetNode<TextureRect>("Money").GetNode<Label>("Value") },
-			{"Food", statLabels.GetNode<TextureRect>("Food").GetNode<Label>("Value") },
-			{"Citizens", statLabels.GetNode<TextureRect>("Citizens").GetNode<Label>("Value") },
-			{"Stone",statLabels.GetNode<TextureRect>("Stone").GetNode<Label>("Value")}, 
-			{"Happiness",statLabels.GetNode<TextureRect>("Happiness").GetNode<Label>("Value")},
-			{"Wood",statLabels.GetNode<TextureRect>("Wood").GetNode<Label>("Value")},
-			{"UnEmployed",statLabels.GetNode<TextureRect>("UnEmployed").GetNode<Label>("Value")},
-			{"Iron",statLabels.GetNode<TextureRect>("Iron").GetNode<Label>("Value")},
-			{"Water",statLabels.GetNode<TextureRect>("Water").GetNode<Label>("Value")}
+			{GameResource.Money, statLabels.GetNode<TextureRect>(GameResource.Money).GetNode<Label>("Value") },
+			{GameResource.Food, statLabels.GetNode<TextureRect>(GameResource.Food).GetNode<Label>("Value") },
+			{GameResource.Citizens, statLabels.GetNode<TextureRect>(GameResource.Citizens).GetNode<Label>("Value") },
+			{GameResource.Stone,statLabels.GetNode<TextureRect>(GameResource.Stone).GetNode<Label>("Value")}, 
+			{GameResource.Happiness,statLabels.GetNode<TextureRect>(GameResource.Happiness).GetNode<Label>("Value")},
+			{GameResource.Wood,statLabels.GetNode<TextureRect>(GameResource.Wood).GetNode<Label>("Value")},
+			{GameResource.Unemployed,statLabels.GetNode<TextureRect>(GameResource.Unemployed).GetNode<Label>("Value")},
+			{GameResource.Iron,statLabels.GetNode<TextureRect>(GameResource.Iron).GetNode<Label>("Value")},
+			{GameResource.Water,statLabels.GetNode<TextureRect>(GameResource.Water).GetNode<Label>("Value")}
 		};
 	}
 
@@ -67,14 +68,14 @@ public partial class GameMenu : Control
 
 			switch (item.Key)
 			{
-				case "UnEmployed":
+				case GameResource.Unemployed:
 				{
-					value = GameLogistics.Resources["UnEmployed"];
+					value = GameLogistics.Resources[GameResource.Unemployed];
 					break;
 				}
-				case "Citizens":
+				case GameResource.Citizens:
 				{
-					value = GameLogistics.Resources["Citizens"];
+					value = GameLogistics.Resources[GameResource.Citizens];
 					break;
 				}
 				default:

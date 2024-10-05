@@ -30,17 +30,22 @@ public static class GameMode
 
 public static class Upgrade
 {
-	public const string Cost = "Cost";
 	public const string MaxWorkers = "MaxWorkers";
-	public const string Inhabitants = "Inhabitants";
-	public const string WoodCost = "WoodCost";
-	public const string StoneCost = "StoneCost";
-	public const string MoneyBackOnDelete = "MoneyBackOnDelete";
-	public const string WoodBackOnDelete = "WoodBackOnDelete";
-	public const string StoneBackOnDelete = "StoneBackOnDelete";
-	public const string WoodMoveCost = "WoodMoveCost";
-	public const string StoneMoveCost = "StoneMoveCost";
 	public const string MaxInhabitants = "MaxInhabitants";
-	public const string Workers = "Workers";
+}
+
+public static class GameResource
+{
+	public const string Wood = "Wood";
+	public const string Stone = "Stone";
+	public const string Food = "Food";
+	public const string Water = "Water";
+	public const string Iron = "Iron";
+	public const string Citizens = "Citizens";
+	public const string Happiness = "Happiness";
+	public const string Unemployed = "Unemployed";
+	public const string Money = "Money";
+	
+	
 }
 

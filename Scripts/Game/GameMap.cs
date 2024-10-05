@@ -43,13 +43,13 @@ public partial class GameMap : Node2D
 	{
 
 		_timeSinceLastTick += delta;
-		if (GameLogistics.Resources["Food"] > 0 && GameLogistics.Resources["Wood"] > 0)
+		if (GameLogistics.Resources[GameResource.Food] > 0 && GameLogistics.Resources[GameResource.Wood] > 0)
 		{
 			_foodTimer.Start();
 			hungry = 0;
 		}
 
-		if (GameLogistics.Resources["UnEmployed"] > 0) //there are unemployed
+		if (GameLogistics.Resources[GameResource.Unemployed] > 0) //there are unemployed
 		{
 			GiveJobToNpcs();
 		}
@@ -94,7 +94,7 @@ public partial class GameMap : Node2D
 		}
 		placeable.IsPlaced = true;
 		placeable.Position = GetGlobalMousePosition();
-		placeable.ZIndex = 2;
+		
 		AddChild(placeable);
 	}
 
@@ -117,7 +117,7 @@ public partial class GameMap : Node2D
 		npc.ZIndex = 1;
 		Citizens.Add(npc);
 		
-		GameLogistics.Resources["UnEmployed"]++;
+		GameLogistics.Resources[GameResource.Unemployed]++;
 		
 		npc.OnJobChange += OnSelectJob;
 		if (Citizens.Count % 10 == 0)
@@ -167,9 +167,9 @@ public partial class GameMap : Node2D
 	private void OnDayTimerTimeout()
 	{
 		GameLogistics.Day += 1;
-		if (GameLogistics.Resources["Food"] > 0)
+		if (GameLogistics.Resources[GameResource.Food] > 0)
 		{
-			GameLogistics.Resources["Food"] -= 1;
+			GameLogistics.Resources[GameResource.Food] -= 1;
 		}
 		GameMenu.UpdateMenuInfo();
 	}

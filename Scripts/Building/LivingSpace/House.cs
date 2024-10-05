@@ -61,10 +61,33 @@ public partial class House : LivingSpaces
 				EmitSignal(SignalName.OnCreateNpc, this);
 			}
 		}
+
+		if (!_isPeopleInside())
+		{
+			GetNode<AnimatedSprite2D>("HouseSprite").SetAnimation("default");
+			GetNode<AnimatedSprite2D>("HouseSprite").Pause();
+			GetNode<AnimatedSprite2D>("HouseSprite").Frame = Level;
+		}
+
 		UpdateInfo();
 	}
 
+	private bool _isPeopleInside()
+	{
+		foreach (var person in People)
+		{
+			Console.WriteLine(Position.DistanceTo(person.Position));
+			if (Position.DistanceTo(person.Position) < 15)
+			{
+				GetNode<AnimatedSprite2D>("HouseSprite").SetAnimation("Level 1 people inside");
+				GetNode<AnimatedSprite2D>("HouseSprite").Play();
+				Console.WriteLine("people inside");
+				return true;
+			}
+		}
 
+		return false;
+	}
 
 
 	public void UpdateInfo()

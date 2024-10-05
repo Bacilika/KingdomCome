@@ -35,8 +35,8 @@ public partial class GameLogistics: Node2D
 		shop.OnBuildingButtonPressed += BuildBuilding;
 		shop.OnRoadBuild += OnRoadBuild;
 		
-		_houses = _gameMap._placedHouses;
-		_productions = _gameMap._placedProduction;
+		//_houses = _gameMap._placedHouses;
+		//_productions = _gameMap._placedProduction;
 
 		Resources = new System.Collections.Generic.Dictionary<string, int>
 		{

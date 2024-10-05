@@ -14,21 +14,29 @@ public partial class CityHouse : LivingSpaces
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready_instance()
 	{
-		BuildingName = "City House";
-		BuildingDescription = "Affordable house allowing for many citizens but with less comfort";
+		PlayerLevel = 0;
+		BuildingName = "City house";
+		BuildingDescription = "A living space for more people but less comfortable.";
 		Upgrades = new Dictionary<string, List<int>>
 		{
-			{ Upgrade.Cost, [1000, 750, 750] }, 
-			{ Upgrade.MaxInhabitants, [5, 7, 10] },
-			{ Upgrade.Workers, [5, 7, 10] },
-			{ Upgrade.WoodCost, [3, 5, 7] },
-			{ Upgrade.StoneCost, [2, 4, 6]}, 
-			{Upgrade.MoneyBackOnDelete, [750, 500, 500] },
-			{Upgrade.WoodBackOnDelete, [2, 4, 5]},
-			{Upgrade.StoneBackOnDelete, [1, 2, 3]}, 
-			{Upgrade.WoodMoveCost, [2, 5, 10]}, 
-			{Upgrade.StoneMoveCost, [2, 5, 10]}
+			{ Upgrade.MaxInhabitants, [10, 15, 20] },
 		};
+		BuildCost = new Dictionary<string, List<int>>
+		{
+			{ GameResource.Wood, [5, 7, 10] },
+			{ GameResource.Stone, [5, 7, 10] },
+		};
+		MoveCost = new Dictionary<string, List<int>>
+		{
+			{ GameResource.Wood, [1, 2, 3] },
+			{ GameResource.Stone, [1, 2, 3] },
+		};
+		DeleteCost = new Dictionary<string, List<int>>
+		{
+			{ GameResource.Wood, [2, 3, 4] },
+			{ GameResource.Stone, [2, 3, 4] }
+		};
+
 	}
 
 	public Npc GetNpc()

@@ -5,8 +5,8 @@
 [ext_resource type="Texture2D" uid="uid://ghj85165vddc" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/House_RedWood_Stone_1 - lights on.png" id="3_j0wmt"]
 [ext_resource type="Texture2D" uid="uid://bsojsx4kufh5r" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/House_RedWood_Stone_2 - lights on_1.png" id="4_s8l1m"]
 [ext_resource type="Texture2D" uid="uid://b8vmwtxt2qrvu" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/House_RedWood_Stone_2 - lights on_2.png" id="5_grq2f"]
-[ext_resource type="Texture2D" uid="uid://n00u4g0dhyb4" path="res://Sprites/Edificios 2d Medieval/Edificios 2d Medieval/House (65).png" id="6_qgth1"]
 [ext_resource type="Texture2D" uid="uid://b7oulmwt85wik" path="res://Sprites/Edificios 2d Medieval/Edificios 2d Medieval/House (62).png" id="7_4itqb"]
+[ext_resource type="Texture2D" uid="uid://bre1yyku1dqbi" path="res://Sprites/Edificios 2d Medieval/Edificios 2d Medieval/House (48).png" id="7_jbnh4"]
 [ext_resource type="Texture2D" uid="uid://c2amjwauf2kq1" path="res://Sprites/Edificios 2d Medieval/Edificios 2d Medieval/House (59).png" id="8_uel65"]
 [ext_resource type="Texture2D" uid="uid://dt1kbfdm7dk2a" path="res://Sprites/Extra/addResource1.png" id="9_s2hpg"]
 [ext_resource type="Texture2D" uid="uid://co3y7ufhufouh" path="res://Sprites/Extra/addResource2.png" id="10_e7rob"]
@@ -43,10 +43,10 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("6_qgth1")
+"texture": ExtResource("7_4itqb")
 }, {
 "duration": 1.0,
-"texture": ExtResource("7_4itqb")
+"texture": ExtResource("7_jbnh4")
 }, {
 "duration": 1.0,
 "texture": ExtResource("8_uel65")
@@ -57,7 +57,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r3tpq"]
-size = Vector2(88, 96)
+size = Vector2(113, 148)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ijjqg"]
 size = Vector2(160, 112)
@@ -100,14 +100,13 @@ z_index = 1
 script = ExtResource("1_17nkw")
 
 [node name="HouseSprite" type="AnimatedSprite2D" parent="."]
-position = Vector2(3.93391e-06, 0.405239)
-scale = Vector2(0.339869, 0.339869)
+position = Vector2(0.499997, -0.113043)
+scale = Vector2(1.30474, 1.30474)
 sprite_frames = SubResource("SpriteFrames_fiu42")
-frame = 2
-frame_progress = 0.208687
+animation = &"Level 1 people inside"
 
 [node name="CollisionShape0" type="CollisionShape2D" parent="."]
-position = Vector2(-1, 0)
+position = Vector2(1.5, -1)
 shape = SubResource("RectangleShape2D_r3tpq")
 
 [node name="CollisionShape1" type="CollisionShape2D" parent="."]
@@ -115,6 +114,7 @@ shape = SubResource("RectangleShape2D_ijjqg")
 disabled = true
 
 [node name="CollisionShape2" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("RectangleShape2D_ecvay")
 disabled = true
 
@@ -123,6 +123,7 @@ position = Vector2(0, -80)
 sprite_frames = SubResource("SpriteFrames_eb5sg")
 
 [node name="PlaceableInfo" parent="." instance=ExtResource("16_per2a")]
+visible = false
 
 [connection signal="area_entered" from="." to="." method="OnAreaEntered"]
 [connection signal="area_exited" from="." to="." method="OnAreaExited"]

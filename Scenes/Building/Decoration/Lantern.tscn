@@ -1,0 +1,86 @@
+[gd_scene load_steps=15 format=3 uid="uid://dq6vw2u2mgsil"]
+
+[ext_resource type="Script" path="res://Scenes/Building/Decoration/Lantern.cs" id="1_uj1ek"]
+[ext_resource type="Texture2D" uid="uid://b2msraucelimp" path="res://Sprites/Edificios 2d Medieval/Edificios 2d Medieval/Lantern_2.png" id="3_ftd6x"]
+[ext_resource type="Texture2D" uid="uid://bdaqwv8dvrhlj" path="res://Sprites/Edificios 2d Medieval/Edificios 2d Medieval/Lantern_4.png" id="3_uysje"]
+[ext_resource type="Texture2D" uid="uid://dt1kbfdm7dk2a" path="res://Sprites/Extra/addResource1.png" id="7_ryxsb"]
+[ext_resource type="Texture2D" uid="uid://co3y7ufhufouh" path="res://Sprites/Extra/addResource2.png" id="8_gdvdf"]
+[ext_resource type="Texture2D" uid="uid://bpp4m7x6k6cyf" path="res://Sprites/Extra/addResource3.png" id="9_udv6k"]
+[ext_resource type="Texture2D" uid="uid://bjtqfmauw1cfk" path="res://Sprites/Extra/addResource4.png" id="10_7yv5c"]
+[ext_resource type="Texture2D" uid="uid://bh7bofwv2v6rn" path="res://Sprites/Extra/addResource5.png" id="11_10y2v"]
+[ext_resource type="Texture2D" uid="uid://c2s5x2ag6prrg" path="res://Sprites/Extra/addResource6.png" id="12_uegro"]
+[ext_resource type="Texture2D" uid="uid://epbdr1v164x7" path="res://Sprites/Extra/addResource8.png" id="13_5suj6"]
+[ext_resource type="PackedScene" uid="uid://biil4p82w3tjw" path="res://Scenes/Building/PlaceableInfo.tscn" id="14_i3kgr"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fiu42"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_uysje")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_ftd6x")
+}],
+"loop": true,
+"name": &"default",
+"speed": 4.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r3tpq"]
+size = Vector2(24, 121)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_eb5sg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_ryxsb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_gdvdf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_udv6k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_7yv5c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_10y2v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_uegro")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_5suj6")
+}],
+"loop": false,
+"name": &"default",
+"speed": 6.0
+}]
+
+[node name="Lantern" type="Area2D"]
+physics_interpolation_mode = 2
+z_index = 1
+script = ExtResource("1_uj1ek")
+
+[node name="HouseSprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(-1, 1.00001)
+scale = Vector2(0.494523, 0.494523)
+sprite_frames = SubResource("SpriteFrames_fiu42")
+frame_progress = 0.254791
+
+[node name="CollisionShape0" type="CollisionShape2D" parent="."]
+position = Vector2(1, 5.5)
+shape = SubResource("RectangleShape2D_r3tpq")
+
+[node name="Animation" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -80)
+sprite_frames = SubResource("SpriteFrames_eb5sg")
+
+[node name="PlaceableInfo" parent="." instance=ExtResource("14_i3kgr")]
+visible = false
+
+[connection signal="area_entered" from="." to="." method="OnAreaEntered"]
+[connection signal="area_exited" from="." to="." method="OnAreaExited"]
+[connection signal="mouse_entered" from="." to="." method="OnMouseEntered"]
+[connection signal="mouse_exited" from="." to="." method="OnMouseExited"]

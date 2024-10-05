@@ -16,9 +16,7 @@ public abstract partial class LivingSpaces : AbstractPlaceable
 		GetNode<AnimatedSprite2D>("HouseSprite").Play();
 	}
 
-	protected override void OnDelete()
-	{
-	}
+	//protected override void OnDelete(){}
 
 
 	protected override void OnDeleteInstance()

@@ -34,6 +34,9 @@ public partial class GameLogistics: Node2D
 		var shop = gameMenu.GetNode<Shop>("MenuCanvasLayer/Container/Shop");
 		shop.OnBuildingButtonPressed += BuildBuilding;
 		shop.OnRoadBuild += OnRoadBuild;
+		
+		//_houses = _gameMap._placedHouses;
+		//_productions = _gameMap._placedProduction;
 
 		Resources = new System.Collections.Generic.Dictionary<string, int>
 		{
@@ -97,9 +100,11 @@ public partial class GameLogistics: Node2D
 			dragging = true;
 			if (_object != null)
 			{
+				GD.Print("Can afford " + CanAfford() );
+				GD.Print("Can place " + CanPlace() );
 				if (CanPlace() && CanAfford())
 				{
-					if (!Move ) //Building new house
+					if (!Move )
 					{
 						var UpgradesClass = _object.GetType().Name;
 						Console.WriteLine(UpgradesClass);

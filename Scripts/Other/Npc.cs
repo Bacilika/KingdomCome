@@ -14,7 +14,7 @@ public class MoodReason
 
 public partial class Npc : CharacterBody2D
 {
-	public House Home;
+	public LivingSpaces Home;
 	public Production Work;
 	private bool _focused;
 	private bool isUnemployed = true;

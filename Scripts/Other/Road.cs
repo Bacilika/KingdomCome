@@ -9,6 +9,7 @@ public partial class Road : AbstractPlaceable
 	}
 	public override void _Ready_instance()
 	{
+		//Price = 100;
 	}
 	protected override void OnDeleteInstance()
 	{

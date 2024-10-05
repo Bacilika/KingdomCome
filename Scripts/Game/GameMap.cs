@@ -12,7 +12,7 @@ public partial class GameMap : Node2D
 	private Timer _foodTimer; 
 	private Timer _dayTimer;
 	private AudioStreamPlayer2D _music;
-	public List<House> _placedHouses = [];
+	public List<LivingSpaces> _placedHouses = [];
 	public List<Production> _placedProduction = [];
 	public List<Npc> Citizens = [];
 	public static List<AbstractActivity> _placedActivities = [];
@@ -79,6 +79,11 @@ public partial class GameMap : Node2D
 			house.OnCreateNpc += PlaceNpc;
 			_placedHouses.Add(house);
 		}
+		if (placeable is CityHouse cityHouse)
+		{
+			cityHouse.OnCreateNpc += PlaceNpc;
+			_placedHouses.Add(cityHouse);
+		}
 		else if(placeable is AbstractActivity activity)
 		{
 			_placedActivities.Add(activity);
@@ -93,7 +98,7 @@ public partial class GameMap : Node2D
 		AddChild(placeable);
 	}
 
-	public void PlaceNpc(House house)
+	public void PlaceNpc(LivingSpaces house)
 	{
 		var NPCScene = ResourceLoader.Load<PackedScene>("res://Scenes/Other/NPC.tscn");
 		var infoScene = ResourceLoader.Load<PackedScene>("res://Scenes/Building/CitizenInfo.tscn");

@@ -7,7 +7,7 @@ using Scripts.Constants;
 public partial class GameLogistics: Node2D
 {
 	private GameMap _gameMap;
-	private List<House> _houses;
+	private List<LivingSpaces> _houses;
 	private List<Production> _productions;
 	
 	private AbstractPlaceable _object;
@@ -109,7 +109,7 @@ public partial class GameLogistics: Node2D
 						var UpgradesClass = _object.GetType().Name;
 						Console.WriteLine(UpgradesClass);
 							
-							Resources["Money"] -= _object.GetPrice();
+							//Resources["Money"] -= _object.GetPrice();
 							Resources["Wood"] -= _object.Upgrades[Upgrade.WoodCost][_object.Level];
 							Resources["Stone"] -= _object.Upgrades[Upgrade.StoneCost][_object.Level];
 							var placedNode = _object.Duplicate();

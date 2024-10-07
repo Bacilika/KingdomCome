@@ -45,4 +45,7 @@ public partial class IronMine : Production
 	}
 	public override void WhenShopReady(){}
 
+	public override void AtWorkTimerTimeout(Npc npc)
+	{
+	}
 }

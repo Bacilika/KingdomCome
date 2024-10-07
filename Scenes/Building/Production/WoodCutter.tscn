@@ -73,7 +73,7 @@ position = Vector2(1, 1.5)
 shape = SubResource("RectangleShape2D_cews5")
 
 [node name="WoodTimer" type="Timer" parent="."]
-wait_time = 10.0
+wait_time = 5.0
 
 [node name="CollisionShape1" type="CollisionShape2D" parent="."]
 position = Vector2(2, 0.5)

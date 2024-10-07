@@ -13,6 +13,7 @@ public abstract partial class Production : AbstractPlaceable
 	public delegate void LookingForWorkersEventHandler(Productions production);
 	
 	public abstract override void WhenShopReady();
+	public abstract void AtWorkTimerTimeout(Npc npc); 
 
 	protected override void Tick()
 	{

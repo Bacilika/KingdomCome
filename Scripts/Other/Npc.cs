@@ -38,6 +38,8 @@ public partial class Npc : CharacterBody2D
 	public AbstractPlaceable PlaceablePosition;
 	private AbstractActivity activity;
 
+	public Timer AtWorkTimer;
+
 
 	private AnimatedSprite2D _hitAnimation;
 
@@ -56,7 +58,7 @@ public partial class Npc : CharacterBody2D
 		_hitAnimation = GetNode<AnimatedSprite2D>("IronAnimation");
 		_hitAnimation.Visible = false;
 		_hitAnimation.Stop();
-		
+		AtWorkTimer = GetNode<Timer>("AtWorkTimer");
 		_navigation = GetNode<NavigationAgent2D>("NavigationAgent2D");
 		_timer = GetNode<Timer>("WorkTimer");
 		_walkingOnGrassSound = GetNode<AudioStreamPlayer2D>("GrassWalking");
@@ -79,6 +81,13 @@ public partial class Npc : CharacterBody2D
 		timerOut = true;
 	}
 
+	public void OnAtWorkTimerTimeout()
+	{
+		Work.AtWorkTimerTimeout(this);
+		Console.WriteLine("Timeout");
+	}
+	
+	
 	private void TurnOnAudio(bool on)
 	{
 		if (on)

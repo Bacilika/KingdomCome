@@ -50,4 +50,7 @@ public partial class Church : AbstractActivity
 	public override void ProduceItem()
 	{
 	}
+	public override void AtWorkTimerTimeout(Npc npc)
+	{
+	}
 }

@@ -44,8 +44,13 @@ public partial class HunterLodge : Production
 	public override void AtWork(Npc npc)
 	{
 	}
-	
-	public override void WhenShopReady(){}
 
+	public override void WhenShopReady()
+	{
+	}
+
+	public override void AtWorkTimerTimeout(Npc npc)
+	{
+	}
 	
 }

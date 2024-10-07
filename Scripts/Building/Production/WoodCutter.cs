@@ -18,8 +18,6 @@ public partial class WoodCutter : Production
 		_timer = GetNode<Timer>("WoodTimer");
 
 		_assignedWorker = new() { };
-		
-
 
 		Upgrades = new Dictionary<string, List<int>>
 		{
@@ -55,8 +53,14 @@ public partial class WoodCutter : Production
 		{
 			npc.SetDestination(_assignedWorker[npc].GlobalPosition);
 		}
-		
-		
+		npc.AtWorkTimer.SetWaitTime(10 + Position.DistanceTo(_assignedWorker[npc].GlobalPosition)/100);
+		npc.AtWorkTimer.Start();
+		Console.WriteLine(npc.AtWorkTimer.TimeLeft);
+	}
+
+	public override void AtWorkTimerTimeout(Npc npc)
+	{
+		npc.SetDestination(Position);
 	}
 	
 	public override void ProduceItem()
@@ -66,7 +70,12 @@ public partial class WoodCutter : Production
 
 	public override void WhenShopReady()
 	{
-		forest = GetParent<GameMap>().GetNode<Forest>("Forest");
+
+		try
+		{
+			forest = GetParent<GameMap>().GetNode<Forest>("Forest");
+		}
+		catch (Exception _){}
 
 	}
 

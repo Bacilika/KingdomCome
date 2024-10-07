@@ -46,5 +46,8 @@ public partial class Well : Production
 	}
 	public override void WhenShopReady(){}
 
+	public override void AtWorkTimerTimeout(Npc npc)
+	{
+	}
 
 }

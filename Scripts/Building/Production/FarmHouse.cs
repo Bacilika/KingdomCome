@@ -51,5 +51,7 @@ public partial class FarmHouse : Production
 	
 	public override void WhenShopReady(){}
 
-
+	public override void AtWorkTimerTimeout(Npc npc)
+	{
+	}
 }

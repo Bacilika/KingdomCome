@@ -212,7 +212,7 @@ shape = SubResource("CapsuleShape2D_8jye2")
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 
 [node name="WorkTimer" type="Timer" parent="."]
-wait_time = 10.042
+wait_time = 25.0
 
 [node name="GrassWalking" type="AudioStreamPlayer2D" parent="."]
 z_index = 1
@@ -224,6 +224,10 @@ visible = false
 [node name="IronAnimation" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_cguxn")
 
+[node name="AtWorkTimer" type="Timer" parent="."]
+wait_time = 10.0
+
 [connection signal="mouse_entered" from="." to="." method="OnMouseEntered"]
 [connection signal="mouse_exited" from="." to="." method="OnMouseExited"]
 [connection signal="timeout" from="WorkTimer" to="." method="OnWorkTimerTimeout"]
+[connection signal="timeout" from="AtWorkTimer" to="." method="OnAtWorkTimerTimeout"]

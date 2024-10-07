@@ -18,7 +18,6 @@ public partial class GameLogistics: Node2D
 	public static bool dragging;
 	public static bool Move;
 	private PackedScene _roadScene = ResourceLoader.Load<PackedScene>("res://Scenes/Other/Road.tscn");
-	public static int RoadPrice = 100;
 	private Array<Vector2I> _roadPositions = [];
 	private TileMapLayer _roadLayer;
 	
@@ -106,8 +105,6 @@ public partial class GameLogistics: Node2D
 				{
 					if (!Move )
 					{
-						var UpgradesClass = _object.GetType().Name;
-						Console.WriteLine(UpgradesClass);
 						RemoveResources();
 						var placedNode = _object.Duplicate();
 						EmitSignal(SignalName.HousePlaced, placedNode); //Emitted to GameMap
@@ -173,7 +170,7 @@ public partial class GameLogistics: Node2D
 		{
 			foreach (var cost in _building.BuildCost)
 			{
-				if (cost.Value[_building.Level] >= Resources[cost.Key])
+				if (cost.Value[_building.Level] > Resources[cost.Key])
 				{
 					return false;
 				}
@@ -246,14 +243,14 @@ public partial class GameLogistics: Node2D
 			var gridPosition = _roadLayer.LocalToMap( GetGlobalMousePosition());
 			_roadPositions.Add(gridPosition);
 			_roadLayer.SetCellsTerrainConnect( _roadPositions, 0, 0);
-			Resources[GameResource.Money] -= RoadPrice;
+			RemoveResources(_roadObject);
 
 		}
 	}
 	
 	private bool CanPlaceRoad()
 	{
-		return !_roadPositions.Contains(_roadLayer.LocalToMap(GetGlobalMousePosition()));
+		return !_roadPositions.Contains(_roadLayer.LocalToMap(GetGlobalMousePosition())) && CanAfford(_roadObject);
 	}
 	
 }

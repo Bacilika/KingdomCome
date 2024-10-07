@@ -124,7 +124,7 @@ public partial class Npc : CharacterBody2D
 						_hitAnimation.Play();
 					}
 
-					if (destination == Work.Position)
+					if (PlaceablePosition == Work)
 					{
 						EmitSignal(SignalName.OnAtWork, this);
 					}
@@ -141,8 +141,8 @@ public partial class Npc : CharacterBody2D
 							_animation.Play();
 						}
 						
-						
-						setDestination();
+						SwitchLocation();
+						SetDestination();
 
 						timerOut = false;
 						_timer.Stop();
@@ -202,7 +202,6 @@ public partial class Npc : CharacterBody2D
 
 	public void ShowInfo()
 	{
-		Console.WriteLine("Npc info");
 		Info.SetInfo(this);
 		Info.Visible = true;
 	}
@@ -253,8 +252,7 @@ public partial class Npc : CharacterBody2D
 			moodReasons["Work"].Happiness = 1;
 			if (!change)
 			{
-				SwitchLocation();
-				setDestination();
+				SetDestination();
 			}
 			
 			return true;
@@ -345,7 +343,7 @@ public partial class Npc : CharacterBody2D
 		return null;
 	}
 	
-	public void setDestination(Vector2 vec)
+	public void SetDestination(Vector2 vec)
 	{
 		_navigation.SetTargetPosition(vec);
 		_navigation.GetNextPathPosition();
@@ -353,7 +351,7 @@ public partial class Npc : CharacterBody2D
 		TurnOnAudio(true);
 	}
 
-	public void setDestination()
+	public void SetDestination()
 	{
 		_navigation.SetTargetPosition(PlaceablePosition.Position);
 		_navigation.GetNextPathPosition();

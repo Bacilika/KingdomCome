@@ -30,16 +30,13 @@ public partial class ShopIcon : Control
 	{
 		Product = product;
 		Shop = shop;
-		
-		Texture2D productImage;
-		productImage = product.AnimatedSprite.SpriteFrames.GetFrameTexture("default",0);
-		
+		Icon.TextureNormal = product.AnimatedSprite.SpriteFrames.GetFrameTexture("default",0);
 		var containerHeight = Size.Y;
 		var minimum = new Vector2(containerHeight, containerHeight);
 		SetCustomMinimumSize(minimum);
 		Icon.SetCustomMinimumSize(minimum);
 		CustomMinimumSize = minimum;
-		Icon.TextureNormal = productImage;
+		
 		Icon.Pressed += OnShopIconPressed;
 		Icon.MouseEntered += OnMouseEntered;
 		Icon.MouseExited += OnMouseExited;
@@ -58,7 +55,6 @@ public partial class ShopIcon : Control
 		}
 		_productionInfo.setInfo(Product);
 		_productionInfo.Visible = true;
-
 	}
 
 	public void OnMouseExited()

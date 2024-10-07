@@ -44,12 +44,19 @@ public partial class WoodCutter : Production
 
 	public override void AtWork(Npc npc)
 	{
+		
+		_assignedWorker.TryAdd(npc, null);
 		if (_assignedWorker[npc] == null)
 		{
 			_assignedWorker[npc] = forest.trees[Rnd.RandiRange(0, forest.trees.Count-1)];
 		}
+
+		if (_assignedWorker[npc] != null)
+		{
+			npc.SetDestination(_assignedWorker[npc].GlobalPosition);
+		}
 		
-		npc.setDestination(_assignedWorker[npc].Position);
+		
 	}
 	
 	public override void ProduceItem()

@@ -5,7 +5,7 @@ using Scripts.Constants;
 
 public abstract partial class AbstractShopIconContainer : ScrollContainer
 {
-
+	
 	public List<AbstractPlaceable> Products = [];
 	public PackedScene ShopIconScene;
 	
@@ -35,7 +35,6 @@ public abstract partial class AbstractShopIconContainer : ScrollContainer
 			shopIconControl.SetUp(product, GameShop);
 			RemoveChild(product);
 			Stock.Add(shopIconControl);
-			Console.WriteLine(shopIconControl.Position);
 		}
 		Stock.Sort((x, y) => x.Product.PlayerLevel.CompareTo(y.Product.PlayerLevel));
 		foreach (var child in childContainer.GetChildren())
@@ -65,21 +64,18 @@ public abstract partial class AbstractShopIconContainer : ScrollContainer
 			{
 				if (item.Product.PlayerLevel > GameMap.Level) //too low level
 				{
-					Console.WriteLine($"{item.Product.BuildingName} is disabled");
 					item.Icon.SelfModulate = _disabled;
 					item.Icon.Disabled = true;
 					item.TooltipText = $"Unlocks at level {item.Product.PlayerLevel}";
 				}
 				else if (resources[cost.Key] < cost.Value[item.Product.Level]) //not enough resources
 				{
-					Console.WriteLine($"{item.Product.BuildingName} is too expensive");
 					item.Icon.SelfModulate = _cantAfford;
 					item.Icon.Disabled = true;
 					item.TooltipText = "Cannot afford";
 				}
 				else
 				{
-					Console.WriteLine($"{item.Product.BuildingName} is available");
 					item.Icon.SelfModulate = _canBuy;
 					item.Icon.Disabled = false;
 				}

@@ -1,5 +1,7 @@
 using Godot;
 using System;
+using System.Collections.Generic;
+using Scripts.Constants;
 
 public partial class Road : AbstractPlaceable
 {
@@ -9,16 +11,16 @@ public partial class Road : AbstractPlaceable
 	}
 	public override void _Ready_instance()
 	{
-		//Price = 100;
+		BuildingName = "Road";
+		BuildingDescription = "Road for citizens to walk on";
+		BuildCost = new Dictionary<string, List<int>>
+		{
+			{ GameResource.Stone, [1, 1, 1] }
+		};
 	}
 	protected override void OnDeleteInstance()
 	{
 	
-	}
-	public override void _Ready()
-	{
-		BuildingName = "Road";
-		BuildingDescription = "Road for citizens to walk on";
 	}
 
 	public override void WhenShopReady(){}

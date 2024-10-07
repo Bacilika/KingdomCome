@@ -100,6 +100,7 @@ public abstract partial class AbstractPlaceable : Area2D
 		
 		_Ready_instance();
 		SetObjectValues();
+		WhenShopReady();
 	}
 
 	public string GetBuildingName()

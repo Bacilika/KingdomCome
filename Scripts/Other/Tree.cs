@@ -1,10 +1,7 @@
-using Godot;
-using System;
 using KingdomCome.Scripts.MapResources;
 
 public partial class Tree : AbstractResource
 {
-	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -16,9 +13,6 @@ public partial class Tree : AbstractResource
 	{
 		if (ResourcesLeft == 0)
 		{
-			
 		}
 	}
-	
-	
 }

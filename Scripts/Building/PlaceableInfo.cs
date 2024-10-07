@@ -1,27 +1,29 @@
 using Godot;
-using System;
-using System.Collections.Generic;
 
 public partial class PlaceableInfo : Panel
 {
-	
-	public bool Focused;
-	public PackedScene CitizenPortrait;
-	public BoxContainer PortraitContainer;
-	private Control _houseInfo;
-	private RichTextLabel _textLabel;
-	private Label _buildingName;
+	[Signal]
+	public delegate void OnChooseWareEventHandler();
+
 	[Signal]
 	public delegate void OnDeleteEventHandler();
-	[Signal]
-	public delegate void OnUpgradeEventHandler();
+
 	[Signal]
 	public delegate void OnMoveEventHandler();
-	[Signal]	
-	public delegate void OnChooseWareEventHandler();
+
+	[Signal]
+	public delegate void OnUpgradeEventHandler();
+
+	private Label _buildingName;
+	private Control _houseInfo;
+	private RichTextLabel _textLabel;
+	public PackedScene CitizenPortrait;
+
+	public bool Focused;
+	public BoxContainer PortraitContainer;
+
 	public override void _Process(double delta)
 	{
-		
 	}
 
 	public override void _Ready()
@@ -31,19 +33,18 @@ public partial class PlaceableInfo : Panel
 		PortraitContainer = GetNode<BoxContainer>("HouseInfo/CitizenPortraitContainer");
 		CitizenPortrait = ResourceLoader.Load<PackedScene>("res://Scenes/Building/CitizenPortraitButton.tscn");
 		_houseInfo = GetNode<Control>("HouseInfo");
-
 	}
 
-	public void OnButtonDownPressed(){
-				GD.Print("button down");
+	public void OnButtonDownPressed()
+	{
+		GD.Print("button down");
 	}
 
 	public void OnChooseWareButtonPressed()
 	{
 		EmitSignal(SignalName.OnChooseWare);
-
 	}
-	
+
 	public void OnDeleteButtonPressed()
 	{
 		EmitSignal(SignalName.OnDelete); //emitted to AbstractPlaceable
@@ -53,7 +54,7 @@ public partial class PlaceableInfo : Panel
 	{
 		EmitSignal(SignalName.OnUpgrade); //emitted to AbstractPlaceable
 	}
-	
+
 	public void OnMoveButtonPressed()
 	{
 		EmitSignal(SignalName.OnMove); //emitted to AbstractPlaceable
@@ -64,6 +65,7 @@ public partial class PlaceableInfo : Panel
 		_houseInfo.Visible = false;
 		npc.ShowInfo();
 	}
+
 	public void HideNpcInfo()
 	{
 		_houseInfo.Visible = true;
@@ -73,13 +75,13 @@ public partial class PlaceableInfo : Panel
 	{
 		Focused = true;
 	}
+
 	private void OnMouseExited()
 	{
 		Focused = false;
-		
 	}
 
-	public void UpdateInfo(string buildingName,string text)
+	public void UpdateInfo(string buildingName, string text)
 	{
 		_buildingName.Text = buildingName;
 		_textLabel.Text = text;

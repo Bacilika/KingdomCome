@@ -1,7 +1,8 @@
-using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Godot;
+using KingdomCome.Scripts.Building;
 using KingdomCome.Scripts.Building.Activities;
 using Scripts.Constants;
 
@@ -9,61 +10,61 @@ public class MoodReason
 {
 	public string Reason { get; set; }
 	public int Happiness { get; set; }
-	
 }
 
 public partial class Npc : CharacterBody2D
 {
-	public LivingSpace Home;
-	public Production Work;
-	private bool _focused;
-	private bool isUnemployed = true;
-	private NavigationAgent2D _navigation;
-	private float _speed = 100;
-	public int Happiness = 10;
-	private bool _still;
-	
-	public Texture2D Sprite;
-	private AnimatedSprite2D _animation;
-	private Vector2 destination;
-	private bool _ready;
-	private Timer _workTimer;
-	private bool timerOut;
-	private RandomNumberGenerator _rnd = new (); 
-	private AudioStreamPlayer2D _walkingOnGrassSound;
-	public CitizenInfo Info;
-	public Dictionary<string, MoodReason> moodReasons;
-	private bool _stopped;
-
-	public AbstractPlaceable PlaceablePosition;
-	private AbstractActivity activity;
-
-	public Timer AtWorkTimer;
-
-	private Vector2 _activityPosition;
-	
-	[Signal]
-	public delegate void OnJobChangeEventHandler(Npc npc);
-	
 	[Signal]
 	public delegate void OnAtWorkEventHandler(Npc npc);
-	
+
+	[Signal]
+	public delegate void OnJobChangeEventHandler(Npc npc);
+
+	private const int BaseHappiness = 5;
+	private AbstractActivity _activity;
+
+	private Vector2 _activityPosition;
+	private AnimatedSprite2D _animation;
+
+	private Timer _dayTimer;
+	private Vector2 _destination;
+	private bool _focused;
+
+	private Dictionary<string, MoodReason> _moodReasons;
+
+	//Navigation
+	private NavigationAgent2D _navigation;
+	private bool _ready;
+	private RandomNumberGenerator _rnd = new();
+	private float _speed = 100;
+	private bool _still;
+	private bool _stopped;
+	private bool _timerOut;
+	private AudioStreamPlayer2D _walkingOnGrassSound;
+	public Timer AtWorkTimer;
+
+	public int Happiness = 10;
+	public LivingSpace Home;
+	public CitizenInfo Info;
+	public AbstractPlaceable PlaceablePosition;
+	public Texture2D Sprite;
+	public Production Work;
+
 	public override void _Ready()
 	{
 		_animation = GetNode<AnimatedSprite2D>("WalkingAnimation");
 		Sprite = _animation.SpriteFrames.GetFrameTexture("walkUp", 0);
 		AtWorkTimer = GetNode<Timer>("AtWorkTimer");
 		_navigation = GetNode<NavigationAgent2D>("NavigationAgent2D");
-		_workTimer = GetNode<Timer>("WorkTimer");
+		_dayTimer = GetNode<Timer>("WorkTimer");
 		_walkingOnGrassSound = GetNode<AudioStreamPlayer2D>("GrassWalking");
-		//destination = Home.Position;
 		Info = GetNode<CitizenInfo>("CitizenInfo");
 		Info.SetInfo(this);
 		Info.GetNode<HBoxContainer>("HBoxContainer").Visible = false;
 		Info.Visible = false;
 
 
-		moodReasons = new()
+		_moodReasons = new Dictionary<string, MoodReason>
 		{
 			{ "Work", new MoodReason() },
 			{ "Activity", new MoodReason() }
@@ -72,7 +73,7 @@ public partial class Npc : CharacterBody2D
 
 	public void OnWorkTimerTimeout()
 	{
-		timerOut = true;
+		_timerOut = true;
 	}
 
 	public void OnAtWorkTimerTimeout()
@@ -80,8 +81,8 @@ public partial class Npc : CharacterBody2D
 		Work.AtWorkTimerTimeout(this);
 		Console.WriteLine("Timeout");
 	}
-	
-	
+
+
 	private void ToggleWalkingSound(bool on)
 	{
 		if (on)
@@ -89,19 +90,17 @@ public partial class Npc : CharacterBody2D
 			_walkingOnGrassSound.Play();
 			return;
 		}
+
 		_walkingOnGrassSound.Stop();
 	}
 
 	public override void _Process(double delta)
 	{
-		calculateHappiness();
-		if (Info is not null && Info.Visible)
-		{
-			Info.SetInfo(this);
-		}
+		CalculateHappiness();
+		if (Info is not null && Info.Visible) Info.SetInfo(this);
 	}
 
-	
+
 	public override void _PhysicsProcess(double delta)
 	{
 		if (!_ready || NavigationServer2D.MapGetIterationId(_navigation.GetNavigationMap()) == 0) return; //Not ready
@@ -112,45 +111,38 @@ public partial class Npc : CharacterBody2D
 			ToggleWalkingSound(false);
 			return;
 		}
-		
+
 		if (_navigation.DistanceToTarget() > 10) //not at destination
 		{
 			_still = false;
 			Move();
-			
 		}
-		
+
 		else //if at destination
 		{
-			if (_workTimer.IsStopped()) //Reach Work
+			if (_dayTimer.IsStopped()) //Reach Work
 			{
-				_workTimer.Start();
+				_dayTimer.Start();
 				ToggleWalkingSound(false);
 				_animation.Animation = "work";
-				
-				if (PlaceablePosition == Work)
-				{
-					EmitSignal(SignalName.OnAtWork, this);
-				}
+
+				if (PlaceablePosition == Work) EmitSignal(SignalName.OnAtWork, this);
 			}
-			if (timerOut) //done at work
-			{
-				if (_rnd.RandiRange(0, 10)==0) //to make their movement a bit less monotone
+
+			if (_timerOut) //done at work
+				if (_rnd.RandiRange(0, 10) == 0) //to make their movement a bit less monotone
 				{
 					SwitchLocation();
 					SetDestination();
 
-					timerOut = false;
-					_workTimer.Stop();
-					if(destination == Home.Position) Work.GatherResource();
+					_timerOut = false;
+					_dayTimer.Stop();
+					if (_destination == Home.Position) Work.GatherResource();
 				}
-			}
-
 		}
-
 	}
 
-	public void Move()
+	private void Move()
 	{
 		Velocity = GlobalPosition.DirectionTo(_navigation.GetNextPathPosition()) * _speed;
 		_animation.Animation = GetDirection();
@@ -158,10 +150,8 @@ public partial class Npc : CharacterBody2D
 		_animation.Play();
 	}
 
-
 	private string GetDirection()
 	{
-
 		var angle = Velocity.Angle();
 		var angleToDegrees = angle * 180 / Math.PI;
 		switch (angleToDegrees)
@@ -183,61 +173,42 @@ public partial class Npc : CharacterBody2D
 		Info.Visible = true;
 	}
 
-	public void calculateHappiness()
+	private void CalculateHappiness()
 	{
-		var temphappiness = 5;
-		foreach (var reason in moodReasons)
-		{
-			temphappiness += reason.Value.Happiness;
-		}
-
-		Happiness = temphappiness;
+		Happiness = BaseHappiness + _moodReasons.Sum(reason => reason.Value.Happiness);
 	}
 
-	public String GetUnhappyReason()
+	public string GetUnhappyReason()
 	{
-		string unhappyReason = "";
+		var unhappyReason = "";
 
-		if (moodReasons is not null)
-		{
-			foreach (var reason in moodReasons)
+		if (_moodReasons is not null)
+			foreach (var reason in _moodReasons)
 			{
-				string happiness = reason.Value.Happiness.ToString();
-				if (reason.Value.Happiness > 0)
-				{
-					happiness = $"+{reason.Value.Happiness}";
-				}
+				var happiness = reason.Value.Happiness.ToString();
+				if (reason.Value.Happiness > 0) happiness = $"+{reason.Value.Happiness}";
 				unhappyReason += $"{reason.Value.Reason} ({happiness}) \n";
 			}
-		}
 
 		return unhappyReason;
 	}
-	
+
 
 	public bool GetJob(Production production, bool change = false)
 	{
 		if (Work is null || change)
 		{
-
-			if (Work is not null)
-			{
-				Work.RemoveWorker(this);
-			}
+			Work?.RemoveWorker(this);
 			Work = production;
-			moodReasons["Work"].Reason = "Has work";
-			moodReasons["Work"].Happiness = 1;
-			if (!change)
-			{
+			_moodReasons["Work"].Reason = "Has work";
+			_moodReasons["Work"].Happiness = 1;
+			if (!change) //if this is first job, go to work!
 				SetDestination();
-			}
-			
 			return true;
 		}
 
 		return false;
 	}
-	
 
 	public bool IsEmployed()
 	{
@@ -250,50 +221,44 @@ public partial class Npc : CharacterBody2D
 		Home.People.Remove(this);
 		GameLogistics.Resources[GameResource.Citizens] -= 1;
 		if (Work is not null)
-		{
 			Work.People.Remove(this);
-			
-		}
 		else
-		{
 			GameLogistics.Resources[GameResource.Unemployed] -= 1;
-		}
 		QueueFree();
 	}
-	
-	
+
+
 	private void SwitchLocation()
 	{
-		if (PlaceablePosition is null)
-		{
-			PlaceablePosition = Home; 
-		}
+		PlaceablePosition ??= Home;
 		switch (PlaceablePosition.BuildingName)
 		{
 			case var value when value == Home.BuildingName:
 			{
 				PlaceablePosition = Work;
-				break; 
+				break;
 			}
 			case var value when value == Work.BuildingName:
 			{
-				if (FindActivity() != null){
-					PlaceablePosition = activity;
-					moodReasons["Activity"].Reason = "enjoys" + activity.BuildingName;
-					moodReasons["Activity"].Happiness = 2;
+				if (FindActivity() != null)
+				{
+					PlaceablePosition = _activity;
+					_moodReasons["Activity"].Reason = "enjoys" + _activity.BuildingName;
+					_moodReasons["Activity"].Happiness = 2;
 				}
 				else
 				{
 					PlaceablePosition = Home;
-					moodReasons["Activity"].Reason = "No avaliable activity";
-					moodReasons["Activity"].Happiness = -2;
+					_moodReasons["Activity"].Reason = "No avaliable activity";
+					_moodReasons["Activity"].Happiness = -2;
 				}
-				break; 
+
+				break;
 			}
-			case var value when value == activity.BuildingName:
+			case var value when value == _activity.BuildingName:
 			{
 				PlaceablePosition = Home;
-				break; 
+				break;
 			}
 			default:
 			{
@@ -306,27 +271,26 @@ public partial class Npc : CharacterBody2D
 	private AbstractActivity FindActivity()
 	{
 		if (_rnd.RandiRange(0, 3) == 0 && GameMap._placedActivities.Count > 0)
-		{
-			for (int i = 0; i < 5; i++)
+			for (var i = 0; i < 5; i++)
 			{
 				var j = _rnd.RandiRange(0, GameMap._placedActivities.Count - 1);
-				if (activity.IsOpen)
+				if (_activity.IsOpen)
 				{
-					activity = GameMap._placedActivities[j];
-					return activity;
+					_activity = GameMap._placedActivities[j];
+					return _activity;
 				}
 			}
-		}
+
 		return null;
 	}
-	
+
 	public void SetDestination(Vector2 vec)
 	{
 		_navigation.SetTargetPosition(vec);
 		_navigation.GetNextPathPosition();
 	}
 
-	public void SetDestination()
+	private void SetDestination()
 	{
 		_navigation.SetTargetPosition(PlaceablePosition.Position);
 		_navigation.GetNextPathPosition();
@@ -334,12 +298,12 @@ public partial class Npc : CharacterBody2D
 		ToggleWalkingSound(true);
 	}
 
-	public void OnMouseEntered()
+	private void OnMouseEntered()
 	{
 		_focused = true;
 	}
 
-	public void OnMouseExited()
+	private void OnMouseExited()
 	{
 		_focused = false;
 	}
@@ -348,7 +312,7 @@ public partial class Npc : CharacterBody2D
 	{
 		if (@event.IsActionPressed(Inputs.LeftClick))
 		{
-			if (_focused && !_still || Info.focused)
+			if ((_focused && !_still) || Info.focused)
 			{
 				ShowInfo();
 				_stopped = true;

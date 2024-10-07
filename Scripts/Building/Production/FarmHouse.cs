@@ -1,14 +1,12 @@
-using Godot;
-using System;
 using System.Collections.Generic;
+using Godot;
 using Scripts.Constants;
 
 public partial class FarmHouse : Production
 {
-	
 	private int _food;
-	
-	public override void _Ready_instance()
+
+	protected override void _Ready_instance()
 	{
 		BuildingName = "Barn";
 		BuildingDescription = "A Barn that produces food";
@@ -17,19 +15,18 @@ public partial class FarmHouse : Production
 		PlayerLevel = 3;
 		Upgrades = new Dictionary<string, List<int>>
 		{
-			{ Upgrade.MaxWorkers, [5, 7, 10] },
-
+			{ Upgrade.MaxWorkers, [5, 7, 10] }
 		};
 		BuildCost = new Dictionary<string, List<int>>
 		{
 			{ GameResource.Wood, [5, 7, 10] },
 			{ GameResource.Stone, [5, 7, 10] },
-			{ GameResource.Iron, [5, 7, 10] },
+			{ GameResource.Iron, [5, 7, 10] }
 		};
 		MoveCost = new Dictionary<string, List<int>>
 		{
 			{ GameResource.Wood, [1, 2, 3] },
-			{ GameResource.Stone, [1, 2, 3] },
+			{ GameResource.Stone, [1, 2, 3] }
 		};
 		DeleteCost = new Dictionary<string, List<int>>
 		{
@@ -44,6 +41,4 @@ public partial class FarmHouse : Production
 		_food++;
 		GameLogistics.Resources[GameResource.Food]++;
 	}
-
-	
 }

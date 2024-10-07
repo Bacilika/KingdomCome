@@ -1,22 +1,19 @@
 using Godot;
-using System;
 using Scripts.Constants;
 
 public partial class CitizenInfo : Panel
 {
-	public Npc CitizenNpc;
 	private TextureRect _icon;
 	public TextureRect Background;
-	public bool focused = false;
+	public Npc CitizenNpc;
+	public bool focused;
 
 
-	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		_icon = GetNode<TextureRect>("TextureRect");
 		Position = new Vector2(0, 200);
-
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -27,17 +24,14 @@ public partial class CitizenInfo : Panel
 	public void SetInfo(Npc npc)
 	{
 		CitizenNpc = npc;
-		
+
 		var work = GameResource.Unemployed;
-		if (CitizenNpc.Work is not null)
-		{
-			work = $" Work: {CitizenNpc.Work.GetBuildingName()}";
-		}
-		
+		if (CitizenNpc.Work is not null) work = $" Work: {CitizenNpc.Work.GetBuildingName()}";
+
 		var textLabel = GetNode<Label>("RichTextLabel");
-		textLabel.Text =  work + 
-						  "\nHappiness: " + GameLogistics.ConvertHappiness(npc.Happiness)
-						  + "\n" + npc.GetUnhappyReason();
+		textLabel.Text = work +
+						 "\nHappiness: " + GameLogistics.ConvertHappiness(npc.Happiness)
+						 + "\n" + npc.GetUnhappyReason();
 
 		_icon.Texture = npc.Sprite;
 		MoveToFront();

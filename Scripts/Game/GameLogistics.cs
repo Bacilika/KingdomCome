@@ -1,30 +1,29 @@
 using Godot;
-using System;
-using System.Collections.Generic;
 using Godot.Collections;
+using KingdomCome.Scripts.Building;
 using Scripts.Constants;
 
-public partial class GameLogistics: Node2D
+public partial class GameLogistics : Node2D
 {
-	private GameMap _gameMap;
-	
-	private AbstractPlaceable _object;
-	private Road _roadObject;
-	public static bool IsPlaceMode;
-	private bool _roadPlaceMode;
-	private bool _containBuilding;
-	public static int Day = 0;
-	public static System.Collections.Generic.Dictionary<string, int> Resources; 
-	public static bool dragging;
-	public static bool Move;
-	private PackedScene _roadScene = ResourceLoader.Load<PackedScene>("res://Scenes/Other/Road.tscn");
-	private Array<Vector2I> _roadPositions = [];
-	private TileMapLayer _roadLayer;
-	
 	[Signal]
 	public delegate void HousePlacedEventHandler(Node2D house);
-	
-	
+
+	public static bool IsPlaceMode;
+	public static int Day = 0;
+	public static System.Collections.Generic.Dictionary<string, int> Resources;
+	public static bool dragging;
+	public static bool Move;
+	private bool _containBuilding;
+	private GameMap _gameMap;
+
+	private AbstractPlaceable _object;
+	private TileMapLayer _roadLayer;
+	private Road _roadObject;
+	private bool _roadPlaceMode;
+	private Array<Vector2I> _roadPositions = [];
+	private PackedScene _roadScene = ResourceLoader.Load<PackedScene>("res://Scenes/Other/Road.tscn");
+
+
 	public override void _Ready()
 	{
 		_gameMap = GetParent<GameMap>();
@@ -33,7 +32,7 @@ public partial class GameLogistics: Node2D
 		var shop = gameMenu.GetNode<Shop>("MenuCanvasLayer/Container/Shop");
 		shop.OnBuildingButtonPressed += BuildBuilding;
 		shop.OnRoadBuild += OnRoadBuild;
-		
+
 		//_houses = _gameMap._placedHouses;
 		//_productions = _gameMap._placedProduction;
 
@@ -50,23 +49,13 @@ public partial class GameLogistics: Node2D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		if (dragging && _roadPlaceMode)
-		{
-			PlaceRoad();
-		}
-		if (_object is not null)
-		{
-			_object.Position = GetGlobalMousePosition();
-		}
+		if (dragging && _roadPlaceMode) PlaceRoad();
+		if (_object is not null) _object.Position = GetGlobalMousePosition();
 
-		if (_roadObject is not null)
-		{
-			_roadObject.Position = GetGlobalMousePosition();
-		}
-		
+		if (_roadObject is not null) _roadObject.Position = GetGlobalMousePosition();
 	}
 
-	public static String ConvertHappiness(int happiness)
+	public static string ConvertHappiness(int happiness)
 	{
 		switch (happiness)
 		{
@@ -99,11 +88,11 @@ public partial class GameLogistics: Node2D
 			dragging = true;
 			if (_object != null)
 			{
-				GD.Print("Can afford " + CanAfford() );
-				GD.Print("Can place " + CanPlace() );
+				GD.Print("Can afford " + CanAfford());
+				GD.Print("Can place " + CanPlace());
 				if (CanPlace() && CanAfford())
 				{
-					if (!Move )
+					if (!Move)
 					{
 						RemoveResources();
 						var placedNode = _object.Duplicate();
@@ -121,25 +110,19 @@ public partial class GameLogistics: Node2D
 						_object.IsPlaced = true;
 						ResetModes();
 					}
-					
 				}
 			}
 		}
-		if (@event.IsActionPressed((Inputs.RightClick)))
-		{
-			ResetModes();
-		}
-		if (@event.IsActionReleased(Inputs.LeftClick))
-		{
-			dragging = false;
-		}
+
+		if (@event.IsActionPressed(Inputs.RightClick)) ResetModes();
+		if (@event.IsActionReleased(Inputs.LeftClick)) dragging = false;
 	}
 
 	public static bool HasUnemployedCitizens()
 	{
 		return Resources[GameResource.Unemployed] > 0;
 	}
-	
+
 
 	public bool CanPlace()
 	{
@@ -148,42 +131,31 @@ public partial class GameLogistics: Node2D
 
 	public void ResetModes()
 	{
-		if(_roadObject != null) GetParent().RemoveChild(_roadObject);
-		if(_object != null && !Move) GetParent().RemoveChild(_object);
+		if (_roadObject != null) GetParent().RemoveChild(_roadObject);
+		if (_object != null && !Move) GetParent().RemoveChild(_object);
 		_object = null;
 		_roadObject = null;
 		IsPlaceMode = false;
 		_roadPlaceMode = false;
 		Move = false;
 		GameMenu.GameMode.Text = "";
-		
 	}
 
 	public bool CanAfford(AbstractPlaceable building = null)
 	{
 		var _building = building;
-		if (building is null)
-		{
-			_building = _object;
-		}
+		if (building is null) _building = _object;
 		if (!Move)
 		{
 			foreach (var cost in _building.BuildCost)
-			{
 				if (cost.Value[_building.Level] > Resources[cost.Key])
-				{
 					return false;
-				}
-			}
 
 			return true;
-
 		}
 		// add cost for moving house here
-		else
-		{
-			return true;
-		}
+
+		return true;
 	}
 
 	public void OnMove(AbstractPlaceable building)
@@ -199,9 +171,10 @@ public partial class GameLogistics: Node2D
 	{
 		_containBuilding = status;
 	}
+
 	private void UpgradeBuilding(AbstractPlaceable building)
 	{
-		if(CanAfford(building))
+		if (CanAfford(building))
 		{
 			RemoveResources(building);
 			building.SetObjectValues();
@@ -214,14 +187,8 @@ public partial class GameLogistics: Node2D
 
 	public void RemoveResources(AbstractPlaceable building = null)
 	{
-		if (building is null)
-		{
-			building = _object;
-		}
-		foreach (var cost in building.BuildCost)
-		{
-			Resources[cost.Key] -= cost.Value[building.Level];
-		}
+		if (building is null) building = _object;
+		foreach (var cost in building.BuildCost) Resources[cost.Key] -= cost.Value[building.Level];
 	}
 
 	private void BuildBuilding(AbstractPlaceable building)
@@ -233,24 +200,21 @@ public partial class GameLogistics: Node2D
 		_containBuilding = false;
 		IsPlaceMode = true;
 		GameMenu.GameMode.Text = GameMode.Build;
-		
 	}
-	
+
 	private void PlaceRoad()
 	{
 		if (CanPlaceRoad())
 		{
-			var gridPosition = _roadLayer.LocalToMap( GetGlobalMousePosition());
+			var gridPosition = _roadLayer.LocalToMap(GetGlobalMousePosition());
 			_roadPositions.Add(gridPosition);
-			_roadLayer.SetCellsTerrainConnect( _roadPositions, 0, 0);
+			_roadLayer.SetCellsTerrainConnect(_roadPositions, 0, 0);
 			RemoveResources(_roadObject);
-
 		}
 	}
-	
+
 	private bool CanPlaceRoad()
 	{
 		return !_roadPositions.Contains(_roadLayer.LocalToMap(GetGlobalMousePosition())) && CanAfford(_roadObject);
 	}
-	
 }

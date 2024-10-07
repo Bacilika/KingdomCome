@@ -1,7 +1,7 @@
 [gd_scene load_steps=20 format=4 uid="uid://vcvlb4vnybwc"]
 
 [ext_resource type="Script" path="res://Scripts/Game/GameMap.cs" id="1_owh02"]
-[ext_resource type="Script" path="res://Scripts/Game/GameCamera.cs" id="2_rjrjb"]
+[ext_resource type="PackedScene" uid="uid://rgnjdcqst55d" path="res://Scenes/Game/GameCamera.tscn" id="2_u0ysy"]
 [ext_resource type="Texture2D" uid="uid://dfqs8hmb86hff" path="res://Art/Ground Tileset/Tileset_Ground.png" id="3_ayklq"]
 [ext_resource type="Texture2D" uid="uid://c2hlx3kkqjc7h" path="res://Art/Water and Sand/Tileset_Water.png" id="4_rdbrl"]
 [ext_resource type="Texture2D" uid="uid://bam6r0w1dcr7v" path="res://Sprites/Extra/Tileset_Road-export.png" id="5_o0nfu"]
@@ -2062,8 +2062,7 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(-1112, -680, 792, -680,
 y_sort_enabled = true
 script = ExtResource("1_owh02")
 
-[node name="GameCamera" type="Camera2D" parent="."]
-script = ExtResource("2_rjrjb")
+[node name="GameCamera" parent="." instance=ExtResource("2_u0ysy")]
 
 [node name="GrassLayer" type="TileMapLayer" parent="."]
 top_level = true

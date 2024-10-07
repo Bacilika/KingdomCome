@@ -213,6 +213,7 @@ wait_time = 25.0
 [node name="GrassWalking" type="AudioStreamPlayer2D" parent="."]
 z_index = 1
 stream = ExtResource("3_kh5mf")
+volume_db = -2.0
 
 [node name="CitizenInfo" parent="." instance=ExtResource("4_pwgeb")]
 visible = false

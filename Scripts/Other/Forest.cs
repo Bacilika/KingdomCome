@@ -1,22 +1,21 @@
-using Godot;
-using System;
 using System.Collections.Generic;
+using Godot;
 
 public partial class Forest : Area2D
 {
 	private PackedScene _treeScene;
 	private CollisionShape2D area;
-	private RandomNumberGenerator rnd;
 	private int radius;
+	private RandomNumberGenerator rnd;
 	public List<Tree> trees;
-	
+
 	public override void _Ready()
 	{
 		area = GetNode<CollisionShape2D>("CollisionShape2D");
-		radius =(int) area.Shape.GetRect().Size.X/2;
+		radius = (int)area.Shape.GetRect().Size.X / 2;
 		rnd = new RandomNumberGenerator();
 		trees = [];
-		
+
 		_treeScene = ResourceLoader.Load<PackedScene>("res://Scenes/Other/Tree.tscn");
 		PlaceTrees(50);
 	}
@@ -28,7 +27,7 @@ public partial class Forest : Area2D
 
 	public void PlaceTrees(int amount)
 	{
-		for (int i = 0; i < amount; i++)
+		for (var i = 0; i < amount; i++)
 		{
 			var tree = _treeScene.Instantiate<Tree>();
 			GetParent<GameMap>().CallDeferred("add_child", tree);
@@ -43,20 +42,15 @@ public partial class Forest : Area2D
 				foreach (var placedTree in trees)
 				{
 					var distance = tree.Position - placedTree.Position;
-					if (distance.Length() < treeRadius * 2)
-					{
-						cantPlace = true;
-					}
+					if (distance.Length() < treeRadius * 2) cantPlace = true;
 				}
-
 			} while (cantPlace);
-			
-			var treeSprite = tree.GetNode<AnimatedSprite2D>("AnimatedSprite2D");
-			treeSprite.Frame = rnd.RandiRange(0, treeSprite.SpriteFrames.GetFrameCount("default")-1);
-			var height = treeSprite.SpriteFrames.GetFrameTexture("default", treeSprite.Frame).GetHeight();
-			treeSprite.Position = new Vector2(0, -height/2);
-			trees.Add(tree);
 
+			var treeSprite = tree.GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+			treeSprite.Frame = rnd.RandiRange(0, treeSprite.SpriteFrames.GetFrameCount("default") - 1);
+			var height = treeSprite.SpriteFrames.GetFrameTexture("default", treeSprite.Frame).GetHeight();
+			treeSprite.Position = new Vector2(0, -height / 2);
+			trees.Add(tree);
 		}
 	}
 }

@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://rgnjdcqst55d"]
+
+[ext_resource type="Script" path="res://Scripts/Game/GameCamera.cs" id="1_d00mg"]
+
+[node name="GameCamera" type="Camera2D"]
+script = ExtResource("1_d00mg")
+
+[node name="AudioListener2D" type="AudioListener2D" parent="."]
+z_index = 2
+current = true

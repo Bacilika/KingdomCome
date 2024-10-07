@@ -1,19 +1,19 @@
-using Godot;
 using System;
-using System.Net;
+using Godot;
+using KingdomCome.Scripts.Building;
 using Scripts.Constants;
 
 public abstract partial class Production : AbstractPlaceable
 {
-	protected string Producing;
-	private int _food;
-	protected Timer _timer;
-	protected int ProductionRate = 10; // 1/ProductionRate % chance to produce item by 1 each tick. 
 	[Signal]
 	public delegate void LookingForWorkersEventHandler(Productions production);
 
+	private int _food;
+	protected Timer _timer;
+	protected string Producing;
+	protected int ProductionRate = 10; // 1/ProductionRate % chance to produce item by 1 each tick. 
 
-	
+
 	public virtual void AtWorkTimerTimeout(Npc npc)
 	{
 		Console.WriteLine("Production instance");
@@ -21,10 +21,7 @@ public abstract partial class Production : AbstractPlaceable
 
 	protected override void Tick()
 	{
-		if ( _timer is not null && _timer.IsStopped())
-		{
-			_timer.Start();
-		}
+		if (_timer is not null && _timer.IsStopped()) _timer.Start();
 		UpdateInfo();
 	}
 
@@ -33,12 +30,11 @@ public abstract partial class Production : AbstractPlaceable
 		if (GetWorkers() > 0)
 		{
 			ProduceItem();
-			PlayAnimation();	
+			PlayAnimation();
 		}
 	}
 
 	public abstract void ProduceItem();
-	public abstract override void _Ready_instance();
 
 	public virtual void AtWork(Npc npc)
 	{
@@ -61,36 +57,28 @@ public abstract partial class Production : AbstractPlaceable
 		{
 			return false;
 		}
+
+		bool employed;
+		if (GameMenu.GameMode.Text == GameMode.JobChange)
+			employed = npc.GetJob(this, true);
 		else
+			employed = npc.GetJob(this);
+
+		if (employed)
 		{
-			bool employed;
-			if (GameMenu.GameMode.Text == GameMode.JobChange)
-			{
-				employed = npc.GetJob(this, true);
-			}
-			else
-			{
-				employed = npc.GetJob(this);
-			}
-			
-			if (employed)
-			{
-				GameLogistics.Resources[GameResource.Unemployed]--;
-				People.Add(npc);
-			}
-			
-			npc.OnAtWork += AtWork;
-			return true;
-			
-			
+			GameLogistics.Resources[GameResource.Unemployed]--;
+			People.Add(npc);
 		}
+
+		npc.OnAtWork += AtWork;
+		return true;
 	}
 
 	public void RemoveWorker(Npc npc)
 	{
 		People.Remove(npc);
 	}
-	
+
 	public void OnFoodTimerTimeout()
 	{
 		_food++;
@@ -98,14 +86,14 @@ public abstract partial class Production : AbstractPlaceable
 		float time = 15 - GetWorkers();
 		_timer.Start(time);
 	}
-	
+
 	protected override void OnDeleteInstance()
 	{
 	}
-	
+
 	public void UpdateInfo()
 	{
 		var info = $"Produces  {Producing}\nWorkers: {GetWorkers()} / {Upgrades[Upgrade.MaxWorkers][Level]}";
-		InfoBox.UpdateInfo(GetBuildingName(),info);
+		InfoBox.UpdateInfo(GetBuildingName(), info);
 	}
 }

@@ -1,14 +1,15 @@
 using Godot;
-using System;
-using System.Threading.Tasks;
+using KingdomCome.Scripts.Building;
 
 public partial class ShopIcon : Control
 {
-	public TextureButton Icon;
-	public Shop Shop;
 	private ProductionInfo _productionInfo;
+	public TextureButton Icon;
 
 	public AbstractPlaceable Product;
+
+	public Shop Shop;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -18,7 +19,6 @@ public partial class ShopIcon : Control
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		
 	}
 
 	public AbstractPlaceable GetProduct()
@@ -30,29 +30,23 @@ public partial class ShopIcon : Control
 	{
 		Product = product;
 		Shop = shop;
-		Icon.TextureNormal = product.AnimatedSprite.SpriteFrames.GetFrameTexture("default",0);
+		Icon.TextureNormal = product.AnimatedSprite.SpriteFrames.GetFrameTexture("default", 0);
 		var containerHeight = Size.Y;
 		var minimum = new Vector2(containerHeight, containerHeight);
 		SetCustomMinimumSize(minimum);
 		Icon.SetCustomMinimumSize(minimum);
 		CustomMinimumSize = minimum;
-		
+
 		Icon.Pressed += OnShopIconPressed;
 		Icon.MouseEntered += OnMouseEntered;
 		Icon.MouseExited += OnMouseExited;
-		if (!product.isUnlocked)
-		{
-			Icon.Disabled = false;
-		}
-
-		
+		if (!product.IsUnlocked) Icon.Disabled = false;
 	}
+
 	public void OnMouseEntered()
 	{
 		if (_productionInfo is null)
-		{
 			_productionInfo = Shop.GetParent().GetParent().GetParent<GameMenu>().ProductionInfo;
-		}
 		_productionInfo.setInfo(Product);
 		_productionInfo.Visible = true;
 	}
@@ -61,19 +55,12 @@ public partial class ShopIcon : Control
 	{
 		_productionInfo.Visible = false;
 	}
-	
+
 	public void OnShopIconPressed()
 	{
 		if (Product is Road road)
-		{
 			Shop.EmitSignal(Shop.SignalName.OnRoadBuild, road);
-			
-		}
 		else //road
-		{
 			Shop.EmitSignal(Shop.SignalName.OnBuildingButtonPressed, Product);
-			
-		}
-		
 	}
 }

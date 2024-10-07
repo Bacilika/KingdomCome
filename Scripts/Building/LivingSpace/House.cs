@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO.Pipes;
 using Scripts.Constants;
 
-public partial class House : LivingSpaces
+public partial class House : LivingSpace
 {
 	private int _growth = 5; // 1/_growth% chance to increase habitants by 1 each tick. 
 	private Npc Npc;
@@ -71,6 +71,8 @@ public partial class House : LivingSpaces
 
 		UpdateInfo();
 	}
+
+	public override void WhenShopReady(){}
 
 	private bool _isPeopleInside()
 	{

@@ -11,6 +11,9 @@ public abstract partial class Production : AbstractPlaceable
 	protected int ProductionRate = 10; // 1/ProductionRate % chance to produce item by 1 each tick. 
 	[Signal]
 	public delegate void LookingForWorkersEventHandler(Productions production);
+	
+	public abstract override void WhenShopReady();
+
 	protected override void Tick()
 	{
 		if ( _timer is not null && _timer.IsStopped())
@@ -31,6 +34,8 @@ public abstract partial class Production : AbstractPlaceable
 
 	public abstract void ProduceItem();
 	public abstract override void _Ready_instance();
+
+	public abstract void AtWork(Npc npc);
 
 	public int GetWorkers()
 	{
@@ -65,6 +70,8 @@ public abstract partial class Production : AbstractPlaceable
 				GameLogistics.Resources[GameResource.Unemployed]--;
 				People.Add(npc);
 			}
+			
+			npc.OnAtWork += AtWork;
 			return true;
 			
 			

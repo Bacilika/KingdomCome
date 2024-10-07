@@ -29,6 +29,7 @@ public partial class Flowerbed : AbstractPlaceable
 		};
 		
 	}
+	public override void WhenShopReady(){}
 
 
 	protected override void Tick()

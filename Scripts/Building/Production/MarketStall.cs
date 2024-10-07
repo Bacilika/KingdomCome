@@ -103,4 +103,10 @@ public partial class MarketStall : Production
 		sell = true;
 		price = 1;
 	}
+	
+	public override void AtWork(Npc npc)
+	{
+	}
+	public override void WhenShopReady(){}
+
 }

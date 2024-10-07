@@ -39,4 +39,10 @@ public partial class IronMine : Production
 	{
 		GameLogistics.Resources[GameResource.Iron]++;
 	}
+	
+	public override void AtWork(Npc npc)
+	{
+	}
+	public override void WhenShopReady(){}
+
 }

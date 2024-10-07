@@ -44,5 +44,12 @@ public partial class FarmHouse : Production
 		_food++;
 		GameLogistics.Resources[GameResource.Food]++;
 	}
+	
+	public override void AtWork(Npc npc)
+	{
+	}
+	
+	public override void WhenShopReady(){}
+
 
 }

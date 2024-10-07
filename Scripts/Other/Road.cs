@@ -21,6 +21,8 @@ public partial class Road : AbstractPlaceable
 		BuildingDescription = "Road for citizens to walk on";
 	}
 
+	public override void WhenShopReady(){}
+
 
 	public override void _Process(double delta)
 	{

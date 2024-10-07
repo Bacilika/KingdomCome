@@ -14,20 +14,17 @@ public class MoodReason
 
 public partial class Npc : CharacterBody2D
 {
-	public LivingSpaces Home;
+	public LivingSpace Home;
 	public Production Work;
 	private bool _focused;
 	private bool isUnemployed = true;
 	private NavigationAgent2D _navigation;
 	private float _speed = 100;
-	public Vector2 startPos;
 	public int Happiness = 10;
 	private bool _still;
 	
 	public Texture2D Sprite;
 	private AnimatedSprite2D _animation;
-	private Vector2 homePosition;
-	private Vector2 workPosition;
 	private Vector2 destination;
 	private bool _ready;
 	private Timer _timer;
@@ -38,12 +35,19 @@ public partial class Npc : CharacterBody2D
 	public Dictionary<string, MoodReason> moodReasons;
 	private bool _stopped;
 
+	public AbstractPlaceable PlaceablePosition;
+	private AbstractActivity activity;
+
+
 	private AnimatedSprite2D _hitAnimation;
 
 	private Vector2 _activityPosition;
 	
 	[Signal]
 	public delegate void OnJobChangeEventHandler(Npc npc);
+	
+	[Signal]
+	public delegate void OnAtWorkEventHandler(Npc npc);
 	
 	public override void _Ready()
 	{
@@ -56,7 +60,7 @@ public partial class Npc : CharacterBody2D
 		_navigation = GetNode<NavigationAgent2D>("NavigationAgent2D");
 		_timer = GetNode<Timer>("WorkTimer");
 		_walkingOnGrassSound = GetNode<AudioStreamPlayer2D>("GrassWalking");
-		destination = homePosition;
+		//destination = Home.Position;
 		Info = GetNode<CitizenInfo>("CitizenInfo");
 		Info.SetInfo(this);
 		Info.GetNode<HBoxContainer>("HBoxContainer").Visible = false;
@@ -112,12 +116,17 @@ public partial class Npc : CharacterBody2D
 				{
 					_timer.Start();
 					TurnOnAudio(false);
-					if (Work is StoneMine && destination == workPosition)
+					if (Work is StoneMine && destination == Work.Position)
 					{
 						_animation.Stop();
 						_animation.Visible = false;
 						_hitAnimation.Visible = true;
 						_hitAnimation.Play();
+					}
+
+					if (destination == Work.Position)
+					{
+						EmitSignal(SignalName.OnAtWork, this);
 					}
 				}
 				if (timerOut)
@@ -130,10 +139,11 @@ public partial class Npc : CharacterBody2D
 							_hitAnimation.Visible = false;
 							_animation.Visible = true;
 							_animation.Play();
-							
 						}
+						
+						
 						setDestination();
-						startPos = GetGlobalPosition();
+
 						timerOut = false;
 						_timer.Stop();
 						var nextPos = _navigation.GetNextPathPosition();
@@ -143,7 +153,7 @@ public partial class Npc : CharacterBody2D
 						_animation.Play();
 						
 						
-						if(destination == homePosition) Work.GatherResource();
+						if(destination == Home.Position) Work.GatherResource();
 					}
 				}
 
@@ -169,6 +179,8 @@ public partial class Npc : CharacterBody2D
 			}
 		}
 	}
+
+
 
 	private string GetDirection()
 	{
@@ -225,12 +237,7 @@ public partial class Npc : CharacterBody2D
 
 		return unhappyReason;
 	}
-
-	public void SetStartPos(Vector2 pos)
-	{
-		startPos = pos;
-		homePosition = startPos;
-	}
+	
 
 	public bool GetJob(Production production, bool change = false)
 	{
@@ -242,11 +249,11 @@ public partial class Npc : CharacterBody2D
 				Work.RemoveWorker(this);
 			}
 			Work = production;
-			workPosition = Work.Position;
 			moodReasons["Work"].Reason = "Has work";
 			moodReasons["Work"].Happiness = 1;
 			if (!change)
 			{
+				SwitchLocation();
 				setDestination();
 			}
 			
@@ -278,56 +285,77 @@ public partial class Npc : CharacterBody2D
 		}
 		QueueFree();
 	}
+	
+	
+	private void SwitchLocation()
+	{
+		if (PlaceablePosition is null)
+		{
+			PlaceablePosition = Home; 
+		}
+		switch (PlaceablePosition.BuildingName)
+		{
+			case var value when value == Home.BuildingName:
+			{
+				PlaceablePosition = Work;
+				break; 
+			}
+			case var value when value == Work.BuildingName:
+			{
+				if (FindActivity() != null){
+					PlaceablePosition = activity;
+					moodReasons["Activity"].Reason = "enjoys" + activity.BuildingName;
+					moodReasons["Activity"].Happiness = 2;
+				}
+				else
+				{
+					PlaceablePosition = Home;
+					moodReasons["Activity"].Reason = "No avaliable activity";
+					moodReasons["Activity"].Happiness = -2;
+				}
+				break; 
+			}
+			case var value when value == activity.BuildingName:
+			{
+				PlaceablePosition = Home;
+				break; 
+			}
+			default:
+			{
+				Console.WriteLine("Unknown building name");
+				break;
+			}
+		}
+	}
+
+	private AbstractPlaceable FindActivity()
+	{
+		if (_rnd.RandiRange(0, 3) == 0 && GameMap._placedActivities.Count > 0)
+		{
+			for (int i = 0; i < 5; i++)
+			{
+				var j = _rnd.RandiRange(0, GameMap._placedActivities.Count - 1);
+				if (activity.IsOpen)
+				{
+					activity = GameMap._placedActivities[j];
+					return activity;
+				}
+			}
+		}
+		return null;
+	}
+	
+	public void setDestination(Vector2 vec)
+	{
+		_navigation.SetTargetPosition(vec);
+		_navigation.GetNextPathPosition();
+		_ready = true;
+		TurnOnAudio(true);
+	}
 
 	public void setDestination()
 	{
-		if (Home.hasMoved)
-		{
-			homePosition = Home.Position;
-		}
-		if (Work.hasMoved)
-		{
-			workPosition = Work.Position;
-		}
-
-		if (_rnd.RandiRange(0, 3) == 0 && destination == workPosition && GameMap._placedActivities.Count > 0)
-		{
-			AbstractActivity activity;
-			int counter = 0;
-			do
-			{
-				var i = _rnd.RandiRange(0, GameMap._placedActivities.Count - 1);
-				activity = GameMap._placedActivities[i];
-				counter++;
-			} while (!activity.IsOpen && counter < 5);
-
-			if (activity.IsOpen)
-			{
-				destination = activity.Position;
-				moodReasons["Activity"].Reason = "enjoys" + activity.BuildingName;
-				moodReasons["Activity"].Happiness = 2;
-			}
-			else
-			{
-				destination = homePosition;
-				moodReasons["Activity"].Reason = "No avaliable activity";
-				moodReasons["Activity"].Happiness = -2;
-			}
-		}
-		else
-		{
-			if (destination == workPosition || destination == _activityPosition)
-			{
-				destination = homePosition;
-			}
-			else
-			{
-				destination = workPosition;
-			}
-
-		}
-	
-		_navigation.SetTargetPosition(destination);
+		_navigation.SetTargetPosition(PlaceablePosition.Position);
 		_navigation.GetNextPathPosition();
 		_ready = true;
 		TurnOnAudio(true);

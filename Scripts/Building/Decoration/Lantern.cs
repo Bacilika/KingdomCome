@@ -30,6 +30,7 @@ public partial class Lantern : AbstractPlaceable
 		
 	}
 
+	public override void WhenShopReady(){}
 
 	protected override void Tick()
 	{

@@ -1,10 +1,12 @@
 using Godot;
 using System;
 
-public abstract partial class LivingSpaces : AbstractPlaceable
+public abstract partial class LivingSpace : AbstractPlaceable
 {
 	protected abstract override void Tick();
 	public abstract override void _Ready_instance();
+
+	public abstract override void WhenShopReady();
 
 	public void MoveIntoHouse(Npc npc)
 	{
@@ -14,6 +16,8 @@ public abstract partial class LivingSpaces : AbstractPlaceable
 		InfoBox.PortraitContainer.AddChild(npcPortrait);
 		GetNode<AnimatedSprite2D>("HouseSprite").SetAnimation("Level 1 people inside");
 		GetNode<AnimatedSprite2D>("HouseSprite").Play();
+		npc.PlaceablePosition = this;
+
 	}
 
 	//protected override void OnDelete(){}

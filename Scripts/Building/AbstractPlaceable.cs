@@ -269,7 +269,8 @@ public abstract partial class AbstractPlaceable : Area2D
 			}
 		}
 	}
-	
+
+	public abstract void WhenShopReady();
 	
 	public void SetObjectValues()
 	{

@@ -16,6 +16,8 @@ public abstract partial class AbstractActivity: Production
 	{
 		GameLogistics.Resources[GameResource.Unemployed] += GetWorkers();
 	}
-	
-	
+
+	public abstract override void WhenShopReady();
+
+
 }

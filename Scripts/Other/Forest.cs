@@ -8,7 +8,7 @@ public partial class Forest : Area2D
 	private CollisionShape2D area;
 	private RandomNumberGenerator rnd;
 	private int radius;
-	private List<Tree> trees;
+	public List<Tree> trees;
 	
 	public override void _Ready()
 	{

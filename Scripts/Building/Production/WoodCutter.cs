@@ -68,15 +68,17 @@ public partial class WoodCutter : Production
 		GameLogistics.Resources[GameResource.Wood]++;
 	}
 
-	public override void WhenShopReady()
+	public override void OnParentReady()
 	{
 
 		try
 		{
 			forest = GetParent<GameMap>().GetNode<Forest>("Forest");
 		}
-		catch (Exception _){}
-
+		catch (Exception _)
+		{
+			// ignored
+		}
 	}
 
 }

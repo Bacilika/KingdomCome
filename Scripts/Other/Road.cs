@@ -22,10 +22,7 @@ public partial class Road : AbstractPlaceable
 	{
 	
 	}
-
-	public override void WhenShopReady(){}
-
-
+	
 	public override void _Process(double delta)
 	{
 	}

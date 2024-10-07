@@ -31,7 +31,7 @@ public partial class Forest : Area2D
 		for (int i = 0; i < amount; i++)
 		{
 			var tree = _treeScene.Instantiate<Tree>();
-			AddChild(tree);
+			GetParent<GameMap>().CallDeferred("add_child", tree);
 			var treeRadius = (tree.GetNode<CollisionShape2D>("CollisionShape2D").Shape.GetRect().Size / 2)[0];
 			bool cantPlace;
 			do

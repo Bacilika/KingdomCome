@@ -41,16 +41,8 @@ public partial class Church : AbstractActivity
 		};
 	}
 
-	public override void AtWork(Npc npc)
-	{
-	}
-
-	public override void WhenShopReady(){}
 
 	public override void ProduceItem()
-	{
-	}
-	public override void AtWorkTimerTimeout(Npc npc)
 	{
 	}
 }

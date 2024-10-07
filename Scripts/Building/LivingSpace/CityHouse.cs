@@ -43,8 +43,6 @@ public partial class CityHouse : LivingSpace
 	{
 		return Npc;
 	}
-	
-	public override void WhenShopReady(){}
 
 	
 	protected override void Tick()

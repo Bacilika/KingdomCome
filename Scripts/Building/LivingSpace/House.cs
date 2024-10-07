@@ -72,8 +72,6 @@ public partial class House : LivingSpace
 		UpdateInfo();
 	}
 
-	public override void WhenShopReady(){}
-
 	private bool _isPeopleInside()
 	{
 		foreach (var person in People)

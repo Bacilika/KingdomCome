@@ -6,8 +6,6 @@ public abstract partial class LivingSpace : AbstractPlaceable
 	protected abstract override void Tick();
 	public abstract override void _Ready_instance();
 
-	public abstract override void WhenShopReady();
-
 	public void MoveIntoHouse(Npc npc)
 	{
 		People.Add(npc);

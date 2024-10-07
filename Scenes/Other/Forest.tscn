@@ -12,3 +12,4 @@ script = ExtResource("1_k7ph0")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 y_sort_enabled = true
 shape = SubResource("CircleShape2D_3fe4r")
+disabled = true

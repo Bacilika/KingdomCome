@@ -40,14 +40,4 @@ public partial class Well : Production
 	{
 		GameLogistics.Resources[GameResource.Water]++;
 	}
-	
-	public override void AtWork(Npc npc)
-	{
-	}
-	public override void WhenShopReady(){}
-
-	public override void AtWorkTimerTimeout(Npc npc)
-	{
-	}
-
 }

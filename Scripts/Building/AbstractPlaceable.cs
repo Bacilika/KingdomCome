@@ -50,7 +50,17 @@ public abstract partial class AbstractPlaceable : Area2D
 	
 	protected abstract void Tick();
 	public abstract void _Ready_instance();
-	protected abstract void OnDeleteInstance();
+
+	protected virtual void OnDeleteInstance()
+	{
+		Console.WriteLine("AbstractPlaceable OnDeleteInstance");
+	}
+
+	public virtual void OnParentReady()
+	{
+		Console.WriteLine("AbstractPlaceable OnParentReady");
+	}
+
 	public void OnDelete()
 	{
 		OnDeleteInstance();
@@ -100,7 +110,7 @@ public abstract partial class AbstractPlaceable : Area2D
 		
 		_Ready_instance();
 		SetObjectValues();
-		WhenShopReady();
+		OnParentReady();
 	}
 
 	public string GetBuildingName()
@@ -147,19 +157,34 @@ public abstract partial class AbstractPlaceable : Area2D
 	
 	private void OnAreaEntered(Area2D other)
 	{
-		var building = (AbstractPlaceable)other;
-		building.Colliding = true;
-		if(IsPlaced)
+		if (other is Tree tree )
 		{
-			EmitSignal(SignalName.OnAreaUpdated,true);
-		}			
+			Console.WriteLine("Tree collision");
+		}
+		else
+		{
+			var building = (AbstractPlaceable)other;
+			building.Colliding = true;
+			if(IsPlaced)
+			{
+				EmitSignal(SignalName.OnAreaUpdated,true);
+			}	
+		}
+		
 	}
 	
 	private void OnAreaExited(Area2D other)
 	{
-		var building = (AbstractPlaceable)other;
-		building.Colliding = false;
-		EmitSignal(SignalName.OnAreaUpdated,false);
+		if (other is Tree tree )
+		{
+			Console.WriteLine("Tree exited");
+		}
+		else
+		{
+			var building = (AbstractPlaceable)other;
+			building.Colliding = false;
+			EmitSignal(SignalName.OnAreaUpdated,false);
+		}
 	}
 	
 
@@ -270,9 +295,6 @@ public abstract partial class AbstractPlaceable : Area2D
 			}
 		}
 	}
-
-	public abstract void WhenShopReady();
-	
 	public void SetObjectValues()
 	{
 		AnimatedSprite.Frame = Level;

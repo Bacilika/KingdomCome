@@ -27,7 +27,7 @@ public partial class Npc : CharacterBody2D
 	private AnimatedSprite2D _animation;
 	private Vector2 destination;
 	private bool _ready;
-	private Timer _timer;
+	private Timer _workTimer;
 	private bool timerOut;
 	private RandomNumberGenerator _rnd = new (); 
 	private AudioStreamPlayer2D _walkingOnGrassSound;
@@ -39,9 +39,6 @@ public partial class Npc : CharacterBody2D
 	private AbstractActivity activity;
 
 	public Timer AtWorkTimer;
-
-
-	private AnimatedSprite2D _hitAnimation;
 
 	private Vector2 _activityPosition;
 	
@@ -55,12 +52,9 @@ public partial class Npc : CharacterBody2D
 	{
 		_animation = GetNode<AnimatedSprite2D>("WalkingAnimation");
 		Sprite = _animation.SpriteFrames.GetFrameTexture("walkUp", 0);
-		_hitAnimation = GetNode<AnimatedSprite2D>("IronAnimation");
-		_hitAnimation.Visible = false;
-		_hitAnimation.Stop();
 		AtWorkTimer = GetNode<Timer>("AtWorkTimer");
 		_navigation = GetNode<NavigationAgent2D>("NavigationAgent2D");
-		_timer = GetNode<Timer>("WorkTimer");
+		_workTimer = GetNode<Timer>("WorkTimer");
 		_walkingOnGrassSound = GetNode<AudioStreamPlayer2D>("GrassWalking");
 		//destination = Home.Position;
 		Info = GetNode<CitizenInfo>("CitizenInfo");
@@ -88,7 +82,7 @@ public partial class Npc : CharacterBody2D
 	}
 	
 	
-	private void TurnOnAudio(bool on)
+	private void ToggleWalkingSound(bool on)
 	{
 		if (on)
 		{
@@ -110,85 +104,59 @@ public partial class Npc : CharacterBody2D
 	
 	public override void _PhysicsProcess(double delta)
 	{
-		if (_ready)
+		if (!_ready || NavigationServer2D.MapGetIterationId(_navigation.GetNavigationMap()) == 0) return; //Not ready
+
+		if (_stopped) //stopped by player
 		{
-			if (NavigationServer2D.MapGetIterationId(_navigation.GetNavigationMap()) == 0)
-			{
-				return;
-			}
-
-			if (_navigation.DistanceToTarget() < 10)
-			{
-				_still = true;
-				_animation.Stop();
-				if (_timer.IsStopped())
-				{
-					_timer.Start();
-					TurnOnAudio(false);
-					if (Work is StoneMine && destination == Work.Position)
-					{
-						_animation.Stop();
-						_animation.Visible = false;
-						_hitAnimation.Visible = true;
-						_hitAnimation.Play();
-					}
-
-					if (PlaceablePosition == Work)
-					{
-						EmitSignal(SignalName.OnAtWork, this);
-					}
-				}
-				if (timerOut)
-				{
-					if (_rnd.RandiRange(0, 10)==0) //to make their movement a bit less monotone
-					{
-						if (Work is StoneMine or IronMine)
-						{
-							_hitAnimation.Stop();
-							_hitAnimation.Visible = false;
-							_animation.Visible = true;
-							_animation.Play();
-						}
-						
-						SwitchLocation();
-						SetDestination();
-
-						timerOut = false;
-						_timer.Stop();
-						var nextPos = _navigation.GetNextPathPosition();
-						Vector2 new_vel =  (GlobalPosition.DirectionTo(nextPos) * _speed);
-						Velocity = new_vel;
-						MoveAndSlide();
-						_animation.Play();
-						
-						
-						if(destination == Home.Position) Work.GatherResource();
-					}
-				}
-
-			}
-			else
-			{
-				_still = false;
-				if (!_stopped)
-				{
-					TurnOnAudio(true);
-					_animation.Play();
-					var nextPos = _navigation.GetNextPathPosition();
-					Vector2 new_vel =  (GlobalPosition.DirectionTo(nextPos) * _speed);
-					Velocity = new_vel;
-					MoveAndSlide();
-					_animation.Animation = GetDirection();
-				}
-				else
-				{
-					_animation.Stop();
-					TurnOnAudio(false);
-				}
-			}
+			_animation.Stop();
+			ToggleWalkingSound(false);
+			return;
 		}
+		
+		if (_navigation.DistanceToTarget() > 10) //not at destination
+		{
+			_still = false;
+			Move();
+			
+		}
+		
+		else //if at destination
+		{
+			if (_workTimer.IsStopped()) //Reach Work
+			{
+				_workTimer.Start();
+				ToggleWalkingSound(false);
+				_animation.Animation = "work";
+				
+				if (PlaceablePosition == Work)
+				{
+					EmitSignal(SignalName.OnAtWork, this);
+				}
+			}
+			if (timerOut) //done at work
+			{
+				if (_rnd.RandiRange(0, 10)==0) //to make their movement a bit less monotone
+				{
+					SwitchLocation();
+					SetDestination();
+
+					timerOut = false;
+					_workTimer.Stop();
+					if(destination == Home.Position) Work.GatherResource();
+				}
+			}
+
+		}
+
 	}
 
+	public void Move()
+	{
+		Velocity = GlobalPosition.DirectionTo(_navigation.GetNextPathPosition()) * _speed;
+		_animation.Animation = GetDirection();
+		MoveAndSlide();
+		_animation.Play();
+	}
 
 
 	private string GetDirection()
@@ -335,7 +303,7 @@ public partial class Npc : CharacterBody2D
 		}
 	}
 
-	private AbstractPlaceable FindActivity()
+	private AbstractActivity FindActivity()
 	{
 		if (_rnd.RandiRange(0, 3) == 0 && GameMap._placedActivities.Count > 0)
 		{
@@ -356,8 +324,6 @@ public partial class Npc : CharacterBody2D
 	{
 		_navigation.SetTargetPosition(vec);
 		_navigation.GetNextPathPosition();
-		_ready = true;
-		TurnOnAudio(true);
 	}
 
 	public void SetDestination()
@@ -365,7 +331,7 @@ public partial class Npc : CharacterBody2D
 		_navigation.SetTargetPosition(PlaceablePosition.Position);
 		_navigation.GetNextPathPosition();
 		_ready = true;
-		TurnOnAudio(true);
+		ToggleWalkingSound(true);
 	}
 
 	public void OnMouseEntered()

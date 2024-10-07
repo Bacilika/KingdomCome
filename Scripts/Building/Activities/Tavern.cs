@@ -48,14 +48,6 @@ public partial class Tavern : AbstractActivity
 		}
 
 	}
+
 	
-	public override void AtWork(Npc npc)
-	{
-	}
-	public override void WhenShopReady(){}
-	public override void AtWorkTimerTimeout(Npc npc)
-	{
-	}
-
-
 }

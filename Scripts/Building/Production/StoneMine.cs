@@ -38,14 +38,6 @@ public partial class StoneMine : Production
 	{
 		GameLogistics.Resources[GameResource.Stone]++;
 	}
-
 	
-	public override void AtWork(Npc npc)
-	{
-	}
-	public override void WhenShopReady(){}
-
-	public override void AtWorkTimerTimeout(Npc npc)
-	{
-	}
+	
 }

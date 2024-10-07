@@ -40,17 +40,7 @@ public partial class HunterLodge : Production
 	{
 		GameLogistics.Resources[GameResource.Food]++;
 	}
+
 	
-	public override void AtWork(Npc npc)
-	{
-	}
-
-	public override void WhenShopReady()
-	{
-	}
-
-	public override void AtWorkTimerTimeout(Npc npc)
-	{
-	}
 	
 }

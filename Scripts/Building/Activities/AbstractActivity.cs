@@ -7,8 +7,6 @@ public abstract partial class AbstractActivity : Production
     public bool IsOpen = true;
     public int maxVisitors = 10;
     public int visitors;
-    
-    public abstract override void ProduceItem();
     protected override void Tick()
     {
         UpdateInfo();

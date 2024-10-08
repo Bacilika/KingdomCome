@@ -76,11 +76,11 @@ rendering_quadrant_size = 32
 collision_enabled = false
 
 [node name="Level" type="Label" parent="MenuCanvasLayer/Container"]
-layout_mode = 0
-offset_left = 15.0
-offset_top = -484.0
-offset_right = 101.0
-offset_bottom = -455.0
+layout_mode = 1
+offset_left = 9.0
+offset_top = 45.0
+offset_right = 95.0
+offset_bottom = 74.0
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("3_d13wb")
 theme_override_font_sizes/font_size = 26
@@ -88,10 +88,10 @@ text = "Level: 0"
 
 [node name="Day" type="Label" parent="MenuCanvasLayer/Container"]
 layout_mode = 0
-offset_left = 20.0
-offset_top = -453.0
-offset_right = 96.0
-offset_bottom = -424.0
+offset_left = 8.0
+offset_top = 80.0
+offset_right = 84.0
+offset_bottom = 109.0
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("3_d13wb")
 theme_override_font_sizes/font_size = 26

@@ -17,7 +17,14 @@ public partial class Productions : AbstractShopIconContainer
 				.Instantiate<StoneMine>(),
 			ResourceLoader.Load<PackedScene>("res://Scenes/Building/Production/Well.tscn").Instantiate<Well>(),
 			ResourceLoader.Load<PackedScene>("res://Scenes/Building/Production/WoodCutter.tscn")
-				.Instantiate<WoodCutter>()
+				.Instantiate<WoodCutter>(), 
+			ResourceLoader.Load<PackedScene>("res://Scenes/Building/Production/Windmill.tscn")
+			.Instantiate<Windmill>(),
+			ResourceLoader.Load<PackedScene>("res://Scenes/Building/Production/Bakery.tscn")
+			.Instantiate<Bakery>(), 
+			ResourceLoader.Load<PackedScene>("res://Scenes/Building/Production/Brewery.tscn")
+				.Instantiate<Brewery>()
+			
 		];
 	}
 }

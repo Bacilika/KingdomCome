@@ -1,14 +1,17 @@
+using Godot;
+using System;
 using System.Collections.Generic;
-using KingdomCome.Scripts.Building.Activities;
 using Scripts.Constants;
 
-public partial class Tavern : AbstractActivity
-{
+public partial class Bakery : Production{
+	// Called when the node enters the scene tree for the first time.
 	protected override void _Ready_instance()
 	{
-		PlayerLevel = 2;
-		BuildingName = "Tavern";
-		BuildingDescription = "A place for citizens to gather and drink beer. Requires water and food";
+		BuildingName = "Bakery";
+		BuildingDescription = "Produces bread from wheat";
+		Producing = GameResource.Stone;
+		ProductionRate = 2;
+		PlayerLevel = 5;
 		Upgrades = new Dictionary<string, List<int>>
 		{
 			{ Upgrade.MaxWorkers, [5, 7, 10] }
@@ -32,15 +35,6 @@ public partial class Tavern : AbstractActivity
 
 	public override void ProduceItem()
 	{
-		if (GameLogistics.Resources[GameResource.Food] > 0 && GameLogistics.Resources[GameResource.Water] > 0)
-		{
-			GameLogistics.Resources[GameResource.Food]--;
-			GameLogistics.Resources[GameResource.Water]--;
-			IsOpen = true;
-		}
-		else
-		{
-			IsOpen = false;
-		}
+		GameLogistics.Resources[GameResource.Stone]++;
 	}
 }

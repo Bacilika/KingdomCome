@@ -1,0 +1,102 @@
+[gd_scene load_steps=16 format=3 uid="uid://2m2io2mmgtv7"]
+
+[ext_resource type="Script" path="res://Scripts/Building/Production/Bakery.cs" id="1_xtybq"]
+[ext_resource type="Texture2D" uid="uid://dt1kbfdm7dk2a" path="res://Sprites/Extra/addResource1.png" id="2_oercm"]
+[ext_resource type="Texture2D" uid="uid://m03jkap8ov7y" path="res://Sprites/Edificios 2d Medieval/Edificios 2d Medieval/House (36).png" id="2_wwodf"]
+[ext_resource type="Texture2D" uid="uid://co3y7ufhufouh" path="res://Sprites/Extra/addResource2.png" id="3_afa1g"]
+[ext_resource type="Texture2D" uid="uid://bre1yyku1dqbi" path="res://Sprites/Edificios 2d Medieval/Edificios 2d Medieval/House (48).png" id="3_e6s6g"]
+[ext_resource type="Texture2D" uid="uid://bpp4m7x6k6cyf" path="res://Sprites/Extra/addResource3.png" id="4_ax1xk"]
+[ext_resource type="Texture2D" uid="uid://c6fp3ybs8oe4j" path="res://Sprites/Edificios 2d Medieval/Edificios 2d Medieval/House (49).png" id="4_eq135"]
+[ext_resource type="Texture2D" uid="uid://bjtqfmauw1cfk" path="res://Sprites/Extra/addResource4.png" id="5_rxir4"]
+[ext_resource type="Texture2D" uid="uid://bh7bofwv2v6rn" path="res://Sprites/Extra/addResource5.png" id="6_v7t1y"]
+[ext_resource type="Texture2D" uid="uid://c2s5x2ag6prrg" path="res://Sprites/Extra/addResource6.png" id="7_ya7ey"]
+[ext_resource type="Texture2D" uid="uid://epbdr1v164x7" path="res://Sprites/Extra/addResource8.png" id="8_g3squ"]
+[ext_resource type="PackedScene" uid="uid://biil4p82w3tjw" path="res://Scenes/Building/PlaceableInfo.tscn" id="9_cubs1"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wjt6n"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_wwodf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_e6s6g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_eq135")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cews5"]
+size = Vector2(67, 139)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6fe6w"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_oercm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_afa1g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_ax1xk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_rxir4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_v7t1y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_ya7ey")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_g3squ")
+}],
+"loop": false,
+"name": &"default",
+"speed": 6.0
+}]
+
+[node name="Bakery" type="Area2D"]
+script = ExtResource("1_xtybq")
+
+[node name="FoodTimer" type="Timer" parent="."]
+wait_time = 30.0
+autostart = true
+
+[node name="HouseSprite" type="AnimatedSprite2D" parent="."]
+z_index = 1
+scale = Vector2(0.538025, 0.538025)
+sprite_frames = SubResource("SpriteFrames_wjt6n")
+frame_progress = 0.935727
+
+[node name="CollisionShape0" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(-1.5, 3.5)
+shape = SubResource("RectangleShape2D_cews5")
+
+[node name="CollisionShape1" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(-2, -2)
+shape = SubResource("RectangleShape2D_cews5")
+
+[node name="CollisionShape2" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_cews5")
+
+[node name="Animation" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -88)
+sprite_frames = SubResource("SpriteFrames_6fe6w")
+
+[node name="PlaceableInfo" parent="." instance=ExtResource("9_cubs1")]
+
+[connection signal="area_entered" from="." to="." method="OnAreaEntered"]
+[connection signal="area_exited" from="." to="." method="OnAreaExited"]
+[connection signal="mouse_entered" from="." to="." method="OnMouseEntered"]
+[connection signal="mouse_exited" from="." to="." method="OnMouseExited"]
+[connection signal="timeout" from="FoodTimer" to="." method="OnFoodTimerTimeout"]

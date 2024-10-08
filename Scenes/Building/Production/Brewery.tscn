@@ -1,0 +1,101 @@
+[gd_scene load_steps=16 format=3 uid="uid://cpmmpxvxf4bb7"]
+
+[ext_resource type="Script" path="res://Scripts/Building/Production/Brewery.cs" id="1_efmpo"]
+[ext_resource type="Texture2D" uid="uid://dutncfp67n5et" path="res://Sprites/Edificios 2d Medieval/Edificios 2d Medieval/House (70).png" id="2_deig2"]
+[ext_resource type="Texture2D" uid="uid://dt1kbfdm7dk2a" path="res://Sprites/Extra/addResource1.png" id="2_e43ny"]
+[ext_resource type="Texture2D" uid="uid://cpwrh12u2rl5e" path="res://Sprites/Edificios 2d Medieval/Edificios 2d Medieval/Barrel.png" id="3_1xenw"]
+[ext_resource type="Texture2D" uid="uid://co3y7ufhufouh" path="res://Sprites/Extra/addResource2.png" id="3_yc6tw"]
+[ext_resource type="Texture2D" uid="uid://bpp4m7x6k6cyf" path="res://Sprites/Extra/addResource3.png" id="4_cks7f"]
+[ext_resource type="Texture2D" uid="uid://bmhc8k76eo7j7" path="res://Sprites/Edificios 2d Medieval/Edificios 2d Medieval/House (85).png" id="4_t6cqs"]
+[ext_resource type="Texture2D" uid="uid://bjtqfmauw1cfk" path="res://Sprites/Extra/addResource4.png" id="5_1our5"]
+[ext_resource type="Texture2D" uid="uid://bh7bofwv2v6rn" path="res://Sprites/Extra/addResource5.png" id="6_n7tgl"]
+[ext_resource type="Texture2D" uid="uid://c2s5x2ag6prrg" path="res://Sprites/Extra/addResource6.png" id="7_ywvpm"]
+[ext_resource type="Texture2D" uid="uid://epbdr1v164x7" path="res://Sprites/Extra/addResource8.png" id="8_fyuea"]
+[ext_resource type="PackedScene" uid="uid://biil4p82w3tjw" path="res://Scenes/Building/PlaceableInfo.tscn" id="9_sj4xx"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wjt6n"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_1xenw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_deig2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_t6cqs")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cews5"]
+size = Vector2(67, 139)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6fe6w"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_e43ny")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_yc6tw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_cks7f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_1our5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_n7tgl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_ywvpm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_fyuea")
+}],
+"loop": false,
+"name": &"default",
+"speed": 6.0
+}]
+
+[node name="Brewery" type="Area2D"]
+script = ExtResource("1_efmpo")
+
+[node name="FoodTimer" type="Timer" parent="."]
+wait_time = 30.0
+autostart = true
+
+[node name="HouseSprite" type="AnimatedSprite2D" parent="."]
+z_index = 1
+scale = Vector2(0.614323, 0.614323)
+sprite_frames = SubResource("SpriteFrames_wjt6n")
+
+[node name="CollisionShape0" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(-1.5, 3.5)
+shape = SubResource("RectangleShape2D_cews5")
+
+[node name="CollisionShape1" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(-2, -2)
+shape = SubResource("RectangleShape2D_cews5")
+
+[node name="CollisionShape2" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_cews5")
+
+[node name="Animation" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -88)
+sprite_frames = SubResource("SpriteFrames_6fe6w")
+
+[node name="PlaceableInfo" parent="." instance=ExtResource("9_sj4xx")]
+
+[connection signal="area_entered" from="." to="." method="OnAreaEntered"]
+[connection signal="area_exited" from="." to="." method="OnAreaExited"]
+[connection signal="mouse_entered" from="." to="." method="OnMouseEntered"]
+[connection signal="mouse_exited" from="." to="." method="OnMouseExited"]
+[connection signal="timeout" from="FoodTimer" to="." method="OnFoodTimerTimeout"]

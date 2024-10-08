@@ -1,0 +1,118 @@
+[gd_scene load_steps=18 format=3 uid="uid://c8tuntaljjw20"]
+
+[ext_resource type="Script" path="res://Scripts/Building/Production/Windmill.cs" id="1_7g1uc"]
+[ext_resource type="Texture2D" uid="uid://de10h0k630dw7" path="res://Sprites/Extra/Buildings/windmill.png" id="2_3uijp"]
+[ext_resource type="Texture2D" uid="uid://dt1kbfdm7dk2a" path="res://Sprites/Extra/addResource1.png" id="5_pjkqj"]
+[ext_resource type="Texture2D" uid="uid://co3y7ufhufouh" path="res://Sprites/Extra/addResource2.png" id="6_yubyo"]
+[ext_resource type="Texture2D" uid="uid://bpp4m7x6k6cyf" path="res://Sprites/Extra/addResource3.png" id="7_j1lcw"]
+[ext_resource type="Texture2D" uid="uid://bjtqfmauw1cfk" path="res://Sprites/Extra/addResource4.png" id="8_dwff3"]
+[ext_resource type="Texture2D" uid="uid://bh7bofwv2v6rn" path="res://Sprites/Extra/addResource5.png" id="9_vhfow"]
+[ext_resource type="Texture2D" uid="uid://c2s5x2ag6prrg" path="res://Sprites/Extra/addResource6.png" id="10_0nfs2"]
+[ext_resource type="Texture2D" uid="uid://epbdr1v164x7" path="res://Sprites/Extra/addResource8.png" id="11_y8mgy"]
+[ext_resource type="PackedScene" uid="uid://biil4p82w3tjw" path="res://Scenes/Building/PlaceableInfo.tscn" id="12_f3t5t"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nw2ii"]
+atlas = ExtResource("2_3uijp")
+region = Rect2(64, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qr21g"]
+atlas = ExtResource("2_3uijp")
+region = Rect2(128, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sj114"]
+atlas = ExtResource("2_3uijp")
+region = Rect2(192, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iashv"]
+atlas = ExtResource("2_3uijp")
+region = Rect2(256, 64, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wjt6n"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nw2ii")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qr21g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sj114")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iashv")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cews5"]
+size = Vector2(67, 139)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6fe6w"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_pjkqj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_yubyo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_j1lcw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_dwff3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_vhfow")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_0nfs2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_y8mgy")
+}],
+"loop": false,
+"name": &"default",
+"speed": 6.0
+}]
+
+[node name="Windmill" type="Area2D"]
+script = ExtResource("1_7g1uc")
+
+[node name="FoodTimer" type="Timer" parent="."]
+wait_time = 30.0
+autostart = true
+
+[node name="HouseSprite" type="AnimatedSprite2D" parent="."]
+z_index = 1
+scale = Vector2(3.08084, 3.08084)
+sprite_frames = SubResource("SpriteFrames_wjt6n")
+
+[node name="CollisionShape0" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(-1.5, 3.5)
+shape = SubResource("RectangleShape2D_cews5")
+
+[node name="CollisionShape1" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(-2, -2)
+shape = SubResource("RectangleShape2D_cews5")
+
+[node name="CollisionShape2" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_cews5")
+
+[node name="Animation" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -88)
+sprite_frames = SubResource("SpriteFrames_6fe6w")
+
+[node name="PlaceableInfo" parent="." instance=ExtResource("12_f3t5t")]
+
+[connection signal="area_entered" from="." to="." method="OnAreaEntered"]
+[connection signal="area_exited" from="." to="." method="OnAreaExited"]
+[connection signal="mouse_entered" from="." to="." method="OnMouseEntered"]
+[connection signal="mouse_exited" from="." to="." method="OnMouseExited"]
+[connection signal="timeout" from="FoodTimer" to="." method="OnFoodTimerTimeout"]

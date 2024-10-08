@@ -4,7 +4,7 @@ using Scripts.Constants;
 
 public partial class Flowerbed : AbstractPlaceable
 {
-    public int increaseHappiness = 1;
+	public int increaseHappiness = 1;
 
     protected override void _Ready_instance()
     {

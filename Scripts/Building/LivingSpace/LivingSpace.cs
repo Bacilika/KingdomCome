@@ -1,9 +1,37 @@
 using Godot;
 using KingdomCome.Scripts.Building;
+using KingdomCome.Scripts.Other;
+using Scripts.Constants;
 
 public abstract partial class LivingSpace : AbstractPlaceable
 {
-    protected abstract override void Tick();
+    protected int Growth = 5; // 1/_growth% chance to increase habitants by 1 each tick. 
+    [Signal]
+    public delegate void OnCreateNpcEventHandler(House house);
+
+    public string HouseholdName = NameGenerator.GenerateLastName();
+
+    protected virtual void DoAction()
+    {
+    }
+
+    protected override void Tick()
+    {
+        if (Inhabitants < Upgrades[Upgrade.MaxInhabitants][Level])
+        {
+            if (Rnd.RandiRange(0, Growth) == 0)
+            {
+                Inhabitants++;
+                GameLogistics.Resources[GameResource.Citizens]++;
+                PlayAnimation();
+                EmitSignal(SignalName.OnCreateNpc, this);
+            }
+        }
+
+        DoAction();
+        UpdateInfo();
+
+    }
 
     public void MoveIntoHouse(Npc npc)
     {
@@ -15,11 +43,18 @@ public abstract partial class LivingSpace : AbstractPlaceable
         GetNode<AnimatedSprite2D>("HouseSprite").Play();
         npc.PlaceablePosition = this;
     }
-
-    //protected override void OnDelete(){}
-
-
-    protected override void OnDeleteInstance()
+    public void UpdateInfo()
     {
+        if (People.Count == 0)
+        {
+            InfoBox.UpdateInfo("Empty House",
+                "Inhabitants: " + Inhabitants + "/" + Upgrades[Upgrade.MaxInhabitants][Level]);
+        }
+        else
+        {
+            InfoBox.UpdateInfo($"The {HouseholdName}'s",
+                "Inhabitants: " + Inhabitants + "/" + Upgrades[Upgrade.MaxInhabitants][Level]);
+        }
+
     }
 }

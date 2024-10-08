@@ -50,7 +50,10 @@ public abstract partial class AbstractPlaceable : Area2D
 
     public Dictionary<string, List<int>> Upgrades;
 
-    protected abstract void Tick();
+    protected virtual void Tick()
+    {
+        
+    }
     protected abstract void _Ready_instance();
 
     protected virtual void OnDeleteInstance()

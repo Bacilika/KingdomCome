@@ -4,9 +4,6 @@ using Scripts.Constants;
 
 public partial class CityHouse : LivingSpace
 {
-    [Signal]
-    public delegate void OnCreateNpcEventHandler(CityHouse house);
-
     private int _growth = 5; // 1/_growth% chance to increase habitants by 1 each tick. 
     private Npc Npc;
 
@@ -36,41 +33,8 @@ public partial class CityHouse : LivingSpace
             { GameResource.Stone, [2, 3, 4] }
         };
     }
-
     public Npc GetNpc()
     {
         return Npc;
-    }
-
-
-    protected override void Tick()
-    {
-        if (Inhabitants < Upgrades[Upgrade.MaxInhabitants][Level])
-            if (Rnd.RandiRange(0, _growth) == 0)
-            {
-                Inhabitants++;
-                GameLogistics.Resources["Citizens"]++;
-                PlayAnimation();
-                EmitSignal(SignalName.OnCreateNpc, this);
-            }
-
-        UpdateInfo();
-    }
-
-    public void MoveIntoHouse(Npc npc)
-    {
-        People.Add(npc);
-        var npcPortrait = InfoBox.CitizenPortrait.Instantiate<CitizenPortraitButton>();
-        npcPortrait.npc = npc;
-        InfoBox.PortraitContainer.AddChild(npcPortrait);
-        GetNode<AnimatedSprite2D>("HouseSprite").SetAnimation("Level 1 people inside");
-        GetNode<AnimatedSprite2D>("HouseSprite").Play();
-    }
-
-
-    public void UpdateInfo()
-    {
-        InfoBox.UpdateInfo(GetBuildingName(),
-            "Inhabitants: " + Inhabitants + "/" + Upgrades[Upgrade.MaxInhabitants][Level]);
     }
 }

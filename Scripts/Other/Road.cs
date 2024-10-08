@@ -4,10 +4,6 @@ using Scripts.Constants;
 
 public partial class Road : AbstractPlaceable
 {
-	protected override void Tick()
-	{
-	}
-
 	protected override void _Ready_instance()
 	{
 		BuildingName = "Road";
@@ -18,11 +14,4 @@ public partial class Road : AbstractPlaceable
 		};
 	}
 
-	protected override void OnDeleteInstance()
-	{
-	}
-
-	public override void _Process(double delta)
-	{
-	}
 }

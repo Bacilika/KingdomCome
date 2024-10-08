@@ -19,13 +19,17 @@ public partial class GameMap : Node2D
 	private AudioStreamPlayer2D _music;
 	public List<LivingSpace> _placedHouses = [];
 	public List<Production> _placedProduction = [];
+	private PackedScene NPCScene;
+	private PackedScene infoScene;
 
 	private double _timeSinceLastTick;
 
 	public List<Npc> Citizens = [];
-
-	// Called when the node enters the scene tree for the first time.
-	private int hungry;
+	[Signal]
+	public delegate void SendLogEventHandler(string log);
+	[Signal]
+	public delegate void DayOverEventHandler();
+	
 
 
 	public override void _Ready()
@@ -40,17 +44,14 @@ public partial class GameMap : Node2D
 		var nav = GetNode<NavigationRegion2D>("NavigationRegion2D");
 		nav.BakeNavigationPolygon();
 		_gameMenu = GetNode<GameMenu>("GameMenu");
+		SendLog += _gameMenu.GameLog.CreateLog;
+		NPCScene = ResourceLoader.Load<PackedScene>("res://Scenes/Other/NPC.tscn");
+		infoScene = ResourceLoader.Load<PackedScene>("res://Scenes/Building/CitizenInfo.tscn");
 	}
 
 	public override void _Process(double delta)
 	{
 		_timeSinceLastTick += delta;
-		if (GameLogistics.Resources[GameResource.Food] > 0 && GameLogistics.Resources[GameResource.Wood] > 0)
-		{
-			_foodTimer.Start();
-			hungry = 0;
-		}
-
 		if (GameLogistics.Resources[GameResource.Unemployed] > 0) //there are unemployed
 			GiveJobToNpcs();
 	}
@@ -63,24 +64,15 @@ public partial class GameMap : Node2D
 
 	private void OnEatFoodTimerTimedout()
 	{
-		hungry++;
-		Console.WriteLine("Your citizens are Hungry!");
-		if (hungry > 5) Console.WriteLine("Game Over :(");
 	}
 
 	public void PlaceBuilding(Node2D nodeObject)
 	{
 		var placeable = (AbstractPlaceable)nodeObject;
-		if (placeable is House house)
+		if (placeable is LivingSpace livingSpace)
 		{
-			house.OnCreateNpc += PlaceNpc;
-			_placedHouses.Add(house);
-		}
-
-		if (placeable is CityHouse cityHouse)
-		{
-			cityHouse.OnCreateNpc += PlaceNpc;
-			_placedHouses.Add(cityHouse);
+			livingSpace.OnCreateNpc += PlaceNpc;
+			_placedHouses.Add(livingSpace);
 		}
 		else if (placeable is AbstractActivity activity)
 		{
@@ -90,22 +82,25 @@ public partial class GameMap : Node2D
 		if (placeable is Production production) _placedProduction.Add(production);
 		placeable.IsPlaced = true;
 		placeable.Position = GetGlobalMousePosition();
-
 		AddChild(placeable);
+		EmitSignal(SignalName.SendLog,$"Successfully built {placeable.BuildingName}");
 	}
 
 	public void PlaceNpc(LivingSpace house)
 	{
-		var NPCScene = ResourceLoader.Load<PackedScene>("res://Scenes/Other/NPC.tscn");
-		var infoScene = ResourceLoader.Load<PackedScene>("res://Scenes/Building/CitizenInfo.tscn");
 		var npc = NPCScene.Instantiate<Npc>();
 		var info = infoScene.Instantiate<CitizenInfo>();
 		_gameMenu.CanvasLayer.AddChild(info);
 		info.Visible = false;
 		AddChild(npc);
+		npc.SendLog += _gameMenu.GameLog.CreateLog;
+		npc.OnFed += OnNpcFed;
+		DayOver += npc.OnDayOver;
 
 		npc.Home = house;
 		house.MoveIntoHouse(npc);
+		npc.CitizenName += $" {house.HouseholdName}";
+		npc.EmitSignal(SignalName.SendLog, $"{npc.CitizenName} moved into house!");
 		npc.Position = house.Position;
 		npc.Info = info;
 		house.InfoBox.MoveToFront();
@@ -118,7 +113,7 @@ public partial class GameMap : Node2D
 		if (Citizens.Count % 10 == 0)
 		{
 			Level++;
-			GameMenu.updateLevel(Level.ToString());
+			GameMenu.UpdateLevel(Level.ToString());
 		}
 	}
 
@@ -160,8 +155,19 @@ public partial class GameMap : Node2D
 
 	private void OnDayTimerTimeout()
 	{
+		EmitSignal(SignalName.SendLog,$"Day {GameLogistics.Day} has passed");
 		GameLogistics.Day += 1;
+		EmitSignal(SignalName.DayOver);
 		if (GameLogistics.Resources[GameResource.Food] > 0) GameLogistics.Resources[GameResource.Food] -= 1;
 		GameMenu.UpdateMenuInfo();
+		
+	}
+
+	private void OnNpcFed(Npc npc, bool fed)
+	{
+		if (!fed)
+		{
+			EmitSignal(SignalName.SendLog,$" {npc.CitizenName} did not get fed today");
+		}
 	}
 }

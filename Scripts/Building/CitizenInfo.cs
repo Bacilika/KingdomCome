@@ -5,6 +5,9 @@ public partial class CitizenInfo : Panel
 {
 	private TextureRect _icon;
 	public TextureRect Background;
+	public Label Name;
+	public Label Job;
+	public Label Happiness;
 	public Npc CitizenNpc;
 	public bool focused;
 
@@ -12,8 +15,11 @@ public partial class CitizenInfo : Panel
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		_icon = GetNode<TextureRect>("TextureRect");
+		_icon = GetNode<TextureRect>("VBoxContainer/TextureRect");
 		Position = new Vector2(0, 200);
+		Name = GetNode<Label>("VBoxContainer/Name");
+		Job = GetNode<Label>("VBoxContainer/Job");
+		Happiness = GetNode<Label>("VBoxContainer/Happiness");
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -24,15 +30,11 @@ public partial class CitizenInfo : Panel
 	public void SetInfo(Npc npc)
 	{
 		CitizenNpc = npc;
+		
+		Job.Text = CitizenNpc.Work is not null ? $"Works at {CitizenNpc.Work.GetBuildingName()}" : GameResource.Unemployed;
 
-		var work = GameResource.Unemployed;
-		if (CitizenNpc.Work is not null) work = $" Work: {CitizenNpc.Work.GetBuildingName()}";
-
-		var textLabel = GetNode<Label>("RichTextLabel");
-		textLabel.Text = work +
-						 "\nHappiness: " + GameLogistics.ConvertHappiness(npc.Happiness)
-						 + "\n" + npc.GetUnhappyReason();
-
+		Name.Text = CitizenNpc.CitizenName;
+		Happiness.Text = $"Happiness: {GameLogistics.ConvertHappiness(npc.Happiness)}";
 		_icon.Texture = npc.Sprite;
 		MoveToFront();
 	}

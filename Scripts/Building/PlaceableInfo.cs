@@ -20,7 +20,7 @@ public partial class PlaceableInfo : Panel
 	public PackedScene CitizenPortrait;
 
 	public bool Focused;
-	public BoxContainer PortraitContainer;
+	public HFlowContainer PortraitContainer;
 
 	public override void _Process(double delta)
 	{
@@ -30,7 +30,7 @@ public partial class PlaceableInfo : Panel
 	{
 		_buildingName = GetNode<Label>("HouseInfo/BuildingName");
 		_textLabel = GetNode<RichTextLabel>("HouseInfo/RichTextLabel");
-		PortraitContainer = GetNode<BoxContainer>("HouseInfo/CitizenPortraitContainer");
+		PortraitContainer = GetNode<HFlowContainer>("HouseInfo/CitizenPortraitContainer");
 		CitizenPortrait = ResourceLoader.Load<PackedScene>("res://Scenes/Building/CitizenPortraitButton.tscn");
 		_houseInfo = GetNode<Control>("HouseInfo");
 	}

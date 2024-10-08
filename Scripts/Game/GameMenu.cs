@@ -14,6 +14,7 @@ public partial class GameMenu : Control
 	public static Label Level;
 	public CanvasLayer CanvasLayer;
 	public ProductionInfo ProductionInfo;
+	public GameLog GameLog;
 
 
 	public override void _Ready()
@@ -23,6 +24,7 @@ public partial class GameMenu : Control
 		Level = GetNode<Label>("MenuCanvasLayer/Container/Level");
 		GameMode = GetNode<Label>("MenuCanvasLayer/CurrentGameMode");
 		CanvasLayer = GetNode<CanvasLayer>("MenuCanvasLayer");
+		GameLog = GetNode<GameLog>("MenuCanvasLayer/GameLog");
 		var currentScale = (Vector2)GetTree().Root.Size / GetTree().Root.MinSize;
 		var container = GetNode<Control>("MenuCanvasLayer/Container");
 		container.Scale = currentScale;
@@ -52,7 +54,7 @@ public partial class GameMenu : Control
 		UpdateMenuInfo();
 	}
 
-	public static void updateLevel(string updatedLevel)
+	public static void UpdateLevel(string updatedLevel)
 	{
 		Level.Text = "Level: " + updatedLevel;
 	}

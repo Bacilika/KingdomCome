@@ -49,12 +49,12 @@ text = "Building info"
 fit_content = true
 scroll_active = false
 
-[node name="CitizenPortraitContainer" type="BoxContainer" parent="HouseInfo"]
+[node name="CitizenPortraitContainer" type="HFlowContainer" parent="HouseInfo"]
 layout_mode = 0
 offset_left = 8.0
-offset_top = 104.0
+offset_top = 80.0
 offset_right = 200.0
-offset_bottom = 136.0
+offset_bottom = 144.0
 
 [node name="ButtonContainer" type="HBoxContainer" parent="HouseInfo"]
 layout_mode = 0

@@ -26,12 +26,5 @@ public partial class Lantern : AbstractPlaceable
         };
     }
 
-    protected override void Tick()
-    {
-    }
 
-
-    protected override void OnDeleteInstance()
-    {
-    }
 }

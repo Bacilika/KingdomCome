@@ -4,13 +4,6 @@ using Scripts.Constants;
 
 public partial class Church : AbstractActivity
 {
-    // Called when the node enters the scene tree for the first time.
-
-
-    protected override void Tick()
-    {
-    }
-
     protected override void _Ready_instance()
     {
         PlayerLevel = 2;
@@ -37,9 +30,5 @@ public partial class Church : AbstractActivity
             { GameResource.Stone, [2, 3, 4] }
         };
     }
-
-
-    public override void ProduceItem()
-    {
-    }
+    
 }

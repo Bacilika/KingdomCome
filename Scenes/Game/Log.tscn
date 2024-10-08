@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://dhictfo6v2455"]
+
+[ext_resource type="FontFile" uid="uid://4apkhqisib11" path="res://BLKCHCRY.TTF" id="1_lapc6"]
+[ext_resource type="Script" path="res://Scripts/Game/Log.cs" id="2_c4wuu"]
+
+[node name="Log" type="RichTextLabel"]
+custom_minimum_size = Vector2(450, 30)
+offset_right = 256.0
+offset_bottom = 24.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("1_lapc6")
+theme_override_font_sizes/normal_font_size = 25
+text = "example log"
+fit_content = true
+scroll_active = false
+script = ExtResource("2_c4wuu")

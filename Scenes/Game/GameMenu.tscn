@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://25kpv3trjyvk"]
+[gd_scene load_steps=20 format=3 uid="uid://25kpv3trjyvk"]
 
 [ext_resource type="Script" path="res://Scripts/Game/GameMenu.cs" id="1_dev6f"]
 [ext_resource type="Theme" uid="uid://c2femp2uxsefw" path="res://Themes/Theme.tres" id="1_vgcun"]
@@ -16,6 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://5fcgde8yoegf" path="res://Sprites/Extra/Icons/Sign8.png" id="12_onvdd"]
 [ext_resource type="Texture2D" uid="uid://c55yx5br1mqso" path="res://Sprites/Extra/Icons/Sign9.png" id="13_fmjcf"]
 [ext_resource type="PackedScene" uid="uid://3falldunylfw" path="res://Scenes/Game/ProductionInfo.tscn" id="15_enu43"]
+[ext_resource type="PackedScene" uid="uid://b62g0jvvj278c" path="res://Scenes/Game/GameLog.tscn" id="16_3yc3n"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fyhtp"]
 texture = ExtResource("2_k8sk1")
@@ -60,15 +61,10 @@ follow_viewport_scale = 3.877
 
 [node name="Container" type="Control" parent="MenuCanvasLayer"]
 layout_mode = 3
-anchor_left = -0.006
-anchor_top = 0.922
-anchor_right = 1.001
-anchor_bottom = 0.922
-offset_left = -0.32
-offset_top = -109.08
-offset_right = -4.28003
-offset_bottom = -5.08002
-grow_vertical = 0
+anchors_preset = 0
+offset_top = -50.0
+offset_right = 1277.0
+offset_bottom = 590.0
 size_flags_horizontal = 6
 size_flags_vertical = 10
 mouse_filter = 2
@@ -102,20 +98,27 @@ theme_override_font_sizes/font_size = 26
 text = "Day: 0"
 
 [node name="ColorRect" type="ColorRect" parent="MenuCanvasLayer/Container"]
-layout_mode = 0
-offset_left = 9.0
-offset_top = -530.0
-offset_right = 1288.0
-offset_bottom = -490.0
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -639.5
+offset_right = 639.5
+offset_bottom = 40.0
+grow_horizontal = 2
 theme = ExtResource("1_vgcun")
 color = Color(0.188235, 0.188235, 0.188235, 0.72549)
 
 [node name="GameStats" type="GridContainer" parent="MenuCanvasLayer/Container"]
-layout_mode = 2
-offset_left = 16.0
-offset_top = -523.0
-offset_right = 1279.0
-offset_bottom = -419.0
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -631.5
+offset_top = 6.0
+offset_right = 631.5
+offset_bottom = 110.0
+grow_horizontal = 2
 mouse_filter = 2
 theme_override_constants/h_separation = 80
 theme_override_constants/v_separation = 7
@@ -166,10 +169,18 @@ tooltip_text = "Water"
 texture = ExtResource("13_fmjcf")
 
 [node name="Shop" parent="MenuCanvasLayer/Container" instance=ExtResource("4_nmxg4")]
-offset_left = 15.0
-offset_top = -10.0
-offset_right = 1287.0
-offset_bottom = 93.0
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -639.5
+offset_top = -121.0
+offset_right = 639.5
+offset_bottom = -18.0
+grow_horizontal = 2
+grow_vertical = 0
 
 [node name="CurrentGameMode" type="Label" parent="MenuCanvasLayer"]
 anchors_preset = -1
@@ -177,10 +188,10 @@ anchor_left = 0.5
 anchor_top = 0.0543125
 anchor_right = 0.5
 anchor_bottom = 0.0543125
-offset_left = -634.0
-offset_top = -78.76
-offset_right = 638.0
-offset_bottom = 6.24
+offset_left = -632.0
+offset_top = -44.76
+offset_right = 640.0
+offset_bottom = 40.24
 size_flags_horizontal = 4
 size_flags_vertical = 0
 theme_override_colors/font_color = Color(0.380392, 0, 0, 1)
@@ -192,12 +203,30 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="ProductionInfo" parent="MenuCanvasLayer" instance=ExtResource("15_enu43")]
-visible = false
-offset_left = 488.0
-offset_top = 326.0
-offset_right = 792.0
-offset_bottom = 454.0
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.722
+anchor_right = 0.5
+anchor_bottom = 0.722
+offset_left = -152.0
+offset_top = -140.08
+offset_right = 152.0
+offset_bottom = -12.08
+grow_horizontal = 2
+grow_vertical = 0
 size_flags_vertical = 8
+
+[node name="GameLog" parent="MenuCanvasLayer" instance=ExtResource("16_3yc3n")]
+anchors_preset = -1
+anchor_left = 0.006
+anchor_top = 0.909
+anchor_right = 0.006
+anchor_bottom = 0.909
+offset_left = -7.68
+offset_top = -247.76
+offset_right = 448.32
+offset_bottom = 6.23999
+grow_vertical = 0
 
 [node name="ButtonPressedSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("5_hysb5")

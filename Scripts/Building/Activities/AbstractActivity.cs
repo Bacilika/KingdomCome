@@ -5,8 +5,8 @@ namespace KingdomCome.Scripts.Building.Activities;
 public abstract partial class AbstractActivity : Production
 {
     public bool IsOpen = true;
-    public abstract override void ProduceItem();
-
+    public int maxVisitors = 10;
+    public int visitors;
     protected override void Tick()
     {
         UpdateInfo();
@@ -15,5 +15,16 @@ public abstract partial class AbstractActivity : Production
     protected override void OnDeleteInstance()
     {
         GameLogistics.Resources[GameResource.Unemployed] += GetWorkers();
+    }
+
+    public bool Visit()
+    {
+        if (visitors >= maxVisitors)
+        {
+            return false;
+        }
+
+        visitors++;
+        return true;
     }
 }

@@ -19,6 +19,11 @@ public abstract partial class Production : AbstractPlaceable
 		Console.WriteLine("Production instance");
 	}
 
+	public virtual void ProduceItem()
+	{
+		Console.WriteLine("ProduceItem instance");
+	}
+
 	protected override void Tick()
 	{
 		if (_timer is not null && _timer.IsStopped()) _timer.Start();
@@ -27,14 +32,9 @@ public abstract partial class Production : AbstractPlaceable
 
 	public void GatherResource()
 	{
-		if (GetWorkers() > 0)
-		{
-			ProduceItem();
-			PlayAnimation();
-		}
+		ProduceItem();
+		PlayAnimation();
 	}
-
-	public abstract void ProduceItem();
 
 	public virtual void AtWork(Npc npc)
 	{
@@ -81,19 +81,17 @@ public abstract partial class Production : AbstractPlaceable
 
 	public void OnFoodTimerTimeout()
 	{
-		_food++;
+		/*_food++;
 		ProduceItem();
 		float time = 15 - GetWorkers();
-		_timer.Start(time);
+		_timer.Start(time);*/
 	}
-
-	protected override void OnDeleteInstance()
-	{
-	}
+	
 
 	public void UpdateInfo()
 	{
-		var info = $"Produces  {Producing}\nWorkers: {GetWorkers()} / {Upgrades[Upgrade.MaxWorkers][Level]}";
+		var info = $"Produces  {Producing}" +
+				   $"\nWorkers: {GetWorkers()} / {Upgrades[Upgrade.MaxWorkers][Level]}";
 		InfoBox.UpdateInfo(GetBuildingName(), info);
 	}
 }

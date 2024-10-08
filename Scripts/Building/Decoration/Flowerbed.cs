@@ -25,13 +25,4 @@ public partial class Flowerbed : AbstractPlaceable
             { GameResource.Stone, [2, 3, 4] }
         };
     }
-
-    protected override void Tick()
-    {
-    }
-
-
-    protected override void OnDeleteInstance()
-    {
-    }
 }

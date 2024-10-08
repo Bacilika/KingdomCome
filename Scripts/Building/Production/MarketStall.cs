@@ -44,12 +44,6 @@ public partial class MarketStall : Production
 		WareBox.Connect(ChooseWare.SignalName.OnSellIron, Callable.From(OnSellIron));
 	}
 
-
-	protected override void Tick()
-	{
-		UpdateInfo();
-	}
-
 	public override void ProduceItem()
 	{
 		if (sell && itemToSell != null)

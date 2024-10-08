@@ -6,43 +6,51 @@
 [ext_resource type="Texture2D" uid="uid://bnr631t1td44f" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Character/CharacterPortrait.png" id="3_pqspc"]
 
 [node name="CitizenInfo" type="Panel"]
-offset_right = 136.0
-offset_bottom = 144.0
+offset_right = 192.0
+offset_bottom = 192.0
 theme = ExtResource("1_wgayp")
 script = ExtResource("1_5tojb")
 
-[node name="TextureRect" type="TextureRect" parent="."]
-custom_minimum_size = Vector2(50, 50)
-layout_mode = 2
-offset_left = 43.0
-offset_top = 3.0
-offset_right = 93.0
-offset_bottom = 53.0
-grow_horizontal = 2
-size_flags_horizontal = 4
-size_flags_vertical = 0
-texture = ExtResource("3_pqspc")
-
-[node name="RichTextLabel" type="Label" parent="."]
-layout_mode = 2
-offset_top = 54.0
-offset_right = 136.0
-offset_bottom = 93.0
-text = "Happiness: Happy
-Job: Uemployed
-"
-horizontal_alignment = 1
-
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
 offset_left = 3.0
-offset_top = 118.0
-offset_right = 133.0
-offset_bottom = 136.0
+offset_right = 192.0
+offset_bottom = 192.0
 grow_horizontal = 2
 grow_vertical = 0
 size_flags_vertical = 8
 theme = ExtResource("1_wgayp")
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+texture = ExtResource("3_pqspc")
+
+[node name="Name" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Name
+"
+horizontal_alignment = 1
+
+[node name="Job" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Job
+"
+horizontal_alignment = 1
+
+[node name="Happiness" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Happiness
+"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_top = 162.0
+offset_right = 192.0
+offset_bottom = 186.0
 alignment = 1
 
 [node name="ChangeJob" type="Button" parent="HBoxContainer"]

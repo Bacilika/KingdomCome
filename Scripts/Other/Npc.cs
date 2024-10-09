@@ -141,12 +141,13 @@ public partial class Npc : CharacterBody2D
 			if (_timerOut) //done at work
 				if (_rnd.RandiRange(0, 10) == 0) //to make their movement a bit less monotone
 				{
+					if (PlaceablePosition == Work) Work.GatherResource(); //leaving work.
 					SwitchLocation();
 					SetDestination();
 
 					_timerOut = false;
 					_dayTimer.Stop();
-					if (_destination == Home.Position) Work.GatherResource();
+					
 				}
 		}
 	}

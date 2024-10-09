@@ -59,12 +59,33 @@ offset = Vector2(0, 50)
 transform = Transform2D(1, 0, 0, 1, 0, 50)
 follow_viewport_scale = 3.877
 
+[node name="CurrentGameMode" type="Label" parent="MenuCanvasLayer"]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.0543125
+anchor_right = 0.5
+anchor_bottom = 0.0543125
+offset_left = -632.0
+offset_top = -44.76
+offset_right = 640.0
+offset_bottom = 40.24
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.380392, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_d13wb")
+theme_override_font_sizes/font_size = 42
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
 [node name="Container" type="Control" parent="MenuCanvasLayer"]
 layout_mode = 3
-anchors_preset = 0
-offset_top = -50.0
+anchor_top = -0.078
+anchor_bottom = -0.078
+offset_top = -0.079998
 offset_right = 1277.0
-offset_bottom = 590.0
+offset_bottom = 639.92
 size_flags_horizontal = 6
 size_flags_vertical = 10
 mouse_filter = 2
@@ -74,28 +95,6 @@ position = Vector2(8, -600)
 tile_set = SubResource("TileSet_et3qr")
 rendering_quadrant_size = 32
 collision_enabled = false
-
-[node name="Level" type="Label" parent="MenuCanvasLayer/Container"]
-layout_mode = 1
-offset_left = 9.0
-offset_top = 45.0
-offset_right = 95.0
-offset_bottom = 74.0
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("3_d13wb")
-theme_override_font_sizes/font_size = 26
-text = "Level: 0"
-
-[node name="Day" type="Label" parent="MenuCanvasLayer/Container"]
-layout_mode = 0
-offset_left = 8.0
-offset_top = 80.0
-offset_right = 84.0
-offset_bottom = 109.0
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("3_d13wb")
-theme_override_font_sizes/font_size = 26
-text = "Day: 0"
 
 [node name="ColorRect" type="ColorRect" parent="MenuCanvasLayer/Container"]
 layout_mode = 1
@@ -109,34 +108,22 @@ grow_horizontal = 2
 theme = ExtResource("1_vgcun")
 color = Color(0.188235, 0.188235, 0.188235, 0.72549)
 
-[node name="GameStats" type="GridContainer" parent="MenuCanvasLayer/Container"]
+[node name="GameStats" type="HBoxContainer" parent="MenuCanvasLayer/Container"]
 layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -631.5
-offset_top = 6.0
-offset_right = 631.5
-offset_bottom = 110.0
-grow_horizontal = 2
-mouse_filter = 2
-theme_override_constants/h_separation = 80
-theme_override_constants/v_separation = 7
-columns = 9
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -1268.0
+offset_top = 3.0
+offset_right = -33.0
+offset_bottom = 37.0
+grow_horizontal = 0
+theme_override_constants/separation = 55
+alignment = 2
 
 [node name="Citizens" parent="MenuCanvasLayer/Container/GameStats" instance=ExtResource("4_2bxld")]
 layout_mode = 2
 tooltip_text = "Citizens"
-
-[node name="Food" parent="MenuCanvasLayer/Container/GameStats" instance=ExtResource("4_2bxld")]
-layout_mode = 2
-tooltip_text = "Food"
-texture = ExtResource("6_v7o1e")
-
-[node name="Money" parent="MenuCanvasLayer/Container/GameStats" instance=ExtResource("4_2bxld")]
-layout_mode = 2
-tooltip_text = "Money"
-texture = ExtResource("7_k3pbr")
 
 [node name="Happiness" parent="MenuCanvasLayer/Container/GameStats" instance=ExtResource("4_2bxld")]
 layout_mode = 2
@@ -147,6 +134,50 @@ texture = ExtResource("8_mbmc5")
 layout_mode = 2
 tooltip_text = "Unemployed"
 texture = ExtResource("9_0d0hb")
+
+[node name="Money" parent="MenuCanvasLayer/Container/GameStats" instance=ExtResource("4_2bxld")]
+layout_mode = 2
+tooltip_text = "Money"
+texture = ExtResource("7_k3pbr")
+
+[node name="Level" type="HBoxContainer" parent="MenuCanvasLayer/Container/GameStats"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Level" type="Label" parent="MenuCanvasLayer/Container/GameStats/Level"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_d13wb")
+theme_override_font_sizes/font_size = 26
+text = "0"
+
+[node name="LevelProgress" type="ProgressBar" parent="MenuCanvasLayer/Container/GameStats/Level"]
+custom_minimum_size = Vector2(70, 25)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_d13wb")
+theme_override_font_sizes/font_size = 26
+max_value = 10.0
+step = 1.0
+show_percentage = false
+
+[node name="NextLevel" type="Label" parent="MenuCanvasLayer/Container/GameStats/Level"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_d13wb")
+theme_override_font_sizes/font_size = 26
+text = "1"
+
+[node name="Day" type="Label" parent="MenuCanvasLayer/Container/GameStats"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_d13wb")
+theme_override_font_sizes/font_size = 26
+text = "Day: 0"
+
+[node name="Food" parent="MenuCanvasLayer/Container/GameStats" instance=ExtResource("4_2bxld")]
+layout_mode = 2
+tooltip_text = "Food"
+texture = ExtResource("6_v7o1e")
 
 [node name="Stone" parent="MenuCanvasLayer/Container/GameStats" instance=ExtResource("4_2bxld")]
 layout_mode = 2
@@ -181,26 +212,6 @@ offset_right = 639.5
 offset_bottom = -18.0
 grow_horizontal = 2
 grow_vertical = 0
-
-[node name="CurrentGameMode" type="Label" parent="MenuCanvasLayer"]
-anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 0.0543125
-anchor_right = 0.5
-anchor_bottom = 0.0543125
-offset_left = -632.0
-offset_top = -44.76
-offset_right = 640.0
-offset_bottom = 40.24
-size_flags_horizontal = 4
-size_flags_vertical = 0
-theme_override_colors/font_color = Color(0.380392, 0, 0, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("3_d13wb")
-theme_override_font_sizes/font_size = 42
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
 
 [node name="ProductionInfo" parent="MenuCanvasLayer" instance=ExtResource("15_enu43")]
 anchors_preset = -1

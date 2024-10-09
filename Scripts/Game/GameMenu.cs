@@ -1,5 +1,5 @@
+using System.Collections.Generic;
 using Godot;
-using Godot.Collections;
 using Scripts.Constants;
 
 public partial class GameMenu : Control
@@ -8,30 +8,36 @@ public partial class GameMenu : Control
 	public delegate void HousePlacedEventHandler(Node2D house);
 
 	public static AudioStreamPlayer2D ButtonPress;
-	private static Dictionary<string, Label> _gameStatLabels;
+	private static Godot.Collections.Dictionary<string, Label> _gameStatLabels;
 	public static Label GameMode;
 	public static Label Day;
 	public static Label Level;
+	public static Label NextLevel;
+	public static ProgressBar LevelProgressbar;
 	public CanvasLayer CanvasLayer;
 	public ProductionInfo ProductionInfo;
 	public GameLog GameLog;
+	private static List<Npc> _citizen;
 
 
 	public override void _Ready()
 	{
+		_citizen = GetParent<GameMap>().Citizens;
 		ProductionInfo = GetNode<ProductionInfo>("MenuCanvasLayer/ProductionInfo");
-		Day = GetNode<Label>("MenuCanvasLayer/Container/Day");
-		Level = GetNode<Label>("MenuCanvasLayer/Container/Level");
+		Day = GetNode<Label>("MenuCanvasLayer/Container/GameStats/Day");
+		Level = GetNode<Label>("MenuCanvasLayer/Container/GameStats/Level/Level");
+		NextLevel = GetNode<Label>("MenuCanvasLayer/Container/GameStats/Level/NextLevel");
+		LevelProgressbar = GetNode<ProgressBar>("MenuCanvasLayer/Container/GameStats/Level/LevelProgress");
 		GameMode = GetNode<Label>("MenuCanvasLayer/CurrentGameMode");
 		CanvasLayer = GetNode<CanvasLayer>("MenuCanvasLayer");
 		GameLog = GetNode<GameLog>("MenuCanvasLayer/GameLog");
 		var currentScale = (Vector2)GetTree().Root.Size / GetTree().Root.MinSize;
 		var container = GetNode<Control>("MenuCanvasLayer/Container");
 		container.Scale = currentScale;
-		var statLabels = GetNode<GridContainer>("MenuCanvasLayer/Container/GameStats");
+		var statLabels = GetNode<HBoxContainer>("MenuCanvasLayer/Container/GameStats");
 		ButtonPress = GetNode<AudioStreamPlayer2D>("ButtonPressedSound");
 		ButtonPress?.Play();
-		_gameStatLabels = new Dictionary<string, Label>
+		_gameStatLabels = new Godot.Collections.Dictionary<string, Label>
 		{
 			{ GameResource.Money, statLabels.GetNode<TextureRect>(GameResource.Money).GetNode<Label>("Value") },
 			{ GameResource.Food, statLabels.GetNode<TextureRect>(GameResource.Food).GetNode<Label>("Value") },
@@ -54,13 +60,17 @@ public partial class GameMenu : Control
 		UpdateMenuInfo();
 	}
 
-	public static void UpdateLevel(string updatedLevel)
+	public static void UpdateLevel(int updatedLevel)
 	{
-		Level.Text = "Level: " + updatedLevel;
+		LevelProgressbar.Value = 0;
+		Level.Text =  updatedLevel.ToString();
+		NextLevel.Text = (updatedLevel +1).ToString();
 	}
 
 	public static void UpdateMenuInfo()
 	{
+
+		LevelProgressbar.Value = _citizen.Count % 10;
 		var red = new Color("#801917");
 
 		Day.Text = "Day: " + GameLogistics.Day;

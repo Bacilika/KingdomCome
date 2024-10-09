@@ -113,7 +113,7 @@ public partial class GameMap : Node2D
 		if (Citizens.Count % 10 == 0)
 		{
 			Level++;
-			GameMenu.UpdateLevel(Level.ToString());
+			GameMenu.UpdateLevel(Level);
 		}
 	}
 

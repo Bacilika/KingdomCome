@@ -1,10 +1,11 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using KingdomCome.Scripts.Building;
 using Scripts.Constants;
 
-public partial class Bakery : Production{
-	// Called when the node enters the scene tree for the first time.
+public partial class SawMill : Production
+{
 	protected override void _Ready_instance()
 	{
 		BuildingName = "Bakery";
@@ -35,6 +36,6 @@ public partial class Bakery : Production{
 
 	public override void ProduceItem()
 	{
-		GameLogistics.Resources[Food.Bread]++;
+		GameLogistics.Resources[ProcessedResource.Plank]++;
 	}
 }

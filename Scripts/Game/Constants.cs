@@ -34,7 +34,7 @@ public static class Upgrade
     public const string MaxInhabitants = "MaxInhabitants";
 }
 
-public static class GameResource
+public static class RawResource
 {
     public const string Wood = "Wood";
     public const string Stone = "Stone";
@@ -45,5 +45,20 @@ public static class GameResource
     public const string Happiness = "Happiness";
     public const string Unemployed = "Unemployed";
     public const string Money = "Money";
+}
+
+public static class Food
+{
+    public const string Bread = "Bread";
+    public const string Meat = "Meat";
+    public const string Crops = "Crops";
+}
+
+public static class ProcessedResource
+{
+    public const string IronIngot = "IronIngot";
+    public const string Plank = "Plank";
+    public const string Ale = "Ale";
     public const string Flour = "Flour";
+    public const string Wheat = "Wheat";
 }

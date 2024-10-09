@@ -29,7 +29,7 @@ public partial class Npc : CharacterBody2D
 	private const int BaseHappiness = 5;
 	private AbstractActivity _activity;
 	private Vector2 _activityPosition;
-	private Timer _dayTimer;
+	public Timer _dayTimer;
 	private Vector2 _destination;
 	private bool _focused;
 	
@@ -48,7 +48,7 @@ public partial class Npc : CharacterBody2D
 	private bool _ready;
 	private bool _still;
 	private bool _stopped;
-	private bool _timerOut;
+	public bool _timerOut;
 	private RandomNumberGenerator _rnd = new();
 	private float _speed = 100;
 	private AudioStreamPlayer2D _walkingOnGrassSound;
@@ -61,6 +61,7 @@ public partial class Npc : CharacterBody2D
 
 	public override void _Ready()
 	{
+			
 		_animation = GetNode<AnimatedSprite2D>("WalkingAnimation");
 		Sprite = _animation.SpriteFrames.GetFrameTexture("walkDown", 0);
 		AtWorkTimer = GetNode<Timer>("AtWorkTimer");
@@ -89,6 +90,7 @@ public partial class Npc : CharacterBody2D
 	public void OnAtWorkTimerTimeout()
 	{
 		Work.AtWorkTimerTimeout(this);
+		Work.GatherResource(Position);
 	}
 
 
@@ -129,13 +131,11 @@ public partial class Npc : CharacterBody2D
 
 		else //if at destination
 		{
-			if (_dayTimer.IsStopped()) //Reach Work
+			if (_dayTimer.IsStopped()) //Start timer for work
 			{
 				_dayTimer.Start();
 				ToggleWalkingSound(false);
 				_animation.Animation = "work";
-
-				if (PlaceablePosition == Work) EmitSignal(SignalName.OnAtWork, this);
 			}
 
 			if (_timerOut) //done at work
@@ -167,9 +167,9 @@ public partial class Npc : CharacterBody2D
 		switch (angleToDegrees)
 		{
 			case >= 45 and < 135:
-				return "walkUp";
-			case >= -135 and < -45:
 				return "walkDown";
+			case >= -135 and < -45:
+				return "walkUp";
 			case >= 0 and < 45 or < 0 and >= -45:
 				return "walkRight";
 			default:
@@ -249,11 +249,11 @@ public partial class Npc : CharacterBody2D
 		EmitSignal(SignalName.SendLog, $"{CitizenName} is moving out");
 		Work?.People.Remove(this);
 		Home.People.Remove(this);
-		GameLogistics.Resources[GameResource.Citizens] -= 1;
+		GameLogistics.Resources[RawResource.Citizens] -= 1;
 		if (Work is not null)
 			Work.People.Remove(this);
 		else
-			GameLogistics.Resources[GameResource.Unemployed] -= 1;
+			GameLogistics.Resources[RawResource.Unemployed] -= 1;
 		QueueFree();
 	}
 
@@ -368,9 +368,9 @@ public partial class Npc : CharacterBody2D
 
 	public void OnDayOver()
 	{
-		if (GameLogistics.Resources[GameResource.Food] > 0)
+		if (GameLogistics.Resources[RawResource.Food] > 0)
 		{
-			GameLogistics.Resources[GameResource.Food]--;
+			GameLogistics.Resources[RawResource.Food]--;
 			if (Hunger > 0)
 			{
 				Hunger--;

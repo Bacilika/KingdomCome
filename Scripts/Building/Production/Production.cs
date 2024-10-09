@@ -1,18 +1,25 @@
 using System;
 using Godot;
+using Godot.Collections;
 using KingdomCome.Scripts.Building;
+using KingdomCome.Scripts.MapResources;
 using Scripts.Constants;
 
 public abstract partial class Production : AbstractPlaceable
 {
 	[Signal]
 	public delegate void LookingForWorkersEventHandler(Productions production);
-
+	protected Dictionary<Npc, AbstractResource> _assignedWorker = new();
 	private int _food;
 	protected Timer _timer;
 	protected string Producing;
 	protected int ProductionRate = 10; // 1/ProductionRate % chance to produce item by 1 each tick. 
 
+
+	public virtual void OnNpcReachWork(Node2D npc)
+	{
+		Console.WriteLine("OnNpcReachWork");
+	}
 
 	public virtual void AtWorkTimerTimeout(Npc npc)
 	{
@@ -34,6 +41,12 @@ public abstract partial class Production : AbstractPlaceable
 	{
 		ProduceItem();
 		PlayAnimation();
+	}
+	
+	public void GatherResource(Vector2 pos)
+	{
+		ProduceItem();
+		PlayAnimation(pos);
 	}
 
 	public virtual void AtWork(Npc npc)
@@ -66,11 +79,10 @@ public abstract partial class Production : AbstractPlaceable
 
 		if (employed)
 		{
-			GameLogistics.Resources[GameResource.Unemployed]--;
+			GameLogistics.Resources[RawResource.Unemployed]--;
 			People.Add(npc);
 		}
 
-		npc.OnAtWork += AtWork;
 		return true;
 	}
 

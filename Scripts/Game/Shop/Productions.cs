@@ -23,7 +23,9 @@ public partial class Productions : AbstractShopIconContainer
 			ResourceLoader.Load<PackedScene>("res://Scenes/Building/Production/Bakery.tscn")
 			.Instantiate<Bakery>(), 
 			ResourceLoader.Load<PackedScene>("res://Scenes/Building/Production/Brewery.tscn")
-				.Instantiate<Brewery>()
+				.Instantiate<Brewery>(),
+			ResourceLoader.Load<PackedScene>("res://Scenes/Building/Production/SawMill.tscn")
+			.Instantiate<SawMill>()
 			
 		];
 	}

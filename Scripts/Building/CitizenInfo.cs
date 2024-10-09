@@ -31,7 +31,7 @@ public partial class CitizenInfo : Panel
 	{
 		CitizenNpc = npc;
 		
-		Job.Text = CitizenNpc.Work is not null ? $"Works at {CitizenNpc.Work.GetBuildingName()}" : GameResource.Unemployed;
+		Job.Text = CitizenNpc.Work is not null ? $"Works at {CitizenNpc.Work.GetBuildingName()}" : RawResource.Unemployed;
 
 		Name.Text = CitizenNpc.CitizenName;
 		Happiness.Text = $"Happiness: {GameLogistics.ConvertHappiness(npc.Happiness)}/n" + npc.GetUnhappyReason();

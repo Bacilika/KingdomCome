@@ -27,18 +27,18 @@ public partial class MarketStall : Production
 		};
 		BuildCost = new Dictionary<string, List<int>>
 		{
-			{ GameResource.Wood, [5, 7, 10] },
-			{ GameResource.Stone, [5, 7, 10] }
+			{ RawResource.Wood, [5, 7, 10] },
+			{ RawResource.Stone, [5, 7, 10] }
 		};
 		MoveCost = new Dictionary<string, List<int>>
 		{
-			{ GameResource.Wood, [1, 2, 3] },
-			{ GameResource.Stone, [1, 2, 3] }
+			{ RawResource.Wood, [1, 2, 3] },
+			{ RawResource.Stone, [1, 2, 3] }
 		};
 		DeleteCost = new Dictionary<string, List<int>>
 		{
-			{ GameResource.Wood, [2, 3, 4] },
-			{ GameResource.Stone, [2, 3, 4] }
+			{ RawResource.Wood, [2, 3, 4] },
+			{ RawResource.Stone, [2, 3, 4] }
 		};
 		WareBox = InfoBox.GetNode<ChooseWare>("ChooseWare");
 		WareBox.Connect(ChooseWare.SignalName.OnSellIron, Callable.From(OnSellIron));
@@ -49,7 +49,7 @@ public partial class MarketStall : Production
 		if (sell && itemToSell != null)
 			if (GameLogistics.Resources[itemToSell] > 0)
 			{
-				GameLogistics.Resources[GameResource.Money] += price;
+				GameLogistics.Resources[RawResource.Money] += price;
 				GameLogistics.Resources[itemToSell]--;
 			}
 	}

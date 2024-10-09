@@ -10,7 +10,7 @@ public partial class Road : AbstractPlaceable
 		BuildingDescription = "Road for citizens to walk on";
 		BuildCost = new Dictionary<string, List<int>>
 		{
-			{ GameResource.Stone, [1, 1, 1] }
+			{ RawResource.Stone, [1, 1, 1] }
 		};
 	}
 

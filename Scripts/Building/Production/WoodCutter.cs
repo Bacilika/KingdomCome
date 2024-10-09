@@ -6,8 +6,8 @@ using Scripts.Constants;
 
 public partial class WoodCutter : Production
 {
-	private Dictionary<Npc, AbstractResource> _assignedWorker;
 	private Forest forest;
+	private List<Tree> _trees = [];
 
 	protected override void _Ready_instance()
 	{
@@ -16,39 +16,47 @@ public partial class WoodCutter : Production
 		Producing = "Wood";
 		PlayerLevel = 1;
 		_timer = GetNode<Timer>("WoodTimer");
-
-		_assignedWorker = new Dictionary<Npc, AbstractResource>();
-
+		
 		Upgrades = new Dictionary<string, List<int>>
 		{
 			{ Upgrade.MaxWorkers, [5, 7, 10] }
 		};
 		BuildCost = new Dictionary<string, List<int>>
 		{
-			{ GameResource.Wood, [5, 7, 10] },
-			{ GameResource.Stone, [5, 7, 10] }
+			{ RawResource.Wood, [5, 7, 10] },
+			{ RawResource.Stone, [5, 7, 10] }
 		};
 		MoveCost = new Dictionary<string, List<int>>
 		{
-			{ GameResource.Wood, [1, 2, 3] },
-			{ GameResource.Stone, [1, 2, 3] }
+			{ RawResource.Wood, [1, 2, 3] },
+			{ RawResource.Stone, [1, 2, 3] }
 		};
 		DeleteCost = new Dictionary<string, List<int>>
 		{
-			{ GameResource.Wood, [2, 3, 4] },
-			{ GameResource.Stone, [2, 3, 4] }
+			{ RawResource.Wood, [2, 3, 4] },
+			{ RawResource.Stone, [2, 3, 4] }
 		};
 	}
-
-	public override void AtWork(Npc npc)
+	
+	
+	public override void OnNpcReachWork(Node2D node)
 	{
+		var npc = node as Npc;
+		if (npc._dayTimer.IsStopped() && npc.PlaceablePosition != this)
+		{
+			Console.WriteLine("hej");
+			return;
+		}
 		_assignedWorker.TryAdd(npc, null);
 		if (_assignedWorker[npc] == null)
-			_assignedWorker[npc] = forest.trees[Rnd.RandiRange(0, forest.trees.Count - 1)];
+			_assignedWorker[npc] = _trees[Rnd.RandiRange(0, Upgrades[Upgrade.MaxWorkers][Level] + 3)];
 
 		if (_assignedWorker[npc] != null) npc.SetDestination(_assignedWorker[npc].GlobalPosition);
 		npc.AtWorkTimer.SetWaitTime(10 + Position.DistanceTo(_assignedWorker[npc].GlobalPosition) / 100);
-		npc.AtWorkTimer.Start();
+		if (npc.AtWorkTimer.IsStopped())
+		{
+			npc.AtWorkTimer.Start();
+		}
 		Console.WriteLine(npc.AtWorkTimer.TimeLeft);
 	}
 
@@ -59,7 +67,7 @@ public partial class WoodCutter : Production
 
 	public override void ProduceItem()
 	{
-		GameLogistics.Resources[GameResource.Wood]++;
+		GameLogistics.Resources[RawResource.Wood]++;
 	}
 
 	public override void OnParentReady()
@@ -67,6 +75,11 @@ public partial class WoodCutter : Production
 		try
 		{
 			forest = GetParent<GameMap>().GetNode<Forest>("Forest");
+			foreach (var tree in forest.trees)
+			{
+				_trees.Add(tree);
+			}
+			_trees.Sort((x, y) => x.GlobalPosition.DistanceTo(Position).CompareTo(y.GlobalPosition.DistanceTo(Position)));
 		}
 		catch (Exception _)
 		{

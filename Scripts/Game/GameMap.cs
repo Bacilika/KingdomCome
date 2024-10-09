@@ -52,7 +52,7 @@ public partial class GameMap : Node2D
 	public override void _Process(double delta)
 	{
 		_timeSinceLastTick += delta;
-		if (GameLogistics.Resources[GameResource.Unemployed] > 0) //there are unemployed
+		if (GameLogistics.Resources[RawResource.Unemployed] > 0) //there are unemployed
 			GiveJobToNpcs();
 	}
 
@@ -107,7 +107,7 @@ public partial class GameMap : Node2D
 		npc.ZIndex = 1;
 		Citizens.Add(npc);
 
-		GameLogistics.Resources[GameResource.Unemployed]++;
+		GameLogistics.Resources[RawResource.Unemployed]++;
 
 		npc.OnJobChange += OnSelectJob;
 		if (Citizens.Count % 10 == 0)
@@ -158,7 +158,7 @@ public partial class GameMap : Node2D
 		EmitSignal(SignalName.SendLog,$"Day {GameLogistics.Day} has passed");
 		GameLogistics.Day += 1;
 		EmitSignal(SignalName.DayOver);
-		if (GameLogistics.Resources[GameResource.Food] > 0) GameLogistics.Resources[GameResource.Food] -= 1;
+		if (GameLogistics.Resources[RawResource.Food] > 0) GameLogistics.Resources[RawResource.Food] -= 1;
 		GameMenu.UpdateMenuInfo();
 		
 	}

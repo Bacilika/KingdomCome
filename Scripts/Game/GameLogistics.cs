@@ -11,6 +11,8 @@ public partial class GameLogistics : Node2D
 	public static bool IsPlaceMode;
 	public static int Day = 0;
 	public static System.Collections.Generic.Dictionary<string, int> Resources;
+	public static System.Collections.Generic.Dictionary<string, int> FoodResource;
+	public static System.Collections.Generic.Dictionary<string, int> ProcessedResources;
 	public static bool dragging;
 	public static bool Move;
 	private bool _containBuilding;
@@ -38,11 +40,21 @@ public partial class GameLogistics : Node2D
 
 		Resources = new System.Collections.Generic.Dictionary<string, int>
 		{
-			{ GameResource.Money, 0 }, { GameResource.Citizens, 0 },
-			{ GameResource.Happiness, 0 }, { GameResource.Food, 0 },
-			{ GameResource.Stone, 100 }, { GameResource.Iron, 0 },
-			{ GameResource.Unemployed, 0 }, { GameResource.Water, 0 },
-			{ GameResource.Wood, 100 }
+			{ RawResource.Money, 0 }, { RawResource.Citizens, 0 },
+			{ RawResource.Happiness, 0 }, { RawResource.Food, 0 },
+			{ RawResource.Stone, 100 }, { RawResource.Iron, 0 },
+			{ RawResource.Unemployed, 0 }, { RawResource.Water, 0 },
+			{ RawResource.Wood, 100 }
+		};
+		
+		FoodResource = new System.Collections.Generic.Dictionary<string, int>
+		{
+			{ Food.Bread, 0 }, { Food.Meat, 0 }, { Food.Crops, 0 }
+		};
+		
+		ProcessedResources = new System.Collections.Generic.Dictionary<string, int>
+		{
+			{ ProcessedResource.Plank, 0 }, { ProcessedResource.IronIngot, 0 }
 		};
 	}
 
@@ -120,7 +132,7 @@ public partial class GameLogistics : Node2D
 
 	public static bool HasUnemployedCitizens()
 	{
-		return Resources[GameResource.Unemployed] > 0;
+		return Resources[RawResource.Unemployed] > 0;
 	}
 
 

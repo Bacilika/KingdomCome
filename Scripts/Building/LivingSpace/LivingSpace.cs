@@ -7,7 +7,7 @@ public abstract partial class LivingSpace : AbstractPlaceable
 {
     protected int Growth = 5; // 1/_growth% chance to increase habitants by 1 each tick. 
     [Signal]
-    public delegate void OnCreateNpcEventHandler(House house);
+    public delegate void OnCreateNpcEventHandler(LivingSpace house);
 
     public string HouseholdName = NameGenerator.GenerateLastName();
 
@@ -22,7 +22,7 @@ public abstract partial class LivingSpace : AbstractPlaceable
             if (Rnd.RandiRange(0, Growth) == 0)
             {
                 Inhabitants++;
-                GameLogistics.Resources[GameResource.Citizens]++;
+                GameLogistics.Resources[RawResource.Citizens]++;
                 PlayAnimation();
                 EmitSignal(SignalName.OnCreateNpc, this);
             }

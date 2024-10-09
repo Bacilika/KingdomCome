@@ -39,18 +39,18 @@ public partial class GameMenu : Control
 		ButtonPress?.Play();
 		_gameStatLabels = new Godot.Collections.Dictionary<string, Label>
 		{
-			{ GameResource.Money, statLabels.GetNode<TextureRect>(GameResource.Money).GetNode<Label>("Value") },
-			{ GameResource.Food, statLabels.GetNode<TextureRect>(GameResource.Food).GetNode<Label>("Value") },
-			{ GameResource.Citizens, statLabels.GetNode<TextureRect>(GameResource.Citizens).GetNode<Label>("Value") },
-			{ GameResource.Stone, statLabels.GetNode<TextureRect>(GameResource.Stone).GetNode<Label>("Value") },
-			{ GameResource.Happiness, statLabels.GetNode<TextureRect>(GameResource.Happiness).GetNode<Label>("Value") },
-			{ GameResource.Wood, statLabels.GetNode<TextureRect>(GameResource.Wood).GetNode<Label>("Value") },
+			{ RawResource.Money, statLabels.GetNode<TextureRect>(RawResource.Money).GetNode<Label>("Value") },
+			{ RawResource.Food, statLabels.GetNode<TextureRect>(RawResource.Food).GetNode<Label>("Value") },
+			{ RawResource.Citizens, statLabels.GetNode<TextureRect>(RawResource.Citizens).GetNode<Label>("Value") },
+			{ RawResource.Stone, statLabels.GetNode<TextureRect>(RawResource.Stone).GetNode<Label>("Value") },
+			{ RawResource.Happiness, statLabels.GetNode<TextureRect>(RawResource.Happiness).GetNode<Label>("Value") },
+			{ RawResource.Wood, statLabels.GetNode<TextureRect>(RawResource.Wood).GetNode<Label>("Value") },
 			{
-				GameResource.Unemployed,
-				statLabels.GetNode<TextureRect>(GameResource.Unemployed).GetNode<Label>("Value")
+				RawResource.Unemployed,
+				statLabels.GetNode<TextureRect>(RawResource.Unemployed).GetNode<Label>("Value")
 			},
-			{ GameResource.Iron, statLabels.GetNode<TextureRect>(GameResource.Iron).GetNode<Label>("Value") },
-			{ GameResource.Water, statLabels.GetNode<TextureRect>(GameResource.Water).GetNode<Label>("Value") }
+			{ RawResource.Iron, statLabels.GetNode<TextureRect>(RawResource.Iron).GetNode<Label>("Value") },
+			{ RawResource.Water, statLabels.GetNode<TextureRect>(RawResource.Water).GetNode<Label>("Value") }
 		};
 	}
 
@@ -81,14 +81,14 @@ public partial class GameMenu : Control
 
 			switch (item.Key)
 			{
-				case GameResource.Unemployed:
+				case RawResource.Unemployed:
 				{
-					value = GameLogistics.Resources[GameResource.Unemployed];
+					value = GameLogistics.Resources[RawResource.Unemployed];
 					break;
 				}
-				case GameResource.Citizens:
+				case RawResource.Citizens:
 				{
-					value = GameLogistics.Resources[GameResource.Citizens];
+					value = GameLogistics.Resources[RawResource.Citizens];
 					break;
 				}
 				default:

@@ -11,15 +11,25 @@ animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("3_077s4")
+}],
+"loop": true,
+"name": &"Level0",
+"speed": 5.0
 }, {
+"frames": [{
 "duration": 1.0,
 "texture": ExtResource("3_1deib")
+}],
+"loop": true,
+"name": &"Level1",
+"speed": 5.0
 }, {
+"frames": [{
 "duration": 1.0,
 "texture": ExtResource("4_pxw3y")
 }],
 "loop": true,
-"name": &"default",
+"name": &"Level2",
 "speed": 5.0
 }]
 
@@ -31,9 +41,9 @@ script = ExtResource("1_o4few")
 
 [node name="HouseSprite" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -1)
-scale = Vector2(0.2875, 0.2875)
+scale = Vector2(0.594593, 0.594593)
 sprite_frames = SubResource("SpriteFrames_ttjxn")
-frame_progress = 0.185971
+animation = &"Level0"
 
 [node name="CollisionShape0" type="CollisionShape2D" parent="."]
 position = Vector2(0, -1)

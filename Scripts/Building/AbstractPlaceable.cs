@@ -26,7 +26,7 @@ public abstract partial class AbstractPlaceable : Area2D
 
     private double _time;
     private ChooseWare _wareBox;
-    public AnimatedSprite2D AnimatedSprite;
+    public AnimatedSprite2D HouseSprite;
     public Dictionary<string, List<int>> BuildCost;
     public string BuildingDescription;
 
@@ -86,7 +86,7 @@ public abstract partial class AbstractPlaceable : Area2D
     {
         ZIndex = 2; //in front of Npc
         InfoBox = GetNode<PlaceableInfo>("PlaceableInfo");
-        AnimatedSprite = GetNode<AnimatedSprite2D>("HouseSprite");
+        HouseSprite = GetNode<AnimatedSprite2D>("HouseSprite");
 
         InfoBox.Connect(PlaceableInfo.SignalName.OnDelete, Callable.From(OnDelete));
         InfoBox.Connect(PlaceableInfo.SignalName.OnUpgrade, Callable.From(OnUpgrade));
@@ -115,7 +115,7 @@ public abstract partial class AbstractPlaceable : Area2D
     {
         if (IsPlaced)
         {
-            AnimatedSprite.SelfModulate = Colliding ? _modulation : _noModulation;
+            HouseSprite.SelfModulate = Colliding ? _modulation : _noModulation;
 
             _time += delta;
             if (_time > 1)
@@ -221,8 +221,8 @@ public abstract partial class AbstractPlaceable : Area2D
                 Level++;
                 if (this is House)
                 {
-                    GetNode<AnimatedSprite2D>("HouseSprite").SetAnimation("default");
-                    GetNode<AnimatedSprite2D>("HouseSprite").Pause();
+                    HouseSprite.SetAnimation("Level" + Level);
+                    HouseSprite.Pause();
                 }
 
                 EmitSignal(SignalName.OnBuildingUpgrade, this);
@@ -266,7 +266,7 @@ public abstract partial class AbstractPlaceable : Area2D
 
     public void SetObjectValues()
     {
-        AnimatedSprite.Frame = Level;
+        HouseSprite.SetAnimation("Level" + Level); 
         ActivateHitbox(Level);
     }
 

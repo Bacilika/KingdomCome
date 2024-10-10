@@ -43,9 +43,8 @@ public partial class House : LivingSpace
 	{
 		if (!_isPeopleInside())
 		{
-			GetNode<AnimatedSprite2D>("HouseSprite").SetAnimation("default");
+			GetNode<AnimatedSprite2D>("HouseSprite").SetAnimation("Level" + Level);
 			GetNode<AnimatedSprite2D>("HouseSprite").Pause();
-			GetNode<AnimatedSprite2D>("HouseSprite").Frame = Level;
 		}
 	}
 
@@ -54,7 +53,7 @@ public partial class House : LivingSpace
 		foreach (var person in People)
 			if (Position.DistanceTo(person.Position) < 15)
 			{
-				GetNode<AnimatedSprite2D>("HouseSprite").SetAnimation("Level 1 people inside");
+				GetNode<AnimatedSprite2D>("HouseSprite").SetAnimation("AnimationLevel" + Level);
 				GetNode<AnimatedSprite2D>("HouseSprite").Play();
 				return true;
 			}

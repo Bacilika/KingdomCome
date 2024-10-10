@@ -30,6 +30,14 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("6_7k5jv")
+}],
+"loop": true,
+"name": &"Level0",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("4_rc72m")
 }, {
 "duration": 1.0,
@@ -37,14 +45,6 @@ animations = [{
 }],
 "loop": true,
 "name": &"Level2PeopleInside",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("6_7k5jv")
-}],
-"loop": true,
-"name": &"default",
 "speed": 5.0
 }]
 
@@ -89,6 +89,7 @@ script = ExtResource("1_f2tex")
 position = Vector2(-1, 1.00001)
 scale = Vector2(0.172222, 0.172222)
 sprite_frames = SubResource("SpriteFrames_fiu42")
+animation = &"Level0"
 
 [node name="CollisionShape0" type="CollisionShape2D" parent="."]
 position = Vector2(-1, -1.5)

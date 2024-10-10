@@ -30,7 +30,7 @@ animations = [{
 "texture": ExtResource("5_vdxdq")
 }],
 "loop": true,
-"name": &"default",
+"name": &"Level0",
 "speed": 5.0
 }]
 
@@ -75,8 +75,7 @@ shape = SubResource("CapsuleShape2D_4rn2q")
 
 [node name="HouseSprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_q3bpt")
-frame = 2
-frame_progress = 0.824811
+animation = &"Level0"
 
 [node name="CollisionShape2" type="CollisionShape2D" parent="."]
 position = Vector2(1, 6)

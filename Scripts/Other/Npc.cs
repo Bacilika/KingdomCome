@@ -78,7 +78,8 @@ public partial class Npc : CharacterBody2D
 		_moodReasons = new Dictionary<string, MoodReason>
 		{
 			{ "Work", new MoodReason() },
-			{ "Activity", new MoodReason() }
+			{ "Activity", new MoodReason() }, 
+			{"Food", new MoodReason()}
 		};
 	}
 
@@ -189,6 +190,15 @@ public partial class Npc : CharacterBody2D
 		foreach (var reason in _moodReasons)
 		{
 			Happiness += reason.Value.Happiness;
+		}
+
+		if (Happiness < BaseHappiness)
+		{
+			GetNode<Sprite2D>("ExclamationPoint").Visible = true;
+		}
+		else
+		{
+			GetNode<Sprite2D>("ExclamationPoint").Visible = false;
 		}
 	}
 

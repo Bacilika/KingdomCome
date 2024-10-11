@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://b62g0jvvj278c"]
+[gd_scene load_steps=2 format=3 uid="uid://c0ejkvqyxdkcc"]
 
 [ext_resource type="Script" path="res://Scripts/Game/GameLog.cs" id="1_li5si"]
 

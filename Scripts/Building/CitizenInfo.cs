@@ -34,7 +34,7 @@ public partial class CitizenInfo : Panel
 		Job.Text = CitizenNpc.Work is not null ? $"Works at {CitizenNpc.Work.GetBuildingName()}" : RawResource.Unemployed;
 
 		Name.Text = CitizenNpc.CitizenName;
-		Happiness.Text = $"Happiness: {GameLogistics.ConvertHappiness(npc.Happiness)}/n" + npc.GetUnhappyReason();
+		Happiness.Text = $"Happiness: {GameLogistics.ConvertHappiness(npc.Happiness)}" + "\n"+ npc.GetUnhappyReason();
 		_icon.Texture = npc.Sprite;
 		MoveToFront();
 	}

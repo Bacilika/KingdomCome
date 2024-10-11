@@ -30,7 +30,7 @@ public partial class ShopIcon : Control
 	{
 		Product = product;
 		Shop = shop;
-		Icon.TextureNormal = product.AnimatedSprite.SpriteFrames.GetFrameTexture("default", 0);
+		Icon.TextureNormal = product.HouseSprite.SpriteFrames.GetFrameTexture("Level0", 0);
 		var containerHeight = Size.Y;
 		var minimum = new Vector2(containerHeight, containerHeight);
 		SetCustomMinimumSize(minimum);

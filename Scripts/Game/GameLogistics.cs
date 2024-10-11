@@ -53,7 +53,8 @@ public partial class GameLogistics : Node2D
 		
 		ProcessedResources = new System.Collections.Generic.Dictionary<string, int>
 		{
-			{ ProcessedResource.Plank, 0 }, { ProcessedResource.IronIngot, 0 }
+			{ ProcessedResource.Plank, 0 }, { ProcessedResource.IronIngot, 0 },
+			{ProcessedResource.Flour,0}
 		};
 	}
 

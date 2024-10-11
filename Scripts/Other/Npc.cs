@@ -101,7 +101,8 @@ public partial class Npc : CharacterBody2D
 		_moodReasons = new Dictionary<string, MoodReason>
 		{
 			{ "Work", new MoodReason() },
-			{ "Activity", new MoodReason() }
+			{ "Activity", new MoodReason() }, 
+			{"Food", new MoodReason()}
 		};
 	}
 
@@ -240,6 +241,15 @@ public partial class Npc : CharacterBody2D
 		{
 			Happiness += reason.Value.Happiness;
 		}
+
+		if (Happiness < BaseHappiness)
+		{
+			GetNode<Sprite2D>("ExclamationPoint").Visible = true;
+		}
+		else
+		{
+			GetNode<Sprite2D>("ExclamationPoint").Visible = false;
+		}
 	}
 
 	public string GetUnhappyReason()
@@ -253,7 +263,6 @@ public partial class Npc : CharacterBody2D
 				if (reason.Value.Happiness > 0) happiness = $"+{reason.Value.Happiness}";
 				unhappyReason += $"{reason.Value.Reason} ({happiness}) \n";
 			}
-
 		return unhappyReason;
 	}
 
@@ -307,6 +316,7 @@ public partial class Npc : CharacterBody2D
 		if (Work is not null)
 			Work.People.Remove(this);
 		else
+			if (GameLogistics.Resources[RawResource.Unemployed] > 0)
 			GameLogistics.Resources[RawResource.Unemployed] -= 1;
 		QueueFree();
 	}
@@ -387,6 +397,15 @@ public partial class Npc : CharacterBody2D
 		return null;
 	}
 
+	public void OnWorkDelete()
+	{
+		Work = null;
+		TargetBuilding = Home; 
+		SetDestination(Home.Position);
+		ScheduleTimer.Stop();
+		AtWorkTimer.Stop();
+	}
+
 	public void SetDestination(Vector2 vec)
 	{
 		_navigation.SetTargetPosition(vec);
@@ -437,11 +456,15 @@ public partial class Npc : CharacterBody2D
 			{
 				Hunger--;
 				EmitSignal(SignalName.OnFed, this, true);
+				_moodReasons["Food"].Reason = "Got fed";
+				_moodReasons["Activity"].Happiness = 0;
 			}
 		}
 		else
 		{
 			EmitSignal(SignalName.OnFed, this, false);
+			_moodReasons["Food"].Reason = "Did not get fed";
+			_moodReasons["Food"].Happiness = -2;
 		}
 	}
 }

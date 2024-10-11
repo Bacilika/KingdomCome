@@ -6,7 +6,6 @@ public abstract partial class AbstractActivity : Production
 {
 	public bool IsOpen = true;
 	public int maxVisitors = 10;
-	public int visitors;
 	protected override void Tick()
 	{
 		UpdateInfo();
@@ -19,12 +18,10 @@ public abstract partial class AbstractActivity : Production
 
 	public bool Visit()
 	{
-		if (visitors >= maxVisitors)
+		if (CurrentPeople.Count >= maxVisitors)
 		{
 			return false;
 		}
-
-		visitors++;
 		return true;
 	}
 }

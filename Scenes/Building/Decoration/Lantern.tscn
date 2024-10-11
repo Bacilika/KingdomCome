@@ -22,7 +22,7 @@ animations = [{
 "texture": ExtResource("3_ftd6x")
 }],
 "loop": true,
-"name": &"default",
+"name": &"Level0",
 "speed": 1.0
 }]
 
@@ -67,7 +67,7 @@ script = ExtResource("1_uj1ek")
 position = Vector2(-1, 1.00001)
 scale = Vector2(0.494523, 0.494523)
 sprite_frames = SubResource("SpriteFrames_fiu42")
-frame_progress = 0.982651
+animation = &"Level0"
 
 [node name="CollisionShape0" type="CollisionShape2D" parent="."]
 position = Vector2(1, 5.5)

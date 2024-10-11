@@ -1,21 +1,40 @@
-[gd_scene load_steps=8 format=3 uid="uid://cnt0tt2expke0"]
+[gd_scene load_steps=9 format=3 uid="uid://clbv88re7qw6r"]
 
 [ext_resource type="Script" path="res://Scripts/Building/Activities/Tavern.cs" id="1_os2qy"]
 [ext_resource type="Texture2D" uid="uid://btymv775ghbsi" path="res://Sprites/Extra/Buildings/tavern1.webp" id="2_5l2k8"]
 [ext_resource type="Texture2D" uid="uid://8ebj3pmg1l3v" path="res://Sprites/Extra/Buildings/tavern3.png" id="3_t2bfw"]
+[ext_resource type="Texture2D" uid="uid://5ngrgo28mfh5" path="res://Sprites/Extra/Buildings/tavern3_3.png" id="4_vjd3d"]
 [ext_resource type="PackedScene" uid="uid://biil4p82w3tjw" path="res://Scenes/Building/PlaceableInfo.tscn" id="5_b51j2"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ttjxn"]
 animations = [{
+"frames": [],
+"loop": true,
+"name": &"AnimationLevel1",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("2_5l2k8")
+}],
+"loop": true,
+"name": &"Level0",
+"speed": 5.0
 }, {
+"frames": [{
 "duration": 1.0,
 "texture": ExtResource("3_t2bfw")
 }],
 "loop": true,
-"name": &"default",
+"name": &"Level1",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_vjd3d")
+}],
+"loop": true,
+"name": &"Level2",
 "speed": 5.0
 }]
 
@@ -34,8 +53,7 @@ script = ExtResource("1_os2qy")
 position = Vector2(-2.99995, -4.5)
 scale = Vector2(0.416557, 0.416557)
 sprite_frames = SubResource("SpriteFrames_ttjxn")
-frame = 1
-frame_progress = 0.182606
+animation = &"AnimationLevel1"
 
 [node name="CollisionShape0" type="CollisionShape2D" parent="."]
 position = Vector2(-10.5, -0.5)

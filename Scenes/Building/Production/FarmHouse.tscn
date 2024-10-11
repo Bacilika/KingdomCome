@@ -26,7 +26,7 @@ animations = [{
 "texture": ExtResource("5_ocdr2")
 }],
 "loop": true,
-"name": &"default",
+"name": &"Level0",
 "speed": 5.0
 }]
 
@@ -70,8 +70,7 @@ script = ExtResource("1_36o5k")
 
 [node name="HouseSprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_gy8eo")
-frame = 1
-frame_progress = 0.7408
+animation = &"Level0"
 
 [node name="FoodTimer" type="Timer" parent="."]
 wait_time = 10.0

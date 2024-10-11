@@ -1,12 +1,14 @@
-[gd_scene load_steps=16 format=3 uid="uid://p3qfaqnaffh1"]
+[gd_scene load_steps=18 format=3 uid="uid://p3qfaqnaffh1"]
 
 [ext_resource type="Script" path="res://Scripts/Building/Production/WoodCutter.cs" id="1_a236h"]
 [ext_resource type="Texture2D" uid="uid://cdobuvg0qs8c7" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/House_BlueBricks_Wood_1.png" id="2_pnnxm"]
-[ext_resource type="Texture2D" uid="uid://dtrwqwsj3j73g" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/House_BlueBricks_Wood_5.png" id="3_lhmgw"]
-[ext_resource type="Texture2D" uid="uid://bdv4a833mig63" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/House_BlueBricks_Wood_7.png" id="4_nv3p3"]
+[ext_resource type="Texture2D" uid="uid://dgmcoh7pd4owu" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/House_BlueBricks_Wood_1_animation_1.png" id="2_x7okw"]
+[ext_resource type="Texture2D" uid="uid://d24fwk5s6gwaj" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/House_BlueBricks_Wood_1animation_2.png" id="3_3lggo"]
+[ext_resource type="Texture2D" uid="uid://lcckvy0d744a" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/House_BlueBricks_Wood_1_animation_11.png" id="4_04sge"]
 [ext_resource type="PackedScene" uid="uid://biil4p82w3tjw" path="res://Scenes/Building/PlaceableInfo.tscn" id="5_h81m2"]
 [ext_resource type="Texture2D" uid="uid://dt1kbfdm7dk2a" path="res://Sprites/Extra/addResource1.png" id="5_r8goj"]
 [ext_resource type="Texture2D" uid="uid://co3y7ufhufouh" path="res://Sprites/Extra/addResource2.png" id="6_3c0s2"]
+[ext_resource type="Texture2D" uid="uid://dy2w0yexeerd4" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/House_BlueBricks_Wood_2.png" id="6_wo0ym"]
 [ext_resource type="Texture2D" uid="uid://bpp4m7x6k6cyf" path="res://Sprites/Extra/addResource3.png" id="7_20uxw"]
 [ext_resource type="Texture2D" uid="uid://bjtqfmauw1cfk" path="res://Sprites/Extra/addResource4.png" id="8_aqjvy"]
 [ext_resource type="Texture2D" uid="uid://bh7bofwv2v6rn" path="res://Sprites/Extra/addResource5.png" id="9_86na0"]
@@ -17,21 +19,58 @@
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_pnnxm")
+"texture": ExtResource("2_x7okw")
 }, {
 "duration": 1.0,
-"texture": ExtResource("3_lhmgw")
+"texture": ExtResource("2_x7okw")
 }, {
 "duration": 1.0,
-"texture": ExtResource("4_nv3p3")
+"texture": ExtResource("3_3lggo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_x7okw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_04sge")
 }],
 "loop": true,
-"name": &"default",
+"name": &"AnimationLevel0",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"AnimationLevel1",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"AnimationLevel2",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_pnnxm")
+}],
+"loop": true,
+"name": &"Level0",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_wo0ym")
+}],
+"loop": true,
+"name": &"Level1",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"Level2",
 "speed": 5.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cews5"]
-size = Vector2(153, 108.5)
+size = Vector2(77, 72)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_pfse0"]
 animations = [{
@@ -69,23 +108,27 @@ script = ExtResource("1_a236h")
 
 [node name="HouseSprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_gy8eo")
+animation = &"Level0"
 
 [node name="CollisionShape0" type="CollisionShape2D" parent="."]
-position = Vector2(1, 1.5)
+position = Vector2(-0.5, 7)
 shape = SubResource("RectangleShape2D_cews5")
 
 [node name="WoodTimer" type="Timer" parent="."]
 wait_time = 5.0
 
 [node name="CollisionShape1" type="CollisionShape2D" parent="."]
-position = Vector2(2, 0.5)
+visible = false
+position = Vector2(-0.5, 0.5)
 shape = SubResource("RectangleShape2D_cews5")
 
 [node name="CollisionShape2" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(-1.5, 2.75)
 shape = SubResource("RectangleShape2D_cews5")
 
 [node name="Animation" type="AnimatedSprite2D" parent="."]
+visible = false
 position = Vector2(0, -72)
 sprite_frames = SubResource("SpriteFrames_pfse0")
 

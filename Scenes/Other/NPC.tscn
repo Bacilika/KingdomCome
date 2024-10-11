@@ -6,6 +6,7 @@
 [ext_resource type="AudioStream" uid="uid://b42k3qloq1c6x" path="res://Audio/GrassWalking.mp3" id="3_kh5mf"]
 [ext_resource type="PackedScene" uid="uid://dyq8jku2xq8kr" path="res://Scenes/Building/CitizenInfo.tscn" id="4_pwgeb"]
 [ext_resource type="Texture2D" uid="uid://ci4sq16dccr2j" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Character/Character/Character_Slash.png" id="5_6tfck"]
+[ext_resource type="Texture2D" uid="uid://dqc2iux8lwose" path="res://Sprites/Extra/Icons/Exclamation_point.png" id="6_6qoud"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_f4nvv"]
 atlas = ExtResource("1_f3dyl")
@@ -364,6 +365,12 @@ visible = false
 [node name="AtWorkTimer" type="Timer" parent="."]
 wait_time = 10.0
 one_shot = true
+
+[node name="ExclamationPoint" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(12, -19)
+scale = Vector2(0.0642458, 0.0642458)
+texture = ExtResource("6_6qoud")
 
 [connection signal="mouse_entered" from="." to="." method="OnMouseEntered"]
 [connection signal="mouse_exited" from="." to="." method="OnMouseExited"]

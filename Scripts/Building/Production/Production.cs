@@ -8,8 +8,41 @@ public abstract partial class Production : AbstractPlaceable
 	private int _food;
 	protected Timer _timer;
 	protected string Producing;
-	
-	
+	protected int ProductionRate = 10; // 1/ProductionRate % chance to produce item by 1 each tick. 
+
+	protected override void OnDelete()
+	{
+		OnDeleteInstance();
+		Console.WriteLine("People " + People.Count);
+		for (var i = People.Count -1; i > -1; i--)
+		{
+			var npc = People[i];
+			npc.OnWorkDelete();
+			RemoveWorker(npc);
+			GameLogistics.Resources[RawResource.Unemployed]++;
+
+		}
+		foreach (var cost in DeleteCost) GameLogistics.Resources[cost.Key] += cost.Value[Level];
+		Shop.deleteAudio.Play();
+		Console.WriteLine(GameMap._placedProduction.Count);
+		foreach (var production in GameMap._placedProduction)
+		{
+			if (production == this)
+			{
+				GameMap._placedProduction.Remove(production);
+				Console.WriteLine("Removed production");
+				break;
+			}
+		}
+		Console.WriteLine(GameMap._placedProduction.Count);
+		QueueFree();
+	}
+
+	public virtual void OnNpcReachWork(Node2D npc)
+	{
+		Console.WriteLine("OnNpcReachWork");
+	}
+
 	public virtual void ProduceItem()
 	{
 		Console.WriteLine("ProduceItem instance");

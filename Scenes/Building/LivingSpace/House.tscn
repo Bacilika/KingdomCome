@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://cx5dug5bljx7r"]
+[gd_scene load_steps=23 format=3 uid="uid://cx5dug5bljx7r"]
 
 [ext_resource type="Script" path="res://Scripts/Building/LivingSpace/House.cs" id="1_y1wo4"]
 [ext_resource type="Texture2D" uid="uid://bwrsvxhm848ni" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/House_RedWood_Stone_1 - lights on-2.png" id="2_ugkg1"]
@@ -7,12 +7,13 @@
 [ext_resource type="Texture2D" uid="uid://bsojsx4kufh5r" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/House_RedWood_Stone_2 - lights on_1.png" id="4_xy41x"]
 [ext_resource type="Texture2D" uid="uid://dt1kbfdm7dk2a" path="res://Sprites/Extra/addResource1.png" id="5_36com"]
 [ext_resource type="Texture2D" uid="uid://b8vmwtxt2qrvu" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/House_RedWood_Stone_2 - lights on_2.png" id="5_kmpw5"]
+[ext_resource type="Texture2D" uid="uid://fcscjt7qgc4v" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/House_RedWood_Stone_3_3_animation1.png" id="6_8fonb"]
 [ext_resource type="Texture2D" uid="uid://co3y7ufhufouh" path="res://Sprites/Extra/addResource2.png" id="6_anjd3"]
 [ext_resource type="Texture2D" uid="uid://ncak4duw1smn" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/House_RedWood_Stone_1.png" id="6_w44rr"]
 [ext_resource type="Texture2D" uid="uid://bpp4m7x6k6cyf" path="res://Sprites/Extra/addResource3.png" id="7_3c46p"]
+[ext_resource type="Texture2D" uid="uid://bsvf82gfxh1y2" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/House_RedWood_Stone_3_3_animation2.png" id="7_rrgd5"]
 [ext_resource type="Texture2D" uid="uid://cc1ypnuadgjre" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/House_RedWood_Stone_2.png" id="7_svvhs"]
 [ext_resource type="Texture2D" uid="uid://bjtqfmauw1cfk" path="res://Sprites/Extra/addResource4.png" id="8_31np2"]
-[ext_resource type="Texture2D" uid="uid://bqcdpxg0au2ns" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/House_RedWood_Stone_3.png" id="8_s3vkd"]
 [ext_resource type="Texture2D" uid="uid://bh7bofwv2v6rn" path="res://Sprites/Extra/addResource5.png" id="9_bgvb8"]
 [ext_resource type="Texture2D" uid="uid://c2s5x2ag6prrg" path="res://Sprites/Extra/addResource6.png" id="10_fy0ix"]
 [ext_resource type="Texture2D" uid="uid://epbdr1v164x7" path="res://Sprites/Extra/addResource8.png" id="11_fdkp0"]
@@ -27,7 +28,7 @@ animations = [{
 "texture": ExtResource("3_5mqxn")
 }],
 "loop": true,
-"name": &"Level 1 people inside",
+"name": &"AnimationLevel0",
 "speed": 5.0
 }, {
 "frames": [{
@@ -38,32 +39,53 @@ animations = [{
 "texture": ExtResource("5_kmpw5")
 }],
 "loop": true,
-"name": &"Level2PeopleInside",
+"name": &"AnimationLevel1",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_8fonb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_rrgd5")
+}],
+"loop": true,
+"name": &"AnimationLevel2",
 "speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("6_w44rr")
-}, {
-"duration": 1.0,
-"texture": ExtResource("7_svvhs")
-}, {
-"duration": 1.0,
-"texture": ExtResource("8_s3vkd")
 }],
 "loop": true,
-"name": &"default",
+"name": &"Level0",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_svvhs")
+}],
+"loop": true,
+"name": &"Level1",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_8fonb")
+}],
+"loop": true,
+"name": &"Level2",
 "speed": 5.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r3tpq"]
-size = Vector2(88, 96)
+size = Vector2(88, 72)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ijjqg"]
 size = Vector2(160, 112)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ecvay"]
-size = Vector2(176, 128)
+size = Vector2(206, 99)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_eb5sg"]
 animations = [{
@@ -103,17 +125,20 @@ script = ExtResource("1_y1wo4")
 
 [node name="HouseSprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_fiu42")
-frame_progress = 0.135936
+animation = &"Level2"
 
 [node name="CollisionShape0" type="CollisionShape2D" parent="."]
-position = Vector2(-1, 0)
+visible = false
+position = Vector2(-1, 12)
 shape = SubResource("RectangleShape2D_r3tpq")
 
 [node name="CollisionShape1" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("RectangleShape2D_ijjqg")
 disabled = true
 
 [node name="CollisionShape2" type="CollisionShape2D" parent="."]
+position = Vector2(15, -4.5)
 shape = SubResource("RectangleShape2D_ecvay")
 disabled = true
 

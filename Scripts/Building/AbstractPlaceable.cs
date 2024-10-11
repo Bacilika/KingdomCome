@@ -66,17 +66,18 @@ public abstract partial class AbstractPlaceable : Area2D
         Console.WriteLine("AbstractPlaceable OnParentReady");
     }
 
-    private void OnDelete()
+    //Only for Living spaces
+    protected virtual void OnDelete()
     {
         OnDeleteInstance();
-        for (var i = People.Count - 1; i > 0; i--)
+        for (var i = People.Count -1; i > -1; i--)
         {
             var npc = People[i];
             npc.OnDelete();
         }
-
-        foreach (var cost in DeleteCost) GameLogistics.Resources[cost.Key] -= cost.Value[Level];
+        foreach (var cost in DeleteCost) GameLogistics.Resources[cost.Key] += cost.Value[Level];
         Shop.deleteAudio.Play();
+        
         QueueFree();
     }
 

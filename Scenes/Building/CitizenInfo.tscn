@@ -42,7 +42,7 @@ horizontal_alignment = 1
 
 [node name="Happiness" type="Label" parent="VBoxContainer"]
 layout_mode = 2
-text = "Happiness
+text = "Neutral
 "
 horizontal_alignment = 1
 

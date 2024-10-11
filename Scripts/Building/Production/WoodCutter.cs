@@ -42,9 +42,8 @@ public partial class WoodCutter : Production
 	public override void OnNpcReachWork(Node2D node)
 	{
 		var npc = node as Npc;
-		if (npc._dayTimer.IsStopped() && npc.PlaceablePosition != this)
+		if (npc.WorkTimer.IsStopped() && npc.PlaceablePosition != this)
 		{
-			Console.WriteLine("hej");
 			return;
 		}
 		_assignedWorker.TryAdd(npc, null);
@@ -57,7 +56,6 @@ public partial class WoodCutter : Production
 		{
 			npc.AtWorkTimer.Start();
 		}
-		Console.WriteLine(npc.AtWorkTimer.TimeLeft);
 	}
 
 	public override void AtWorkTimerTimeout(Npc npc)

@@ -8,6 +8,9 @@ using Scripts.Constants;
 public partial class GameMap : Node2D
 {
 	public static List<AbstractActivity> _placedActivities = [];
+	
+	public static List<LivingSpace> _placedHouses = [];
+	public static List<Production> _placedProduction = [];
 
 	//for job selection
 	public static bool JobSelectMode;
@@ -17,8 +20,6 @@ public partial class GameMap : Node2D
 	private Timer _foodTimer;
 	private GameMenu _gameMenu;
 	private AudioStreamPlayer2D _music;
-	public List<LivingSpace> _placedHouses = [];
-	public List<Production> _placedProduction = [];
 	private PackedScene NPCScene;
 	private PackedScene infoScene;
 

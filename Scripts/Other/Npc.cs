@@ -29,7 +29,7 @@ public partial class Npc : CharacterBody2D
 	private const int BaseHappiness = 5;
 	private AbstractActivity _activity;
 	private Vector2 _activityPosition;
-	public Timer _dayTimer;
+	public Timer WorkTimer;
 	private Vector2 _destination;
 	private bool _focused;
 	
@@ -66,7 +66,7 @@ public partial class Npc : CharacterBody2D
 		Sprite = _animation.SpriteFrames.GetFrameTexture("walkDown", 0);
 		AtWorkTimer = GetNode<Timer>("AtWorkTimer");
 		_navigation = GetNode<NavigationAgent2D>("NavigationAgent2D");
-		_dayTimer = GetNode<Timer>("WorkTimer");
+		WorkTimer = GetNode<Timer>("WorkTimer");
 		_walkingOnGrassSound = GetNode<AudioStreamPlayer2D>("GrassWalking");
 		Info = GetNode<CitizenInfo>("CitizenInfo");
 		Info.SetInfo(this);
@@ -132,14 +132,14 @@ public partial class Npc : CharacterBody2D
 
 		else //if at destination
 		{
-			if (_dayTimer.IsStopped()) //Start timer for work
+			ToggleWalkingSound(false);
+			if (WorkTimer.IsStopped()) //Start timer for work
 			{
-				_dayTimer.Start();
-				ToggleWalkingSound(false);
+				WorkTimer.Start();
 				_animation.Animation = "work";
 			}
 
-			if (_timerOut) //done at work
+			if (_timerOut && Work is not null) //done at work
 				if (_rnd.RandiRange(0, 10) == 0) //to make their movement a bit less monotone
 				{
 					if (PlaceablePosition == Work) Work.GatherResource(); //leaving work.
@@ -147,7 +147,7 @@ public partial class Npc : CharacterBody2D
 					SetDestination();
 
 					_timerOut = false;
-					_dayTimer.Stop();
+					WorkTimer.Stop();
 					
 				}
 		}
@@ -213,7 +213,6 @@ public partial class Npc : CharacterBody2D
 				if (reason.Value.Happiness > 0) happiness = $"+{reason.Value.Happiness}";
 				unhappyReason += $"{reason.Value.Reason} ({happiness}) \n";
 			}
-
 		return unhappyReason;
 	}
 
@@ -263,6 +262,7 @@ public partial class Npc : CharacterBody2D
 		if (Work is not null)
 			Work.People.Remove(this);
 		else
+			if (GameLogistics.Resources[RawResource.Unemployed] > 0)
 			GameLogistics.Resources[RawResource.Unemployed] -= 1;
 		QueueFree();
 	}
@@ -335,6 +335,15 @@ public partial class Npc : CharacterBody2D
 		return null;
 	}
 
+	public void OnWorkDelete()
+	{
+		Work = null;
+		PlaceablePosition = Home; 
+		SetDestination();
+		WorkTimer.Stop();
+		AtWorkTimer.Stop();
+	}
+
 	public void SetDestination(Vector2 vec)
 	{
 		_navigation.SetTargetPosition(vec);
@@ -375,6 +384,7 @@ public partial class Npc : CharacterBody2D
 			}
 		}
 	}
+	
 
 	public void OnDayOver()
 	{
@@ -385,11 +395,15 @@ public partial class Npc : CharacterBody2D
 			{
 				Hunger--;
 				EmitSignal(SignalName.OnFed, this, true);
+				_moodReasons["Food"].Reason = "Got fed";
+				_moodReasons["Activity"].Happiness = 0;
 			}
 		}
 		else
 		{
 			EmitSignal(SignalName.OnFed, this, false);
+			_moodReasons["Food"].Reason = "Did not get fed";
+			_moodReasons["Food"].Happiness = -2;
 		}
 	}
 }

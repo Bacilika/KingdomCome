@@ -71,13 +71,16 @@ public partial class GameMenu : Control
 	{
 
 		LevelProgressbar.Value = _citizen.Count % 10;
-		var red = new Color("#801917");
 
 		Day.Text = "Day: " + GameLogistics.Day;
 
 		foreach (var item in _gameStatLabels)
 		{
 			int value;
+			if (item.Key == RawResource.Food)
+			{
+				item.Value.TooltipText = GameLogistics.FoodResourceAsString;
+			}
 
 			switch (item.Key)
 			{
@@ -94,15 +97,9 @@ public partial class GameMenu : Control
 				default:
 				{
 					value = GameLogistics.Resources[item.Key];
-					if (value == 0)
-						item.Value.Set("theme_override_colors/font_color", red);
-					else
-						item.Value.Set("theme_override_colors/font_color", new Color(1, 1, 1));
-
 					break;
 				}
 			}
-
 			item.Value.Text = ": " + value;
 		}
 	}

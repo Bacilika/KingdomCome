@@ -51,6 +51,7 @@ public partial class GameMap : Node2D
 
 	public override void _Process(double delta)
 	{
+		GameMenu.UpdateMenuInfo();
 		_timeSinceLastTick += delta;
 		if (GameLogistics.Resources[RawResource.Unemployed] > 0) //there are unemployed
 			GiveJobToNpcs();
@@ -159,7 +160,7 @@ public partial class GameMap : Node2D
 		GameLogistics.Day += 1;
 		EmitSignal(SignalName.DayOver);
 		if (GameLogistics.Resources[RawResource.Food] > 0) GameLogistics.Resources[RawResource.Food] -= 1;
-		GameMenu.UpdateMenuInfo();
+		
 		
 	}
 

@@ -13,9 +13,6 @@
 [ext_resource type="Texture2D" uid="uid://c2s5x2ag6prrg" path="res://Sprites/Extra/addResource6.png" id="10_b7rp1"]
 [ext_resource type="Texture2D" uid="uid://epbdr1v164x7" path="res://Sprites/Extra/addResource8.png" id="11_js1et"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_cews5"]
-size = Vector2(67, 139)
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_wjt6n"]
 animations = [{
 "frames": [{
@@ -32,6 +29,9 @@ animations = [{
 "name": &"default",
 "speed": 5.0
 }]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cews5"]
+size = Vector2(82, 184.5)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_6fe6w"]
 animations = [{
@@ -63,11 +63,9 @@ animations = [{
 }]
 
 [node name="HunterLodge" type="Area2D"]
+collision_layer = 3
+collision_mask = 3
 script = ExtResource("1_6cilf")
-
-[node name="CollisionShape0" type="CollisionShape2D" parent="."]
-position = Vector2(-1.5, 3.5)
-shape = SubResource("RectangleShape2D_cews5")
 
 [node name="FoodTimer" type="Timer" parent="."]
 wait_time = 30.0
@@ -77,11 +75,16 @@ autostart = true
 z_index = 1
 sprite_frames = SubResource("SpriteFrames_wjt6n")
 
+[node name="CollisionShape0" type="CollisionShape2D" parent="."]
+position = Vector2(0, 8)
+shape = SubResource("RectangleShape2D_cews5")
+
 [node name="CollisionShape1" type="CollisionShape2D" parent="."]
-position = Vector2(-2, -2)
+position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_cews5")
 
 [node name="CollisionShape2" type="CollisionShape2D" parent="."]
+position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_cews5")
 
 [node name="Animation" type="AnimatedSprite2D" parent="."]

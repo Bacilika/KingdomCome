@@ -44,6 +44,9 @@ public abstract partial class AbstractPlaceable : Area2D
     public Dictionary<string, List<int>> MoveCost;
     public List<Npc> People = [];
     public int PlayerLevel = 0;
+    protected List<Npc> CurrentPeople = [];
+
+    public bool ActivityIndoors = true;
 
     protected RandomNumberGenerator Rnd = new();
 
@@ -69,7 +72,7 @@ public abstract partial class AbstractPlaceable : Area2D
     private void OnDelete()
     {
         OnDeleteInstance();
-        for (var i = People.Count - 1; i > 0; i--)
+        for (var i = People.Count - 1; i >= 0; i--)
         {
             var npc = People[i];
             npc.OnDelete();
@@ -100,10 +103,37 @@ public abstract partial class AbstractPlaceable : Area2D
         _wareBox.Visible = false;
         var button = InfoBox.GetNode<Button>("ChooseWareButton");
         button.Visible = this is MarketStall;
+        BodyEntered += CitizenEntered;
+        BodyExited += CitizenExited;
 
         _Ready_instance();
         SetObjectValues();
         OnParentReady();
+    }
+
+    public virtual void OnCitizenEntered(Npc npc)
+    {
+        
+    }
+
+    public  virtual void CitizenEntered(Node2D node2D)
+    {
+
+        if (node2D is Npc npc)
+        {
+            CurrentPeople.Add(npc);
+            npc.OnBuildingEntered(this);
+        }
+    }
+    public void CitizenExited(Node2D node2D)
+    {
+
+        if (node2D is Npc npc)
+        {
+            CurrentPeople.Remove(npc);
+            npc.OnBuildingExited();
+        }
+			
     }
 
     public string GetBuildingName()
@@ -286,6 +316,7 @@ public abstract partial class AbstractPlaceable : Area2D
     protected void PlayAnimation(Vector2 position)
     {
         var animatedSprite = GetNode<AnimatedSprite2D>("Animation");
+        animatedSprite.MoveToFront();
         animatedSprite.GlobalPosition = position;
         animatedSprite?.Play();
     }

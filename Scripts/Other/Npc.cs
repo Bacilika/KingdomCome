@@ -29,7 +29,6 @@ public partial class Npc : CharacterBody2D
 	private const int BaseHappiness = 5;
 	private AbstractActivity _activity;
 	private Vector2 _activityPosition;
-	public Timer _dayTimer;
 	private Vector2 _destination;
 	private bool _focused;
 	
@@ -39,8 +38,7 @@ public partial class Npc : CharacterBody2D
 	private AnimatedSprite2D _animation;
 	public int Hunger = 0;
 
-
-
+	
 	private Dictionary<string, MoodReason> _moodReasons;
 
 	//Navigation
@@ -48,7 +46,6 @@ public partial class Npc : CharacterBody2D
 	private bool _ready;
 	private bool _still;
 	private bool _stopped;
-	public bool _timerOut;
 	private RandomNumberGenerator _rnd = new();
 	private float _speed = 100;
 	private AudioStreamPlayer2D _walkingOnGrassSound;
@@ -58,6 +55,13 @@ public partial class Npc : CharacterBody2D
 	public AbstractPlaceable PlaceablePosition;
 	public Texture2D Sprite;
 	public Production Work;
+	public AbstractPlaceable CurrentBuilding;
+	public Timer ScheduleTimer;
+	public bool _move;
+	public AbstractPlaceable TargetBuilding;
+	public bool AtWork;
+	public double time;
+	public string _direction;
 
 	public override void _Ready()
 	{
@@ -66,15 +70,34 @@ public partial class Npc : CharacterBody2D
 		Sprite = _animation.SpriteFrames.GetFrameTexture("walkDown", 0);
 		AtWorkTimer = GetNode<Timer>("AtWorkTimer");
 		_navigation = GetNode<NavigationAgent2D>("NavigationAgent2D");
-		_dayTimer = GetNode<Timer>("WorkTimer");
 		_walkingOnGrassSound = GetNode<AudioStreamPlayer2D>("GrassWalking");
 		Info = GetNode<CitizenInfo>("CitizenInfo");
 		Info.SetInfo(this);
 		Info.GetNode<HBoxContainer>("HBoxContainer").Visible = false;
 		Info.Visible = false;
+		ScheduleTimer = new Timer();
+		ScheduleTimer.WaitTime = 30;
+		ScheduleTimer.OneShot = true;
+		ScheduleTimer.Timeout += () =>
+		{
+			AtWorkTimer.Stop();
+			ScheduleTimer.Stop();
+			if (AtWork)
+			{
+				AtWork = false;
+				CurrentBuilding = Work;
+				SetNextLocation();
+			}
+			_move = true;
+		};
+		ScheduleTimer.Autostart = false;
+		AddChild(ScheduleTimer);
+		_navigation.TargetReached += () =>
+		{
+			
+			StartScheduleTimer();
+		};
 		
-
-
 		_moodReasons = new Dictionary<string, MoodReason>
 		{
 			{ "Work", new MoodReason() },
@@ -82,18 +105,54 @@ public partial class Npc : CharacterBody2D
 		};
 	}
 
-	public void OnWorkTimerTimeout()
+	public void OnBuildingEntered(AbstractPlaceable building)
 	{
-		_timerOut = true;
+		if (building != TargetBuilding)
+		{
+			return;
+		}
+		if (!ScheduleTimer.IsStopped()) //citizen is working
+		{
+			Work.NpcWork(this); //do task
+			return;
+		}
+		
+		if (!building.ActivityIndoors)
+		{
+			_navigation.SetTargetPosition(Position);
+		}
+		
+	}
+
+	public void StartScheduleTimer()
+	{
+		_move = false;
+		if (CurrentBuilding == null && TargetBuilding == Work) // reach workplace
+		{
+			AtWork = true;
+			Work.NpcWork(this);
+		}
+		ScheduleTimer.Start();
+		CurrentBuilding = TargetBuilding;
+		if (!AtWork)
+		{
+			SetNextLocation();
+		}
+		
+	}
+	public void OnBuildingExited()
+	{
+		CurrentBuilding = null;
 	}
 
 	public void OnAtWorkTimerTimeout()
 	{
 		Work.AtWorkTimerTimeout(this);
-		Work.GatherResource(Position);
+		
+		
+		
 	}
-
-
+	
 	private void ToggleWalkingSound(bool on)
 	{
 		if (on)
@@ -111,7 +170,6 @@ public partial class Npc : CharacterBody2D
 		if (Info is not null && Info.Visible) Info.SetInfo(this);
 	}
 
-
 	public override void _PhysicsProcess(double delta)
 	{
 		if (!_ready || NavigationServer2D.MapGetIterationId(_navigation.GetNavigationMap()) == 0) return; //Not ready
@@ -123,39 +181,31 @@ public partial class Npc : CharacterBody2D
 			return;
 		}
 
-		if (_navigation.DistanceToTarget() > 10) //not at destination
+		if (_move) // going to destination
 		{
-			_still = false;
-			Move();
-		}
-
-		else //if at destination
-		{
-			if (_dayTimer.IsStopped()) //Start timer for work
+			_direction = GetDirection();
+			if (!_walkingOnGrassSound.Playing)
 			{
-				_dayTimer.Start();
-				ToggleWalkingSound(false);
-				_animation.Animation = "work";
+				ToggleWalkingSound(true);
 			}
 
-			if (_timerOut) //done at work
-				if (_rnd.RandiRange(0, 10) == 0) //to make their movement a bit less monotone
-				{
-					if (PlaceablePosition == Work) Work.GatherResource(); //leaving work.
-					SwitchLocation();
-					SetDestination();
-
-					_timerOut = false;
-					_dayTimer.Stop();
-					
-				}
+			Move();
+			if (_navigation.DistanceToTarget() < 1)
+			{
+				_navigation.SetTargetPosition(Position);
+			}
+		}
+		else //at destination
+		{
+			ToggleWalkingSound(false);
+			_animation.Animation = $"work{_direction}";
 		}
 	}
 
 	private void Move()
 	{
 		Velocity = GlobalPosition.DirectionTo(_navigation.GetNextPathPosition()) * _speed;
-		_animation.Animation = GetDirection();
+		_animation.Animation = $"walk{_direction}";
 		MoveAndSlide();
 		_animation.Play();
 	}
@@ -167,13 +217,13 @@ public partial class Npc : CharacterBody2D
 		switch (angleToDegrees)
 		{
 			case >= 45 and < 135:
-				return "walkDown";
+				return "Down";
 			case >= -135 and < -45:
-				return "walkUp";
+				return "Up";
 			case >= 0 and < 45 or < 0 and >= -45:
-				return "walkRight";
+				return "Right";
 			default:
-				return "walkLeft";
+				return "Left";
 		}
 	}
 
@@ -220,10 +270,14 @@ public partial class Npc : CharacterBody2D
 			if (!change) //if this is first job, go to work!
 			{
 				EmitSignal(SignalName.SendLog, $"{CitizenName} got their first job at the {Work.BuildingName}!");
-				SetDestination();
+				_move = true;
+				SetDestination(Work.Position);
+				TargetBuilding = Work;
+				_ready = true;
 			}
 			else
 			{
+				AtWork = false;
 				if (oldWork is not null)
 				{
 					EmitSignal(SignalName.SendLog, $"{CitizenName} changed job from {oldWork.BuildingName} to {Work.BuildingName}");
@@ -258,50 +312,58 @@ public partial class Npc : CharacterBody2D
 	}
 
 
-	private void SwitchLocation()
+	public void SetNextLocation()
 	{
-		PlaceablePosition ??= Home;
-		switch (PlaceablePosition.BuildingName)
+		if (CurrentBuilding == null)
 		{
-			case var value when value == Home.BuildingName:
+			return;
+		}
+		switch (CurrentBuilding.GetBuildingName())
+		{
+			case var value when value == Home.GetBuildingName():
 			{
-				PlaceablePosition = Work;
+				TargetBuilding = Work;
+				SetDestination(Work.Position);
 				break;
 			}
-			case var value when value == Work.BuildingName:
+			case var value when value == Work.GetBuildingName():
 			{
 				if (!GoToActivity()) // Going home
 				{
-					PlaceablePosition = Home;
+					TargetBuilding = Home;
+					SetDestination(Home.Position);
+					break;
 				}
 				
 				if (FindActivity() != null)
 				{
-					
-					PlaceablePosition = _activity;
 					_moodReasons["Activity"].Reason = "enjoys" + _activity.BuildingName;
 					_moodReasons["Activity"].Happiness = 2;
 					EmitSignal(SignalName.SendLog, $"{CitizenName} enjoys spending time at the {_activity.BuildingName}");
+					TargetBuilding = _activity;
+					SetDestination(_activity.Position);
 				}
 				else
 				{ 
+					TargetBuilding = Home;
 					EmitSignal(SignalName.SendLog, $"{CitizenName} didn't find an activity");
-					PlaceablePosition = Home;
 					_moodReasons["Activity"].Reason = "No available activity";
 					_moodReasons["Activity"].Happiness = -2;
+					SetDestination(Home.Position);
 				}
 
 				break;
 			}
-			case var value when value == _activity.BuildingName:
+			case var value when value == _activity.GetBuildingName():
 			{
-				PlaceablePosition = Home;
+				TargetBuilding = Home;
+				SetDestination(Home.Position);
 				break;
 			}
 			default:
 			{
-				Console.WriteLine("Unknown building name");
-				break;
+				Console.WriteLine("Trying to switch when currentBuilding is null");
+				throw new Exception();
 			}
 		}
 	}

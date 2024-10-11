@@ -1,20 +1,23 @@
 [gd_scene load_steps=4 format=3 uid="uid://dtgqg8p8u8ecn"]
 
 [ext_resource type="Script" path="res://Scripts/Other/Mountain.cs" id="1_5nntx"]
-[ext_resource type="Texture2D" uid="uid://cyahl51520e8j" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Rocks/Rock_Gray_3.png" id="2_vgcaw"]
+[ext_resource type="Texture2D" uid="uid://c3nuifvuhq68o" path="res://Sprites/Extra/Mountain.png" id="2_80csb"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_3fe4r"]
-radius = 114.28
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0vhla"]
+radius = 16.0
+height = 178.0
 
 [node name="Mountain" type="Area2D"]
 y_sort_enabled = true
 script = ExtResource("1_5nntx")
 
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(3, 3)
+texture = ExtResource("2_80csb")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 y_sort_enabled = true
-shape = SubResource("CircleShape2D_3fe4r")
+position = Vector2(0, 80)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_0vhla")
 disabled = true
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(13.7476, 13.7695)
-texture = ExtResource("2_vgcaw")

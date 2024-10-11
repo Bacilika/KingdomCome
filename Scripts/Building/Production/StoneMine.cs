@@ -6,10 +6,10 @@ public partial class StoneMine : Production
 	// Called when the node enters the scene tree for the first time.
 	protected override void _Ready_instance()
 	{
+		ActivityIndoors = false;
 		BuildingName = "Stone Mine";
 		BuildingDescription = "Mine for Mining stone";
 		Producing = RawResource.Stone;
-		ProductionRate = 2;
 		PlayerLevel = 1;
 		Upgrades = new Dictionary<string, List<int>>
 		{

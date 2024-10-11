@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://2m2io2mmgtv7"]
+[gd_scene load_steps=16 format=3 uid="uid://yo2f8xj5qf04"]
 
 [ext_resource type="Script" path="res://Scripts/Building/Production/Bakery.cs" id="1_xtybq"]
 [ext_resource type="Texture2D" uid="uid://dt1kbfdm7dk2a" path="res://Sprites/Extra/addResource1.png" id="2_oercm"]
@@ -63,6 +63,8 @@ animations = [{
 }]
 
 [node name="Bakery" type="Area2D"]
+collision_layer = 3
+collision_mask = 3
 script = ExtResource("1_xtybq")
 
 [node name="FoodTimer" type="Timer" parent="."]
@@ -76,17 +78,14 @@ sprite_frames = SubResource("SpriteFrames_wjt6n")
 frame_progress = 0.935727
 
 [node name="CollisionShape0" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(-1.5, 3.5)
 shape = SubResource("RectangleShape2D_cews5")
 
 [node name="CollisionShape1" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(-2, -2)
 shape = SubResource("RectangleShape2D_cews5")
 
 [node name="CollisionShape2" type="CollisionShape2D" parent="."]
-visible = false
 shape = SubResource("RectangleShape2D_cews5")
 
 [node name="Animation" type="AnimatedSprite2D" parent="."]

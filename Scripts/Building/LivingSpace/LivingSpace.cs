@@ -42,6 +42,7 @@ public abstract partial class LivingSpace : AbstractPlaceable
         GetNode<AnimatedSprite2D>("HouseSprite").SetAnimation("Level 1 people inside");
         GetNode<AnimatedSprite2D>("HouseSprite").Play();
         npc.PlaceablePosition = this;
+        npc.CurrentBuilding = this;
     }
     public void UpdateInfo()
     {

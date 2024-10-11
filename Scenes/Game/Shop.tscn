@@ -15,7 +15,7 @@
 [node name="Shop" type="Control"]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 768.0
+offset_right = 728.0
 offset_bottom = 128.0
 theme = ExtResource("4_h681q")
 script = ExtResource("1_1o3pr")
@@ -35,13 +35,14 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -205.5
+offset_left = -232.0
 offset_top = -112.0
-offset_right = 205.5
+offset_right = 179.0
 grow_horizontal = 2
 grow_vertical = 0
 mouse_filter = 0
 theme_override_icons/menu = SubResource("ViewportTexture_ok3r1")
+tab_alignment = 1
 current_tab = 4
 tabs_position = 1
 clip_tabs = false

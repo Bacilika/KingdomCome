@@ -8,10 +8,6 @@ public partial class HunterLodge : Production
 	{
 		BuildingName = "Hunter's Lodge";
 		BuildingDescription = "A station for hunters to gather and hunt. Produces meat.";
-
-		ProductionRate = 2;
-		_timer = GetNode<Timer>("FoodTimer");
-		_timer.Start();
 		PlayerLevel = 0;
 		Producing = "Food";
 		Upgrades = new Dictionary<string, List<int>>

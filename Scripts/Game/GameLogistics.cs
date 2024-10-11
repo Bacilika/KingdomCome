@@ -1,3 +1,4 @@
+using System.IO;
 using Godot;
 using Godot.Collections;
 using KingdomCome.Scripts.Building;
@@ -24,6 +25,7 @@ public partial class GameLogistics : Node2D
 	private bool _roadPlaceMode;
 	private Array<Vector2I> _roadPositions = [];
 	private PackedScene _roadScene = ResourceLoader.Load<PackedScene>("res://Scenes/Other/Road.tscn");
+	public static string FoodResourceAsString;
 
 
 	public override void _Ready()
@@ -34,10 +36,7 @@ public partial class GameLogistics : Node2D
 		var shop = gameMenu.GetNode<Shop>("MenuCanvasLayer/Container/Shop");
 		shop.OnBuildingButtonPressed += BuildBuilding;
 		shop.OnRoadBuild += OnRoadBuild;
-
-		//_houses = _gameMap._placedHouses;
-		//_productions = _gameMap._placedProduction;
-
+		
 		Resources = new System.Collections.Generic.Dictionary<string, int>
 		{
 			{ RawResource.Money, 0 }, { RawResource.Citizens, 0 },
@@ -49,7 +48,7 @@ public partial class GameLogistics : Node2D
 		
 		FoodResource = new System.Collections.Generic.Dictionary<string, int>
 		{
-			{ Food.Bread, 0 }, { Food.Meat, 0 }, { Food.Crops, 0 }
+			{ Food.Bread, 5 }, { Food.Meat, 6 }, { Food.Crops, 7 }
 		};
 		
 		ProcessedResources = new System.Collections.Generic.Dictionary<string, int>
@@ -58,9 +57,45 @@ public partial class GameLogistics : Node2D
 		};
 	}
 
+	private void CalculateFoods()
+	{
+		FoodResourceAsString = "";
+
+	var totalfood = 0;
+		foreach (var food in FoodResource)
+		{
+			switch (food.Key)
+			{
+				case Food.Bread:
+				{
+					FoodResourceAsString += $"{food.Key}: {food.Value} (x2)\n";
+					totalfood += 2;
+					break;
+				}
+				case Food.Meat:
+				{
+					FoodResourceAsString += $"{food.Key}: {food.Value} (x1)\n";
+					totalfood += 1;
+					break;
+				}
+				case Food.Crops:
+				{
+					FoodResourceAsString += $"{food.Key}: {food.Value} (x2)\n";
+					totalfood += 2;
+					break;
+				}
+					
+			}
+		}
+
+		Resources[RawResource.Food] = totalfood;
+	}
+		
+
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		CalculateFoods();
 		if (dragging && _roadPlaceMode) PlaceRoad();
 		if (_object is not null) _object.Position = GetGlobalMousePosition();
 

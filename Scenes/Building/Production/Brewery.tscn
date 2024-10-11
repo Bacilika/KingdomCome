@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cpmmpxvxf4bb7"]
+[gd_scene load_steps=16 format=3 uid="uid://tmoepsc4q7yg"]
 
 [ext_resource type="Script" path="res://Scripts/Building/Production/Brewery.cs" id="1_efmpo"]
 [ext_resource type="Texture2D" uid="uid://dutncfp67n5et" path="res://Sprites/Edificios 2d Medieval/Edificios 2d Medieval/House (70).png" id="2_deig2"]
@@ -63,6 +63,8 @@ animations = [{
 }]
 
 [node name="Brewery" type="Area2D"]
+collision_layer = 3
+collision_mask = 3
 script = ExtResource("1_efmpo")
 
 [node name="FoodTimer" type="Timer" parent="."]
@@ -75,17 +77,14 @@ scale = Vector2(0.614323, 0.614323)
 sprite_frames = SubResource("SpriteFrames_wjt6n")
 
 [node name="CollisionShape0" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(-1.5, 3.5)
 shape = SubResource("RectangleShape2D_cews5")
 
 [node name="CollisionShape1" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(-2, -2)
 shape = SubResource("RectangleShape2D_cews5")
 
 [node name="CollisionShape2" type="CollisionShape2D" parent="."]
-visible = false
 shape = SubResource("RectangleShape2D_cews5")
 
 [node name="Animation" type="AnimatedSprite2D" parent="."]

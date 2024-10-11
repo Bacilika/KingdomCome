@@ -12,13 +12,11 @@ public partial class MarketStall : Production
 
 	protected override void _Ready_instance()
 	{
+		ActivityIndoors = false;
 		BuildingName = "Market Stall";
 		BuildingDescription = "Market stall to sell resources";
 
 		Producing = "Iron";
-		ProductionRate = 2;
-		_timer = GetNode<Timer>("FoodTimer");
-		_timer.Start();
 		InfoBox.Connect(PlaceableInfo.SignalName.OnChooseWare, Callable.From(OnChooseWare));
 		PlayerLevel = 3;
 		Upgrades = new Dictionary<string, List<int>>

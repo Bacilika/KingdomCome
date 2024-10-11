@@ -7,7 +7,7 @@ using Scripts.Constants;
 public partial class WoodCutter : Production
 {
 	private Forest forest;
-	private List<Tree> _trees = [];
+	private double time;
 
 	protected override void _Ready_instance()
 	{
@@ -38,31 +38,24 @@ public partial class WoodCutter : Production
 		};
 	}
 	
-	
-	public override void OnNpcReachWork(Node2D node)
+	public override void NpcWork(Npc npc)
 	{
-		var npc = node as Npc;
-		if (npc._dayTimer.IsStopped() && npc.PlaceablePosition != this)
-		{
-			Console.WriteLine("hej");
-			return;
-		}
-		_assignedWorker.TryAdd(npc, null);
-		if (_assignedWorker[npc] == null)
-			_assignedWorker[npc] = _trees[Rnd.RandiRange(0, Upgrades[Upgrade.MaxWorkers][Level] + 3)];
-
-		if (_assignedWorker[npc] != null) npc.SetDestination(_assignedWorker[npc].GlobalPosition);
-		npc.AtWorkTimer.SetWaitTime(10 + Position.DistanceTo(_assignedWorker[npc].GlobalPosition) / 100);
-		if (npc.AtWorkTimer.IsStopped())
-		{
-			npc.AtWorkTimer.Start();
-		}
-		Console.WriteLine(npc.AtWorkTimer.TimeLeft);
+		npc.CurrentBuilding = npc.Work;
+		npc.TargetBuilding = npc.Work;
+		npc.SetDestination(forest.GetClosest(npc).GlobalPosition);
+		npc.AtWorkTimer.SetWaitTime(5);
+		npc._move = true;
+		
 	}
 
 	public override void AtWorkTimerTimeout(Npc npc)
 	{
+		var tree = forest.GetClosestTo(npc.Position);
+		GatherResource(npc.Position);
+		forest.RemoveResource(tree);
+		tree.AssignedNpcs.Remove(npc);
 		npc.SetDestination(Position);
+		npc._move = true;
 	}
 
 	public override void ProduceItem()
@@ -72,16 +65,12 @@ public partial class WoodCutter : Production
 
 	public override void OnParentReady()
 	{
+		
 		try
 		{
 			forest = GetParent<GameMap>().GetNode<Forest>("Forest");
-			foreach (var tree in forest.trees)
-			{
-				_trees.Add(tree);
-			}
-			_trees.Sort((x, y) => x.GlobalPosition.DistanceTo(Position).CompareTo(y.GlobalPosition.DistanceTo(Position)));
 		}
-		catch (Exception _)
+		catch
 		{
 			// ignored
 		}

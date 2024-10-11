@@ -11,7 +11,6 @@ public partial class SawMill : Production
 		BuildingName = "Bakery";
 		BuildingDescription = "Produces bread from wheat";
 		Producing = RawResource.Stone;
-		ProductionRate = 2;
 		PlayerLevel = 5;
 		Upgrades = new Dictionary<string, List<int>>
 		{

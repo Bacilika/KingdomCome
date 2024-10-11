@@ -1,7 +1,8 @@
-[gd_scene load_steps=30 format=3 uid="uid://2uovf4y3vnqd"]
+[gd_scene load_steps=49 format=3 uid="uid://2uovf4y3vnqd"]
 
 [ext_resource type="Script" path="res://Scripts/Other/Npc.cs" id="1_dv6rn"]
 [ext_resource type="Texture2D" uid="uid://7ld563nokdjq" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Character/Character/Character_Walk.png" id="1_f3dyl"]
+[ext_resource type="Texture2D" uid="uid://dks13v40j0uxo" path="res://Art/Characters/Character/Character_Slash.png" id="3_bfk5s"]
 [ext_resource type="AudioStream" uid="uid://b42k3qloq1c6x" path="res://Audio/GrassWalking.mp3" id="3_kh5mf"]
 [ext_resource type="PackedScene" uid="uid://dyq8jku2xq8kr" path="res://Scenes/Building/CitizenInfo.tscn" id="4_pwgeb"]
 [ext_resource type="Texture2D" uid="uid://ci4sq16dccr2j" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Character/Character/Character_Slash.png" id="5_6tfck"]
@@ -70,6 +71,54 @@ region = Rect2(64, 64, 32, 32)
 atlas = ExtResource("1_f3dyl")
 region = Rect2(96, 64, 32, 32)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_i4jye"]
+atlas = ExtResource("3_bfk5s")
+region = Rect2(0, 144, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_650sf"]
+atlas = ExtResource("3_bfk5s")
+region = Rect2(32, 144, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t56fs"]
+atlas = ExtResource("3_bfk5s")
+region = Rect2(64, 144, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q3lxm"]
+atlas = ExtResource("3_bfk5s")
+region = Rect2(96, 144, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4lqun"]
+atlas = ExtResource("3_bfk5s")
+region = Rect2(128, 144, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_amxqq"]
+atlas = ExtResource("3_bfk5s")
+region = Rect2(160, 144, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8o0ai"]
+atlas = ExtResource("3_bfk5s")
+region = Rect2(0, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ciyht"]
+atlas = ExtResource("3_bfk5s")
+region = Rect2(32, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mggqf"]
+atlas = ExtResource("3_bfk5s")
+region = Rect2(64, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1r2vq"]
+atlas = ExtResource("3_bfk5s")
+region = Rect2(96, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r2a7x"]
+atlas = ExtResource("3_bfk5s")
+region = Rect2(128, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tvgtg"]
+atlas = ExtResource("3_bfk5s")
+region = Rect2(160, 0, 32, 48)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_qkgag"]
 atlas = ExtResource("5_6tfck")
 region = Rect2(0, 48, 32, 48)
@@ -93,6 +142,30 @@ region = Rect2(128, 48, 32, 48)
 [sub_resource type="AtlasTexture" id="AtlasTexture_tfp11"]
 atlas = ExtResource("5_6tfck")
 region = Rect2(160, 48, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xb5uc"]
+atlas = ExtResource("3_bfk5s")
+region = Rect2(0, 96, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aj3k8"]
+atlas = ExtResource("3_bfk5s")
+region = Rect2(32, 96, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b7xru"]
+atlas = ExtResource("3_bfk5s")
+region = Rect2(64, 96, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tk436"]
+atlas = ExtResource("3_bfk5s")
+region = Rect2(96, 96, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d3wdx"]
+atlas = ExtResource("3_bfk5s")
+region = Rect2(128, 96, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5jjsg"]
+atlas = ExtResource("3_bfk5s")
+region = Rect2(160, 96, 32, 48)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_2xgin"]
 animations = [{
@@ -166,6 +239,52 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_i4jye")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_650sf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t56fs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q3lxm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4lqun")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_amxqq")
+}],
+"loop": true,
+"name": &"workDown",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8o0ai")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ciyht")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mggqf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1r2vq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r2a7x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tvgtg")
+}],
+"loop": true,
+"name": &"workLeft",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_qkgag")
 }, {
 "duration": 1.0,
@@ -184,7 +303,30 @@ animations = [{
 "texture": SubResource("AtlasTexture_tfp11")
 }],
 "loop": true,
-"name": &"work",
+"name": &"workRight",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xb5uc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aj3k8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b7xru")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tk436")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d3wdx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5jjsg")
+}],
+"loop": true,
+"name": &"workUp",
 "speed": 5.0
 }]
 
@@ -199,7 +341,7 @@ script = ExtResource("1_dv6rn")
 
 [node name="WalkingAnimation" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_2xgin")
-animation = &"walkUp"
+animation = &"workUp"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 y_sort_enabled = true
@@ -209,6 +351,7 @@ shape = SubResource("CircleShape2D_cb1ig")
 
 [node name="WorkTimer" type="Timer" parent="."]
 wait_time = 25.0
+one_shot = true
 
 [node name="GrassWalking" type="AudioStreamPlayer2D" parent="."]
 z_index = 1
@@ -220,6 +363,7 @@ visible = false
 
 [node name="AtWorkTimer" type="Timer" parent="."]
 wait_time = 10.0
+one_shot = true
 
 [connection signal="mouse_entered" from="." to="." method="OnMouseEntered"]
 [connection signal="mouse_exited" from="." to="." method="OnMouseExited"]

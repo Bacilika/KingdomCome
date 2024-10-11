@@ -1,59 +1,40 @@
 using System;
 using Godot;
-using Godot.Collections;
 using KingdomCome.Scripts.Building;
-using KingdomCome.Scripts.MapResources;
 using Scripts.Constants;
 
 public abstract partial class Production : AbstractPlaceable
 {
-	[Signal]
-	public delegate void LookingForWorkersEventHandler(Productions production);
-	protected Dictionary<Npc, AbstractResource> _assignedWorker = new();
 	private int _food;
 	protected Timer _timer;
 	protected string Producing;
-	protected int ProductionRate = 10; // 1/ProductionRate % chance to produce item by 1 each tick. 
-
-
-	public virtual void OnNpcReachWork(Node2D npc)
-	{
-		Console.WriteLine("OnNpcReachWork");
-	}
-
-	public virtual void AtWorkTimerTimeout(Npc npc)
-	{
-		Console.WriteLine("Production instance");
-	}
-
+	
+	
 	public virtual void ProduceItem()
 	{
 		Console.WriteLine("ProduceItem instance");
 	}
 
-	protected override void Tick()
+	public virtual void AtWorkTimerTimeout(Npc npc)
 	{
-		if (_timer is not null && _timer.IsStopped()) _timer.Start();
-		UpdateInfo();
+		GatherResource(npc.Position);
+		npc.AtWorkTimer.Start();
+	}
+	public virtual void NpcWork(Npc npc)
+	{
+		npc.AtWorkTimer.SetWaitTime(5);
+		npc.AtWorkTimer.Start();
 	}
 
-	public void GatherResource()
+	protected override void Tick()
 	{
-		ProduceItem();
-		PlayAnimation();
+		UpdateInfo();
 	}
-	
 	public void GatherResource(Vector2 pos)
 	{
 		ProduceItem();
 		PlayAnimation(pos);
 	}
-
-	public virtual void AtWork(Npc npc)
-	{
-		Console.WriteLine("Production AtWork");
-	}
-
 	public int GetWorkers()
 	{
 		return People.Count;
@@ -90,15 +71,6 @@ public abstract partial class Production : AbstractPlaceable
 	{
 		People.Remove(npc);
 	}
-
-	public void OnFoodTimerTimeout()
-	{
-		/*_food++;
-		ProduceItem();
-		float time = 15 - GetWorkers();
-		_timer.Start(time);*/
-	}
-	
 
 	public void UpdateInfo()
 	{

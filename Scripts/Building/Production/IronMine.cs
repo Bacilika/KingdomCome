@@ -8,9 +8,8 @@ public partial class IronMine : Production
 	{
 		BuildingName = "Iron Mine";
 		BuildingDescription = "A Mine for Iron";
-
+		ActivityIndoors = false;
 		Producing = "Iron";
-		ProductionRate = 2;
 		PlayerLevel = 3;
 		Upgrades = new Dictionary<string, List<int>>
 		{

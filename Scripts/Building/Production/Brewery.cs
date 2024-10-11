@@ -11,7 +11,6 @@ public partial class Brewery : Production
 		BuildingName = "Brewery";
 		BuildingDescription = "Produces ale from flour";
 		Producing = RawResource.Stone;
-		ProductionRate = 2;
 		PlayerLevel = 5;
 		Upgrades = new Dictionary<string, List<int>>
 		{

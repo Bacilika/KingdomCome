@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://c8tuntaljjw20"]
+[gd_scene load_steps=18 format=3 uid="uid://b3l6irkacdpfr"]
 
 [ext_resource type="Script" path="res://Scripts/Building/Production/Windmill.cs" id="1_7g1uc"]
 [ext_resource type="Texture2D" uid="uid://de10h0k630dw7" path="res://Sprites/Extra/Buildings/windmill.png" id="2_3uijp"]
@@ -80,6 +80,8 @@ animations = [{
 }]
 
 [node name="Windmill" type="Area2D"]
+collision_layer = 3
+collision_mask = 3
 script = ExtResource("1_7g1uc")
 
 [node name="FoodTimer" type="Timer" parent="."]
@@ -92,17 +94,14 @@ scale = Vector2(3.08084, 3.08084)
 sprite_frames = SubResource("SpriteFrames_wjt6n")
 
 [node name="CollisionShape0" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(-1.5, 3.5)
 shape = SubResource("RectangleShape2D_cews5")
 
 [node name="CollisionShape1" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(-2, -2)
 shape = SubResource("RectangleShape2D_cews5")
 
 [node name="CollisionShape2" type="CollisionShape2D" parent="."]
-visible = false
 shape = SubResource("RectangleShape2D_cews5")
 
 [node name="Animation" type="AnimatedSprite2D" parent="."]

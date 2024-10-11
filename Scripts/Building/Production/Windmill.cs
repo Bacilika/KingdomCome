@@ -11,7 +11,6 @@ public partial class Windmill : Production
 		BuildingName = "Windmill";
 		BuildingDescription = "Procudes flour from wheat";
 		Producing = ProcessedResource.Flour;
-		ProductionRate = 2;
 		PlayerLevel = 1;
 		Upgrades = new Dictionary<string, List<int>>
 		{

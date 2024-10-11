@@ -8,12 +8,10 @@ public partial class Well : Production
 	{
 		BuildingName = "Well";
 		BuildingDescription = "Allows citizens to get water";
+		ActivityIndoors = false;
 
 		Producing = RawResource.Water;
-		ProductionRate = 2;
 		PlayerLevel = 0;
-		_timer = GetNode<Timer>("FoodTimer");
-		_timer.Start();
 		Upgrades = new Dictionary<string, List<int>>
 		{
 			{ Upgrade.MaxWorkers, [5, 7, 10] }

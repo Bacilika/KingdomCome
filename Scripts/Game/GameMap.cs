@@ -52,7 +52,6 @@ public partial class GameMap : Node2D
 
 	public override void _Process(double delta)
 	{
-		GameMenu.UpdateMenuInfo();
 		_timeSinceLastTick += delta;
 		if (GameLogistics.Resources[RawResource.Unemployed] > 0) //there are unemployed
 			GiveJobToNpcs();
@@ -83,7 +82,7 @@ public partial class GameMap : Node2D
 
 		if (placeable is Production production) _placedProduction.Add(production);
 		placeable.IsPlaced = true;
-		placeable.Position = GetGlobalMousePosition();
+		//placeable.Position = GetGlobalMousePosition();
 		AddChild(placeable);
 		EmitSignal(SignalName.SendLog,$"Successfully built {placeable.BuildingName}");
 	}

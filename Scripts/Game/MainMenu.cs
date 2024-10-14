@@ -14,7 +14,7 @@ public partial class MainMenu : Control
 	{
 		Vector2 size = GetTree().Root.Size;
 		Vector2 minsize = GetTree().Root.MinSize;
-		CurrentScale = size / minsize;
+		//CurrentScale = size / minsize;
 	}
 
 

@@ -9,6 +9,7 @@ public partial class GameMenu : Control
 
 	public static AudioStreamPlayer2D ButtonPress;
 	private static Godot.Collections.Dictionary<string, Label> _gameStatLabels;
+	private static Godot.Collections.Dictionary<string, TextureRect> _gameStats;
 	public static Label GameMode;
 	public static Label Day;
 	public static Label Level;
@@ -24,19 +25,20 @@ public partial class GameMenu : Control
 	{
 		_citizen = GetParent<GameMap>().Citizens;
 		ProductionInfo = GetNode<ProductionInfo>("MenuCanvasLayer/ProductionInfo");
-		Day = GetNode<Label>("MenuCanvasLayer/Container/GameStats/Day");
-		Level = GetNode<Label>("MenuCanvasLayer/Container/GameStats/Level/Level");
-		NextLevel = GetNode<Label>("MenuCanvasLayer/Container/GameStats/Level/NextLevel");
-		LevelProgressbar = GetNode<ProgressBar>("MenuCanvasLayer/Container/GameStats/Level/LevelProgress");
+		Day = GetNode<Label>("MenuCanvasLayer/GameStats/Day");
+		Level = GetNode<Label>("MenuCanvasLayer/GameStats/Level/Level");
+		NextLevel = GetNode<Label>("MenuCanvasLayer/GameStats/Level/NextLevel");
+		LevelProgressbar = GetNode<ProgressBar>("MenuCanvasLayer/GameStats/Level/LevelProgress");
 		GameMode = GetNode<Label>("MenuCanvasLayer/CurrentGameMode");
 		CanvasLayer = GetNode<CanvasLayer>("MenuCanvasLayer");
 		GameLog = GetNode<GameLog>("MenuCanvasLayer/GameLog");
 		var currentScale = (Vector2)GetTree().Root.Size / GetTree().Root.MinSize;
-		var container = GetNode<Control>("MenuCanvasLayer/Container");
-		container.Scale = currentScale;
-		var statLabels = GetNode<HBoxContainer>("MenuCanvasLayer/Container/GameStats");
+		var container = GetNode<CanvasLayer>("MenuCanvasLayer");
+			//container.Scale = currentScale;
+		var statLabels = GetNode<HBoxContainer>("MenuCanvasLayer/GameStats");
 		ButtonPress = GetNode<AudioStreamPlayer2D>("ButtonPressedSound");
 		ButtonPress?.Play();
+		
 		_gameStatLabels = new Godot.Collections.Dictionary<string, Label>
 		{
 			{ RawResource.Money, statLabels.GetNode<TextureRect>(RawResource.Money).GetNode<Label>("Value") },
@@ -45,13 +47,24 @@ public partial class GameMenu : Control
 			{ RawResource.Stone, statLabels.GetNode<TextureRect>(RawResource.Stone).GetNode<Label>("Value") },
 			{ RawResource.Happiness, statLabels.GetNode<TextureRect>(RawResource.Happiness).GetNode<Label>("Value") },
 			{ RawResource.Wood, statLabels.GetNode<TextureRect>(RawResource.Wood).GetNode<Label>("Value") },
-			{
-				RawResource.Unemployed,
-				statLabels.GetNode<TextureRect>(RawResource.Unemployed).GetNode<Label>("Value")
-			},
+			{ RawResource.Unemployed, statLabels.GetNode<TextureRect>(RawResource.Unemployed).GetNode<Label>("Value") },
 			{ RawResource.Iron, statLabels.GetNode<TextureRect>(RawResource.Iron).GetNode<Label>("Value") },
 			{ RawResource.Water, statLabels.GetNode<TextureRect>(RawResource.Water).GetNode<Label>("Value") }
 		};
+		_gameStats = new Godot.Collections.Dictionary<string, TextureRect>
+		{
+			{ RawResource.Money, statLabels.GetNode<TextureRect>(RawResource.Money) },
+			{ RawResource.Food, statLabels.GetNode<TextureRect>(RawResource.Food)},
+			{ RawResource.Citizens, statLabels.GetNode<TextureRect>(RawResource.Citizens)},
+			{ RawResource.Stone, statLabels.GetNode<TextureRect>(RawResource.Stone)},
+			{ RawResource.Happiness, statLabels.GetNode<TextureRect>(RawResource.Happiness)},
+			{ RawResource.Wood, statLabels.GetNode<TextureRect>(RawResource.Wood)},
+			{ RawResource.Unemployed, statLabels.GetNode<TextureRect>(RawResource.Unemployed)},
+			{ RawResource.Iron, statLabels.GetNode<TextureRect>(RawResource.Iron)},
+			{ RawResource.Water, statLabels.GetNode<TextureRect>(RawResource.Water)}
+		};
+		
+		
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -67,7 +80,7 @@ public partial class GameMenu : Control
 		NextLevel.Text = (updatedLevel +1).ToString();
 	}
 
-	public static void UpdateMenuInfo()
+	public void UpdateMenuInfo()
 	{
 
 		LevelProgressbar.Value = _citizen.Count % 10;
@@ -76,31 +89,19 @@ public partial class GameMenu : Control
 
 		foreach (var item in _gameStatLabels)
 		{
-			int value;
-			if (item.Key == RawResource.Food)
-			{
-				item.Value.TooltipText = GameLogistics.FoodResourceAsString;
-			}
 
-			switch (item.Key)
-			{
-				case RawResource.Unemployed:
-				{
-					value = GameLogistics.Resources[RawResource.Unemployed];
-					break;
-				}
-				case RawResource.Citizens:
-				{
-					value = GameLogistics.Resources[RawResource.Citizens];
-					break;
-				}
-				default:
-				{
-					value = GameLogistics.Resources[item.Key];
-					break;
-				}
-			}
-			item.Value.Text = ": " + value;
+			SetToolTip(item.Key);
+			item.Value.Text = ": " + GameLogistics.Resources[item.Key];
+		}
+	}
+
+	private void SetToolTip(string key)
+	{
+		switch (key)
+		{
+			case RawResource.Food:
+				_gameStats[key].SetTooltipText(GameLogistics.FoodResourceAsString);
+				break;
 		}
 	}
 }

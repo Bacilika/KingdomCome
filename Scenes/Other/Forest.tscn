@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Scripts/Other/Forest.cs" id="1_k7ph0"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3fe4r"]
-radius = 250.0
+radius = 360.089
 
 [node name="Forest" type="Area2D"]
 y_sort_enabled = true

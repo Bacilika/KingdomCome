@@ -4,17 +4,17 @@ using Scripts.Constants;
 
 public partial class GameCamera : Camera2D
 {
-	private const int ZoomMaxStep = 3;
-	private const int ZoomMinStep = 0;
+	private const int ZoomMaxStep = 4;
+	private const int ZoomMinStep = 1;
 	private readonly HashSet<string> _directionsPressed = [];
 	private Vector2 _dragStartCameraPosition = Vector2.Zero;
 	private Vector2 _dragStartMousePosition = Vector2.Zero;
 	private bool _isDragging;
 	private Vector2 _position;
 	private Vector2 _zoom;
-	private float _zoomStep = 1;
+	private float _zoomStep = 3;
 
-	private int PanStep => (int)(10 * (_zoomStep == 0 ? 0.5f : _zoomStep));
+	private int PanStep => (int)(5 * (_zoomStep == 0 ? 0.5f : _zoomStep));
 
 	private void MoveCamera(string direction)
 	{

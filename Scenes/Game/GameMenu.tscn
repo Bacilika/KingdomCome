@@ -1,10 +1,9 @@
-[gd_scene load_steps=20 format=3 uid="uid://25kpv3trjyvk"]
+[gd_scene load_steps=17 format=3 uid="uid://25kpv3trjyvk"]
 
 [ext_resource type="Script" path="res://Scripts/Game/GameMenu.cs" id="1_dev6f"]
 [ext_resource type="Theme" uid="uid://c2femp2uxsefw" path="res://Themes/Theme.tres" id="1_vgcun"]
-[ext_resource type="Texture2D" uid="uid://o80rtv7te3j4" path="res://Sprites/Atlas_Castle_Building-export.png" id="2_k8sk1"]
 [ext_resource type="FontFile" uid="uid://dul1t3v440c7s" path="res://Deutsch.ttf" id="3_d13wb"]
-[ext_resource type="PackedScene" uid="uid://b7mukvq5n5mpd" path="res://GameStat.tscn" id="4_2bxld"]
+[ext_resource type="PackedScene" uid="uid://b7mukvq5n5mpd" path="res://Scenes/Game/GameStat.tscn" id="4_2bxld"]
 [ext_resource type="PackedScene" uid="uid://dlbb4eje8p5k2" path="res://Scenes/Game/Shop.tscn" id="4_nmxg4"]
 [ext_resource type="AudioStream" uid="uid://b51ml7us3al4e" path="res://Audio/ButtonPressed.mp3" id="5_hysb5"]
 [ext_resource type="Texture2D" uid="uid://ocbp46wni417" path="res://Sprites/Extra/Icons/Sign2.png" id="6_v7o1e"]
@@ -18,46 +17,139 @@
 [ext_resource type="PackedScene" uid="uid://3falldunylfw" path="res://Scenes/Game/ProductionInfo.tscn" id="15_enu43"]
 [ext_resource type="PackedScene" uid="uid://b62g0jvvj278c" path="res://Scenes/Game/GameLog.tscn" id="16_3yc3n"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fyhtp"]
-texture = ExtResource("2_k8sk1")
-texture_region_size = Vector2i(32, 32)
-1:7/0 = 0
-1:6/0 = 0
-1:5/0 = 0
-2:5/0 = 0
-3:5/0 = 0
-3:6/0 = 0
-3:7/0 = 0
-2:7/0 = 0
-2:6/0 = 0
-8:6/0 = 0
-10:6/0 = 0
-10:3/0 = 0
-8:3/0 = 0
-3:12/0 = 0
-7:11/0 = 0
-7:13/0 = 0
-5:13/0 = 0
-5:11/0 = 0
-
-[sub_resource type="TileSet" id="TileSet_et3qr"]
-tile_size = Vector2i(32, 32)
-sources/0 = SubResource("TileSetAtlasSource_fyhtp")
-
 [node name="GameMenu" type="Control"]
 y_sort_enabled = true
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1280.0
-offset_bottom = 640.0
+offset_bottom = 696.0
 size_flags_vertical = 8
 mouse_filter = 2
 script = ExtResource("1_dev6f")
 
 [node name="MenuCanvasLayer" type="CanvasLayer" parent="."]
-offset = Vector2(0, 50)
-transform = Transform2D(1, 0, 0, 1, 0, 50)
 follow_viewport_scale = 3.877
+
+[node name="ColorRect" type="ColorRect" parent="MenuCanvasLayer"]
+anchors_preset = -1
+anchor_left = 0.45
+anchor_top = -0.0127188
+anchor_right = 0.55
+anchor_bottom = -0.0127188
+offset_left = -576.0
+offset_top = 7.776
+offset_right = 576.0
+offset_bottom = 47.776
+grow_horizontal = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme = ExtResource("1_vgcun")
+color = Color(0.592157, 0.54902, 0.466667, 0.564706)
+metadata/_edit_use_anchors_ = true
+
+[node name="GameStats" type="HBoxContainer" parent="MenuCanvasLayer"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -640.0
+offset_top = 4.0
+offset_right = 632.0
+offset_bottom = 33.0
+grow_horizontal = 2
+size_flags_vertical = 0
+theme = ExtResource("1_vgcun")
+theme_override_constants/separation = 54
+alignment = 1
+
+[node name="Citizens" parent="MenuCanvasLayer/GameStats" instance=ExtResource("4_2bxld")]
+layout_mode = 2
+tooltip_text = "Citizens"
+
+[node name="Happiness" parent="MenuCanvasLayer/GameStats" instance=ExtResource("4_2bxld")]
+layout_mode = 2
+tooltip_text = "Happiness"
+texture = ExtResource("8_mbmc5")
+
+[node name="Unemployed" parent="MenuCanvasLayer/GameStats" instance=ExtResource("4_2bxld")]
+layout_mode = 2
+tooltip_text = "Unemployed"
+texture = ExtResource("9_0d0hb")
+
+[node name="Money" parent="MenuCanvasLayer/GameStats" instance=ExtResource("4_2bxld")]
+layout_mode = 2
+tooltip_text = "Money"
+texture = ExtResource("7_k3pbr")
+
+[node name="Level" type="HBoxContainer" parent="MenuCanvasLayer/GameStats"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Level" type="Label" parent="MenuCanvasLayer/GameStats/Level"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_d13wb")
+theme_override_font_sizes/font_size = 26
+text = "0"
+
+[node name="LevelProgress" type="ProgressBar" parent="MenuCanvasLayer/GameStats/Level"]
+custom_minimum_size = Vector2(70, 25)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_d13wb")
+theme_override_font_sizes/font_size = 26
+max_value = 10.0
+step = 1.0
+show_percentage = false
+
+[node name="NextLevel" type="Label" parent="MenuCanvasLayer/GameStats/Level"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_d13wb")
+theme_override_font_sizes/font_size = 26
+text = "1"
+
+[node name="Day" type="Label" parent="MenuCanvasLayer/GameStats"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_d13wb")
+theme_override_font_sizes/font_size = 26
+text = "Day: 0"
+
+[node name="Food" parent="MenuCanvasLayer/GameStats" instance=ExtResource("4_2bxld")]
+layout_mode = 2
+texture = ExtResource("6_v7o1e")
+
+[node name="Stone" parent="MenuCanvasLayer/GameStats" instance=ExtResource("4_2bxld")]
+layout_mode = 2
+tooltip_text = "Stone"
+texture = ExtResource("10_jbmre")
+
+[node name="Wood" parent="MenuCanvasLayer/GameStats" instance=ExtResource("4_2bxld")]
+layout_mode = 2
+tooltip_text = "Wood"
+texture = ExtResource("11_hpum0")
+
+[node name="Iron" parent="MenuCanvasLayer/GameStats" instance=ExtResource("4_2bxld")]
+layout_mode = 2
+tooltip_text = "Iron"
+texture = ExtResource("12_onvdd")
+
+[node name="Water" parent="MenuCanvasLayer/GameStats" instance=ExtResource("4_2bxld")]
+layout_mode = 2
+tooltip_text = "Water"
+texture = ExtResource("13_fmjcf")
+
+[node name="Shop" parent="MenuCanvasLayer" instance=ExtResource("4_nmxg4")]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -209.0
+offset_top = -111.0
+offset_right = 207.0
+offset_bottom = -7.0
+grow_horizontal = 2
+grow_vertical = 0
 
 [node name="CurrentGameMode" type="Label" parent="MenuCanvasLayer"]
 anchors_preset = -1
@@ -66,9 +158,9 @@ anchor_top = 0.0543125
 anchor_right = 0.5
 anchor_bottom = 0.0543125
 offset_left = -632.0
-offset_top = -44.76
+offset_top = 11.24
 offset_right = 640.0
-offset_bottom = 40.24
+offset_bottom = 96.24
 size_flags_horizontal = 4
 size_flags_vertical = 0
 theme_override_colors/font_color = Color(0.380392, 0, 0, 1)
@@ -78,140 +170,6 @@ theme_override_font_sizes/font_size = 42
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
-
-[node name="Container" type="Control" parent="MenuCanvasLayer"]
-layout_mode = 3
-anchor_top = -0.078
-anchor_bottom = -0.078
-offset_top = -0.079998
-offset_right = 1277.0
-offset_bottom = 639.92
-size_flags_horizontal = 6
-size_flags_vertical = 10
-mouse_filter = 2
-
-[node name="MenuBar" type="TileMapLayer" parent="MenuCanvasLayer/Container"]
-position = Vector2(8, -600)
-tile_set = SubResource("TileSet_et3qr")
-rendering_quadrant_size = 32
-collision_enabled = false
-
-[node name="ColorRect" type="ColorRect" parent="MenuCanvasLayer/Container"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -639.5
-offset_right = 639.5
-offset_bottom = 40.0
-grow_horizontal = 2
-theme = ExtResource("1_vgcun")
-color = Color(0.592157, 0.54902, 0.466667, 0.564706)
-
-[node name="GameStats" type="HBoxContainer" parent="MenuCanvasLayer/Container"]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -1268.0
-offset_top = 3.0
-offset_right = -33.0
-offset_bottom = 37.0
-grow_horizontal = 0
-theme = ExtResource("1_vgcun")
-theme_override_constants/separation = 55
-alignment = 2
-
-[node name="Citizens" parent="MenuCanvasLayer/Container/GameStats" instance=ExtResource("4_2bxld")]
-layout_mode = 2
-tooltip_text = "Citizens"
-
-[node name="Happiness" parent="MenuCanvasLayer/Container/GameStats" instance=ExtResource("4_2bxld")]
-layout_mode = 2
-tooltip_text = "Happiness"
-texture = ExtResource("8_mbmc5")
-
-[node name="Unemployed" parent="MenuCanvasLayer/Container/GameStats" instance=ExtResource("4_2bxld")]
-layout_mode = 2
-tooltip_text = "Unemployed"
-texture = ExtResource("9_0d0hb")
-
-[node name="Money" parent="MenuCanvasLayer/Container/GameStats" instance=ExtResource("4_2bxld")]
-layout_mode = 2
-tooltip_text = "Money"
-texture = ExtResource("7_k3pbr")
-
-[node name="Level" type="HBoxContainer" parent="MenuCanvasLayer/Container/GameStats"]
-layout_mode = 2
-theme_override_constants/separation = 4
-
-[node name="Level" type="Label" parent="MenuCanvasLayer/Container/GameStats/Level"]
-layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("3_d13wb")
-theme_override_font_sizes/font_size = 26
-text = "0"
-
-[node name="LevelProgress" type="ProgressBar" parent="MenuCanvasLayer/Container/GameStats/Level"]
-custom_minimum_size = Vector2(70, 25)
-layout_mode = 2
-theme_override_fonts/font = ExtResource("3_d13wb")
-theme_override_font_sizes/font_size = 26
-max_value = 10.0
-step = 1.0
-show_percentage = false
-
-[node name="NextLevel" type="Label" parent="MenuCanvasLayer/Container/GameStats/Level"]
-layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("3_d13wb")
-theme_override_font_sizes/font_size = 26
-text = "1"
-
-[node name="Day" type="Label" parent="MenuCanvasLayer/Container/GameStats"]
-layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("3_d13wb")
-theme_override_font_sizes/font_size = 26
-text = "Day: 0"
-
-[node name="Food" parent="MenuCanvasLayer/Container/GameStats" instance=ExtResource("4_2bxld")]
-layout_mode = 2
-texture = ExtResource("6_v7o1e")
-
-[node name="Stone" parent="MenuCanvasLayer/Container/GameStats" instance=ExtResource("4_2bxld")]
-layout_mode = 2
-tooltip_text = "Stone"
-texture = ExtResource("10_jbmre")
-
-[node name="Wood" parent="MenuCanvasLayer/Container/GameStats" instance=ExtResource("4_2bxld")]
-layout_mode = 2
-tooltip_text = "Wood"
-texture = ExtResource("11_hpum0")
-
-[node name="Iron" parent="MenuCanvasLayer/Container/GameStats" instance=ExtResource("4_2bxld")]
-layout_mode = 2
-tooltip_text = "Iron"
-texture = ExtResource("12_onvdd")
-
-[node name="Water" parent="MenuCanvasLayer/Container/GameStats" instance=ExtResource("4_2bxld")]
-layout_mode = 2
-tooltip_text = "Water"
-texture = ExtResource("13_fmjcf")
-
-[node name="Shop" parent="MenuCanvasLayer/Container" instance=ExtResource("4_nmxg4")]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -158.5
-offset_top = -103.0
-offset_right = 204.5
-offset_bottom = 0.0
-grow_horizontal = 2
-grow_vertical = 0
 
 [node name="ProductionInfo" parent="MenuCanvasLayer" instance=ExtResource("15_enu43")]
 visible = false
@@ -229,16 +187,14 @@ grow_vertical = 0
 size_flags_vertical = 8
 
 [node name="GameLog" parent="MenuCanvasLayer" instance=ExtResource("16_3yc3n")]
-anchors_preset = -1
-anchor_left = 0.006
-anchor_top = 0.909
-anchor_right = 0.006
-anchor_bottom = 0.909
-offset_left = -7.68
-offset_top = -247.76
-offset_right = 448.32
-offset_bottom = 6.23999
-grow_vertical = 0
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -456.0
+offset_top = 45.0
+offset_right = 0.0
+offset_bottom = 299.0
+grow_horizontal = 0
 
 [node name="ButtonPressedSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("5_hysb5")

@@ -8,6 +8,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 56.0
 offset_bottom = 64.0
+tooltip_text = "Base tooltip"
 script = ExtResource("1_6r730")
 metadata/_edit_use_anchors_ = true
 

@@ -46,7 +46,7 @@ public partial class ShopIcon : Control
 	public void OnMouseEntered()
 	{
 		if (_productionInfo is null)
-			_productionInfo = Shop.GetParent().GetParent().GetParent<GameMenu>().ProductionInfo;
+			_productionInfo = Shop.GetParent().GetParent<GameMenu>().ProductionInfo;
 		_productionInfo.setInfo(Product);
 		_productionInfo.Visible = true;
 	}

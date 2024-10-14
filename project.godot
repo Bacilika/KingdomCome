@@ -23,8 +23,9 @@ gdscript/warnings/exclude_addons=false
 [display]
 
 window/size/viewport_width=1280
-window/size/viewport_height=640
+window/size/viewport_height=690
 window/size/resizable=false
+window/stretch/mode="canvas_items"
 window/stretch/scale_mode="integer"
 
 [dotnet]
@@ -92,3 +93,4 @@ right_click={
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+environment/defaults/default_clear_color=Color(0, 0, 0, 1)

@@ -61,12 +61,10 @@ public abstract partial class AbstractPlaceable : Area2D
 
     protected virtual void OnDeleteInstance()
     {
-        Console.WriteLine("AbstractPlaceable OnDeleteInstance");
     }
 
     public virtual void OnParentReady()
     {
-        Console.WriteLine("AbstractPlaceable OnParentReady");
     }
 
     //Only for Living spaces

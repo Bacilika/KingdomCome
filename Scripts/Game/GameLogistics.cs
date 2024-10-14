@@ -33,7 +33,7 @@ public partial class GameLogistics : Node2D
 		_gameMap = GetParent<GameMap>();
 		_roadLayer = _gameMap.GetNode<TileMapLayer>("RoadLayer");
 		var gameMenu = _gameMap.GetNode<Control>("GameMenu");
-		var shop = gameMenu.GetNode<Shop>("MenuCanvasLayer/Container/Shop");
+		var shop = gameMenu.GetNode<Shop>("MenuCanvasLayer/Shop");
 		shop.OnBuildingButtonPressed += BuildBuilding;
 		shop.OnRoadBuild += OnRoadBuild;
 		
@@ -98,9 +98,11 @@ public partial class GameLogistics : Node2D
 	{
 		CalculateFoods();
 		if (dragging && _roadPlaceMode) PlaceRoad();
-		if (_object is not null) _object.Position = GetGlobalMousePosition();
+		if (_object is not null) _object.Position = _roadLayer.LocalToMap(GetGlobalMousePosition()) * 32;
 
-		if (_roadObject is not null) _roadObject.Position = GetGlobalMousePosition();
+		
+
+		if (_roadObject is not null) _roadObject.Position =  _roadLayer.LocalToMap(GetGlobalMousePosition()) * 32;
 	}
 
 	public static string ConvertHappiness(int happiness)

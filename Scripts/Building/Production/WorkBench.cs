@@ -17,6 +17,7 @@ public partial class WorkBench : Production
 		PlayerLevel = 1;
 		isDone = true;
 		IsPlaced = true;
+		ActivityIndoors = false;
 		Upgrades = new Dictionary<string, List<int>>
 		{
 			{ Upgrade.MaxWorkers, [5, 7, 10] }
@@ -94,14 +95,9 @@ public partial class WorkBench : Production
 		}
 		UpdateInfo();
 	}
-	
 
-	public override void AtWorkTimerTimeout(Npc npc)
+	public override void NpcWork(Npc npc)
 	{
-		npc.SetDestination(Position);
-		npc._move = true;
+		npc._move = false;
 	}
-	
-	
-	
 }

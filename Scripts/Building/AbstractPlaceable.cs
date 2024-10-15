@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Godot;
 using Scripts.Constants;
@@ -108,17 +109,17 @@ public abstract partial class AbstractPlaceable : Area2D
         button.Visible = this is MarketStall;
         BodyEntered += CitizenEntered;
         BodyExited += CitizenExited;
+        if(!HouseSprite.SpriteFrames.GetAnimationNames().Contains("Building"))
+            HouseSprite.SpriteFrames.AddAnimation("Building");
+        HouseSprite.SpriteFrames.AddFrame("Building",(Texture2D)GD.Load("res://Sprites/Extra/Building.png/"));
+        
+ 
 
         _Ready_instance();
         SetObjectValues();
         OnParentReady();
     }
-
-    public virtual void OnCitizenEntered(Npc npc)
-    {
-        
-    }
-
+    
     public  virtual void CitizenEntered(Node2D node2D)
     {
 

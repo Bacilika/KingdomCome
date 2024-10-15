@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://cx5dug5bljx7r"]
+[gd_scene load_steps=23 format=3 uid="uid://cx5dug5bljx7r"]
 
 [ext_resource type="Script" path="res://Scripts/Building/LivingSpace/House.cs" id="1_y1wo4"]
 [ext_resource type="Texture2D" uid="uid://bwrsvxhm848ni" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/House_RedWood_Stone_1 - lights on-2.png" id="2_ugkg1"]
@@ -14,7 +14,6 @@
 [ext_resource type="Texture2D" uid="uid://bsvf82gfxh1y2" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/House_RedWood_Stone_3_3_animation2.png" id="7_rrgd5"]
 [ext_resource type="Texture2D" uid="uid://cc1ypnuadgjre" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/House_RedWood_Stone_2.png" id="7_svvhs"]
 [ext_resource type="Texture2D" uid="uid://bjtqfmauw1cfk" path="res://Sprites/Extra/addResource4.png" id="8_31np2"]
-[ext_resource type="Texture2D" uid="uid://brvm4do2qgrtr" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Rock Slopes/Props/WoodenBoard_1.png" id="8_mpm43"]
 [ext_resource type="Texture2D" uid="uid://bh7bofwv2v6rn" path="res://Sprites/Extra/addResource5.png" id="9_bgvb8"]
 [ext_resource type="Texture2D" uid="uid://c2s5x2ag6prrg" path="res://Sprites/Extra/addResource6.png" id="10_fy0ix"]
 [ext_resource type="Texture2D" uid="uid://epbdr1v164x7" path="res://Sprites/Extra/addResource8.png" id="11_fdkp0"]
@@ -52,14 +51,6 @@ animations = [{
 }],
 "loop": true,
 "name": &"AnimationLevel2",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("8_mpm43")
-}],
-"loop": true,
-"name": &"Building",
 "speed": 5.0
 }, {
 "frames": [{
@@ -134,7 +125,7 @@ script = ExtResource("1_y1wo4")
 
 [node name="HouseSprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_fiu42")
-animation = &"Building"
+animation = &"AnimationLevel0"
 
 [node name="CollisionShape0" type="CollisionShape2D" parent="."]
 visible = false

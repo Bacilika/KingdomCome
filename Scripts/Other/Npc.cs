@@ -94,7 +94,6 @@ public partial class Npc : CharacterBody2D
 		AddChild(ScheduleTimer);
 		_navigation.TargetReached += () =>
 		{
-			
 			StartScheduleTimer();
 		};
 		
@@ -149,9 +148,6 @@ public partial class Npc : CharacterBody2D
 	public void OnAtWorkTimerTimeout()
 	{
 		Work.AtWorkTimerTimeout(this);
-		
-		
-		
 	}
 	
 	private void ToggleWalkingSound(bool on)
@@ -259,6 +255,7 @@ public partial class Npc : CharacterBody2D
 		if (_moodReasons is not null)
 			foreach (var reason in _moodReasons)
 			{
+				if(reason.Value.Reason is null) continue;
 				var happiness = reason.Value.Happiness.ToString();
 				if (reason.Value.Happiness > 0) happiness = $"+{reason.Value.Happiness}";
 				unhappyReason += $"{reason.Value.Reason} ({happiness}) \n";
@@ -293,7 +290,8 @@ public partial class Npc : CharacterBody2D
 				}
 				else
 				{
-					EmitSignal(SignalName.SendLog, $"{CitizenName} changed job from unknown to {Work.BuildingName}");
+					EmitSignal(SignalName.SendLog, $"{CitizenName} got their first job at the {Work.BuildingName}!");
+					TargetBuilding = Work;
 				}
 				
 			}
@@ -332,17 +330,22 @@ public partial class Npc : CharacterBody2D
 		}
 		switch (CurrentBuilding.GetBuildingName())
 		{
-			case var value when value == Home.GetBuildingName():
+			case var value when value == Home?.GetBuildingName():
 			{
 				TargetBuilding = Work;
 				SetDestination(Work.Position);
 				break;
 			}
-			case var value when value == Work.GetBuildingName():
+			case var value when value == Work?.GetBuildingName():
 			{
 				if (!GoToActivity()) // Going home
 				{
 					TargetBuilding = Home;
+					if (Home is null)
+					{
+						SetDestination(new Vector2(0,0));
+						break;
+					}
 					SetDestination(Home.Position);
 					break;
 				}
@@ -361,6 +364,11 @@ public partial class Npc : CharacterBody2D
 					EmitSignal(SignalName.SendLog, $"{CitizenName} didn't find an activity");
 					_moodReasons["Activity"].Reason = "No available activity";
 					_moodReasons["Activity"].Happiness = -2;
+					if (Home is null)
+					{
+						SetDestination(new Vector2(0,0));
+						break;
+					}
 					SetDestination(Home.Position);
 				}
 

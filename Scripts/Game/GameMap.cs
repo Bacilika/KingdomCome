@@ -8,9 +8,10 @@ using Scripts.Constants;
 public partial class GameMap : Node2D
 {
 	public static List<AbstractActivity> _placedActivities = [];
-	
 	public static List<LivingSpace> _placedHouses = [];
 	public static List<Production> _placedProduction = [];
+	public List<Npc> Citizens = [];
+	public List<Npc> Homeless = [];
 
 	//for job selection
 	public static bool JobSelectMode;
@@ -26,7 +27,7 @@ public partial class GameMap : Node2D
 	private WorkBench _workBench;
 	private double _timeSinceLastTick;
 
-	public List<Npc> Citizens = [];
+
 	[Signal]
 	public delegate void SendLogEventHandler(string log);
 	[Signal]
@@ -50,14 +51,16 @@ public partial class GameMap : Node2D
 		NPCScene = ResourceLoader.Load<PackedScene>("res://Scenes/Other/NPC.tscn");
 		infoScene = ResourceLoader.Load<PackedScene>("res://Scenes/Building/CitizenInfo.tscn");
 		
-		//Start NPC
-		PlaceNpc(GetNode<Npc>("Male"));
-		PlaceNpc(GetNode<Npc>("Female"));
+	
 		
 		//start workbench
 		_workBench = GetNode<WorkBench>("WorkBench");
 		_workBench.IsPlaced = true;
 		_workBench.Visible = true;
+		
+		//Start NPC
+		PlaceNpc(GetNode<Npc>("Male"));
+		PlaceNpc(GetNode<Npc>("Female"));
 	}
 
 	public override void _Process(double delta)
@@ -102,23 +105,19 @@ public partial class GameMap : Node2D
 	public void PlaceNpc(LivingSpace house)
 	{
 		var npc = NPCScene.Instantiate<Npc>();
-		var info = infoScene.Instantiate<CitizenInfo>();
-		_gameMenu.CanvasLayer.AddChild(info);
-		info.Visible = false;
 		AddChild(npc);
 		npc.SendLog += _gameMenu.GameLog.CreateLog;
 		npc.OnFed += OnNpcFed;
 		DayOver += npc.OnDayOver;
-		
 		npc.Home = house;
 		house.MoveIntoHouse(npc);
 		npc.CitizenName += $" {house.HouseholdName}";
 		npc.EmitSignal(SignalName.SendLog, $"{npc.CitizenName} moved into house!");
 		npc.Position = house.Position;
-		npc.Info = info;
 		house.InfoBox.MoveToFront();
 		npc.ZIndex = 1;
 		Citizens.Add(npc);
+
 
 		GameLogistics.Resources[RawResource.Unemployed]++;
 
@@ -142,6 +141,9 @@ public partial class GameMap : Node2D
 		npc.Info = info;
 		npc.ZIndex = 1;
 		Citizens.Add(npc);
+		Homeless.Add(npc);
+		_workBench.EmployWorker(npc);
+		
 
 		GameLogistics.Resources[RawResource.Unemployed]++;
 

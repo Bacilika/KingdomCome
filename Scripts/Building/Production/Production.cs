@@ -55,6 +55,7 @@ public abstract partial class Production : AbstractPlaceable
 	}
 	public virtual void NpcWork(Npc npc)
 	{
+		
 		npc.AtWorkTimer.SetWaitTime(5);
 		npc.AtWorkTimer.Start();
 	}

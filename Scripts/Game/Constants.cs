@@ -25,7 +25,8 @@ public static class GameMode
     public const string JobChange = "Job Changing Mode";
     public const string Build = "Build Mode";
     public const string Move = "Move Building Mode";
-    public const string Road = "RoadPlacingMode";
+    public const string Road = "Road Placing Mode";
+    public const string RoadRemove = "Road Removal Mode";
 }
 
 public static class Upgrade

@@ -6,10 +6,9 @@
 [node name="GameStat" type="TextureRect"]
 custom_minimum_size = Vector2(40, 20)
 offset_right = 40.0
-offset_bottom = 20.0
+offset_bottom = 29.0
 scale = Vector2(0.642857, 0.5)
 texture = ExtResource("1_khv6c")
-stretch_mode = 2
 
 [node name="Value" type="Label" parent="."]
 layout_mode = 0

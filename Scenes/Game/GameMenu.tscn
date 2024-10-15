@@ -89,7 +89,7 @@ layout_mode = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("3_d13wb")
 theme_override_font_sizes/font_size = 26
-text = "0"
+text = "Level : 0"
 
 [node name="LevelProgress" type="ProgressBar" parent="MenuCanvasLayer/GameStats/Level"]
 custom_minimum_size = Vector2(70, 25)
@@ -187,6 +187,7 @@ grow_vertical = 0
 size_flags_vertical = 8
 
 [node name="GameLog" parent="MenuCanvasLayer" instance=ExtResource("16_3yc3n")]
+layout_direction = 3
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0

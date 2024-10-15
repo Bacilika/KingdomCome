@@ -10,7 +10,9 @@ public partial class Shop : Control
 
 	[Signal]
 	public delegate void OnRoadBuildEventHandler(Road road);
-
+	[Signal]
+	public delegate void OnRoadRemoveEventHandler(Sprite2D sprite2D);
+	
 	public static AudioStreamPlayer2D placeAudio;
 	public static AudioStreamPlayer2D deleteAudio;
 	private GridContainer _buildButtons;

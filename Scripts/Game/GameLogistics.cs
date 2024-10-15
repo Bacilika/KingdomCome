@@ -26,6 +26,7 @@ public partial class GameLogistics : Node2D
 	private Array<Vector2I> _roadPositions = [];
 	private PackedScene _roadScene = ResourceLoader.Load<PackedScene>("res://Scenes/Other/Road.tscn");
 	public static string FoodResourceAsString;
+	public Sprite2D RoadRemovalTexture;
 
 
 	public override void _Ready()
@@ -36,6 +37,8 @@ public partial class GameLogistics : Node2D
 		var shop = gameMenu.GetNode<Shop>("MenuCanvasLayer/Shop");
 		shop.OnBuildingButtonPressed += BuildBuilding;
 		shop.OnRoadBuild += OnRoadBuild;
+		shop.OnRoadRemove += OnRoadRemove;
+		
 		
 		Resources = new System.Collections.Generic.Dictionary<string, int>
 		{
@@ -103,6 +106,7 @@ public partial class GameLogistics : Node2D
 		
 
 		if (_roadObject is not null) _roadObject.Position =  _roadLayer.LocalToMap(GetGlobalMousePosition()) * 32;
+		if(RoadRemovalTexture is not null) RoadRemovalTexture.Position = _roadLayer.LocalToMap(GetGlobalMousePosition()) * 32;
 	}
 
 	public static string ConvertHappiness(int happiness)
@@ -111,11 +115,11 @@ public partial class GameLogistics : Node2D
 		{
 			case <= 2:
 				return "Very unhappy";
-			case >= 3 and <= 4:
+			case  <= 4:
 				return "Unhappy";
-			case >= 5 and <= 6:
+			case  <= 6:
 				return "Neutral";
-			case >= 7 and <= 8:
+			case  <= 8:
 				return "Happy";
 			default:
 				return "Very happy";
@@ -129,6 +133,16 @@ public partial class GameLogistics : Node2D
 		_roadObject = road;
 		GetParent().AddChild(_roadObject);
 		GameMenu.GameMode.Text = GameMode.Road;
+	}
+	private void OnRoadRemove(Sprite2D sprite2D)
+	{
+		_roadPlaceMode = true;
+		IsPlaceMode = true;
+		_roadObject = null;
+		RoadRemovalTexture = sprite2D;
+		GetParent().AddChild(sprite2D);
+		
+		GameMenu.GameMode.Text = GameMode.RoadRemove;
 	}
 
 	public override void _Input(InputEvent @event)
@@ -182,11 +196,13 @@ public partial class GameLogistics : Node2D
 	public void ResetModes()
 	{
 		if (_roadObject != null) GetParent().RemoveChild(_roadObject);
+		if (RoadRemovalTexture != null) GetParent().RemoveChild(RoadRemovalTexture);
 		if (_object != null && !Move) GetParent().RemoveChild(_object);
 		_object = null;
 		_roadObject = null;
 		IsPlaceMode = false;
 		_roadPlaceMode = false;
+		RoadRemovalTexture = null;
 		Move = false;
 		GameMenu.GameMode.Text = "";
 	}
@@ -254,7 +270,19 @@ public partial class GameLogistics : Node2D
 
 	private void PlaceRoad()
 	{
-		if (CanPlaceRoad())
+		if (GameMenu.GameMode.Text == GameMode.RoadRemove)
+		{	var gridPosition = _roadLayer.LocalToMap(GetGlobalMousePosition());
+			if (_roadPositions.Contains(gridPosition))
+			{
+				_roadLayer.EraseCell(gridPosition);
+				_roadPositions.Remove(gridPosition);
+				_roadLayer.SetCellsTerrainConnect(_roadPositions, 0, 0);
+				Resources[RawResource.Stone] += 1; // change to more generic method.
+				_roadLayer.QueueRedraw();
+			}
+		}
+		
+		else if (CanPlaceRoad())
 		{
 			var gridPosition = _roadLayer.LocalToMap(GetGlobalMousePosition());
 			_roadPositions.Add(gridPosition);

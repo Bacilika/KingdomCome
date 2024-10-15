@@ -76,14 +76,18 @@ public partial class GameMenu : Control
 	public static void UpdateLevel(int updatedLevel)
 	{
 		LevelProgressbar.Value = 0;
-		Level.Text =  updatedLevel.ToString();
+		Level.Text =  $"Level: {updatedLevel.ToString()}";
 		NextLevel.Text = (updatedLevel +1).ToString();
+
 	}
 
 	public void UpdateMenuInfo()
 	{
 
 		LevelProgressbar.Value = _citizen.Count % 10;
+		Level.TooltipText = $"{10 - _citizen.Count % 10 } more citizen until next level";
+		NextLevel.TooltipText = $"{10 - _citizen.Count % 10 } more citizen until next level";
+		LevelProgressbar.TooltipText = $"{10 - _citizen.Count % 10 } more citizen until next level";
 
 		Day.Text = "Day: " + GameLogistics.Day;
 
@@ -91,7 +95,7 @@ public partial class GameMenu : Control
 		{
 
 			SetToolTip(item.Key);
-			item.Value.Text = ": " + GameLogistics.Resources[item.Key];
+			item.Value.Text = GameLogistics.Resources[item.Key].ToString();
 		}
 	}
 

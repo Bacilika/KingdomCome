@@ -282,7 +282,7 @@ public partial class Npc : CharacterBody2D
 				_move = true;
 				SetDestination(Work.Position);
 				TargetBuilding = Work;
-				_ready = true;
+				
 			}
 			else
 			{
@@ -295,7 +295,9 @@ public partial class Npc : CharacterBody2D
 				{
 					EmitSignal(SignalName.SendLog, $"{CitizenName} changed job from unknown to {Work.BuildingName}");
 				}
+				
 			}
+			_ready = true;
 			return true;
 		}
 
@@ -364,7 +366,7 @@ public partial class Npc : CharacterBody2D
 
 				break;
 			}
-			case var value when value == _activity.GetBuildingName():
+			case var value when value == _activity?.GetBuildingName():
 			{
 				TargetBuilding = Home;
 				SetDestination(Home.Position);

@@ -2339,6 +2339,7 @@ position = Vector2(-228, -147)
 position = Vector2(-297, -144)
 
 [node name="WorkBench" parent="." instance=ExtResource("14_ei2b0")]
+position = Vector2(0, -127)
 
 [connection signal="timeout" from="EatFoodTimer" to="." method="OnEatFoodTimerTimedout"]
 [connection signal="timeout" from="DayTimer" to="." method="OnDayTimerTimeout"]

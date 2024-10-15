@@ -23,6 +23,7 @@ public partial class GameMap : Node2D
 	private PackedScene NPCScene;
 	private PackedScene infoScene;
 
+	private WorkBench _workBench;
 	private double _timeSinceLastTick;
 
 	public List<Npc> Citizens = [];
@@ -54,7 +55,9 @@ public partial class GameMap : Node2D
 		PlaceNpc(GetNode<Npc>("Female"));
 		
 		//start workbench
-		GetNode<WorkBench>("WorkBench").IsPlaced = true;
+		_workBench = GetNode<WorkBench>("WorkBench");
+		_workBench.IsPlaced = true;
+		_workBench.Visible = true;
 	}
 
 	public override void _Process(double delta)
@@ -77,6 +80,7 @@ public partial class GameMap : Node2D
 	public void PlaceBuilding(Node2D nodeObject)
 	{
 		var placeable = (AbstractPlaceable)nodeObject;
+		_workBench.BuildList.Add(placeable, []);
 		if (placeable is LivingSpace livingSpace)
 		{
 			livingSpace.OnCreateNpc += PlaceNpc;
@@ -91,6 +95,7 @@ public partial class GameMap : Node2D
 		placeable.IsPlaced = true;
 		//placeable.Position = GetGlobalMousePosition();
 		AddChild(placeable);
+		placeable.HouseSprite.SetAnimation("Building"); 
 		EmitSignal(SignalName.SendLog,$"Successfully built {placeable.BuildingName}");
 	}
 

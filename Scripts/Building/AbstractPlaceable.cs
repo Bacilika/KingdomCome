@@ -50,6 +50,10 @@ public abstract partial class AbstractPlaceable : Area2D
 
     protected RandomNumberGenerator Rnd = new();
 
+    //Used by workbench
+    public int BuildingCounter = 0;
+    public bool isDone = false; 
+
 
     public Dictionary<string, List<int>> Upgrades;
 
@@ -142,7 +146,7 @@ public abstract partial class AbstractPlaceable : Area2D
 
     public override void _Process(double delta)
     {
-        if (IsPlaced)
+        if (IsPlaced && isDone)
         {
             HouseSprite.SelfModulate = Colliding ? _modulation : _noModulation;
 

@@ -48,6 +48,13 @@ public partial class GameMap : Node2D
 		SendLog += _gameMenu.GameLog.CreateLog;
 		NPCScene = ResourceLoader.Load<PackedScene>("res://Scenes/Other/NPC.tscn");
 		infoScene = ResourceLoader.Load<PackedScene>("res://Scenes/Building/CitizenInfo.tscn");
+		
+		//Start NPC
+		PlaceNpc(GetNode<Npc>("Male"));
+		PlaceNpc(GetNode<Npc>("Female"));
+		
+		//start workbench
+		GetNode<WorkBench>("WorkBench").IsPlaced = true;
 	}
 
 	public override void _Process(double delta)
@@ -97,7 +104,7 @@ public partial class GameMap : Node2D
 		npc.SendLog += _gameMenu.GameLog.CreateLog;
 		npc.OnFed += OnNpcFed;
 		DayOver += npc.OnDayOver;
-
+		
 		npc.Home = house;
 		house.MoveIntoHouse(npc);
 		npc.CitizenName += $" {house.HouseholdName}";
@@ -105,6 +112,29 @@ public partial class GameMap : Node2D
 		npc.Position = house.Position;
 		npc.Info = info;
 		house.InfoBox.MoveToFront();
+		npc.ZIndex = 1;
+		Citizens.Add(npc);
+
+		GameLogistics.Resources[RawResource.Unemployed]++;
+
+		npc.OnJobChange += OnSelectJob;
+		if (Citizens.Count % 10 == 0)
+		{
+			Level++;
+			GameMenu.UpdateLevel(Level);
+		}
+	}
+	
+	public void PlaceNpc(Npc npc)
+	{
+		var info = infoScene.Instantiate<CitizenInfo>();
+		_gameMenu.CanvasLayer.AddChild(info);
+		info.Visible = false;
+		npc.SendLog += _gameMenu.GameLog.CreateLog;
+		npc.OnFed += OnNpcFed;
+		DayOver += npc.OnDayOver;
+		npc.EmitSignal(SignalName.SendLog, $"{npc.CitizenName} moved into house!");
+		npc.Info = info;
 		npc.ZIndex = 1;
 		Citizens.Add(npc);
 
@@ -126,6 +156,8 @@ public partial class GameMap : Node2D
 			Production closestJob = null;
 			foreach (var job in _placedProduction)
 			{
+				if (job is WorkBench)
+					continue;
 				if (job.HasMaxEmployees()) continue;
 				//if jop is closer
 				closestJob = job;

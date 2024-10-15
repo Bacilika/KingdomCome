@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://2uovf4y3vnqd"]
+[gd_scene load_steps=50 format=3 uid="uid://2uovf4y3vnqd"]
 
 [ext_resource type="Script" path="res://Scripts/Other/Npc.cs" id="1_dv6rn"]
 [ext_resource type="Texture2D" uid="uid://7ld563nokdjq" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Character/Character/Character_Walk.png" id="1_f3dyl"]

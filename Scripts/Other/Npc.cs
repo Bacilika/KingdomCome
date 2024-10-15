@@ -73,7 +73,7 @@ public partial class Npc : CharacterBody2D
 		_walkingOnGrassSound = GetNode<AudioStreamPlayer2D>("GrassWalking");
 		Info = GetNode<CitizenInfo>("CitizenInfo");
 		Info.SetInfo(this);
-		Info.GetNode<HBoxContainer>("HBoxContainer").Visible = false;
+		Info.GetNode<HBoxContainer>("HBoxContainer").Visible = true;
 		Info.Visible = false;
 		ScheduleTimer = new Timer();
 		ScheduleTimer.WaitTime = 30;

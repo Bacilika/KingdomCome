@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=4 uid="uid://vcvlb4vnybwc"]
+[gd_scene load_steps=27 format=4 uid="uid://ewr80hsqehps"]
 
 [ext_resource type="Script" path="res://Scripts/Game/GameMap.cs" id="1_owh02"]
 [ext_resource type="PackedScene" uid="uid://dtgqg8p8u8ecn" path="res://Scenes/Other/Mountain.tscn" id="2_8oyys"]
@@ -13,6 +13,8 @@
 [ext_resource type="AudioStream" uid="uid://plht8nry2hu6" path="res://Audio/TavernMusic.mp3" id="8_2qw43"]
 [ext_resource type="PackedScene" uid="uid://cxe0cv5bgxbcc" path="res://Scenes/Other/Forest.tscn" id="8_obv6i"]
 [ext_resource type="PackedScene" uid="uid://g121wpunkvls" path="res://Scenes/Game/GameLogistics.tscn" id="10_4gj8f"]
+[ext_resource type="PackedScene" uid="uid://l32r8or4fhm7" path="res://Scenes/Building/Production/WorkBench.tscn" id="14_ei2b0"]
+[ext_resource type="PackedScene" uid="uid://2uovf4y3vnqd" path="res://Scenes/Other/NPC.tscn" id="15_2y8h7"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ehtao"]
 texture = ExtResource("4_iuwca")
@@ -2329,6 +2331,14 @@ position = Vector2(8, 8)
 navigation_polygon = SubResource("NavigationPolygon_n6683")
 
 [node name="GameLogistics" parent="." instance=ExtResource("10_4gj8f")]
+
+[node name="Male" parent="." instance=ExtResource("15_2y8h7")]
+position = Vector2(-228, -147)
+
+[node name="Female" parent="." instance=ExtResource("15_2y8h7")]
+position = Vector2(-297, -144)
+
+[node name="WorkBench" parent="." instance=ExtResource("14_ei2b0")]
 
 [connection signal="timeout" from="EatFoodTimer" to="." method="OnEatFoodTimerTimedout"]
 [connection signal="timeout" from="DayTimer" to="." method="OnDayTimerTimeout"]

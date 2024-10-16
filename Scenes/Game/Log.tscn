@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://dhictfo6v2455"]
+[gd_scene load_steps=3 format=3 uid="uid://h1y2qnrm48pc"]
 
 [ext_resource type="FontFile" uid="uid://4apkhqisib11" path="res://BLKCHCRY.TTF" id="1_lapc6"]
 [ext_resource type="Script" path="res://Scripts/Game/Log.cs" id="2_c4wuu"]

@@ -64,7 +64,6 @@ public partial class GameMenu : Control
 			{ RawResource.Water, statLabels.GetNode<TextureRect>(RawResource.Water)}
 		};
 		
-		
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

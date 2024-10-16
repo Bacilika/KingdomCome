@@ -35,6 +35,7 @@ public partial class Windmill : Production
 
 	public override void ProduceItem()
 	{
-		GameLogistics.Resources[ProcessedResource.Flour]++;
+		GameLogistics.ProcessedResources[ProcessedResource.Flour]++;
+		GameLogistics.Resources[RawResource.Wheat]--;
 	}
 }

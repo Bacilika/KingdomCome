@@ -71,6 +71,8 @@ public abstract partial class AbstractPlaceable : Area2D
     public virtual void OnParentReady()
     {
     }
+    
+    
 
     //Only for Living spaces
     protected virtual void OnDelete()
@@ -98,6 +100,7 @@ public abstract partial class AbstractPlaceable : Area2D
         InfoBox.Connect(PlaceableInfo.SignalName.OnDelete, Callable.From(OnDelete));
         InfoBox.Connect(PlaceableInfo.SignalName.OnUpgrade, Callable.From(OnUpgrade));
         InfoBox.Connect(PlaceableInfo.SignalName.OnMove, Callable.From(OnMove));
+
 
         Monitoring = true;
         Monitorable = true;

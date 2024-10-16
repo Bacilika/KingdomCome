@@ -13,6 +13,12 @@ public partial class PlaceableInfo : Panel
 
 	[Signal]
 	public delegate void OnUpgradeEventHandler();
+	
+	[Signal]
+	public delegate void OnTurnOffBuildingEventHandler();
+	
+	[Signal]
+	public delegate void OnTurnOnBuildingEventHandler();
 
 	private Label _buildingName;
 	private Control _houseInfo;
@@ -34,15 +40,28 @@ public partial class PlaceableInfo : Panel
 		CitizenPortrait = ResourceLoader.Load<PackedScene>("res://Scenes/Building/CitizenPortraitButton.tscn");
 		_houseInfo = GetNode<Control>("HouseInfo");
 	}
+	
 
-	public void OnButtonDownPressed()
+	public void OnTurnOffButtonPressed()
 	{
-		GD.Print("button down");
+		Button turnoffbutton = GetNode<Button>("HouseInfo/TurnOffButton");
+		if (turnoffbutton.IsPressed())
+		{
+			EmitSignal(SignalName.OnTurnOffBuilding); //emitted to Production
+			turnoffbutton.Text = "Turn On";
+		}
+		else
+		{
+			EmitSignal(SignalName.OnTurnOnBuilding);
+			turnoffbutton.Text = "Turn Off";
+
+		}
+
 	}
 
 	public void OnChooseWareButtonPressed()
 	{
-		EmitSignal(SignalName.OnChooseWare);
+		EmitSignal(SignalName.OnChooseWare); //Emitted to market stall
 	}
 
 	public void OnDeleteButtonPressed()

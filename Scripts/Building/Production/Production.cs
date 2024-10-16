@@ -10,31 +10,33 @@ public abstract partial class Production : AbstractPlaceable
 	protected string Producing;
 	protected int ProductionRate = 10; // 1/ProductionRate % chance to produce item by 1 each tick. 
 
+	
+	protected override void Tick()
+	{
+		UpdateInfo();
+		InfoBox.Connect(PlaceableInfo.SignalName.OnTurnOffBuilding, Callable.From(OnTurnOffBuilding));
+		InfoBox.Connect(PlaceableInfo.SignalName.OnTurnOnBuilding, Callable.From(OnTurnOnBuilding));
+	}
 	protected override void OnDelete()
 	{
 		OnDeleteInstance();
-		Console.WriteLine("People " + People.Count);
 		for (var i = People.Count -1; i > -1; i--)
 		{
 			var npc = People[i];
 			npc.OnWorkDelete();
 			RemoveWorker(npc);
 			GameLogistics.Resources[RawResource.Unemployed]++;
-
 		}
 		foreach (var cost in DeleteCost) GameLogistics.Resources[cost.Key] += cost.Value[Level];
 		Shop.deleteAudio.Play();
-		Console.WriteLine(GameMap._placedProduction.Count);
 		foreach (var production in GameMap._placedProduction)
 		{
 			if (production == this)
 			{
 				GameMap._placedProduction.Remove(production);
-				Console.WriteLine("Removed production");
 				break;
 			}
 		}
-		Console.WriteLine(GameMap._placedProduction.Count);
 		QueueFree();
 	}
 
@@ -60,10 +62,35 @@ public abstract partial class Production : AbstractPlaceable
 		npc.AtWorkTimer.Start();
 	}
 
-	protected override void Tick()
+
+
+	protected void OnTurnOffBuilding()
 	{
-		UpdateInfo();
+		for (var i = People.Count -1; i > -1; i--)
+		{
+			var npc = People[i];
+			npc.OnWorkDelete();
+			RemoveWorker(npc);
+			GameLogistics.Resources[RawResource.Unemployed]++;
+		}
+		
+		//Remove from _placedProduction so NPCs can't get job there. 
+		foreach (var production in GameMap._placedProduction)
+		{
+			if (production == this)
+			{
+				GameMap._placedProduction.Remove(production);
+				break;
+			}
+		}
 	}
+	
+	protected void OnTurnOnBuilding()
+	{
+		GameMap._placedProduction.Add(this);
+		
+	}
+	
 	public void GatherResource(Vector2 pos)
 	{
 		ProduceItem();

@@ -91,12 +91,7 @@ z_index = 1
 position = Vector2(-9.53674e-07, 9.53674e-07)
 scale = Vector2(1.03846, 1.03846)
 sprite_frames = SubResource("SpriteFrames_wjt6n")
-animation = &"Level2"
-
-[node name="CollisionShape2" type="CollisionShape2D" parent="HouseSprite"]
-position = Vector2(9.18354e-07, -1.92593)
-scale = Vector2(0.962964, 0.962964)
-shape = SubResource("RectangleShape2D_cews5")
+animation = &"Level0"
 
 [node name="CollisionShape1" type="CollisionShape2D" parent="."]
 position = Vector2(0, -1.5)

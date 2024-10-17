@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://biil4p82w3tjw"]
+[gd_scene load_steps=6 format=3 uid="uid://biil4p82w3tjw"]
 
 [ext_resource type="Theme" uid="uid://c2femp2uxsefw" path="res://Themes/Theme.tres" id="1_0e4c4"]
 [ext_resource type="Script" path="res://Scripts/Building/PlaceableInfo.cs" id="1_snswj"]
 [ext_resource type="PackedScene" uid="uid://ud23v844segc" path="res://Scenes/Building/Production/ChooseWare.tscn" id="3_j5mfn"]
 [ext_resource type="FontFile" uid="uid://dul1t3v440c7s" path="res://Deutsch.ttf" id="3_uwas0"]
+[ext_resource type="FontFile" uid="uid://4apkhqisib11" path="res://BLKCHCRY.TTF" id="4_pvjke"]
 
 [node name="PlaceableInfo" type="Panel"]
 z_index = 2
@@ -45,6 +46,7 @@ offset_top = 56.0
 offset_right = 200.0
 offset_bottom = 96.0
 mouse_filter = 2
+theme_override_fonts/normal_font = ExtResource("4_pvjke")
 text = "Building info"
 fit_content = true
 scroll_active = false

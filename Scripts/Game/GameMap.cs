@@ -24,6 +24,7 @@ public partial class GameMap : Node2D
 	private PackedScene NPCScene;
 	private PackedScene infoScene;
 
+	public Timer GracePeriodTimer;
 	private WorkBench _workBench;
 	private double _timeSinceLastTick;
 
@@ -32,6 +33,8 @@ public partial class GameMap : Node2D
 	public delegate void SendLogEventHandler(string log);
 	[Signal]
 	public delegate void DayOverEventHandler();
+
+	public static bool GracePeriod = true;
 	
 
 
@@ -50,6 +53,14 @@ public partial class GameMap : Node2D
 		SendLog += _gameMenu.GameLog.CreateLog;
 		NPCScene = ResourceLoader.Load<PackedScene>("res://Scenes/Other/NPC.tscn");
 		infoScene = ResourceLoader.Load<PackedScene>("res://Scenes/Building/CitizenInfo.tscn");
+		GracePeriodTimer = new Timer();
+		GracePeriodTimer.WaitTime = 60;
+		GracePeriodTimer.OneShot = true;
+		GracePeriodTimer.Timeout += () =>
+		{
+			GracePeriod = false;
+			QueueFree();
+		};
 		
 	
 		
@@ -131,14 +142,10 @@ public partial class GameMap : Node2D
 	
 	public void PlaceNpc(Npc npc)
 	{
-		var info = infoScene.Instantiate<CitizenInfo>();
-		_gameMenu.CanvasLayer.AddChild(info);
-		info.Visible = false;
 		npc.SendLog += _gameMenu.GameLog.CreateLog;
 		npc.OnFed += OnNpcFed;
 		DayOver += npc.OnDayOver;
 		npc.EmitSignal(SignalName.SendLog, $"{npc.CitizenName} moved into house!");
-		npc.Info = info;
 		npc.ZIndex = 1;
 		Citizens.Add(npc);
 		Homeless.Add(npc);
@@ -163,10 +170,9 @@ public partial class GameMap : Node2D
 			Production closestJob = null;
 			foreach (var job in _placedProduction)
 			{
-				if (job is WorkBench)
+				if (job is WorkBench || !job.isDone)
 					continue;
 				if (job.HasMaxEmployees()) continue;
-				//if jop is closer
 				closestJob = job;
 			}
 

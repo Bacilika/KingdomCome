@@ -12,6 +12,7 @@ public partial class CitizenPortraitButton : Control
 
 	public void OnPortraitPressed()
 	{
+		InfoBox.Visible = false;
 		npc.ShowInfo();
 	}
 

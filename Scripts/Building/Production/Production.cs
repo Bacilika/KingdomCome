@@ -43,6 +43,11 @@ public abstract partial class Production : AbstractPlaceable
 		Console.WriteLine("OnNpcReachWork");
 	}
 
+	public virtual void SpaceOutWorkers()
+	{
+		
+	}
+
 	public virtual void ProduceItem()
 	{
 		Console.WriteLine("ProduceItem instance");
@@ -55,7 +60,7 @@ public abstract partial class Production : AbstractPlaceable
 	}
 	public virtual void NpcWork(Npc npc)
 	{
-		
+		npc.Idle = false;
 		npc.AtWorkTimer.SetWaitTime(5);
 		npc.AtWorkTimer.Start();
 	}
@@ -86,18 +91,11 @@ public abstract partial class Production : AbstractPlaceable
 			return false;
 		}
 
-		bool employed;
-		if (GameMenu.GameMode.Text == GameMode.JobChange)
-			employed = npc.GetJob(this, true);
-		else
-			employed = npc.GetJob(this);
-
-		if (employed)
+		if (npc.GetJob(this))
 		{
 			GameLogistics.Resources[RawResource.Unemployed]--;
 			People.Add(npc);
 		}
-
 		return true;
 	}
 
@@ -106,10 +104,8 @@ public abstract partial class Production : AbstractPlaceable
 		People.Remove(npc);
 	}
 
-	public void UpdateInfo()
+	public virtual void UpdateInfo()
 	{
-		var info = $"Produces  {Producing}" +
-				   $"\nWorkers: {GetWorkers()} / {Upgrades[Upgrade.MaxWorkers][Level]}";
-		InfoBox.UpdateInfo(GetBuildingName(), info);
+		InfoBox.UpdateInfo(GetBuildingName(), $"Produces  {Producing}\nWorkers: {GetWorkers()} / {Upgrades[Upgrade.MaxWorkers][Level]}");
 	}
 }

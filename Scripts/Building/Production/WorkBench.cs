@@ -9,15 +9,19 @@ using Scripts.Constants;
 public partial class WorkBench : Production
 {
 	
-	public Dictionary<AbstractPlaceable, List<Npc>> BuildList = new ();
+	public Dictionary<AbstractPlaceable, List<Npc>> BuildList = [];
 	protected override void _Ready_instance()
 	{
+		_animatedSprite = GetNode<AnimatedSprite2D>("Animation");
+		_animatedSprite.Animation = "ExclamationPoint";
+		_animatedSprite.Play();
 		BuildingName = "WorkBench";
-		BuildingDescription = "Workbench";
+		BuildingDescription = "All Npcs assigned to the workbench will help build";
 		PlayerLevel = 1;
 		isDone = true;
 		IsPlaced = true;
 		ActivityIndoors = false;
+		
 		Upgrades = new Dictionary<string, List<int>>
 		{
 			{ Upgrade.MaxWorkers, [5, 7, 10] }
@@ -41,63 +45,111 @@ public partial class WorkBench : Production
 
 	protected override void Tick()
 	{
-		if (BuildList.Count > 0)
+		RemoveFinishedBuildings();
+		
+		UpdateInfo();
+		if (BuildList.Count == 0)
 		{
-			List<AbstractPlaceable> toBeRemoved = new List<AbstractPlaceable>();
-			foreach (var person in People)
+			foreach (var person in CurrentPeople)
 			{
-				var busy = false;
-				foreach (var building in BuildList)
-				{
-
-					if (building.Value.Contains(person)){
-						if (building.Key.BuildingCounter >= 25)
-						{
-							toBeRemoved.Add(building.Key);
-							person.SetDestination(Position);
-							person._move = true;
-							building.Key.isDone = true;
-							building.Key.HouseSprite.SetAnimation("Level" + building.Key.Level); 
-						}
-						else
-						{
-							busy = true;
-							break;
-						}
-					}
-				}
-				if (!busy)
-				{
-					BuildList.First().Value.Add(person);
-					person.SetDestination(BuildList.First().Key.Position);
-					person._move = true;
-				}
-
-				if (person.Position.DistanceTo(BuildList.First().Key.Position) < 10)
-				{
-					person._move = false;
-					BuildList.First().Key.BuildingCounter ++;
-				}
+				person.Idle = true;
 			}
-
-			foreach (var workplace in toBeRemoved)
+			return;
+		}
+		
+		foreach (var person in People)
+		{
+			if (!person.AtWork) continue;
+			var result = BuildList.FirstOrDefault(x => x.Value.Contains(person));
+			if (!result.Equals(default(KeyValuePair<AbstractPlaceable,List<Npc>>)) ) //if person is busy
 			{
-				BuildList.Remove(workplace);
+				DoBuildAction(person, result.Key);
+				continue;
 			}
-			toBeRemoved.Clear();
+			var firstEntry = BuildList.First();
+			firstEntry.Value.Add(person);
+			person.SetDestination(firstEntry.Key.Position);
+			
+		}
+	}
+
+	private void RemoveFinishedBuildings()
+	{
+		List<AbstractPlaceable> toBeRemoved = [];
+		foreach (var entry in BuildList.Where(entry => entry.Key.BuildingCounter >= 25))
+		{
+			
+			toBeRemoved.Add(entry.Key);
+			entry.Key.isDone = true;
+			entry.Key.HouseSprite.SetAnimation("Level" + entry.Key.Level); 
+			foreach (var person in entry.Value)
+			{
+				person.SetDestination(Position);
+			}
+		}
+
+		foreach (var building in toBeRemoved)
+		{
+			BuildList.Remove(building);
+		}
+		toBeRemoved.Clear();
+	}
+
+	private void DoBuildAction(Npc person, AbstractPlaceable building)
+	{
+		if (!person.AtWork) return;
+		if (person.Position.DistanceTo(building.Position) < 10)
+		{
+			person._move = false;
+			person.Idle = false;
+			building.BuildingCounter ++;
 		}
 		else
 		{
-			foreach (var person in People){
-				person.SetDestination(Position);
-				person._move = true;
-			}
+			person.SetDestination(building.Position);
 		}
-		UpdateInfo();
+	}
+
+	public override void SpaceOutWorkers()
+	{
+		
+		var amount = People.Count;
+		if (amount == 0)
+		{
+			return;
+		}
+		var positions = 360 / amount;
+		var radius = ((CircleShape2D)_hitbox.Shape).Radius;
+		for (var i = 0; i < CurrentPeople.Count; i++)
+		{
+			var person = CurrentPeople[i];
+			if (person._navigation.IsTargetReached())
+			{
+				continue;
+			}
+
+			var circlePos = new Vector2(radius * (float)Math.Cos(positions * i),
+				radius * (float)Math.Sin(positions * i));
+			person.SetDestination( Position + circlePos);
+			Console.WriteLine(person._navigation.TargetPosition);
+		}
+	}
+	public override void OnBuildingPressed()
+	{
+		GetNode<AnimatedSprite2D>("Animation").Visible = false;
+		_animatedSprite.Stop();
+
 	}
 
 	public override void NpcWork(Npc npc)
 	{
-		npc._move = false;
+	}
+	
+	public override void UpdateInfo()
+	{
+		var info = $"All Npcs assigned to the workbench will build the buildings" +
+				   $"\nWorkers: {GetWorkers()}";
+		
+		InfoBox.UpdateInfo(GetBuildingName(), info);
 	}
 }

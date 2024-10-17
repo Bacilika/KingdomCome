@@ -45,7 +45,8 @@ public partial class WoodCutter : Production
 		npc.SetDestination(forest.GetClosest(npc).GlobalPosition);
 		npc.AtWorkTimer.SetWaitTime(5);
 		npc._move = true;
-		
+		npc.Idle = false;
+
 	}
 
 	public override void AtWorkTimerTimeout(Npc npc)

@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://bnr631t1td44f" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Character/CharacterPortrait.png" id="3_pqspc"]
 
 [node name="CitizenInfo" type="Panel"]
+z_index = 2
 offset_right = 192.0
 offset_bottom = 220.0
 theme = ExtResource("1_wgayp")

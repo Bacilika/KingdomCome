@@ -17,35 +17,28 @@ public partial class Npc : CharacterBody2D
 {
 	[Signal]
 	public delegate void OnAtWorkEventHandler(Npc npc);
-
 	[Signal]
 	public delegate void OnJobChangeEventHandler(Npc npc);
 	[Signal]
 	public delegate void SendLogEventHandler(string log);
-	
 	[Signal]
 	public delegate void OnFedEventHandler(Npc npc, bool fed);
 	
-	private const int BaseHappiness = 5;
 	private AbstractActivity _activity;
-	private Vector2 _activityPosition;
-	private Vector2 _destination;
-	private bool _focused;
-	
 	//npc fields
 	public int Happiness = BaseHappiness;
 	public string CitizenName = NameGenerator.GenerateFirstName();
 	private AnimatedSprite2D _animation;
+	private const int BaseHappiness = 5;
 	public int Hunger = 0;
-
+	private bool _focused;
 	
-	private Dictionary<string, MoodReason> _moodReasons;
+	private Dictionary<string, MoodReason> _moodReasons = new();
 
 	//Navigation
-	private NavigationAgent2D _navigation;
-	private bool _ready;
-	private bool _still;
+	public NavigationAgent2D _navigation;
 	private bool _stopped;
+	public bool Idle = true;
 	private RandomNumberGenerator _rnd = new();
 	private float _speed = 100;
 	private AudioStreamPlayer2D _walkingOnGrassSound;
@@ -63,6 +56,8 @@ public partial class Npc : CharacterBody2D
 	public double time;
 	public string _direction;
 
+	private Vector2 _homelessPos = new (-1, -1);
+
 	public override void _Ready()
 	{
 			
@@ -73,53 +68,68 @@ public partial class Npc : CharacterBody2D
 		_walkingOnGrassSound = GetNode<AudioStreamPlayer2D>("GrassWalking");
 		Info = GetNode<CitizenInfo>("CitizenInfo");
 		Info.SetInfo(this);
-		Info.GetNode<HBoxContainer>("HBoxContainer").Visible = true;
 		Info.Visible = false;
 		ScheduleTimer = new Timer();
 		ScheduleTimer.WaitTime = 30;
 		ScheduleTimer.OneShot = true;
 		ScheduleTimer.Timeout += () =>
 		{
+			Console.WriteLine("Schedule update");
 			AtWorkTimer.Stop();
 			ScheduleTimer.Stop();
 			if (AtWork)
 			{
 				AtWork = false;
+				Idle = true;
 				CurrentBuilding = Work;
-				SetNextLocation();
 			}
-			_move = true;
+			SetNextLocation();
+
 		};
 		ScheduleTimer.Autostart = false;
 		AddChild(ScheduleTimer);
-		_navigation.TargetReached += () =>
-		{
-			StartScheduleTimer();
-		};
+		_navigation.TargetReached += OnTargetReached;
 		
-		_moodReasons = new Dictionary<string, MoodReason>
-		{
-			{ "Work", new MoodReason() },
-			{ "Activity", new MoodReason() }, 
-			{"Food", new MoodReason()}
-		};
+		_moodReasons.Add("Work", new MoodReason());
+		_moodReasons.Add("Activity", new MoodReason());
+		_moodReasons.Add("Food", new MoodReason());
+		_moodReasons.Add("Home", new MoodReason());
+		SetMoodReason("Home", "Is Homeless", -3);
+	}
+
+	public void OnMoveIn()
+	{
+		SetMoodReason("Home", "Has a home", 0);
 	}
 
 	public void OnBuildingEntered(AbstractPlaceable building)
 	{
-		if (building != TargetBuilding)
+		if (building != TargetBuilding) return;
+		if (building is Production && building != _activity)
 		{
-			return;
+			Work.SpaceOutWorkers();
 		}
-		if (!ScheduleTimer.IsStopped()) //citizen is working
+		if (AtWork) //citizen is working
 		{
 			Work.NpcWork(this); //do task
 			return;
 		}
-		
-		if (!building.ActivityIndoors)
+
+		if (building == Work) // arrive at work 
 		{
-			_navigation.SetTargetPosition(Position);
+			AtWork = true;
+			Idle = false;
+			Work.SpaceOutWorkers();
+		}
+	}
+
+	public void OnTargetReached()
+	{
+		_move = false;
+		Idle = true;
+		if (ScheduleTimer.IsStopped())
+		{
+			StartScheduleTimer();
 		}
 		
 	}
@@ -127,17 +137,17 @@ public partial class Npc : CharacterBody2D
 	public void StartScheduleTimer()
 	{
 		_move = false;
-		if (CurrentBuilding == null && TargetBuilding == Work) // reach workplace
+		if (AtWork) // reach workplace
 		{
-			AtWork = true;
+			
 			Work.NpcWork(this);
+		}
+		else
+		{
+			Idle = true;
 		}
 		ScheduleTimer.Start();
 		CurrentBuilding = TargetBuilding;
-		if (!AtWork)
-		{
-			SetNextLocation();
-		}
 		
 	}
 	public void OnBuildingExited()
@@ -169,14 +179,15 @@ public partial class Npc : CharacterBody2D
 
 	public override void _PhysicsProcess(double delta)
 	{
-		if (!_ready || NavigationServer2D.MapGetIterationId(_navigation.GetNavigationMap()) == 0) return; //Not ready
-
+		if (NavigationServer2D.MapGetIterationId(_navigation.GetNavigationMap()) == 0) return; //Not ready
+		
 		if (_stopped) //stopped by player
 		{
 			_animation.Stop();
 			ToggleWalkingSound(false);
 			return;
 		}
+		
 
 		if (_move) // going to destination
 		{
@@ -185,17 +196,28 @@ public partial class Npc : CharacterBody2D
 			{
 				ToggleWalkingSound(true);
 			}
-
 			Move();
-			if (_navigation.DistanceToTarget() < 1)
+			if (_navigation.DistanceToTarget() < 5)
 			{
 				_navigation.SetTargetPosition(Position);
 			}
+			
 		}
 		else //at destination
 		{
+			if (!Idle)
+			{
+				_animation.Play();
+				_animation.Animation = $"work{_direction}";
+				
+			}
+			else
+			{
+				_animation.Stop();
+				_animation.Animation = "walkDown";
+			}
 			ToggleWalkingSound(false);
-			_animation.Animation = $"work{_direction}";
+
 		}
 	}
 
@@ -228,14 +250,20 @@ public partial class Npc : CharacterBody2D
 	{
 		Info.SetInfo(this);
 		Info.Visible = true;
+		Info.Position = Vector2.Zero;
+		Info.MoveToFront();
 	}
 
 	private void CalculateHappiness()
 	{
 		Happiness = BaseHappiness;
-		foreach (var reason in _moodReasons)
+		if (GameMap.GracePeriod)
 		{
-			Happiness += reason.Value.Happiness;
+			return;
+		}
+		foreach (var entry in _moodReasons)
+		{
+			Happiness += entry.Value.Happiness;
 		}
 
 		if (Happiness < BaseHappiness)
@@ -250,58 +278,86 @@ public partial class Npc : CharacterBody2D
 
 	public string GetUnhappyReason()
 	{
-		var unhappyReason = "";
+		if (GameMap.GracePeriod)
+		{
+			return "";
+		}
+		var sortedDict = from entry in _moodReasons orderby entry.Value.Happiness select entry;
 
+		var unhappyReason = "";
 		if (_moodReasons is not null)
-			foreach (var reason in _moodReasons)
+			foreach (var entry in sortedDict)
 			{
-				if(reason.Value.Reason is null) continue;
-				var happiness = reason.Value.Happiness.ToString();
-				if (reason.Value.Happiness > 0) happiness = $"+{reason.Value.Happiness}";
-				unhappyReason += $"{reason.Value.Reason} ({happiness}) \n";
+				if(entry.Value.Reason is null) continue;
+				if (entry.Value.Happiness >= 0)
+				{
+					unhappyReason += $"+{entry.Value.Reason}\n";
+				}
+				else
+				{
+					unhappyReason += $"-{entry.Value.Reason}\n";
+				}
 			}
 		return unhappyReason;
 	}
 
-
-	public bool GetJob(Production production, bool change = false)
+	public bool ChangeJob(Production production)
 	{
-		if (Work is null || change)
+		var oldWork = Work;
+		Work?.RemoveWorker(this);
+		Work = production;
+		if (TargetBuilding == oldWork)
 		{
-			var oldWork = Work;
-			Work?.RemoveWorker(this);
-			Work = production;
-			_moodReasons["Work"].Reason = "Has work";
-			_moodReasons["Work"].Happiness = 1;
-			if (!change) //if this is first job, go to work!
-			{
-				EmitSignal(SignalName.SendLog, $"{CitizenName} got their first job at the {Work.BuildingName}!");
-				_move = true;
-				SetDestination(Work.Position);
-				TargetBuilding = Work;
-				
-			}
-			else
-			{
-				AtWork = false;
-				if (oldWork is not null)
-				{
-					EmitSignal(SignalName.SendLog, $"{CitizenName} changed job from {oldWork.BuildingName} to {Work.BuildingName}");
-				}
-				else
-				{
-					EmitSignal(SignalName.SendLog, $"{CitizenName} got their first job at the {Work.BuildingName}!");
-					TargetBuilding = Work;
-				}
-				
-			}
-			_ready = true;
-			return true;
+			TargetBuilding = Work;
+			SetDestination(Work.Position);
 		}
 
-		return false;
+		if (AtWork)
+		{
+			AtWork = false;
+			SetDestination(Work.Position);
+		}
+		EmitSignal(SignalName.SendLog, $"{CitizenName} changed job from {oldWork.BuildingName} to {Work.BuildingName}");
+		return true;
 	}
 
+	private void SetMoodReason(string type, string reason, int happiness)
+	{
+		if (happiness == 0)
+		{
+			_moodReasons[type].Reason = "";
+			_moodReasons[type].Happiness = 0;
+		}
+		_moodReasons[type].Reason = reason;
+		_moodReasons[type].Happiness = happiness;
+	}
+	public bool GetJob(Production production)
+	{
+		if (production is null)
+		{
+			Work = null;
+			Work?.RemoveWorker(this);
+			SetMoodReason("Work", "Unemployed", -1);
+			AtWorkTimer.Stop();
+			ScheduleTimer.Stop();
+			SetDestination(Home?.Position ?? new Vector2(-1,-1));
+			
+			
+			return false;
+		}
+		if (Work is not null)
+		{
+			return ChangeJob(production);
+		}
+		Work = production;
+		SetMoodReason("Work", "Has Work", 1);
+		
+		EmitSignal(SignalName.SendLog, $"{CitizenName} got their first job at the {Work.BuildingName}!");
+		SetDestination(Work.Position);
+		TargetBuilding = Work;
+		return true;
+	}
+	
 	public bool IsEmployed()
 	{
 		return Work != null;
@@ -320,40 +376,44 @@ public partial class Npc : CharacterBody2D
 			GameLogistics.Resources[RawResource.Unemployed] -= 1;
 		QueueFree();
 	}
-
-
+	
 	public void SetNextLocation()
 	{
 		if (CurrentBuilding == null)
 		{
-			return;
-		}
-		switch (CurrentBuilding.GetBuildingName())
-		{
-			case var value when value == Home?.GetBuildingName():
+			if (Work is not null)
 			{
 				TargetBuilding = Work;
 				SetDestination(Work.Position);
-				break;
 			}
+			return;
+		}
+		
+		switch (CurrentBuilding.GetBuildingName())
+		{
+			case var value when value == Home?.GetBuildingName():
+				TargetBuilding = Work;
+				SetDestination(Work.Position);
+				break;
 			case var value when value == Work?.GetBuildingName():
-			{
+				if (Home is null)
+				{
+					SetMoodReason("Home", "Is Homeless", -3);
+					TargetBuilding = Home;
+					SetDestination(new Vector2(-1,-1));
+					break;
+					
+				}
 				if (!GoToActivity()) // Going home
 				{
 					TargetBuilding = Home;
-					if (Home is null)
-					{
-						SetDestination(new Vector2(0,0));
-						break;
-					}
 					SetDestination(Home.Position);
 					break;
 				}
 				
 				if (FindActivity() != null)
 				{
-					_moodReasons["Activity"].Reason = "enjoys" + _activity.BuildingName;
-					_moodReasons["Activity"].Happiness = 2;
+					SetMoodReason("Activity", $"enjoys {_activity.BuildingName}", 2);
 					EmitSignal(SignalName.SendLog, $"{CitizenName} enjoys spending time at the {_activity.BuildingName}");
 					TargetBuilding = _activity;
 					SetDestination(_activity.Position);
@@ -362,31 +422,20 @@ public partial class Npc : CharacterBody2D
 				{ 
 					TargetBuilding = Home;
 					EmitSignal(SignalName.SendLog, $"{CitizenName} didn't find an activity");
-					_moodReasons["Activity"].Reason = "No available activity";
-					_moodReasons["Activity"].Happiness = -2;
-					if (Home is null)
-					{
-						SetDestination(new Vector2(0,0));
-						break;
-					}
+					SetMoodReason("Activity", $"No available activity", -2);
 					SetDestination(Home.Position);
 				}
-
 				break;
-			}
 			case var value when value == _activity?.GetBuildingName():
-			{
 				TargetBuilding = Home;
 				SetDestination(Home.Position);
 				break;
-			}
 			default:
-			{
-				Console.WriteLine("Trying to switch when currentBuilding is null");
-				throw new Exception();
-			}
+				Console.WriteLine($"Trying to switch when currentBuilding is null, {CurrentBuilding?.GetBuildingName()}");
+				break;
 		}
 	}
+	
 	public bool GoToActivity()
 	{
 		return _rnd.RandiRange(0, 3) == 0;
@@ -407,7 +456,8 @@ public partial class Npc : CharacterBody2D
 		return null;
 	}
 
-	public void OnWorkDelete()
+	
+	public void OnWorkDelete() // Todo: Fix OnWorkDelete
 	{
 		Work = null;
 		TargetBuilding = Home; 
@@ -420,14 +470,8 @@ public partial class Npc : CharacterBody2D
 	{
 		_navigation.SetTargetPosition(vec);
 		_navigation.GetNextPathPosition();
-	}
-
-	private void SetDestination()
-	{
-		_navigation.SetTargetPosition(PlaceablePosition.Position);
-		_navigation.GetNextPathPosition();
-		_ready = true;
-		ToggleWalkingSound(true);
+		_move = true;
+		Idle = true;
 	}
 
 	private void OnMouseEntered()
@@ -444,7 +488,7 @@ public partial class Npc : CharacterBody2D
 	{
 		if (@event.IsActionPressed(Inputs.LeftClick))
 		{
-			if ((_focused && !_still) || Info.focused)
+			if (_focused || Info.focused)
 			{
 				ShowInfo();
 				_stopped = true;
@@ -466,15 +510,14 @@ public partial class Npc : CharacterBody2D
 			{
 				Hunger--;
 				EmitSignal(SignalName.OnFed, this, true);
-				_moodReasons["Food"].Reason = "Got fed";
-				_moodReasons["Activity"].Happiness = 0;
+				SetMoodReason("Food", "",0);
+
 			}
 		}
 		else
 		{
 			EmitSignal(SignalName.OnFed, this, false);
-			_moodReasons["Food"].Reason = "Did not get fed";
-			_moodReasons["Food"].Happiness = -2;
+			SetMoodReason("Food", "Did not get fed",-Hunger);
 		}
 	}
 }

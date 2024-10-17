@@ -18,7 +18,7 @@ public abstract partial class AbstractPlaceable : Area2D
     [Signal]
     public delegate void OnMoveBuildingEventHandler(AbstractPlaceable building);
 
-    private CollisionShape2D _hitbox;
+    public CollisionShape2D _hitbox;
     private bool _isFocused;
     private int _maxLevel = 2;
     private Color _modulation = new(1, 0, 0);
@@ -45,7 +45,7 @@ public abstract partial class AbstractPlaceable : Area2D
     public Dictionary<string, List<int>> MoveCost;
     public List<Npc> People = [];
     public int PlayerLevel = 0;
-    protected List<Npc> CurrentPeople = [];
+    protected List<Npc> CurrentPeople = []; // npcs who are currently at the location
 
     public bool ActivityIndoors = true;
 
@@ -53,8 +53,9 @@ public abstract partial class AbstractPlaceable : Area2D
 
     //Used by workbench
     public int BuildingCounter = 0;
-    public bool isDone = false; 
+    public bool isDone = false;
 
+    protected AnimatedSprite2D _animatedSprite;
 
     public Dictionary<string, List<int>> Upgrades;
 
@@ -98,6 +99,8 @@ public abstract partial class AbstractPlaceable : Area2D
         InfoBox.Connect(PlaceableInfo.SignalName.OnDelete, Callable.From(OnDelete));
         InfoBox.Connect(PlaceableInfo.SignalName.OnUpgrade, Callable.From(OnUpgrade));
         InfoBox.Connect(PlaceableInfo.SignalName.OnMove, Callable.From(OnMove));
+        
+     
 
         Monitoring = true;
         Monitorable = true;
@@ -105,6 +108,7 @@ public abstract partial class AbstractPlaceable : Area2D
         InfoBox.MoveToFront();
         _wareBox = InfoBox.GetNode<ChooseWare>("ChooseWare");
         _wareBox.Visible = false;
+
         var button = InfoBox.GetNode<Button>("ChooseWareButton");
         button.Visible = this is MarketStall;
         BodyEntered += CitizenEntered;
@@ -201,6 +205,10 @@ public abstract partial class AbstractPlaceable : Area2D
     }
 
 
+    public virtual void OnBuildingPressed()
+    {
+        
+    }
     public override void _Input(InputEvent @event)
     {
         if (@event.IsActionPressed(Inputs.LeftClick) && !GameLogistics.IsPlaceMode)
@@ -214,12 +222,12 @@ public abstract partial class AbstractPlaceable : Area2D
                     {
                         GameMap.NpcJobSelect.Work = production;
                         GameMap.JobSelectMode = false;
-                        InfoBox.HideNpcInfo();
                         GameMenu.GameMode.Text = "";
                     }
                 }
                 else
                 {
+                    OnBuildingPressed();
                     InfoBox.Visible = !InfoBox.Visible;
                     InfoBox.HideNpcInfo();
                     InfoBox.MoveToFront();
@@ -311,17 +319,18 @@ public abstract partial class AbstractPlaceable : Area2D
         GD.Print(GetOverlappingAreas().Count);
         return !HasOverlappingAreas();
     }
-
-    protected void PlayAnimation()
-    {
-        var animatedSprite = GetNode<AnimatedSprite2D>("Animation");
-        animatedSprite?.Play();
-    }
     protected void PlayAnimation(Vector2 position)
     {
-        var animatedSprite = GetNode<AnimatedSprite2D>("Animation");
-        animatedSprite.MoveToFront();
-        animatedSprite.GlobalPosition = position;
-        animatedSprite?.Play();
+        _animatedSprite = GetNode<AnimatedSprite2D>("Animation");
+        _animatedSprite.Animation = "default";
+        _animatedSprite.MoveToFront();
+        _animatedSprite.GlobalPosition = position;
+        _animatedSprite?.Play();
+    }protected void PlayAnimation()
+    {
+        _animatedSprite = GetNode<AnimatedSprite2D>("Animation");
+        _animatedSprite.Animation = "default";
+        _animatedSprite.MoveToFront();
+        _animatedSprite?.Play();
     }
 }

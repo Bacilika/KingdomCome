@@ -41,20 +41,18 @@ public abstract partial class LivingSpace : AbstractPlaceable
         InfoBox.PortraitContainer.AddChild(npcPortrait);
         GetNode<AnimatedSprite2D>("HouseSprite").SetAnimation("AnimationLevel" + Level);
         GetNode<AnimatedSprite2D>("HouseSprite").Play();
-        npc.PlaceablePosition = this;
-        npc.CurrentBuilding = this;
+        npc.OnMoveIn();
     }
     public void UpdateInfo()
     {
         if (People.Count == 0)
         {
-            InfoBox.UpdateInfo("Empty House",
-                "Inhabitants: " + Inhabitants + "/" + Upgrades[Upgrade.MaxInhabitants][Level]);
+            InfoBox.UpdateInfo("Empty House");
         }
         else
         {
             InfoBox.UpdateInfo($"The {HouseholdName}'s",
-                "Inhabitants: " + Inhabitants + "/" + Upgrades[Upgrade.MaxInhabitants][Level]);
+                $"Inhabitants: {Inhabitants} / {Upgrades[Upgrade.MaxInhabitants][Level]}");
         }
 
     }

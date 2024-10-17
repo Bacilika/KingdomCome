@@ -331,8 +331,7 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_cb1ig"]
-radius = 8.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jqgkw"]
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
 z_index = 2
@@ -341,12 +340,14 @@ input_pickable = true
 script = ExtResource("1_dv6rn")
 
 [node name="WalkingAnimation" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -8)
 sprite_frames = SubResource("SpriteFrames_2xgin")
-animation = &"workUp"
+animation = &"walkDown"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 y_sort_enabled = true
-shape = SubResource("CircleShape2D_cb1ig")
+position = Vector2(0, -8)
+shape = SubResource("CapsuleShape2D_jqgkw")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 

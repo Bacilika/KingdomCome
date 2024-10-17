@@ -1,8 +1,9 @@
-[gd_scene load_steps=16 format=3 uid="uid://l32r8or4fhm7"]
+[gd_scene load_steps=23 format=3 uid="uid://l32r8or4fhm7"]
 
 [ext_resource type="Script" path="res://Scripts/Building/Production/WorkBench.cs" id="1_nfn77"]
 [ext_resource type="Texture2D" uid="uid://ydjrrgbkgcr3" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Rock Slopes/Props/Table_1.png" id="2_73adh"]
-[ext_resource type="Texture2D" uid="uid://cbh8kp0bh3y5c" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Props/Chopped_Tree_2.png" id="2_srsif"]
+[ext_resource type="Texture2D" uid="uid://cbh8kp0bh3y5c" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Rock Slopes/Props/Chopped_Tree_2.png" id="2_srsif"]
+[ext_resource type="Texture2D" uid="uid://brddo04fjmv4b" path="res://Sprites/Extra/Arrow.png" id="4_ie072"]
 [ext_resource type="Texture2D" uid="uid://dt1kbfdm7dk2a" path="res://Sprites/Extra/addResource1.png" id="5_48sth"]
 [ext_resource type="Texture2D" uid="uid://co3y7ufhufouh" path="res://Sprites/Extra/addResource2.png" id="6_qux7i"]
 [ext_resource type="Texture2D" uid="uid://bpp4m7x6k6cyf" path="res://Sprites/Extra/addResource3.png" id="7_jcygq"]
@@ -30,11 +31,50 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_cews5"]
-size = Vector2(69.375, 41.9375)
+[sub_resource type="CircleShape2D" id="CircleShape2D_ssfd6"]
+radius = 24.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gf4u1"]
+radius = 24.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_l3wa0"]
+radius = 24.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2raev"]
+atlas = ExtResource("4_ie072")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ako1m"]
+atlas = ExtResource("4_ie072")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qkn6m"]
+atlas = ExtResource("4_ie072")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vii27"]
+atlas = ExtResource("4_ie072")
+region = Rect2(48, 0, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_pfse0"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2raev")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ako1m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qkn6m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vii27")
+}],
+"loop": true,
+"name": &"ExclamationPoint",
+"speed": 4.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("5_48sth")
@@ -72,20 +112,23 @@ sprite_frames = SubResource("SpriteFrames_gy8eo")
 animation = &"Level0"
 
 [node name="CollisionShape0" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_cews5")
+shape = SubResource("CircleShape2D_ssfd6")
 
 [node name="WoodTimer" type="Timer" parent="."]
 wait_time = 5.0
 
 [node name="CollisionShape1" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_cews5")
+shape = SubResource("CircleShape2D_gf4u1")
 
 [node name="CollisionShape2" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_cews5")
+shape = SubResource("CircleShape2D_l3wa0")
 
 [node name="Animation" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, -72)
+position = Vector2(0, -40)
+scale = Vector2(2.25864, 2.0419)
 sprite_frames = SubResource("SpriteFrames_pfse0")
+animation = &"ExclamationPoint"
+frame_progress = 0.63004
 
 [node name="PlaceableInfo" parent="." instance=ExtResource("12_3jk2m")]
 visible = false

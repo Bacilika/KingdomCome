@@ -81,7 +81,7 @@ public partial class PlaceableInfo : Panel
 		Focused = false;
 	}
 
-	public void UpdateInfo(string buildingName, string text)
+	public void UpdateInfo(string buildingName, string text ="")
 	{
 		_buildingName.Text = buildingName;
 		_textLabel.Text = text;

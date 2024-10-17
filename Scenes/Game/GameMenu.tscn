@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Scripts/Game/GameMenu.cs" id="1_dev6f"]
 [ext_resource type="Theme" uid="uid://c2femp2uxsefw" path="res://Themes/Theme.tres" id="1_vgcun"]
 [ext_resource type="FontFile" uid="uid://dul1t3v440c7s" path="res://Deutsch.ttf" id="3_d13wb"]
-[ext_resource type="PackedScene" path="res://Scenes/Game/GameStat.tscn" id="4_2bxld"]
+[ext_resource type="PackedScene" uid="uid://b7mukvq5n5mpd" path="res://Scenes/Game/GameStat.tscn" id="4_2bxld"]
 [ext_resource type="PackedScene" uid="uid://dlbb4eje8p5k2" path="res://Scenes/Game/Shop.tscn" id="4_nmxg4"]
 [ext_resource type="AudioStream" uid="uid://b51ml7us3al4e" path="res://Audio/ButtonPressed.mp3" id="5_hysb5"]
 [ext_resource type="Texture2D" uid="uid://ocbp46wni417" path="res://Sprites/Extra/Icons/Sign2.png" id="6_v7o1e"]
@@ -15,7 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://5fcgde8yoegf" path="res://Sprites/Extra/Icons/Sign8.png" id="12_onvdd"]
 [ext_resource type="Texture2D" uid="uid://c55yx5br1mqso" path="res://Sprites/Extra/Icons/Sign9.png" id="13_fmjcf"]
 [ext_resource type="PackedScene" uid="uid://3falldunylfw" path="res://Scenes/Game/ProductionInfo.tscn" id="15_enu43"]
-[ext_resource type="PackedScene" uid="uid://c0ejkvqyxdkcc" path="res://Scenes/Game/GameLog.tscn" id="16_3yc3n"]
+[ext_resource type="PackedScene" uid="uid://b62g0jvvj278c" path="res://Scenes/Game/GameLog.tscn" id="16_3yc3n"]
 
 [node name="GameMenu" type="Control"]
 y_sort_enabled = true

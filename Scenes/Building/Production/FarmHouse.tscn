@@ -31,7 +31,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cews5"]
-size = Vector2(87, 112)
+size = Vector2(105.5, 112)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_2lhhp"]
 animations = [{
@@ -84,7 +84,7 @@ position = Vector2(-0.5, 2)
 shape = SubResource("RectangleShape2D_cews5")
 
 [node name="CollisionShape0" type="CollisionShape2D" parent="."]
-position = Vector2(0, 1)
+position = Vector2(9.25, 1)
 shape = SubResource("RectangleShape2D_cews5")
 
 [node name="Animation" type="AnimatedSprite2D" parent="."]

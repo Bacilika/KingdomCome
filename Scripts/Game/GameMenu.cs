@@ -19,6 +19,9 @@ public partial class GameMenu : Control
 	public ProductionInfo ProductionInfo;
 	public GameLog GameLog;
 	private static List<Npc> _citizen;
+	
+	[Signal]
+	public delegate void PauseButtonEventHandler();
 
 
 	public override void _Ready()
@@ -106,5 +109,10 @@ public partial class GameMenu : Control
 				_gameStats[key].SetTooltipText(GameLogistics.FoodResourceAsString);
 				break;
 		}
+	}
+
+	private void OnPauseButtonPressed()
+	{
+		EmitSignal(SignalName.PauseButton);
 	}
 }

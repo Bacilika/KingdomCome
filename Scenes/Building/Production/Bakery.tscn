@@ -31,7 +31,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cews5"]
-size = Vector2(67, 139)
+size = Vector2(150.5, 115)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_6fe6w"]
 animations = [{
@@ -73,6 +73,7 @@ autostart = true
 
 [node name="HouseSprite" type="AnimatedSprite2D" parent="."]
 z_index = 1
+position = Vector2(-13, -17)
 scale = Vector2(0.538025, 0.538025)
 sprite_frames = SubResource("SpriteFrames_wjt6n")
 animation = &"Level0"
@@ -86,6 +87,7 @@ position = Vector2(-2, -2)
 shape = SubResource("RectangleShape2D_cews5")
 
 [node name="CollisionShape2" type="CollisionShape2D" parent="."]
+position = Vector2(-41.75, 63.5)
 shape = SubResource("RectangleShape2D_cews5")
 
 [node name="Animation" type="AnimatedSprite2D" parent="."]

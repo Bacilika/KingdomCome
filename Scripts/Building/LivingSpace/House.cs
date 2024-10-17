@@ -11,6 +11,7 @@ public partial class House : LivingSpace
 	protected override void _Ready_instance()
 	{
 		PlayerLevel = 0;
+
 		BuildingName = "House";
 		BuildingDescription = "A place for citizens to live";
 		Upgrades = new Dictionary<string, List<int>>

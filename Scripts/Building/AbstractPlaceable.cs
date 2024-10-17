@@ -106,6 +106,8 @@ public abstract partial class AbstractPlaceable : Area2D
         _wareBox.Visible = false;
         var button = InfoBox.GetNode<Button>("ChooseWareButton");
         button.Visible = this is MarketStall;
+        var turnoffbutton = InfoBox.GetNode<Button>("TurnOffButton");
+        turnoffbutton.Visible = this is Production;
         BodyEntered += CitizenEntered;
         BodyExited += CitizenExited;
         if(!HouseSprite.SpriteFrames.GetAnimationNames().Contains("Building"))

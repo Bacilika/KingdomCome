@@ -22,7 +22,7 @@ public partial class Forest : Area2D
 		trees = [];
 
 		_treeScene = ResourceLoader.Load<PackedScene>("res://Scenes/Other/Tree.tscn");
-		PlaceTrees(50);
+		PlaceTrees(100);
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

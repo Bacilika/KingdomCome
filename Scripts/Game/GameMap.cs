@@ -50,8 +50,8 @@ public partial class GameMap : Node2D
 		SendLog += _gameMenu.GameLog.CreateLog;
 		NPCScene = ResourceLoader.Load<PackedScene>("res://Scenes/Other/NPC.tscn");
 		infoScene = ResourceLoader.Load<PackedScene>("res://Scenes/Building/CitizenInfo.tscn");
-		
-	
+
+		GetNode<GameMenu>("GameMenu").Connect(GameMenu.SignalName.PauseButton, Callable.From(PauseGame));
 		
 		//start workbench
 		_workBench = GetNode<WorkBench>("WorkBench");
@@ -68,6 +68,17 @@ public partial class GameMap : Node2D
 		_timeSinceLastTick += delta;
 		if (GameLogistics.Resources[RawResource.Unemployed] > 0) //there are unemployed
 			GiveJobToNpcs();
+	}
+
+	private void PauseGame()
+	{
+		foreach (Npc npc in Citizens)
+		{
+			npc.ScheduleTimer.Paused = true;
+			npc.AtWorkTimer.Paused = true;
+			npc._move = false;
+			_dayTimer.Paused = true;
+		}
 	}
 
 	private void OnBackgroundMusicFinish()

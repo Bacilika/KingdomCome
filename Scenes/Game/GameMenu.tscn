@@ -199,3 +199,13 @@ grow_horizontal = 0
 
 [node name="ButtonPressedSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("5_hysb5")
+
+[node name="PauseButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 44.0
+offset_top = 618.0
+offset_right = 99.0
+offset_bottom = 656.0
+text = "Pause"
+
+[connection signal="pressed" from="PauseButton" to="." method="OnPauseButtonPressed"]

@@ -11,9 +11,7 @@ public abstract partial class LivingSpace : AbstractPlaceable
 
     public string HouseholdName = NameGenerator.GenerateLastName();
 
-    protected virtual void DoAction()
-    {
-    }
+    protected virtual void DoAction() { }
 
     protected override void Tick()
     {

@@ -48,6 +48,7 @@ public partial class WoodCutter : Production
 		npc.Idle = false;
 
 	}
+	
 
 	public override void AtWorkTimerTimeout(Npc npc)
 	{

@@ -22,7 +22,7 @@ public partial class Forest : Area2D
 		trees = [];
 
 		_treeScene = ResourceLoader.Load<PackedScene>("res://Scenes/Other/Tree.tscn");
-		PlaceTrees(50);
+		PlaceTrees(100);
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -44,6 +44,7 @@ public partial class Forest : Area2D
 		{
 			foreach (var npc in tree.AssignedNpcs)
 			{
+				if (npc.Work == null) break;
 				if (npc.Position.DistanceTo(tree.GlobalPosition) < 10)
 				{
 					npc._move = false;
@@ -87,7 +88,6 @@ public partial class Forest : Area2D
 
 	public AbstractResource GetClosest(Npc npc)
 	{
-		
 		trees.Sort((x, y) => x.GlobalPosition.DistanceTo(npc.Position).CompareTo(y.GlobalPosition.DistanceTo(npc.Position)));
 		var tree = trees[_rnd.RandiRange(0, 10)];
 		_assignedTrees.Add(tree);

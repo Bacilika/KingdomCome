@@ -50,6 +50,8 @@ public abstract partial class AbstractPlaceable : Area2D
     public bool ActivityIndoors = true;
 
     protected RandomNumberGenerator Rnd = new();
+    public Dictionary<string, List<int>> Upgrades;
+
 
     //Used by workbench
     public int BuildingCounter = 0;
@@ -57,21 +59,14 @@ public abstract partial class AbstractPlaceable : Area2D
 
     protected AnimatedSprite2D _animatedSprite;
 
-    public Dictionary<string, List<int>> Upgrades;
 
-    protected virtual void Tick()
-    {
-        
-    }
+    //Virtual and abstract funtcions
+    protected virtual void Tick(){}
     protected abstract void _Ready_instance();
-
-    protected virtual void OnDeleteInstance()
-    {
-    }
-
-    public virtual void OnParentReady()
-    {
-    }
+    protected virtual void OnDeleteInstance(){}
+    public virtual void OnParentReady(){}
+    
+    
 
     //Only for Living spaces
     protected virtual void OnDelete()
@@ -88,6 +83,9 @@ public abstract partial class AbstractPlaceable : Area2D
         QueueFree();
     }
 
+    protected virtual void TurnOffBuilding()
+    {
+    }
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -102,6 +100,7 @@ public abstract partial class AbstractPlaceable : Area2D
         
      
 
+
         Monitoring = true;
         Monitorable = true;
         InfoBox.Visible = false;
@@ -111,13 +110,16 @@ public abstract partial class AbstractPlaceable : Area2D
 
         var button = InfoBox.GetNode<Button>("ChooseWareButton");
         button.Visible = this is MarketStall;
+        var turnoffbutton = InfoBox.GetNode<Button>("TurnOffButton");
+        turnoffbutton.Visible = this is Production;
         BodyEntered += CitizenEntered;
         BodyExited += CitizenExited;
         if(!HouseSprite.SpriteFrames.GetAnimationNames().Contains("Building"))
             HouseSprite.SpriteFrames.AddAnimation("Building");
         HouseSprite.SpriteFrames.AddFrame("Building",(Texture2D)GD.Load("res://Sprites/Extra/Building.png/"));
         
- 
+ 		InfoBox.Connect(PlaceableInfo.SignalName.OnTurnOffBuilding, Callable.From(TurnOffBuilding));
+
 
         _Ready_instance();
         SetObjectValues();
@@ -126,7 +128,6 @@ public abstract partial class AbstractPlaceable : Area2D
     
     public  virtual void CitizenEntered(Node2D node2D)
     {
-
         if (node2D is Npc npc)
         {
             CurrentPeople.Add(npc);

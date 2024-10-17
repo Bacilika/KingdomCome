@@ -23,6 +23,18 @@ theme_override_fonts/font = ExtResource("3_uwas0")
 theme_override_font_sizes/font_size = 18
 text = "Choose Ware"
 
+[node name="TurnOffButton" type="Button" parent="."]
+layout_mode = 2
+offset_left = 139.0
+offset_top = 7.0
+offset_right = 206.0
+offset_bottom = 39.0
+theme_override_fonts/font = ExtResource("3_uwas0")
+theme_override_font_sizes/font_size = 17
+toggle_mode = true
+text = "Turn off
+"
+
 [node name="HouseInfo" type="Control" parent="."]
 anchors_preset = 0
 offset_right = 40.0
@@ -87,16 +99,19 @@ text = "Move"
 
 [node name="ChooseWare" parent="." instance=ExtResource("3_j5mfn")]
 layout_mode = 0
-offset_left = 213.0
-offset_top = 2.0
-offset_right = 421.0
-offset_bottom = 186.0
+offset_left = 216.0
+offset_top = 1.0
+offset_right = 424.0
+offset_bottom = 185.0
 
 [connection signal="mouse_entered" from="." to="." method="OnMouseEntered"]
 [connection signal="mouse_exited" from="." to="." method="OnMouseExited"]
 [connection signal="mouse_entered" from="ChooseWareButton" to="." method="OnMouseEntered"]
 [connection signal="mouse_exited" from="ChooseWareButton" to="." method="OnMouseExited"]
 [connection signal="pressed" from="ChooseWareButton" to="." method="OnChooseWareButtonPressed"]
+[connection signal="mouse_entered" from="TurnOffButton" to="." method="OnMouseEntered"]
+[connection signal="mouse_exited" from="TurnOffButton" to="." method="OnMouseExited"]
+[connection signal="pressed" from="TurnOffButton" to="." method="OnTurnOffButtonPressed"]
 [connection signal="mouse_entered" from="HouseInfo/ButtonContainer/DeleteButton" to="." method="OnMouseEntered"]
 [connection signal="mouse_exited" from="HouseInfo/ButtonContainer/DeleteButton" to="." method="OnMouseExited"]
 [connection signal="pressed" from="HouseInfo/ButtonContainer/DeleteButton" to="." method="OnDeleteButtonPressed"]

@@ -19,6 +19,12 @@ public partial class GameMenu : Control
 	public ProductionInfo ProductionInfo;
 	public GameLog GameLog;
 	private static List<Npc> _citizen;
+	
+	[Signal]
+	public delegate void PauseButtonEventHandler();
+	
+	[Signal]
+	public delegate void PlayButtonEventHandler();
 
 
 	public override void _Ready()
@@ -64,7 +70,6 @@ public partial class GameMenu : Control
 			{ RawResource.Water, statLabels.GetNode<TextureRect>(RawResource.Water)}
 		};
 		
-		
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -108,4 +113,16 @@ public partial class GameMenu : Control
 				break;
 		}
 	}
+
+	private void OnPauseButtonPressed()
+	{
+		EmitSignal(SignalName.PauseButton);
+	}
+	
+	private void OnPlayButtonPressed()
+	{
+		EmitSignal(SignalName.PlayButton);
+	}
+	
+	
 }

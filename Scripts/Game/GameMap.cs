@@ -63,6 +63,10 @@ public partial class GameMap : Node2D
 		};
 		
 	
+
+		//Connect pause and play buttons
+		GetNode<GameMenu>("GameMenu").Connect(GameMenu.SignalName.PauseButton, Callable.From(PauseGame));
+		GetNode<GameMenu>("GameMenu").Connect(GameMenu.SignalName.PlayButton, Callable.From(PlayGame));
 		
 		//start workbench
 		_workBench = GetNode<WorkBench>("WorkBench");
@@ -79,6 +83,28 @@ public partial class GameMap : Node2D
 		_timeSinceLastTick += delta;
 		if (GameLogistics.Resources[RawResource.Unemployed] > 0) //there are unemployed
 			GiveJobToNpcs();
+	}
+
+	private void PauseGame()
+	{
+		foreach (Npc npc in Citizens)
+		{
+			npc.ScheduleTimer.Paused = true;
+			npc.AtWorkTimer.Paused = true;
+			npc._move = false;
+			_dayTimer.Paused = true;
+		}
+	}
+	
+	private void PlayGame()
+	{
+		foreach (Npc npc in Citizens)
+		{
+			npc.ScheduleTimer.Paused = false;
+			npc.AtWorkTimer.Paused = false;
+			npc._move = true;
+			_dayTimer.Paused = false;
+		}
 	}
 
 	private void OnBackgroundMusicFinish()

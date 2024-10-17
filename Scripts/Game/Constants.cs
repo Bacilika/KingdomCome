@@ -46,6 +46,7 @@ public static class RawResource
     public const string Happiness = "Happiness";
     public const string Unemployed = "Unemployed";
     public const string Money = "Money";
+    public const string Wheat = "Wheat";
 }
 
 public static class Food
@@ -61,5 +62,4 @@ public static class ProcessedResource
     public const string Plank = "Plank";
     public const string Ale = "Ale";
     public const string Flour = "Flour";
-    public const string Wheat = "Wheat";
 }

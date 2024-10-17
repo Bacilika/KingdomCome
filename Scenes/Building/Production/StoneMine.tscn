@@ -28,11 +28,21 @@ animations = [{
 "loop": true,
 "name": &"Level0",
 "speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"Level1",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"Level2",
+"speed": 5.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4rn2q"]
-radius = 18.0
-height = 74.0
+radius = 8.0
+height = 26.0
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_thwig"]
 animations = [{
@@ -71,20 +81,13 @@ collision_mask = 3
 script = ExtResource("1_72tjo")
 
 [node name="HouseSprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -2)
 sprite_frames = SubResource("SpriteFrames_q3bpt")
 animation = &"Level0"
 
 [node name="CollisionShape0" type="CollisionShape2D" parent="."]
-position = Vector2(0, 32)
+position = Vector2(1, -1)
 scale = Vector2(2, 2)
-shape = SubResource("CapsuleShape2D_4rn2q")
-
-[node name="CollisionShape2" type="CollisionShape2D" parent="."]
-position = Vector2(1, 6)
-shape = SubResource("CapsuleShape2D_4rn2q")
-
-[node name="CollisionShape1" type="CollisionShape2D" parent="."]
-position = Vector2(2, 6)
 shape = SubResource("CapsuleShape2D_4rn2q")
 
 [node name="Animation" type="AnimatedSprite2D" parent="."]

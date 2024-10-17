@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/Building/Production/Well.cs" id="1_6e8l0"]
 [ext_resource type="Texture2D" uid="uid://dqgtiysashmi4" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/Well_BlueBricks_Stone.png" id="2_lu63q"]
-[ext_resource type="Texture2D" uid="uid://yvnakmnh42qk" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/Well_Stone_0.png" id="2_twq42"]
+[ext_resource type="Texture2D" uid="uid://b1hwjfks52up8" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/Well_Stone_mellan.png" id="3_u2h4k"]
 [ext_resource type="Texture2D" uid="uid://i3248umk6ey6" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/Well_Stone.png" id="4_6n8b3"]
 [ext_resource type="PackedScene" uid="uid://biil4p82w3tjw" path="res://Scenes/Building/PlaceableInfo.tscn" id="5_cring"]
 [ext_resource type="Texture2D" uid="uid://dt1kbfdm7dk2a" path="res://Sprites/Extra/addResource1.png" id="6_33m08"]
@@ -14,13 +14,13 @@
 [ext_resource type="Texture2D" uid="uid://epbdr1v164x7" path="res://Sprites/Extra/addResource8.png" id="12_0t4co"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cews5"]
-size = Vector2(50, 72)
+size = Vector2(42.25, 37)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_wjt6n"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_twq42")
+"texture": ExtResource("4_6n8b3")
 }],
 "loop": true,
 "name": &"Level0",
@@ -28,7 +28,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("4_6n8b3")
+"texture": ExtResource("3_u2h4k")
 }],
 "loop": true,
 "name": &"Level1",
@@ -78,31 +78,27 @@ collision_mask = 3
 script = ExtResource("1_6e8l0")
 
 [node name="CollisionShape0" type="CollisionShape2D" parent="."]
-visible = false
-position = Vector2(-1, -8.5)
+position = Vector2(-0.125, -0.5)
 shape = SubResource("RectangleShape2D_cews5")
 
 [node name="FoodTimer" type="Timer" parent="."]
 wait_time = 30.0
 autostart = true
 
+[node name="CollisionShape2" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 0)
+shape = SubResource("RectangleShape2D_cews5")
+
 [node name="HouseSprite" type="AnimatedSprite2D" parent="."]
 z_index = 1
 position = Vector2(-9.53674e-07, 9.53674e-07)
 scale = Vector2(1.03846, 1.03846)
 sprite_frames = SubResource("SpriteFrames_wjt6n")
-animation = &"Level2"
-
-[node name="CollisionShape2" type="CollisionShape2D" parent="HouseSprite"]
-position = Vector2(9.18354e-07, -1.92593)
-scale = Vector2(0.962964, 0.962964)
-shape = SubResource("RectangleShape2D_cews5")
+animation = &"Level0"
 
 [node name="CollisionShape1" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, -1.5)
-shape = SubResource("RectangleShape2D_cews5")
-
-[node name="CollisionShape2" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_cews5")
 
 [node name="Animation" type="AnimatedSprite2D" parent="."]

@@ -8,7 +8,7 @@ public partial class Bakery : Production{
 	protected override void _Ready_instance()
 	{
 		BuildingName = "Bakery";
-		BuildingDescription = "Produces bread from wheat";
+		BuildingDescription = "Produces bread from flour";
 		Producing = RawResource.Stone;
 		PlayerLevel = 5;
 		Upgrades = new Dictionary<string, List<int>>
@@ -34,6 +34,7 @@ public partial class Bakery : Production{
 
 	public override void ProduceItem()
 	{
-		GameLogistics.Resources[Food.Bread]++;
+		GameLogistics.ProcessedResources[ProcessedResource.Flour]--;
+		GameLogistics.FoodResource[Food.Bread]++;
 	}
 }

@@ -55,12 +55,12 @@ public partial class Npc : CharacterBody2D
 	public bool AtWork;
 	public double time;
 	public string _direction;
+	private bool scheduleIsStarted = false;
 
 	private Vector2 _homelessPos = new (-1, -1);
 
 	public override void _Ready()
 	{
-			
 		_animation = GetNode<AnimatedSprite2D>("WalkingAnimation");
 		Sprite = _animation.SpriteFrames.GetFrameTexture("walkDown", 0);
 		AtWorkTimer = GetNode<Timer>("AtWorkTimer");
@@ -76,7 +76,8 @@ public partial class Npc : CharacterBody2D
 		{
 			Console.WriteLine("Schedule update");
 			AtWorkTimer.Stop();
-			ScheduleTimer.Stop();
+			//ScheduleTimer.Stop();
+			scheduleIsStarted = false;
 			if (AtWork)
 			{
 				AtWork = false;
@@ -136,6 +137,7 @@ public partial class Npc : CharacterBody2D
 
 	public void StartScheduleTimer()
 	{
+		scheduleIsStarted = true;
 		_move = false;
 		if (AtWork) // reach workplace
 		{
@@ -393,7 +395,7 @@ public partial class Npc : CharacterBody2D
 		{
 			case var value when value == Home?.GetBuildingName():
 				TargetBuilding = Work;
-				SetDestination(Work.Position);
+				SetDestination(Work?.Position?? _homelessPos); //go to different position
 				break;
 			case var value when value == Work?.GetBuildingName():
 				if (Home is null)
@@ -460,10 +462,13 @@ public partial class Npc : CharacterBody2D
 	public void OnWorkDelete() // Todo: Fix OnWorkDelete
 	{
 		Work = null;
-		TargetBuilding = Home; 
+		AtWork = false;		
+		_animation.Stop();
+		TargetBuilding = Home;
 		SetDestination(Home.Position);
 		ScheduleTimer.Stop();
 		AtWorkTimer.Stop();
+		_move = true;
 	}
 
 	public void SetDestination(Vector2 vec)

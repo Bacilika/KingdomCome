@@ -45,16 +45,15 @@ public partial class PlaceableInfo : Panel
 	public void OnTurnOffButtonPressed()
 	{
 		Button turnoffbutton = GetNode<Button>("HouseInfo/TurnOffButton");
+		EmitSignal(SignalName.OnTurnOffBuilding); //emitted to Production
+
 		if (turnoffbutton.IsPressed())
 		{
-			EmitSignal(SignalName.OnTurnOffBuilding); //emitted to Production
 			turnoffbutton.Text = "Turn On";
 		}
 		else
 		{
-			EmitSignal(SignalName.OnTurnOnBuilding);
 			turnoffbutton.Text = "Turn Off";
-
 		}
 
 	}

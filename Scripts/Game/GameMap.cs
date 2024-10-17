@@ -165,7 +165,7 @@ public partial class GameMap : Node2D
 			{
 				if (job is WorkBench)
 					continue;
-				if (job.HasMaxEmployees()) continue;
+				if (job.HasMaxEmployees() || !job.isDone) continue;
 				//if jop is closer
 				closestJob = job;
 			}

@@ -50,27 +50,20 @@ public abstract partial class AbstractPlaceable : Area2D
     public bool ActivityIndoors = true;
 
     protected RandomNumberGenerator Rnd = new();
+    public Dictionary<string, List<int>> Upgrades;
+
 
     //Used by workbench
     public int BuildingCounter = 0;
     public bool isDone = false; 
 
 
-    public Dictionary<string, List<int>> Upgrades;
 
-    protected virtual void Tick()
-    {
-        
-    }
+    //Virtual and abstract funtcions
+    protected virtual void Tick(){}
     protected abstract void _Ready_instance();
-
-    protected virtual void OnDeleteInstance()
-    {
-    }
-
-    public virtual void OnParentReady()
-    {
-    }
+    protected virtual void OnDeleteInstance(){}
+    public virtual void OnParentReady(){}
     
     
 

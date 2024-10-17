@@ -17,9 +17,6 @@ public partial class PlaceableInfo : Panel
 	[Signal]
 	public delegate void OnTurnOffBuildingEventHandler();
 	
-	[Signal]
-	public delegate void OnTurnOnBuildingEventHandler();
-
 	private Label _buildingName;
 	private Control _houseInfo;
 	private RichTextLabel _textLabel;
@@ -44,9 +41,8 @@ public partial class PlaceableInfo : Panel
 
 	public void OnTurnOffButtonPressed()
 	{
-		Button turnoffbutton = GetNode<Button>("HouseInfo/TurnOffButton");
 		EmitSignal(SignalName.OnTurnOffBuilding); //emitted to Production
-
+		Button turnoffbutton = GetNode<Button>("HouseInfo/TurnOffButton");
 		if (turnoffbutton.IsPressed())
 		{
 			turnoffbutton.Text = "Turn On";
@@ -55,7 +51,6 @@ public partial class PlaceableInfo : Panel
 		{
 			turnoffbutton.Text = "Turn Off";
 		}
-
 	}
 
 	public void OnChooseWareButtonPressed()

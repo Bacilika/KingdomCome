@@ -1,8 +1,8 @@
 [gd_scene load_steps=16 format=3 uid="uid://bume3ghabqgtp"]
 
 [ext_resource type="Script" path="res://Scripts/Building/Production/Well.cs" id="1_6e8l0"]
+[ext_resource type="Texture2D" uid="uid://c66dmhqsvg12l" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/Well_Stone_small.png" id="2_4wn6g"]
 [ext_resource type="Texture2D" uid="uid://dqgtiysashmi4" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/Well_BlueBricks_Stone.png" id="2_lu63q"]
-[ext_resource type="Texture2D" uid="uid://yvnakmnh42qk" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/Well_Stone_0.png" id="2_twq42"]
 [ext_resource type="Texture2D" uid="uid://i3248umk6ey6" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/Well_Stone.png" id="4_6n8b3"]
 [ext_resource type="PackedScene" uid="uid://biil4p82w3tjw" path="res://Scenes/Building/PlaceableInfo.tscn" id="5_cring"]
 [ext_resource type="Texture2D" uid="uid://dt1kbfdm7dk2a" path="res://Sprites/Extra/addResource1.png" id="6_33m08"]
@@ -20,7 +20,7 @@ size = Vector2(50, 72)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_twq42")
+"texture": ExtResource("2_4wn6g")
 }],
 "loop": true,
 "name": &"Level0",

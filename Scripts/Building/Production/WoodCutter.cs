@@ -47,6 +47,7 @@ public partial class WoodCutter : Production
 		npc._move = true;
 		
 	}
+	
 
 	public override void AtWorkTimerTimeout(Npc npc)
 	{

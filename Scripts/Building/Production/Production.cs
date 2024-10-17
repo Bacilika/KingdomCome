@@ -15,7 +15,6 @@ public abstract partial class Production : AbstractPlaceable
 	protected override void Tick()
 	{
 		UpdateInfo();
-		InfoBox.Connect(PlaceableInfo.SignalName.OnTurnOffBuilding, Callable.From(TurnOffBuilding));
 	}
 	protected override void OnDelete()
 	{
@@ -64,11 +63,13 @@ public abstract partial class Production : AbstractPlaceable
 
 
 
-	protected void TurnOffBuilding()
+	protected override void TurnOffBuilding()
 	{
 		if (isOn)
 		{
 			isOn = false;
+			Console.WriteLine(People.Count);
+			int npcWorking = People.Count-1;
 			for (var i = People.Count -1; i > -1; i--)
 			{
 				var npc = People[i];
@@ -76,6 +77,7 @@ public abstract partial class Production : AbstractPlaceable
 				RemoveWorker(npc);
 				GameLogistics.Resources[RawResource.Unemployed]++;
 			}
+			Console.WriteLine(People.Count);
 		
 			//Remove from _placedProduction so NPCs can't get job there. 
 			foreach (var production in GameMap._placedProduction)
@@ -91,9 +93,7 @@ public abstract partial class Production : AbstractPlaceable
 		{
 			isOn = true;
 			GameMap._placedProduction.Add(this);
-
 		}
-
 	}
 	
 	

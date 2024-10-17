@@ -62,10 +62,10 @@ public partial class Npc : CharacterBody2D
 	public bool AtWork;
 	public double time;
 	public string _direction;
+	private bool scheduleIsStarted = false;
 
 	public override void _Ready()
 	{
-			
 		_animation = GetNode<AnimatedSprite2D>("WalkingAnimation");
 		Sprite = _animation.SpriteFrames.GetFrameTexture("walkDown", 0);
 		AtWorkTimer = GetNode<Timer>("AtWorkTimer");
@@ -81,7 +81,8 @@ public partial class Npc : CharacterBody2D
 		ScheduleTimer.Timeout += () =>
 		{
 			AtWorkTimer.Stop();
-			ScheduleTimer.Stop();
+			//ScheduleTimer.Stop();
+			scheduleIsStarted = false;
 			if (AtWork)
 			{
 				AtWork = false;
@@ -94,7 +95,8 @@ public partial class Npc : CharacterBody2D
 		AddChild(ScheduleTimer);
 		_navigation.TargetReached += () =>
 		{
-			StartScheduleTimer();
+			if(!scheduleIsStarted)
+				StartScheduleTimer();
 		};
 		
 		_moodReasons = new Dictionary<string, MoodReason>
@@ -126,6 +128,7 @@ public partial class Npc : CharacterBody2D
 
 	public void StartScheduleTimer()
 	{
+		scheduleIsStarted = true;
 		_move = false;
 		if (CurrentBuilding == null && TargetBuilding == Work) // reach workplace
 		{
@@ -332,6 +335,11 @@ public partial class Npc : CharacterBody2D
 		{
 			case var value when value == Home?.GetBuildingName():
 			{
+				if (Work == null)
+				{
+					SetDestination(GlobalPosition);
+					break;
+				}
 				TargetBuilding = Work;
 				SetDestination(Work.Position);
 				break;
@@ -410,16 +418,20 @@ public partial class Npc : CharacterBody2D
 	public void OnWorkDelete()
 	{
 		Work = null;
-		TargetBuilding = Home; 
+		AtWork = false;		
+		_animation.Stop();
+		TargetBuilding = Home;
 		SetDestination(Home.Position);
 		ScheduleTimer.Stop();
 		AtWorkTimer.Stop();
+		_move = true;
 	}
 
 	public void SetDestination(Vector2 vec)
 	{
 		_navigation.SetTargetPosition(vec);
 		_navigation.GetNextPathPosition();
+
 	}
 
 	private void SetDestination()

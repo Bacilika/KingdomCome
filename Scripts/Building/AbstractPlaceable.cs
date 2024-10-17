@@ -82,6 +82,9 @@ public abstract partial class AbstractPlaceable : Area2D
         QueueFree();
     }
 
+    protected virtual void TurnOffBuilding()
+    {
+    }
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -109,7 +112,8 @@ public abstract partial class AbstractPlaceable : Area2D
             HouseSprite.SpriteFrames.AddAnimation("Building");
         HouseSprite.SpriteFrames.AddFrame("Building",(Texture2D)GD.Load("res://Sprites/Extra/Building.png/"));
         
- 
+ 		InfoBox.Connect(PlaceableInfo.SignalName.OnTurnOffBuilding, Callable.From(TurnOffBuilding));
+
 
         _Ready_instance();
         SetObjectValues();
@@ -118,7 +122,6 @@ public abstract partial class AbstractPlaceable : Area2D
     
     public  virtual void CitizenEntered(Node2D node2D)
     {
-
         if (node2D is Npc npc)
         {
             CurrentPeople.Add(npc);

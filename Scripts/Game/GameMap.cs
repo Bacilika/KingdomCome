@@ -51,7 +51,9 @@ public partial class GameMap : Node2D
 		NPCScene = ResourceLoader.Load<PackedScene>("res://Scenes/Other/NPC.tscn");
 		infoScene = ResourceLoader.Load<PackedScene>("res://Scenes/Building/CitizenInfo.tscn");
 
+		//Connect pause and play buttons
 		GetNode<GameMenu>("GameMenu").Connect(GameMenu.SignalName.PauseButton, Callable.From(PauseGame));
+		GetNode<GameMenu>("GameMenu").Connect(GameMenu.SignalName.PlayButton, Callable.From(PlayGame));
 		
 		//start workbench
 		_workBench = GetNode<WorkBench>("WorkBench");
@@ -78,6 +80,17 @@ public partial class GameMap : Node2D
 			npc.AtWorkTimer.Paused = true;
 			npc._move = false;
 			_dayTimer.Paused = true;
+		}
+	}
+	
+	private void PlayGame()
+	{
+		foreach (Npc npc in Citizens)
+		{
+			npc.ScheduleTimer.Paused = false;
+			npc.AtWorkTimer.Paused = false;
+			npc._move = true;
+			_dayTimer.Paused = false;
 		}
 	}
 

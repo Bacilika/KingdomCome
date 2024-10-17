@@ -22,6 +22,9 @@ public partial class GameMenu : Control
 	
 	[Signal]
 	public delegate void PauseButtonEventHandler();
+	
+	[Signal]
+	public delegate void PlayButtonEventHandler();
 
 
 	public override void _Ready()
@@ -115,4 +118,11 @@ public partial class GameMenu : Control
 	{
 		EmitSignal(SignalName.PauseButton);
 	}
+	
+	private void OnPlayButtonPressed()
+	{
+		EmitSignal(SignalName.PlayButton);
+	}
+	
+	
 }

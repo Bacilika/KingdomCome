@@ -95,6 +95,7 @@ public partial class Npc : CharacterBody2D
 		AddChild(ScheduleTimer);
 		_navigation.TargetReached += () =>
 		{
+			Console.WriteLine("Target Reached");
 			if(!scheduleIsStarted)
 				StartScheduleTimer();
 		};

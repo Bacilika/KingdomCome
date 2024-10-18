@@ -14,16 +14,19 @@ public partial class GameLogistics : Node2D
 	public static System.Collections.Generic.Dictionary<string, int> Resources;
 	public static System.Collections.Generic.Dictionary<string, int> FoodResource;
 	public static System.Collections.Generic.Dictionary<string, int> ProcessedResources;
+	private Array<Vector2I> _roadPositions = [];
+	
 	public static bool dragging;
 	public static bool Move;
 	private bool _containBuilding;
+	
 	private GameMap _gameMap;
-
+	private GameMenu _gameMenu;
 	private AbstractPlaceable _object;
 	private TileMapLayer _roadLayer;
 	private Road _roadObject;
 	private bool _roadPlaceMode;
-	private Array<Vector2I> _roadPositions = [];
+	
 	private PackedScene _roadScene = ResourceLoader.Load<PackedScene>("res://Scenes/Other/Road.tscn");
 	public static string FoodResourceAsString;
 	public Sprite2D RoadRemovalTexture;
@@ -33,8 +36,8 @@ public partial class GameLogistics : Node2D
 	{
 		_gameMap = GetParent<GameMap>();
 		_roadLayer = _gameMap.GetNode<TileMapLayer>("RoadLayer");
-		var gameMenu = _gameMap.GetNode<Control>("GameMenu");
-		var shop = gameMenu.GetNode<Shop>("MenuCanvasLayer/Shop");
+		_gameMenu = _gameMap.GetNode<GameMenu>("GameMenu");
+		var shop = _gameMenu.GetNode<Shop>("MenuCanvasLayer/Shop");
 		shop.OnBuildingButtonPressed += BuildBuilding;
 		shop.OnRoadBuild += OnRoadBuild;
 		shop.OnRoadRemove += OnRoadRemove;
@@ -99,8 +102,20 @@ public partial class GameLogistics : Node2D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		if (_object is not null || _roadObject is not null)
+		{
+			_gameMenu.HideShop(true);
+		}
+		else
+		{
+			_gameMenu.HideShop(false);
+		}
+		
 		CalculateFoods();
-		if (dragging && _roadPlaceMode) PlaceRoad();
+		if (dragging && _roadPlaceMode && !_gameMenu.CancelButtonFocused)
+		{
+			PlaceRoad();
+		}
 		if (_object is not null) _object.Position = _roadLayer.LocalToMap(GetGlobalMousePosition()) * 32;
 
 		
@@ -128,6 +143,10 @@ public partial class GameLogistics : Node2D
 
 	private void OnRoadBuild(Road road)
 	{
+		if (_object is not null)
+		{
+			GetParent().RemoveChild(_object);
+		}
 		_roadPlaceMode = true;
 		IsPlaceMode = true;
 		_roadObject = road;
@@ -149,6 +168,7 @@ public partial class GameLogistics : Node2D
 	{
 		if (@event.IsActionPressed(Inputs.LeftClick))
 		{
+			if(_gameMenu.CancelButtonFocused) return;
 			dragging = true;
 			if (_object != null)
 			{
@@ -260,8 +280,11 @@ public partial class GameLogistics : Node2D
 	private void BuildBuilding(AbstractPlaceable building)
 	{
 		building.Position = GetViewport().GetMousePosition();
-		var baseNode = GetParent();
-		baseNode.AddChild(building);
+		if (_object is not null)
+		{
+			GetParent().RemoveChild(_object);
+		}
+		GetParent().AddChild(building);
 		_object = building;
 		_containBuilding = false;
 		IsPlaceMode = true;

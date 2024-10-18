@@ -19,7 +19,7 @@ public partial class GameMap : Node2D
 	public static int Level = 1;
 	private Timer _dayTimer;
 	private Timer _foodTimer;
-	private GameMenu _gameMenu;
+	public GameMenu _gameMenu;
 	private AudioStreamPlayer2D _music;
 	private PackedScene NPCScene;
 	private PackedScene infoScene;
@@ -27,6 +27,7 @@ public partial class GameMap : Node2D
 	public Timer GracePeriodTimer;
 	private WorkBench _workBench;
 	private double _timeSinceLastTick;
+	
 
 
 	[Signal]

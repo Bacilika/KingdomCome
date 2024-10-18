@@ -19,12 +19,16 @@ public partial class GameMenu : Control
 	public ProductionInfo ProductionInfo;
 	public GameLog GameLog;
 	private static List<Npc> _citizen;
+	public Shop Shop;
+	public Button CancelButton;
+	public bool CancelButtonFocused;
 	
 	[Signal]
 	public delegate void PauseButtonEventHandler();
 	
 	[Signal]
 	public delegate void PlayButtonEventHandler();
+	
 
 
 	public override void _Ready()
@@ -38,13 +42,18 @@ public partial class GameMenu : Control
 		GameMode = GetNode<Label>("MenuCanvasLayer/CurrentGameMode");
 		CanvasLayer = GetNode<CanvasLayer>("MenuCanvasLayer");
 		GameLog = GetNode<GameLog>("MenuCanvasLayer/GameLog");
-		var currentScale = (Vector2)GetTree().Root.Size / GetTree().Root.MinSize;
-		var container = GetNode<CanvasLayer>("MenuCanvasLayer");
-			//container.Scale = currentScale;
 		var statLabels = GetNode<HBoxContainer>("MenuCanvasLayer/GameStats");
 		ButtonPress = GetNode<AudioStreamPlayer2D>("ButtonPressedSound");
 		ButtonPress?.Play();
-		
+		Shop = GetNode<Shop>("MenuCanvasLayer/Shop");
+		CancelButton = GetNode<Button>("MenuCanvasLayer/CancelButton");
+		CancelButton.Pressed += () =>
+		{
+			GetParent<GameMap>().GetNode<GameLogistics>("GameLogistics").ResetModes();
+		};
+		CancelButton.MouseEntered += () => { CancelButtonFocused = true; };
+		CancelButton.MouseExited += () => { CancelButtonFocused = false; };
+
 		_gameStatLabels = new Godot.Collections.Dictionary<string, Label>
 		{
 			{ RawResource.Money, statLabels.GetNode<TextureRect>(RawResource.Money).GetNode<Label>("Value") },
@@ -102,6 +111,12 @@ public partial class GameMenu : Control
 			SetToolTip(item.Key);
 			item.Value.Text = GameLogistics.Resources[item.Key].ToString();
 		}
+	}
+
+	public void HideShop(bool hide)
+	{
+		CancelButton.Visible = hide;
+		Shop.Visible = !hide;
 	}
 
 	private void SetToolTip(string key)

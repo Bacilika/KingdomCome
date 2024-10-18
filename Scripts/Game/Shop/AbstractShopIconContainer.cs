@@ -32,9 +32,6 @@ public abstract partial class AbstractShopIconContainer : ScrollContainer
             RemoveChild(product);
             Stock.Add(shopIconControl);
         }
-
-       
-
         Stock.Sort((x, y) => x.Product.PlayerLevel.CompareTo(y.Product.PlayerLevel));
         foreach (var child in childContainer.GetChildren()) childContainer.RemoveChild(child);
 

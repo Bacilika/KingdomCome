@@ -12,10 +12,10 @@ texture = ExtResource("1_khv6c")
 
 [node name="Value" type="Label" parent="."]
 layout_mode = 0
-offset_left = 34.2222
-offset_top = 4.0
-offset_right = 171.222
-offset_bottom = 38.0
+offset_left = 38.8889
+offset_top = 6.0
+offset_right = 175.889
+offset_bottom = 40.0
 scale = Vector2(0.642857, 0.705128)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("2_g7y0j")

@@ -95,4 +95,5 @@ public partial class ShopIcon : Control
 		else // not road
 			Shop.EmitSignal(Shop.SignalName.OnBuildingButtonPressed, Product);
 	}
+	
 }

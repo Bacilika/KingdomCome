@@ -10,7 +10,8 @@ public partial class Decorations : AbstractShopIconContainer
 				.Instantiate<Flowerbed>(),
 			ResourceLoader.Load<PackedScene>("res://Scenes/Building/Decoration/Lantern.tscn").Instantiate<Lantern>(),
 			ResourceLoader.Load<PackedScene>("res://Scenes/Building/Decoration/Flower.tscn").Instantiate<Flower>(),
-			ResourceLoader.Load<PackedScene>("res://Scenes/Building/Decoration/Brush.tscn").Instantiate<Brush>()
+			ResourceLoader.Load<PackedScene>("res://Scenes/Building/Decoration/Brush.tscn").Instantiate<Brush>(), 
+			ResourceLoader.Load<PackedScene>("res://Scenes/Building/Decoration/FlowerVine.tscn").Instantiate<FlowerVine>(), 
 		];
 	}
 }

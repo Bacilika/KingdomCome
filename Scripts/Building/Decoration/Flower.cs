@@ -2,12 +2,11 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using KingdomCome.Scripts.Building;
+using KingdomCome.Scripts.Building.Decoration;
 using Scripts.Constants;
 
-public partial class Flower : AbstractPlaceable
+public partial class Flower : Decoration
 {
-	// Called when the node enters the scene tree for the first time.
-	public int increaseHappiness = 1;
 
 	protected override void _Ready_instance()
 	{

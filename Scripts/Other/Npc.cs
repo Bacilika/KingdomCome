@@ -95,6 +95,7 @@ public partial class Npc : CharacterBody2D
 		_moodReasons.Add("Activity", new MoodReason());
 		_moodReasons.Add("Food", new MoodReason());
 		_moodReasons.Add("Home", new MoodReason());
+		_moodReasons.Add("Decoration", new MoodReason());
 		SetMoodReason("Home", "Is Homeless", -3);
 	}
 
@@ -323,7 +324,7 @@ public partial class Npc : CharacterBody2D
 		return true;
 	}
 
-	private void SetMoodReason(string type, string reason, int happiness)
+	public void SetMoodReason(string type, string reason, int happiness)
 	{
 		if (happiness == 0)
 		{

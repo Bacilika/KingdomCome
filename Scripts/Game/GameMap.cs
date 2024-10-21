@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Godot;
 using KingdomCome.Scripts.Building;
 using KingdomCome.Scripts.Building.Activities;
+using KingdomCome.Scripts.Building.Decoration;
 using Scripts.Constants;
 
 public partial class GameMap : Node2D
@@ -127,9 +128,18 @@ public partial class GameMap : Node2D
 			livingSpace.OnCreateNpc += PlaceNpc;
 			_placedHouses.Add(livingSpace);
 		}
+		
 		else if (placeable is AbstractActivity activity)
 		{
 			_placedActivities.Add(activity);
+		}
+		else if (placeable is Decoration decoration)
+		{
+			decoration.DecorationsPoint += 1;
+			if (decoration.DecorationsPoint == 5)
+			{
+				decoration.addDecorationPoint(Citizens);
+			}
 		}
 
 		if (placeable is Production production) _placedProduction.Add(production);

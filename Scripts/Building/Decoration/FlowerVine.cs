@@ -1,15 +1,16 @@
+using Godot;
+using System;
 using System.Collections.Generic;
-using KingdomCome.Scripts.Building;
 using KingdomCome.Scripts.Building.Decoration;
 using Scripts.Constants;
 
-public partial class Flowerbed : Decoration
+public partial class FlowerVine : Decoration
 {
+	// Called when the node enters the scene tree for the first time.
 	protected override void _Ready_instance()
 	{
-		BuildingName = "Flowerbush";
-		BuildingDescription = "A beautiful flowerbush making your citizens happier";
-		PlayerLevel = 1;
+		BuildingName = "Flower vine";
+		BuildingDescription = "A beautiful flower vine making your citizens happier";
 		Upgrades = new Dictionary<string, List<int>>();
 		BuildCost = new Dictionary<string, List<int>>
 		{
@@ -26,5 +27,7 @@ public partial class Flowerbed : Decoration
 			{ RawResource.Wood, [2, 3, 4] },
 			{ RawResource.Stone, [2, 3, 4] }
 		};
+		GetNode<AnimatedSprite2D>("HouseSprite").Play();
 	}
+	
 }

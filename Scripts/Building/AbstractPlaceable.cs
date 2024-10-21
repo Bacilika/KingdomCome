@@ -99,8 +99,7 @@ public abstract partial class AbstractPlaceable : Area2D
         InfoBox.Connect(PlaceableInfo.SignalName.OnMove, Callable.From(OnMove));
         
      
-        //Remove buttons from decorations
-        //if (this is Decorations)
+
 
 
         Monitoring = true;
@@ -122,6 +121,8 @@ public abstract partial class AbstractPlaceable : Area2D
         
  		InfoBox.Connect(PlaceableInfo.SignalName.OnTurnOffBuilding, Callable.From(TurnOffBuilding));
 
+        //Remove buttons from decorations
+        InfoBox.GetNode<Button>("HouseInfo/ButtonContainer/UpgradeButton").Visible = this is not Decoration.Decoration;
 
         _Ready_instance();
         SetObjectValues();

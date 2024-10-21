@@ -2,11 +2,11 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using KingdomCome.Scripts.Building;
+using KingdomCome.Scripts.Building.Decoration;
 using Scripts.Constants;
 
-public partial class Brush : AbstractPlaceable
+public partial class Brush : Decoration
 {
-	public int increaseHappiness = 1;
 
 	protected override void _Ready_instance()
 	{

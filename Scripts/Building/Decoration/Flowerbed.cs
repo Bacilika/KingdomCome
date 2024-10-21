@@ -8,6 +8,10 @@ public partial class Flowerbed : AbstractPlaceable
 
 	protected override void _Ready_instance()
 	{
+		
+		BuildingName = "Flowerbush";
+		BuildingDescription = "A beautiful flowerbush making your citizens happier";
+		PlayerLevel = 1;
 		Upgrades = new Dictionary<string, List<int>>();
 		BuildCost = new Dictionary<string, List<int>>
 		{

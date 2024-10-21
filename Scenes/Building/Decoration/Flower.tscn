@@ -1,0 +1,83 @@
+[gd_scene load_steps=14 format=3 uid="uid://byvbkpvia3ea7"]
+
+[ext_resource type="Script" path="res://Scripts/Building/Decoration/Flower.cs" id="1_22p6d"]
+[ext_resource type="Texture2D" uid="uid://cxmj0qwpnwxi6" path="res://Sprites/Pixel Art Flower Pack/Pixel Art Flower Pack/Flower 2/Flower 2 - MAGENTA.png" id="4_ylk4l"]
+[ext_resource type="Texture2D" uid="uid://dt1kbfdm7dk2a" path="res://Sprites/Extra/addResource1.png" id="7_d5rjw"]
+[ext_resource type="Texture2D" uid="uid://co3y7ufhufouh" path="res://Sprites/Extra/addResource2.png" id="8_a6x1r"]
+[ext_resource type="Texture2D" uid="uid://bpp4m7x6k6cyf" path="res://Sprites/Extra/addResource3.png" id="9_hd5wh"]
+[ext_resource type="Texture2D" uid="uid://bjtqfmauw1cfk" path="res://Sprites/Extra/addResource4.png" id="10_lm8lv"]
+[ext_resource type="Texture2D" uid="uid://bh7bofwv2v6rn" path="res://Sprites/Extra/addResource5.png" id="11_vyypr"]
+[ext_resource type="Texture2D" uid="uid://c2s5x2ag6prrg" path="res://Sprites/Extra/addResource6.png" id="12_saw0d"]
+[ext_resource type="Texture2D" uid="uid://epbdr1v164x7" path="res://Sprites/Extra/addResource8.png" id="13_fxbyj"]
+[ext_resource type="PackedScene" uid="uid://biil4p82w3tjw" path="res://Scenes/Building/PlaceableInfo.tscn" id="14_hah76"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fiu42"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_ylk4l")
+}],
+"loop": true,
+"name": &"Level0",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r3tpq"]
+size = Vector2(50.5648, 46.67)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_eb5sg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_d5rjw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_a6x1r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_hd5wh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_lm8lv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_vyypr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_saw0d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_fxbyj")
+}],
+"loop": false,
+"name": &"default",
+"speed": 6.0
+}]
+
+[node name="Flower" type="Area2D"]
+physics_interpolation_mode = 2
+z_index = 1
+scale = Vector2(0.988829, 0.810701)
+script = ExtResource("1_22p6d")
+
+[node name="HouseSprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(-1, 1.00001)
+scale = Vector2(0.856256, 0.856256)
+sprite_frames = SubResource("SpriteFrames_fiu42")
+animation = &"Level0"
+
+[node name="CollisionShape0" type="CollisionShape2D" parent="."]
+position = Vector2(-9.64448e-07, 1.33501)
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_r3tpq")
+
+[node name="Animation" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -80)
+sprite_frames = SubResource("SpriteFrames_eb5sg")
+
+[node name="PlaceableInfo" parent="." instance=ExtResource("14_hah76")]
+
+[connection signal="area_entered" from="." to="." method="OnAreaEntered"]
+[connection signal="area_exited" from="." to="." method="OnAreaExited"]
+[connection signal="mouse_entered" from="." to="." method="OnMouseEntered"]
+[connection signal="mouse_exited" from="." to="." method="OnMouseExited"]

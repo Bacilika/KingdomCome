@@ -99,6 +99,8 @@ public abstract partial class AbstractPlaceable : Area2D
         InfoBox.Connect(PlaceableInfo.SignalName.OnMove, Callable.From(OnMove));
         
      
+        //Remove buttons from decorations
+        //if (this is Decorations)
 
 
         Monitoring = true;

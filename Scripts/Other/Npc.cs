@@ -199,6 +199,13 @@ public partial class Npc : CharacterBody2D
 			ToggleWalkingSound(false);
 			return;
 		}
+
+		if (!_move)
+		{
+			//_animation.SetAnimation("idle");
+			_animation.Play("idle");
+		}
+
 		
 
 		if (_move) // going to destination

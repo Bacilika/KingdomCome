@@ -1,9 +1,11 @@
-[gd_scene load_steps=59 format=3 uid="uid://2uovf4y3vnqd"]
+[gd_scene load_steps=61 format=3 uid="uid://2uovf4y3vnqd"]
 
 [ext_resource type="Script" path="res://Scripts/Other/Npc.cs" id="1_dv6rn"]
 [ext_resource type="Texture2D" uid="uid://7ld563nokdjq" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Character/Character/Character_Walk.png" id="1_f3dyl"]
+[ext_resource type="Texture2D" uid="uid://bnr631t1td44f" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Character/CharacterPortrait.png" id="2_m8sf3"]
 [ext_resource type="Texture2D" uid="uid://dks13v40j0uxo" path="res://Art/Characters/Character/Character_Slash.png" id="3_bfk5s"]
 [ext_resource type="AudioStream" uid="uid://b42k3qloq1c6x" path="res://Audio/GrassWalking.mp3" id="3_kh5mf"]
+[ext_resource type="Texture2D" uid="uid://upt4yk7l26yk" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Character/CharacterPortrait_2.png" id="3_urwk0"]
 [ext_resource type="PackedScene" uid="uid://dyq8jku2xq8kr" path="res://Scenes/Building/CitizenInfo.tscn" id="4_pwgeb"]
 [ext_resource type="Texture2D" uid="uid://ci4sq16dccr2j" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Character/Character/Character_Slash.png" id="5_6tfck"]
 [ext_resource type="Texture2D" uid="uid://brddo04fjmv4b" path="res://Sprites/Extra/Arrow.png" id="8_ir6jp"]
@@ -174,6 +176,17 @@ region = Rect2(160, 96, 32, 48)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_2xgin"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_m8sf3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_urwk0")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 2.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_f4nvv")
@@ -399,7 +412,8 @@ script = ExtResource("1_dv6rn")
 [node name="WalkingAnimation" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -8)
 sprite_frames = SubResource("SpriteFrames_2xgin")
-animation = &"walkDown"
+animation = &"idle"
+frame_progress = 0.429972
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 y_sort_enabled = true

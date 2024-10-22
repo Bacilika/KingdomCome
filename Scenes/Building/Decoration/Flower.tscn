@@ -68,7 +68,6 @@ animation = &"Level0"
 
 [node name="CollisionShape0" type="CollisionShape2D" parent="."]
 position = Vector2(-9.64448e-07, 1.33501)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_r3tpq")
 
 [node name="Animation" type="AnimatedSprite2D" parent="."]
@@ -76,6 +75,7 @@ position = Vector2(0, -80)
 sprite_frames = SubResource("SpriteFrames_eb5sg")
 
 [node name="PlaceableInfo" parent="." instance=ExtResource("14_hah76")]
+offset_right = 210.0
 
 [connection signal="area_entered" from="." to="." method="OnAreaEntered"]
 [connection signal="area_exited" from="." to="." method="OnAreaExited"]

@@ -56,6 +56,7 @@ public partial class Npc : CharacterBody2D
 	public double time;
 	public string _direction;
 	private bool scheduleIsStarted = false;
+	public AnimatedSprite2D Interaction;
 
 	private Vector2 _homelessPos = new (-1, -1);
 
@@ -67,8 +68,10 @@ public partial class Npc : CharacterBody2D
 		_navigation = GetNode<NavigationAgent2D>("NavigationAgent2D");
 		_walkingOnGrassSound = GetNode<AudioStreamPlayer2D>("GrassWalking");
 		Info = GetNode<CitizenInfo>("CitizenInfo");
+		Interaction = GetNode<AnimatedSprite2D>("Interaction");
 		Info.SetInfo(this);
 		Info.Visible = false;
+		ZIndex = 1;
 		ScheduleTimer = new Timer();
 		ScheduleTimer.WaitTime = 30;
 		ScheduleTimer.OneShot = true;
@@ -78,8 +81,14 @@ public partial class Npc : CharacterBody2D
 			AtWorkTimer.Stop();
 			//ScheduleTimer.Stop();
 			scheduleIsStarted = false;
+			if (Work is WorkBench && Home == null)
+			{
+				ScheduleTimer.Start();
+				return;
+			}
 			if (AtWork)
 			{
+				
 				AtWork = false;
 				Idle = true;
 				CurrentBuilding = Work;
@@ -271,11 +280,15 @@ public partial class Npc : CharacterBody2D
 
 		if (Happiness < BaseHappiness)
 		{
-			GetNode<Sprite2D>("ExclamationPoint").Visible = true;
+			Interaction.Animation = "ExclamationPoint";
+			Interaction.Visible = true;
+			Interaction.Play();
 		}
 		else
 		{
-			GetNode<Sprite2D>("ExclamationPoint").Visible = false;
+
+			Interaction.Visible = false;
+			Interaction.Stop();
 		}
 	}
 
@@ -354,8 +367,8 @@ public partial class Npc : CharacterBody2D
 		}
 		Work = production;
 		SetMoodReason("Work", "Has Work", 1);
-		
 		EmitSignal(SignalName.SendLog, $"{CitizenName} got their first job at the {Work.BuildingName}!");
+		TutorialWindow.CompleteTutorialStep("Employ Npc");
 		SetDestination(Work.Position);
 		TargetBuilding = Work;
 		return true;
@@ -496,6 +509,7 @@ public partial class Npc : CharacterBody2D
 		{
 			if (_focused || Info.focused)
 			{
+				if (GameMap.TutorialMode)  TutorialWindow.CompleteTutorialStep("Select Npc");
 				ShowInfo();
 				_stopped = true;
 			}

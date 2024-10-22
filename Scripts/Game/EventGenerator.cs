@@ -6,56 +6,40 @@ namespace Scripts.Constants;
 
 public class EventGenerator
 {
-    public static List<EventCard> eventCards = new List<EventCard>();
-    
-
-
+    public static List<EventCard> eventCards = [];
+    private PackedScene _eventScene;
     public EventGenerator()
     {
-        //variables 
-        var eventScene = ResourceLoader.Load<PackedScene>("res://Scenes/Game/EventCard.tscn");
-        var eventCard = eventScene.Instantiate<EventCard>();
-        var title = eventCard.GetNode<Label>("Panel/VBoxContainer/Title");
-        var description = eventCard.GetNode<Label>("Panel/VBoxContainer/PromptText");
-        var button1 = eventCard.GetNode<Button>("Panel/HBoxContainer/Button");
-        var button2 = eventCard.GetNode<Button>("Panel/HBoxContainer/Button2");
+        //get eventcard 
+        _eventScene = ResourceLoader.Load<PackedScene>("res://Scenes/Game/EventCard.tscn");
         
-        //Event 1
-        title.Text = "War!";
-        description.Text = "Another nation has declared war!";
-        button1.Text = "Attack";
-        button2.Text = "Ask for peace";
+        //-----Event 1-----
+        var event1 = CreateEvent(2);
         
-        //create ok button
-        Button buttonOk = new Button(); 
-        buttonOk.Text = "Ok";
-        buttonOk.Visible = false;
-        eventCard.GetNode<HBoxContainer>("Panel/HBoxContainer").AddChild(buttonOk);
+        event1.Title.Text = "War!";
+        event1.Description.Text = "Another nation has declared war!";
+        event1.buttons[0].Text = "Attack";
+        event1.buttons[1].Text = "Ask for peace";
         
         //actions
-        button1.Pressed += () =>
+        event1.buttons[0].Pressed += () =>
         {
-            buttonOk.Visible = true;
             Console.WriteLine("event works.");
-            button1.Visible = false;
-            button2.Visible = false;
-            description.Text = "You won the battle, but lost a citizen! +5 wood, -1 npc";
-            
+            event1.Description.Text = "You won the battle, but lost a citizen! +5 wood, -1 npc";
         };
-        button2.Pressed += () =>
+        event1.buttons[1].Pressed += () =>
         {
-            buttonOk.Visible = true;
             Console.WriteLine("event 2 works.");
-            button1.Visible = false;
-            button2.Visible = false;
-            description.Text = "They didn't listen and killed 5 of your people";
+            event1.Description.Text = "They didn't listen and killed 5 of your people";
         };
-
-        buttonOk.Pressed += () =>
-        {
-            eventCard.Visible = false;
-            eventCard.EmitSignal(EventCard.SignalName.OnEventDone, eventCard);
-        };
+        eventCards.Add(event1);
     }
-    
+
+    public EventCard CreateEvent(int choices)
+    {
+        var event1 = _eventScene.Instantiate<EventCard>();
+        event1.SetFields();
+        event1.AddButtons(choices);
+        return event1;
+    }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Godot;
 using Scripts.Constants;
@@ -22,6 +23,7 @@ public partial class GameMenu : Control
 	public Shop Shop;
 	public Button CancelButton;
 	public bool CancelButtonFocused;
+	public EventGenerator EventGenerator = new();
 	
 	[Signal]
 	public delegate void PauseButtonEventHandler();
@@ -29,7 +31,6 @@ public partial class GameMenu : Control
 	[Signal]
 	public delegate void PlayButtonEventHandler();
 	
-
 
 	public override void _Ready()
 	{
@@ -42,10 +43,13 @@ public partial class GameMenu : Control
 		GameMode = GetNode<Label>("MenuCanvasLayer/CurrentGameMode");
 		CanvasLayer = GetNode<CanvasLayer>("MenuCanvasLayer");
 		GameLog = GetNode<GameLog>("MenuCanvasLayer/GameLog");
-		var statLabels = GetNode<HBoxContainer>("MenuCanvasLayer/GameStats");
+		
+		// sounds
 		ButtonPress = GetNode<AudioStreamPlayer2D>("ButtonPressedSound");
 		ButtonPress?.Play();
 		Shop = GetNode<Shop>("MenuCanvasLayer/Shop");
+		
+		// cancelbutton for shop
 		CancelButton = GetNode<Button>("MenuCanvasLayer/CancelButton");
 		CancelButton.Pressed += () =>
 		{
@@ -54,6 +58,34 @@ public partial class GameMenu : Control
 		CancelButton.MouseEntered += () => { CancelButtonFocused = true; };
 		CancelButton.MouseExited += () => { CancelButtonFocused = false; };
 
+		// set up tutorial selection
+		var startGameEvent = EventGenerator.CreateEvent(2);
+		CanvasLayer.AddChild(startGameEvent);
+		
+		startGameEvent.Visible = true;
+		startGameEvent.Title.Text = "Royal Advisor";
+		startGameEvent.Description.Text = "\" Greetings. We must get started building our kingdom. Would you allow me to help you get started or should I get out of the way? \"";
+		
+		startGameEvent.buttons[0].Text = "I could use some assistance.";
+		startGameEvent.buttons[0].Pressed += () =>
+		{
+			EmitSignal(GameMap.SignalName.SendLog, "Help Requested from The Royal Advisor.");
+			GameMap.TutorialMode = true;
+			var tutorialWindow = GetParent<GameMap>().GetNode<TutorialWindow>("TutorialWindow");
+			tutorialWindow.Visible = true;
+			tutorialWindow.ShowTutorial();
+			startGameEvent.OnEventCompleted();
+		};
+		
+		startGameEvent.buttons[1].Text = "I'll do just fine on my own.";
+		startGameEvent.buttons[1].Pressed += () =>
+		{
+			EmitSignal(GameMap.SignalName.SendLog, "No help from The Royal Advisor.");
+			GameMap.TutorialMode = false;
+			startGameEvent.OnEventCompleted();
+		};
+		// game stats
+		var statLabels = GetNode<HBoxContainer>("MenuCanvasLayer/GameStats");
 		_gameStatLabels = new Godot.Collections.Dictionary<string, Label>
 		{
 			{ RawResource.Money, statLabels.GetNode<TextureRect>(RawResource.Money).GetNode<Label>("Value") },

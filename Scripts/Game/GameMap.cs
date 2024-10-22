@@ -13,6 +13,7 @@ public partial class GameMap : Node2D
 	public static List<Production> _placedProduction = [];
 	public List<Npc> Citizens = [];
 	public List<Npc> Homeless = [];
+	private TutorialWindow _tutorialWindow;
 
 	//for job selection
 	public static bool JobSelectMode;
@@ -24,13 +25,12 @@ public partial class GameMap : Node2D
 	private AudioStreamPlayer2D _music;
 	private PackedScene NPCScene;
 	private PackedScene infoScene;
+	public static bool TutorialMode = true;
 
 	public Timer GracePeriodTimer;
 	private WorkBench _workBench;
 	private double _timeSinceLastTick;
 	
-
-
 	[Signal]
 	public delegate void SendLogEventHandler(string log);
 	[Signal]
@@ -38,7 +38,6 @@ public partial class GameMap : Node2D
 
 	public static bool GracePeriod = true;
 	
-
 
 	public override void _Ready()
 	{
@@ -63,25 +62,26 @@ public partial class GameMap : Node2D
 			GracePeriod = false;
 			QueueFree();
 		};
+		_tutorialWindow = GetNode<TutorialWindow>("TutorialWindow");
 		
-	
-
-		//Connect pause and play buttons
+		
+		// Connect pause and play buttons
 		GetNode<GameMenu>("GameMenu").Connect(GameMenu.SignalName.PauseButton, Callable.From(PauseGame));
 		GetNode<GameMenu>("GameMenu").Connect(GameMenu.SignalName.PlayButton, Callable.From(PlayGame));
 		
-		//start workbench
+		// start workbench
 		_workBench = GetNode<WorkBench>("WorkBench");
 		_workBench.IsPlaced = true;
 		_workBench.Visible = true;
 		
-		//Start NPC
-		PlaceNpc(GetNode<Npc>("Male"));
-		PlaceNpc(GetNode<Npc>("Female"));
+		// Start NPC
+		SpawnFirstNpc(GetNode<Npc>("Male"));
+		SpawnFirstNpc(GetNode<Npc>("Female"));
 	}
 
 	public override void _Process(double delta)
 	{
+		if(TutorialMode) _tutorialWindow.ShowTutorial();
 		_timeSinceLastTick += delta;
 		if (GameLogistics.Resources[RawResource.Unemployed] > 0) //there are unemployed
 			GiveJobToNpcs();
@@ -89,7 +89,7 @@ public partial class GameMap : Node2D
 
 	private void PauseGame()
 	{
-		foreach (Npc npc in Citizens)
+		foreach (var npc in Citizens)
 		{
 			npc.ScheduleTimer.Paused = true;
 			npc.AtWorkTimer.Paused = true;
@@ -153,17 +153,11 @@ public partial class GameMap : Node2D
 	public void PlaceNpc(LivingSpace house)
 	{
 		var npc = NPCScene.Instantiate<Npc>();
-		AddChild(npc);
-		npc.SendLog += _gameMenu.GameLog.CreateLog;
-		npc.OnFed += OnNpcFed;
-		DayOver += npc.OnDayOver;
+		SubscribeToSignals(npc);
 		npc.Home = house;
 		house.MoveIntoHouse(npc);
-		npc.CitizenName += $" {house.HouseholdName}";
-		npc.EmitSignal(SignalName.SendLog, $"{npc.CitizenName} moved into house!");
 		npc.Position = house.Position;
 		house.InfoBox.MoveToFront();
-		npc.ZIndex = 1;
 		Citizens.Add(npc);
 
 
@@ -176,23 +170,22 @@ public partial class GameMap : Node2D
 			GameMenu.UpdateLevel(Level);
 		}
 	}
-	
-	public void PlaceNpc(Npc npc)
+
+	private void SubscribeToSignals(Npc npc)
 	{
 		npc.SendLog += _gameMenu.GameLog.CreateLog;
 		npc.OnFed += OnNpcFed;
 		DayOver += npc.OnDayOver;
-		npc.EmitSignal(SignalName.SendLog, $"{npc.CitizenName} moved into house!");
-		npc.ZIndex = 1;
+	}
+	
+	public void SpawnFirstNpc(Npc npc)
+	{
+		SubscribeToSignals(npc);
 		Citizens.Add(npc);
 		Homeless.Add(npc);
-		_workBench.EmployWorker(npc);
-		
-
 		GameLogistics.Resources[RawResource.Unemployed]++;
-
 		npc.OnJobChange += OnSelectJob;
-		if (Citizens.Count % 10 == 0)
+		if (Citizens.Count % 10 + 2 == 0)
 		{
 			Level++;
 			GameMenu.UpdateLevel(Level);
@@ -224,6 +217,7 @@ public partial class GameMap : Node2D
 		JobSelectMode = true;
 		NpcJobSelect = npc;
 		GameMenu.GameMode.Text = GameMode.JobChange;
+		TutorialWindow.CompleteTutorialStep("Select GiveJob");
 	}
 
 

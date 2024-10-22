@@ -40,6 +40,8 @@ public abstract partial class LivingSpace : AbstractPlaceable
         GetNode<AnimatedSprite2D>("HouseSprite").SetAnimation("AnimationLevel" + Level);
         GetNode<AnimatedSprite2D>("HouseSprite").Play();
         npc.OnMoveIn();
+        npc.CitizenName += $" {HouseholdName}";
+        npc.EmitSignal(GameMap.SignalName.SendLog, $"{npc.CitizenName} moved into house!");
     }
     public void UpdateInfo()
     {

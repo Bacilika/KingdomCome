@@ -87,7 +87,6 @@ public partial class GameMenu : Control
 			{ RawResource.Stone, statLabels.GetNode<TextureRect>(RawResource.Stone).GetNode<Label>("Value") },
 			{ RawResource.Happiness, statLabels.GetNode<TextureRect>(RawResource.Happiness).GetNode<Label>("Value") },
 			{ RawResource.Wood, statLabels.GetNode<TextureRect>(RawResource.Wood).GetNode<Label>("Value") },
-			{ NpcStatuses.Unemployed, statLabels.GetNode<TextureRect>(NpcStatuses.Unemployed).GetNode<Label>("Value") },
 			{ RawResource.Iron, statLabels.GetNode<TextureRect>(RawResource.Iron).GetNode<Label>("Value") },
 			{ RawResource.Water, statLabels.GetNode<TextureRect>(RawResource.Water).GetNode<Label>("Value") }
 		};
@@ -99,7 +98,6 @@ public partial class GameMenu : Control
 			{ RawResource.Stone, statLabels.GetNode<TextureRect>(RawResource.Stone)},
 			{ RawResource.Happiness, statLabels.GetNode<TextureRect>(RawResource.Happiness)},
 			{ RawResource.Wood, statLabels.GetNode<TextureRect>(RawResource.Wood)},
-			{ NpcStatuses.Unemployed, statLabels.GetNode<TextureRect>(NpcStatuses.Unemployed)},
 			{ RawResource.Iron, statLabels.GetNode<TextureRect>(RawResource.Iron)},
 			{ RawResource.Water, statLabels.GetNode<TextureRect>(RawResource.Water)}
 		};

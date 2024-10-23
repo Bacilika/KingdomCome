@@ -4,6 +4,7 @@
 [ext_resource type="Script" path="res://Scripts/Game/EventCard.cs" id="2_1fnn6"]
 
 [node name="EventCard" type="Control"]
+process_mode = 3
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5

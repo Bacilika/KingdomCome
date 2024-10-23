@@ -125,24 +125,26 @@ public partial class GameMap : Node2D
 
 	private void PauseGame()
 	{
-		foreach (var npc in Citizens)
+		GetTree().Paused = true;
+		/*foreach (var npc in Citizens)
 		{
 			npc.ScheduleTimer.Paused = true;
 			npc.AtWorkTimer.Paused = true;
 			npc._move = false;
 			_dayTimer.Paused = true;
-		}
+		}*/
 	}
 	
 	private void PlayGame()
 	{
-		foreach (Npc npc in Citizens)
+		GetTree().Paused = false;
+		/*foreach (Npc npc in Citizens)
 		{
 			npc.ScheduleTimer.Paused = false;
 			npc.AtWorkTimer.Paused = false;
 			npc._move = true;
 			_dayTimer.Paused = false;
-		}
+		}*/
 	}
 
 	private void OnBackgroundMusicFinish()

@@ -15,7 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://g121wpunkvls" path="res://Scenes/Game/GameLogistics.tscn" id="10_4gj8f"]
 [ext_resource type="PackedScene" uid="uid://l32r8or4fhm7" path="res://Scenes/Building/Production/WorkBench.tscn" id="14_ei2b0"]
 [ext_resource type="PackedScene" uid="uid://2uovf4y3vnqd" path="res://Scenes/Other/NPC.tscn" id="15_2y8h7"]
-[ext_resource type="PackedScene" path="res://Scenes/Game/TutorialWindow.tscn" id="16_oo10i"]
+[ext_resource type="PackedScene" uid="uid://c4ceyyidihe6f" path="res://Scenes/Game/TutorialWindow.tscn" id="16_oo10i"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ehtao"]
 texture = ExtResource("4_iuwca")
@@ -2282,6 +2282,7 @@ polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4, 5, 6), Packe
 outlines = Array[PackedVector2Array]([PackedVector2Array(-1672, -896, 1480, -976, 1800, -288, 1800, 1024, 1752, 1240, 1096, 1600, -168, 1552, -504, 1480, -1312, 1224, -1928, 1240, -2088, 936)])
 
 [node name="GameMap" type="Node2D"]
+process_mode = 1
 y_sort_enabled = true
 script = ExtResource("1_owh02")
 
@@ -2289,6 +2290,7 @@ script = ExtResource("1_owh02")
 position = Vector2(458, -436)
 
 [node name="GameCamera" parent="." instance=ExtResource("2_u0ysy")]
+process_mode = 3
 
 [node name="GrassLayer" type="TileMapLayer" parent="."]
 top_level = true
@@ -2330,7 +2332,7 @@ position = Vector2(-749, -412)
 stream = ExtResource("8_2qw43")
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
-position = Vector2(0, -2)
+position = Vector2(-289, -696)
 navigation_polygon = SubResource("NavigationPolygon_n6683")
 
 [node name="GameLogistics" parent="." instance=ExtResource("10_4gj8f")]

@@ -68,10 +68,11 @@ public partial class GameLogistics : Node2D
 	{
 		FoodResourceAsString = "";
 
-	var totalfood = 0;
+		var totalfood = 0;
 		foreach (var food in FoodResource)
 		{
 			FoodResourceAsString += $"{food.Key}: {food.Value}\n";
+			totalfood += food.Value;
 		}
 
 		Resources[RawResource.Food] = totalfood;

@@ -127,7 +127,7 @@ public partial class GameMap : Node2D
 
 	}
 
-	private void PauseGame()
+	public void PauseGame()
 	{
 		GetTree().Paused = true;
 		/*foreach (var npc in Citizens)
@@ -139,7 +139,7 @@ public partial class GameMap : Node2D
 		}*/
 	}
 	
-	private void PlayGame()
+	public void PlayGame()
 	{
 		GetTree().Paused = false;
 		/*foreach (Npc npc in Citizens)

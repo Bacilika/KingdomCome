@@ -28,6 +28,7 @@ public partial class EventCard : Control
 		Description = GetNode<Label>("Panel/VBoxContainer/PromptText");
 		ButtonContainer = GetNode<HBoxContainer>("Panel/HBoxContainer");
 		DoneButton = GetNode<Button>("Panel/DoneContainer/Button");
+
 	}
 
 	public void AddButtons(int amount)

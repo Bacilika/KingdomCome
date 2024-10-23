@@ -24,6 +24,7 @@ public partial class GameMenu : Control
 	public Button CancelButton;
 	public bool CancelButtonFocused;
 	public EventGenerator EventGenerator = new();
+	private RandomNumberGenerator random = new();
 	private Timer eventtimer = new Timer();
 
 	
@@ -46,15 +47,18 @@ public partial class GameMenu : Control
 		CanvasLayer = GetNode<CanvasLayer>("MenuCanvasLayer");
 		GameLog = GetNode<GameLog>("MenuCanvasLayer/GameLog");
 		
-		//event timer
+		//Event 
 		AddChild(eventtimer);
-		eventtimer.SetWaitTime(5);
+		int waitTime = random.RandiRange(5, 10);
+		eventtimer.SetWaitTime(waitTime);
 		eventtimer.Start();
-		eventtimer.OneShot = true;
+		eventtimer.OneShot = false;
 		eventtimer.Timeout += () =>
 		{
-			Console.WriteLine("Event happening");
 			CanvasLayer.AddChild(EventGenerator.getEvent());
+			int waitTime = random.RandiRange(5, 10);
+			eventtimer.SetWaitTime(waitTime);
+			eventtimer.Start();
 		};
 		
 		// sounds

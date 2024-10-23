@@ -153,6 +153,7 @@ public partial class GameMap : Node2D
 	public void PlaceNpc(LivingSpace house)
 	{
 		var npc = NPCScene.Instantiate<Npc>();
+		AddChild(npc);
 		SubscribeToSignals(npc);
 		npc.Home = house;
 		house.MoveIntoHouse(npc);

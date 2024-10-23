@@ -75,6 +75,7 @@ public abstract partial class AbstractPlaceable : Area2D
         for (var i = People.Count - 1; i >= 0; i--)
         {
             var npc = People[i];
+            // TODO: dont delte npc, remove them from house
             npc.OnDelete();
         }
         foreach (var cost in DeleteCost) GameLogistics.Resources[cost.Key] += cost.Value[Level];

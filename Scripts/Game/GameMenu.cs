@@ -24,6 +24,8 @@ public partial class GameMenu : Control
 	public Button CancelButton;
 	public bool CancelButtonFocused;
 	public EventGenerator EventGenerator = new();
+	private Timer eventtimer = new Timer();
+
 	
 	[Signal]
 	public delegate void PauseButtonEventHandler();
@@ -44,6 +46,17 @@ public partial class GameMenu : Control
 		CanvasLayer = GetNode<CanvasLayer>("MenuCanvasLayer");
 		GameLog = GetNode<GameLog>("MenuCanvasLayer/GameLog");
 		
+		//event timer
+		AddChild(eventtimer);
+		eventtimer.SetWaitTime(5);
+		eventtimer.Start();
+		eventtimer.OneShot = true;
+		eventtimer.Timeout += () =>
+		{
+			Console.WriteLine("Event happening");
+			CanvasLayer.AddChild(EventGenerator.getEvent());
+		};
+		
 		// sounds
 		ButtonPress = GetNode<AudioStreamPlayer2D>("ButtonPressedSound");
 		ButtonPress?.Play();
@@ -59,31 +72,7 @@ public partial class GameMenu : Control
 		CancelButton.MouseExited += () => { CancelButtonFocused = false; };
 
 		// set up tutorial selection
-		var startGameEvent = EventGenerator.CreateEvent(2);
-		CanvasLayer.AddChild(startGameEvent);
 		
-		startGameEvent.Visible = true;
-		startGameEvent.Title.Text = "Royal Advisor";
-		startGameEvent.Description.Text = "\" Greetings. We must get started building our kingdom. Would you allow me to help you get started or should I get out of the way? \"";
-		
-		startGameEvent.buttons[0].Text = "I could use some assistance.";
-		startGameEvent.buttons[0].Pressed += () =>
-		{
-			EmitSignal(GameMap.SignalName.SendLog, "Help Requested from The Royal Advisor.");
-			GameMap.TutorialMode = true;
-			var tutorialWindow = GetParent<GameMap>().GetNode<TutorialWindow>("TutorialWindow");
-			tutorialWindow.Visible = true;
-			tutorialWindow.ShowTutorial();
-			startGameEvent.OnEventCompleted();
-		};
-		
-		startGameEvent.buttons[1].Text = "I'll do just fine on my own.";
-		startGameEvent.buttons[1].Pressed += () =>
-		{
-			EmitSignal(GameMap.SignalName.SendLog, "No help from The Royal Advisor.");
-			GameMap.TutorialMode = false;
-			startGameEvent.OnEventCompleted();
-		};
 		// game stats
 		var statLabels = GetNode<HBoxContainer>("MenuCanvasLayer/GameStats");
 		_gameStatLabels = new Godot.Collections.Dictionary<string, Label>

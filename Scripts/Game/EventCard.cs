@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using Scripts.Constants;
 
 public partial class EventCard : Control
 {
@@ -9,6 +10,7 @@ public partial class EventCard : Control
 	public Button DoneButton;
 	public HBoxContainer ButtonContainer;
 	public List<Button> buttons = [];
+	public GameMap Gamemap;
 	
 
 	[Signal]
@@ -16,6 +18,7 @@ public partial class EventCard : Control
 
 	public override void _Ready()
 	{
+		Gamemap = GetParent().GetParent().GetParent<GameMap>();
 		//SetAnchorsPreset(LayoutPreset.Center);
 	}
 
@@ -25,16 +28,6 @@ public partial class EventCard : Control
 		Description = GetNode<Label>("Panel/VBoxContainer/PromptText");
 		ButtonContainer = GetNode<HBoxContainer>("Panel/HBoxContainer");
 		DoneButton = GetNode<Button>("Panel/DoneContainer/Button");
-		DoneButton.Pressed += () =>
-		{
-			EmitSignal(SignalName.OnEventDone, this);
-		};
-	}
-
-	public void OnEventCompleted()
-	{
-		GetParent().RemoveChild(this);
-		QueueFree();
 	}
 
 	public void AddButtons(int amount)

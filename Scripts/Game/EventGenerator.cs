@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 
 namespace Scripts.Constants;
@@ -8,6 +9,7 @@ public class EventGenerator
 {
     public static List<EventCard> eventCards = [];
     private PackedScene _eventScene;
+    private RandomNumberGenerator _rand; 
     public EventGenerator()
     {
         //get eventcard 
@@ -15,24 +17,48 @@ public class EventGenerator
         
         //-----Event 1-----
         var event1 = CreateEvent(2);
+
         
         event1.Title.Text = "War!";
         event1.Description.Text = "Another nation has declared war!";
         event1.buttons[0].Text = "Attack";
         event1.buttons[1].Text = "Ask for peace";
         
+        event1.DoneButton.Pressed += () =>
+        {
+            eventCards.Remove(event1);
+            event1.GetParent().RemoveChild(event1);
+            event1.QueueFree();
+        };
         //actions
         event1.buttons[0].Pressed += () =>
         {
             Console.WriteLine("event works.");
             event1.Description.Text = "You won the battle, but lost a citizen! +5 wood, -1 npc";
+            GameLogistics.Resources[RawResource.Wood] += 5;
+            var npc = event1.Gamemap.Citizens.Last();
+            event1.Gamemap.RemoveChild(npc);
+            npc.OnDelete();
+            
         };
         event1.buttons[1].Pressed += () =>
         {
             Console.WriteLine("event 2 works.");
-            event1.Description.Text = "They didn't listen and killed 5 of your people";
+            int amount = _rand.RandiRange(0, event1.Gamemap.Citizens.Count - 2);
+            List<Npc> sublist = event1.Gamemap.Citizens.GetRange(event1.Gamemap.Citizens.Count-amount, event1.Gamemap.Citizens.Count);
+            String names = ""; 
+            foreach (var npc in sublist)
+            {
+                names += $" {npc.Name},";
+                event1.Gamemap.RemoveChild(npc);
+                npc.OnDelete();
+            }
+            names = names.Remove(names.Length - 1);
+            event1.Description.Text = $"They didn't listen and killed {amount} of your people. Their names were {names} ";
+            event1.Gamemap.Citizens.RemoveRange(event1.Gamemap.Citizens.Count-amount, event1.Gamemap.Citizens.Count);
         };
         eventCards.Add(event1);
+        
     }
 
     public EventCard CreateEvent(int choices)
@@ -41,5 +67,10 @@ public class EventGenerator
         event1.SetFields();
         event1.AddButtons(choices);
         return event1;
+    }
+
+    public EventCard getEvent()
+    {
+        return eventCards[0];
     }
 }

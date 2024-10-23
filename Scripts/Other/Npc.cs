@@ -390,13 +390,14 @@ public partial class Npc : CharacterBody2D
 	{
 		EmitSignal(SignalName.SendLog, $"{CitizenName} is moving out");
 		Work?.People.Remove(this);
-		Home.People.Remove(this);
+		Home?.People.Remove(this);
 		GameLogistics.Resources[RawResource.Citizens] -= 1;
 		if (Work is not null)
 			Work.People.Remove(this);
 		else
 			if (GameLogistics.Resources[RawResource.Unemployed] > 0)
 			GameLogistics.Resources[RawResource.Unemployed] -= 1;
+		GetParent<GameMap>().Citizens.Remove(this);
 		QueueFree();
 	}
 	

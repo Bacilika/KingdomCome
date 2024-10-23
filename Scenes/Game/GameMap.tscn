@@ -15,7 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://g121wpunkvls" path="res://Scenes/Game/GameLogistics.tscn" id="10_4gj8f"]
 [ext_resource type="PackedScene" uid="uid://l32r8or4fhm7" path="res://Scenes/Building/Production/WorkBench.tscn" id="14_ei2b0"]
 [ext_resource type="PackedScene" uid="uid://2uovf4y3vnqd" path="res://Scenes/Other/NPC.tscn" id="15_2y8h7"]
-[ext_resource type="PackedScene" uid="uid://c4ceyyidihe6f" path="res://Scenes/Game/TutorialWindow.tscn" id="16_oo10i"]
+[ext_resource type="PackedScene" path="res://Scenes/Game/TutorialWindow.tscn" id="16_oo10i"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ehtao"]
 texture = ExtResource("4_iuwca")

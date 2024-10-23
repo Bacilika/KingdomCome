@@ -11,6 +11,7 @@ public class MoodReason
 {
 	public string Reason { get; set; }
 	public int Happiness { get; set; }
+	public int Timer { get; set; }
 }
 
 public partial class Npc : CharacterBody2D
@@ -105,6 +106,7 @@ public partial class Npc : CharacterBody2D
 		_moodReasons.Add("Food", new MoodReason());
 		_moodReasons.Add("Home", new MoodReason());
 		_moodReasons.Add("Decoration", new MoodReason());
+		_moodReasons.Add("Trauma", new MoodReason());
 		SetMoodReason("Home", "Is Homeless", -3);
 	}
 
@@ -331,8 +333,8 @@ public partial class Npc : CharacterBody2D
 		Work = production;
 		if (TargetBuilding == oldWork)
 		{
-			TargetBuilding = Work;
-			SetDestination(Work.Position);
+			
+			SetDestinationToTargetBuilding(Work);
 		}
 
 		if (AtWork)
@@ -344,7 +346,7 @@ public partial class Npc : CharacterBody2D
 		return true;
 	}
 
-	public void SetMoodReason(string type, string reason, int happiness)
+	public void SetMoodReason(string type, string reason, int happiness, int timer = -1)
 	{
 		if (happiness == 0)
 		{
@@ -353,6 +355,7 @@ public partial class Npc : CharacterBody2D
 		}
 		_moodReasons[type].Reason = reason;
 		_moodReasons[type].Happiness = happiness;
+		_moodReasons[type].Timer = timer;
 	}
 	public bool GetJob(Production production)
 	{
@@ -376,8 +379,7 @@ public partial class Npc : CharacterBody2D
 		SetMoodReason("Work", "Has Work", 1);
 		EmitSignal(SignalName.SendLog, $"{CitizenName} got their first job at the {Work.BuildingName}!");
 		TutorialWindow.CompleteTutorialStep("Employ Npc");
-		SetDestination(Work.Position);
-		TargetBuilding = Work;
+		SetDestinationToTargetBuilding(Work);
 		return true;
 	}
 	
@@ -391,12 +393,11 @@ public partial class Npc : CharacterBody2D
 		EmitSignal(SignalName.SendLog, $"{CitizenName} is moving out");
 		Work?.People.Remove(this);
 		Home?.People.Remove(this);
-		GameLogistics.Resources[RawResource.Citizens] -= 1;
 		if (Work is not null)
 			Work.People.Remove(this);
 		else
-			if (GameLogistics.Resources[RawResource.Unemployed] > 0)
-			GameLogistics.Resources[RawResource.Unemployed] -= 1;
+			if (GameMap.NpcStats[NpcStatuses.Unemployed] > 0)
+				GameMap.NpcStats[NpcStatuses.Unemployed] -= 1;
 		GetParent<GameMap>().Citizens.Remove(this);
 		GetParent<GameMap>().RemoveChild(this);
 		QueueFree();
@@ -408,8 +409,7 @@ public partial class Npc : CharacterBody2D
 		{
 			if (Work is not null)
 			{
-				TargetBuilding = Work;
-				SetDestination(Work.Position);
+				SetDestinationToTargetBuilding(Work);
 			}
 			return;
 		}
@@ -417,22 +417,19 @@ public partial class Npc : CharacterBody2D
 		switch (CurrentBuilding.GetBuildingName())
 		{
 			case var value when value == Home?.GetBuildingName():
-				TargetBuilding = Work;
-				SetDestination(Work?.Position?? _homelessPos); //go to different position
+				SetDestinationToTargetBuilding(Work);
 				break;
 			case var value when value == Work?.GetBuildingName():
 				if (Home is null)
 				{
 					SetMoodReason("Home", "Is Homeless", -3);
-					TargetBuilding = Home;
-					SetDestination(new Vector2(-1,-1));
+					SetDestinationToTargetBuilding(Home);
 					break;
 					
 				}
 				if (!GoToActivity()) // Going home
 				{
-					TargetBuilding = Home;
-					SetDestination(Home.Position);
+					SetDestinationToTargetBuilding(Home);
 					break;
 				}
 				
@@ -440,25 +437,28 @@ public partial class Npc : CharacterBody2D
 				{
 					SetMoodReason("Activity", $"enjoys {_activity.BuildingName}", 2);
 					EmitSignal(SignalName.SendLog, $"{CitizenName} enjoys spending time at the {_activity.BuildingName}");
-					TargetBuilding = _activity;
-					SetDestination(_activity.Position);
+					SetDestinationToTargetBuilding(_activity);
 				}
 				else
 				{ 
-					TargetBuilding = Home;
 					EmitSignal(SignalName.SendLog, $"{CitizenName} didn't find an activity");
 					SetMoodReason("Activity", $"No available activity", -2);
-					SetDestination(Home.Position);
+					SetDestinationToTargetBuilding(Home);
 				}
 				break;
 			case var value when value == _activity?.GetBuildingName():
-				TargetBuilding = Home;
-				SetDestination(Home.Position);
+				SetDestinationToTargetBuilding(Home);
 				break;
 			default:
 				Console.WriteLine($"Trying to switch when currentBuilding is null, {CurrentBuilding?.GetBuildingName()}");
 				break;
 		}
+	}
+
+	public void SetDestinationToTargetBuilding(AbstractPlaceable target)
+	{
+		TargetBuilding = target;
+		SetDestination(TargetBuilding is null ? _homelessPos : target.Position);
 	}
 	
 	public bool GoToActivity()
@@ -487,8 +487,7 @@ public partial class Npc : CharacterBody2D
 		Work = null;
 		AtWork = false;		
 		_animation.Stop();
-		TargetBuilding = Home;
-		SetDestination(Home.Position);
+		SetDestinationToTargetBuilding(Home);
 		ScheduleTimer.Stop();
 		AtWorkTimer.Stop();
 		_move = true;
@@ -532,21 +531,47 @@ public partial class Npc : CharacterBody2D
 
 	public void OnDayOver()
 	{
+		foreach (var entry in _moodReasons)
+		{
+			if (entry.Value.Timer > -1)
+			{
+				if (entry.Value.Timer == 0)
+				{
+					_moodReasons[entry.Key] = new MoodReason();
+				}
+				else
+				{
+					_moodReasons[entry.Key].Timer--;
+				}
+			}
+		}
 		if (GameLogistics.Resources[RawResource.Food] > 0)
 		{
-			GameLogistics.Resources[RawResource.Food]--;
+			GameLogistics.ConsumeFood();
 			if (Hunger > 0)
 			{
 				Hunger--;
 				EmitSignal(SignalName.OnFed, this, true);
 				SetMoodReason("Food", "",0);
-
 			}
 		}
 		else
 		{
-			EmitSignal(SignalName.OnFed, this, false);
-			SetMoodReason("Food", "Did not get fed",-Hunger);
+			Hunger++;
+			if (Hunger >= 5)
+			{
+				EmitSignal(GameMap.SignalName.SendLog, $"{CitizenName} starved to death.");
+				foreach (var familyMember in Home.People)
+				{
+					familyMember.SetMoodReason("Trauma", "Family member died", -3,3);
+				}
+				
+			}
+			else
+			{
+				EmitSignal(SignalName.OnFed, this, false);
+				SetMoodReason("Food", "Did not get fed",-Hunger);
+			}
 		}
 	}
 }

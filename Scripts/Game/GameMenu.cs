@@ -79,11 +79,11 @@ public partial class GameMenu : Control
 		{
 			{ RawResource.Money, statLabels.GetNode<TextureRect>(RawResource.Money).GetNode<Label>("Value") },
 			{ RawResource.Food, statLabels.GetNode<TextureRect>(RawResource.Food).GetNode<Label>("Value") },
-			{ RawResource.Citizens, statLabels.GetNode<TextureRect>(RawResource.Citizens).GetNode<Label>("Value") },
+			{ NpcStatuses.Citizens, statLabels.GetNode<TextureRect>(NpcStatuses.Citizens).GetNode<Label>("Value") },
 			{ RawResource.Stone, statLabels.GetNode<TextureRect>(RawResource.Stone).GetNode<Label>("Value") },
 			{ RawResource.Happiness, statLabels.GetNode<TextureRect>(RawResource.Happiness).GetNode<Label>("Value") },
 			{ RawResource.Wood, statLabels.GetNode<TextureRect>(RawResource.Wood).GetNode<Label>("Value") },
-			{ RawResource.Unemployed, statLabels.GetNode<TextureRect>(RawResource.Unemployed).GetNode<Label>("Value") },
+			{ NpcStatuses.Unemployed, statLabels.GetNode<TextureRect>(NpcStatuses.Unemployed).GetNode<Label>("Value") },
 			{ RawResource.Iron, statLabels.GetNode<TextureRect>(RawResource.Iron).GetNode<Label>("Value") },
 			{ RawResource.Water, statLabels.GetNode<TextureRect>(RawResource.Water).GetNode<Label>("Value") }
 		};
@@ -91,11 +91,11 @@ public partial class GameMenu : Control
 		{
 			{ RawResource.Money, statLabels.GetNode<TextureRect>(RawResource.Money) },
 			{ RawResource.Food, statLabels.GetNode<TextureRect>(RawResource.Food)},
-			{ RawResource.Citizens, statLabels.GetNode<TextureRect>(RawResource.Citizens)},
+			{ NpcStatuses.Citizens, statLabels.GetNode<TextureRect>(NpcStatuses.Citizens)},
 			{ RawResource.Stone, statLabels.GetNode<TextureRect>(RawResource.Stone)},
 			{ RawResource.Happiness, statLabels.GetNode<TextureRect>(RawResource.Happiness)},
 			{ RawResource.Wood, statLabels.GetNode<TextureRect>(RawResource.Wood)},
-			{ RawResource.Unemployed, statLabels.GetNode<TextureRect>(RawResource.Unemployed)},
+			{ NpcStatuses.Unemployed, statLabels.GetNode<TextureRect>(NpcStatuses.Unemployed)},
 			{ RawResource.Iron, statLabels.GetNode<TextureRect>(RawResource.Iron)},
 			{ RawResource.Water, statLabels.GetNode<TextureRect>(RawResource.Water)}
 		};
@@ -128,8 +128,13 @@ public partial class GameMenu : Control
 
 		foreach (var item in _gameStatLabels)
 		{
-
 			SetToolTip(item.Key);
+			if (GameMap.NpcStats.ContainsKey(item.Key))
+			{
+				item.Value.Text = GameMap.NpcStats[item.Key].ToString();
+				continue;
+			}
+			
 			item.Value.Text = GameLogistics.Resources[item.Key].ToString();
 		}
 	}
@@ -146,6 +151,9 @@ public partial class GameMenu : Control
 		{
 			case RawResource.Food:
 				_gameStats[key].SetTooltipText(GameLogistics.FoodResourceAsString);
+				break;
+			case NpcStatuses.Citizens:
+				_gameStats[key].SetTooltipText(GameMap.NpcStatsAsString);
 				break;
 		}
 	}

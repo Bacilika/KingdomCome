@@ -24,7 +24,6 @@ public abstract partial class Production : AbstractPlaceable
 			var npc = People[i];
 			npc.OnWorkDelete();
 			RemoveWorker(npc);
-			GameLogistics.Resources[RawResource.Unemployed]++;
 		}
 		foreach (var cost in DeleteCost) GameLogistics.Resources[cost.Key] += cost.Value[Level];
 		Shop.deleteAudio.Play();
@@ -80,7 +79,6 @@ public abstract partial class Production : AbstractPlaceable
 				var npc = People[i];
 				npc.OnWorkDelete();
 				RemoveWorker(npc);
-				GameLogistics.Resources[RawResource.Unemployed]++;
 			}
 			Console.WriteLine(People.Count);
 		
@@ -126,7 +124,6 @@ public abstract partial class Production : AbstractPlaceable
 
 		if (npc.GetJob(this))
 		{
-			GameLogistics.Resources[RawResource.Unemployed]--;
 			People.Add(npc);
 		}
 		return true;

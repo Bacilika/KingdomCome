@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 using KingdomCome.Scripts.Building;
 using KingdomCome.Scripts.Building.Activities;
@@ -11,8 +12,11 @@ public partial class GameMap : Node2D
 	public static List<AbstractActivity> _placedActivities = [];
 	public static List<LivingSpace> _placedHouses = [];
 	public static List<Production> _placedProduction = [];
+	
+	public static List<Npc> Homeless = [];
+	public static List<Npc> Unemployed = [];
 	public List<Npc> Citizens = [];
-	public List<Npc> Homeless = [];
+	public static Dictionary<string, int> NpcStats  = new ();
 	private TutorialWindow _tutorialWindow;
 
 	//for job selection
@@ -30,6 +34,7 @@ public partial class GameMap : Node2D
 	public Timer GracePeriodTimer;
 	private WorkBench _workBench;
 	private double _timeSinceLastTick;
+	public static string NpcStatsAsString;
 	
 	[Signal]
 	public delegate void SendLogEventHandler(string log);
@@ -77,14 +82,45 @@ public partial class GameMap : Node2D
 		// Start NPC
 		SpawnFirstNpc(GetNode<Npc>("Male"));
 		SpawnFirstNpc(GetNode<Npc>("Female"));
+		NpcStats = new Dictionary<string, int>()
+		{
+			{NpcStatuses.Unemployed, 0},
+			{NpcStatuses.Citizens, 0},
+			{NpcStatuses.Homeless, 0},
+		};
+	}
+
+	public void SetNpcString()
+	{
+		NpcStatsAsString = "";
+		foreach (var entry in NpcStats)
+		{
+			NpcStatsAsString += $"{entry.Key}: {entry.Value}\n";
+		}
 	}
 
 	public override void _Process(double delta)
 	{
 		if(TutorialMode) _tutorialWindow.ShowTutorial();
 		_timeSinceLastTick += delta;
-		if (GameLogistics.Resources[RawResource.Unemployed] > 0) //there are unemployed
+		Unemployed = [];
+		foreach (var npc in Citizens.Where(npc => npc.Work is null))
+		{
+			Unemployed.Add(npc);
+			NpcStats[NpcStatuses.Unemployed] = Unemployed.Count;
+
+		}
+		Homeless = [];
+		foreach (var npc in Citizens.Where(npc => npc.Home is null))
+		{
+			Homeless.Add(npc);
+			NpcStats[NpcStatuses.Homeless] = Homeless.Count;
+		}
+		if (NpcStats[NpcStatuses.Unemployed] > 0) //there are unemployed
 			GiveJobToNpcs();
+
+		SetNpcString();
+
 	}
 
 	private void PauseGame()
@@ -160,10 +196,6 @@ public partial class GameMap : Node2D
 		npc.Position = house.Position;
 		house.InfoBox.MoveToFront();
 		Citizens.Add(npc);
-
-
-		GameLogistics.Resources[RawResource.Unemployed]++;
-
 		npc.OnJobChange += OnSelectJob;
 		if (Citizens.Count % 10 == 0)
 		{
@@ -184,7 +216,6 @@ public partial class GameMap : Node2D
 		SubscribeToSignals(npc);
 		Citizens.Add(npc);
 		Homeless.Add(npc);
-		GameLogistics.Resources[RawResource.Unemployed]++;
 		npc.OnJobChange += OnSelectJob;
 		if (Citizens.Count % 10 + 2 == 0)
 		{
@@ -239,6 +270,10 @@ public partial class GameMap : Node2D
 		if (GameLogistics.Resources[RawResource.Food] > 0) GameLogistics.Resources[RawResource.Food] -= 1;
 		
 		
+	}
+	public static bool HasUnemployedCitizens()
+	{
+		return NpcStats[NpcStatuses.Unemployed] > 0;
 	}
 
 	private void OnNpcFed(Npc npc, bool fed)

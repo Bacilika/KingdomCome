@@ -13,7 +13,6 @@ public abstract partial class AbstractActivity : Production
 
 	protected override void OnDeleteInstance()
 	{
-		GameLogistics.Resources[RawResource.Unemployed] += GetWorkers();
 	}
 
 	public bool Visit()

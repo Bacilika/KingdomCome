@@ -42,11 +42,17 @@ public static class RawResource
     public const string Food = "Food";
     public const string Water = "Water";
     public const string Iron = "Iron";
-    public const string Citizens = "Citizens";
     public const string Happiness = "Happiness";
-    public const string Unemployed = "Unemployed";
     public const string Money = "Money";
     public const string Wheat = "Wheat";
+}
+
+public static class NpcStatuses
+{
+    public const string Citizens = "Citizens";
+    public const string Unemployed = "Unemployed";
+    public const string Homeless = "Homeless"; 
+    
 }
 
 public static class Food

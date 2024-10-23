@@ -45,10 +45,9 @@ public partial class GameLogistics : Node2D
 		
 		Resources = new System.Collections.Generic.Dictionary<string, int>
 		{
-			{ RawResource.Money, 0 }, { RawResource.Citizens, 0 },
-			{ RawResource.Happiness, 0 }, { RawResource.Food, 0 },
-			{ RawResource.Stone, 100 }, { RawResource.Iron, 0 },
-			{ RawResource.Unemployed, 0 }, { RawResource.Water, 0 },
+			{ RawResource.Money, 0 }, { RawResource.Happiness, 0 },
+			{ RawResource.Food, 0 }, { RawResource.Stone, 100 },
+			{ RawResource.Iron, 0 }, { RawResource.Water, 0 },
 			{ RawResource.Wood, 100 }, { RawResource.Wheat, 10}
 		};
 		
@@ -63,6 +62,7 @@ public partial class GameLogistics : Node2D
 			{ProcessedResource.Flour,0}
 		};
 	}
+	
 
 	private void CalculateFoods()
 	{
@@ -71,31 +71,20 @@ public partial class GameLogistics : Node2D
 	var totalfood = 0;
 		foreach (var food in FoodResource)
 		{
-			switch (food.Key)
-			{
-				case Food.Bread:
-				{
-					FoodResourceAsString += $"{food.Key}: {food.Value} (x2)\n";
-					totalfood += 2;
-					break;
-				}
-				case Food.Meat:
-				{
-					FoodResourceAsString += $"{food.Key}: {food.Value} (x1)\n";
-					totalfood += 1;
-					break;
-				}
-				case Food.Crops:
-				{
-					FoodResourceAsString += $"{food.Key}: {food.Value} (x2)\n";
-					totalfood += 2;
-					break;
-				}
-					
-			}
+			FoodResourceAsString += $"{food.Key}: {food.Value}\n";
 		}
 
 		Resources[RawResource.Food] = totalfood;
+	}
+
+	public static void ConsumeFood()
+	{
+		foreach (var food in FoodResource)
+		{
+			FoodResource[food.Key] --;
+			Resources[RawResource.Food]--;
+			return;
+		}
 	}
 		
 
@@ -110,7 +99,6 @@ public partial class GameLogistics : Node2D
 		{
 			_gameMenu.HideShop(false);
 		}
-		
 		CalculateFoods();
 		if (dragging && _roadPlaceMode && !_gameMenu.CancelButtonFocused)
 		{
@@ -202,10 +190,7 @@ public partial class GameLogistics : Node2D
 		if (@event.IsActionReleased(Inputs.LeftClick)) dragging = false;
 	}
 
-	public static bool HasUnemployedCitizens()
-	{
-		return Resources[RawResource.Unemployed] > 0;
-	}
+	
 
 
 	public bool CanPlace()

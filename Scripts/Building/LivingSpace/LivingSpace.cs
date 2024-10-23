@@ -20,7 +20,6 @@ public abstract partial class LivingSpace : AbstractPlaceable
             if (Rnd.RandiRange(0, Growth) == 0)
             {
                 Inhabitants++;
-                GameLogistics.Resources[RawResource.Citizens]++;
                 PlayAnimation();
                 EmitSignal(SignalName.OnCreateNpc, this);
             }

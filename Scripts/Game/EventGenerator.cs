@@ -17,8 +17,6 @@ public class EventGenerator
         
         //-----Event 1-----
         var event1 = CreateEvent(2);
-
-        
         event1.Title.Text = "War!";
         event1.Description.Text = "Another nation has declared war!";
         event1.buttons[0].Text = "Attack";

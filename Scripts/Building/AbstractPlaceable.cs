@@ -99,6 +99,7 @@ public abstract partial class AbstractPlaceable : Area2D
         InfoBox.Connect(PlaceableInfo.SignalName.OnUpgrade, Callable.From(OnUpgrade));
         InfoBox.Connect(PlaceableInfo.SignalName.OnMove, Callable.From(OnMove));
         
+        
      
 
 

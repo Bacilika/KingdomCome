@@ -61,7 +61,6 @@ public class EventGenerator
         event2.Ready += () => { createEvent2(event2); };
         eventCards.Add(event2);
         eventCards.Add(event1);
-        
     }
 
 

@@ -398,6 +398,7 @@ public partial class Npc : CharacterBody2D
 			if (GameLogistics.Resources[RawResource.Unemployed] > 0)
 			GameLogistics.Resources[RawResource.Unemployed] -= 1;
 		GetParent<GameMap>().Citizens.Remove(this);
+		GetParent<GameMap>().RemoveChild(this);
 		QueueFree();
 	}
 	

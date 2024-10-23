@@ -9,7 +9,7 @@ public class EventGenerator
 {
     public static List<EventCard> eventCards = [];
     private PackedScene _eventScene;
-    private RandomNumberGenerator _rand; 
+    private RandomNumberGenerator _rand = new(); 
     public EventGenerator()
     {
         //get eventcard 
@@ -34,28 +34,26 @@ public class EventGenerator
         event1.buttons[0].Pressed += () =>
         {
             Console.WriteLine("event works.");
-            event1.Description.Text = "You won the battle, but lost a citizen! +5 wood, -1 npc";
             GameLogistics.Resources[RawResource.Wood] += 5;
             var npc = event1.Gamemap.Citizens.Last();
-            event1.Gamemap.RemoveChild(npc);
-            npc.OnDelete();
             
+            event1.Description.Text = $"You won the battle, but lost {npc.CitizenName}! +5 wood " ;
+            npc.OnDelete();
         };
         event1.buttons[1].Pressed += () =>
         {
             Console.WriteLine("event 2 works.");
-            int amount = _rand.RandiRange(0, event1.Gamemap.Citizens.Count - 2);
-            List<Npc> sublist = event1.Gamemap.Citizens.GetRange(event1.Gamemap.Citizens.Count-amount, event1.Gamemap.Citizens.Count);
+            int amount = _rand.RandiRange(1, Math.Max(event1.Gamemap.Citizens.Count-2, 1));
+            List<Npc> sublist = event1.Gamemap.Citizens.GetRange(event1.Gamemap.Citizens.Count-amount-1, event1.Gamemap.Citizens.Count-1);
             String names = ""; 
             foreach (var npc in sublist)
             {
-                names += $" {npc.Name},";
-                event1.Gamemap.RemoveChild(npc);
+                names += $" {npc.CitizenName},";
                 npc.OnDelete();
             }
             names = names.Remove(names.Length - 1);
             event1.Description.Text = $"They didn't listen and killed {amount} of your people. Their names were {names} ";
-            event1.Gamemap.Citizens.RemoveRange(event1.Gamemap.Citizens.Count-amount, event1.Gamemap.Citizens.Count);
+            //event1.Gamemap.Citizens.RemoveRange(event1.Gamemap.Citizens.Count-amount, event1.Gamemap.Citizens.Count);
         };
         eventCards.Add(event1);
         

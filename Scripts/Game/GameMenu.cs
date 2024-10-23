@@ -14,7 +14,6 @@ public partial class GameMenu : Control
 	public static Label GameMode;
 	public static Label Day;
 	public static Label Level;
-	public static Label NextLevel;
 	public static ProgressBar LevelProgressbar;
 	public CanvasLayer CanvasLayer;
 	public ProductionInfo ProductionInfo;
@@ -41,7 +40,6 @@ public partial class GameMenu : Control
 		ProductionInfo = GetNode<ProductionInfo>("MenuCanvasLayer/ProductionInfo");
 		Day = GetNode<Label>("MenuCanvasLayer/GameStats/Day");
 		Level = GetNode<Label>("MenuCanvasLayer/GameStats/Level/Level");
-		NextLevel = GetNode<Label>("MenuCanvasLayer/GameStats/Level/NextLevel");
 		LevelProgressbar = GetNode<ProgressBar>("MenuCanvasLayer/GameStats/Level/LevelProgress");
 		GameMode = GetNode<Label>("MenuCanvasLayer/CurrentGameMode");
 		CanvasLayer = GetNode<CanvasLayer>("MenuCanvasLayer");
@@ -114,7 +112,6 @@ public partial class GameMenu : Control
 	{
 		LevelProgressbar.Value = 0;
 		Level.Text =  $"Level: {updatedLevel.ToString()}";
-		NextLevel.Text = (updatedLevel +1).ToString();
 
 	}
 
@@ -123,7 +120,6 @@ public partial class GameMenu : Control
 
 		LevelProgressbar.Value = _citizen.Count % 10;
 		Level.TooltipText = $"{10 - _citizen.Count % 10 } more citizen until next level";
-		NextLevel.TooltipText = $"{10 - _citizen.Count % 10 } more citizen until next level";
 		LevelProgressbar.TooltipText = $"{10 - _citizen.Count % 10 } more citizen until next level";
 
 		Day.Text = "Day: " + GameLogistics.Day;

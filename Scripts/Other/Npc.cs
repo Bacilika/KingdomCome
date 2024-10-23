@@ -393,17 +393,12 @@ public partial class Npc : CharacterBody2D
 		EmitSignal(SignalName.SendLog, $"{CitizenName} is moving out");
 		Work?.People.Remove(this);
 		Home?.People.Remove(this);
-		if (Work is not null)
-			Work.People.Remove(this);
-		else
-			if (GameMap.NpcStats[NpcStatuses.Unemployed] > 0)
-				GameMap.NpcStats[NpcStatuses.Unemployed] -= 1;
 		GetParent<GameMap>().Citizens.Remove(this);
 		GetParent<GameMap>().RemoveChild(this);
 		QueueFree();
 	}
 	
-	public void SetNextLocation()
+	private void SetNextLocation()
 	{
 		if (CurrentBuilding == null)
 		{
@@ -455,13 +450,13 @@ public partial class Npc : CharacterBody2D
 		}
 	}
 
-	public void SetDestinationToTargetBuilding(AbstractPlaceable target)
+	private void SetDestinationToTargetBuilding(AbstractPlaceable target)
 	{
 		TargetBuilding = target;
 		SetDestination(TargetBuilding is null ? _homelessPos : target.Position);
 	}
 	
-	public bool GoToActivity()
+	private bool GoToActivity()
 	{
 		return _rnd.RandiRange(0, 3) == 0;
 	}
@@ -482,7 +477,7 @@ public partial class Npc : CharacterBody2D
 	}
 
 	
-	public void OnWorkDelete() // Todo: Fix OnWorkDelete
+	public void OnWorkDelete()
 	{
 		Work = null;
 		AtWork = false;		
@@ -513,19 +508,17 @@ public partial class Npc : CharacterBody2D
 
 	public override void _Input(InputEvent @event)
 	{
-		if (@event.IsActionPressed(Inputs.LeftClick))
+		if (!@event.IsActionPressed(Inputs.LeftClick)) return;
+		
+		if (_focused || Info.focused)
 		{
-			if (_focused || Info.focused)
-			{
-				if (GameMap.TutorialMode)  TutorialWindow.CompleteTutorialStep("Select Npc");
-				ShowInfo();
-				_stopped = true;
-			}
-			else
-			{
-				Info.Visible = false;
-				_stopped = false;
-			}
+			ShowInfo();
+			_stopped = true;
+		}
+		else
+		{
+			Info.Visible = false;
+			_stopped = false;
 		}
 	}
 

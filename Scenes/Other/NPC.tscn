@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=3 uid="uid://2uovf4y3vnqd"]
+[gd_scene load_steps=56 format=3 uid="uid://2uovf4y3vnqd"]
 
 [ext_resource type="Script" path="res://Scripts/Other/Npc.cs" id="1_dv6rn"]
 [ext_resource type="Texture2D" uid="uid://7ld563nokdjq" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Character/Character/Character_Walk.png" id="1_f3dyl"]
@@ -8,7 +8,6 @@
 [ext_resource type="Texture2D" uid="uid://upt4yk7l26yk" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Character/CharacterPortrait_2.png" id="3_urwk0"]
 [ext_resource type="PackedScene" uid="uid://dyq8jku2xq8kr" path="res://Scenes/Building/CitizenInfo.tscn" id="4_pwgeb"]
 [ext_resource type="Texture2D" uid="uid://ci4sq16dccr2j" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Character/Character/Character_Slash.png" id="5_6tfck"]
-[ext_resource type="Texture2D" uid="uid://brddo04fjmv4b" path="res://Sprites/Extra/Arrow.png" id="8_ir6jp"]
 [ext_resource type="Texture2D" uid="uid://bsb5ikj67vnxd" path="res://Sprites/Extra/ExclamationPoint1.png" id="9_fkht1"]
 [ext_resource type="Texture2D" uid="uid://c3md08hvm0ps5" path="res://Sprites/Extra/ExclamationPoint2.png" id="10_dgcpp"]
 [ext_resource type="Texture2D" uid="uid://bkiasfo2kbr20" path="res://Sprites/Extra/ExclamationPoint3.png" id="11_j7owm"]
@@ -350,41 +349,8 @@ animations = [{
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jqgkw"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_2ik52"]
-atlas = ExtResource("8_ir6jp")
-region = Rect2(0, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7e4jn"]
-atlas = ExtResource("8_ir6jp")
-region = Rect2(16, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_iax6m"]
-atlas = ExtResource("8_ir6jp")
-region = Rect2(32, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_eb61q"]
-atlas = ExtResource("8_ir6jp")
-region = Rect2(48, 0, 16, 16)
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_0essj"]
 animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_2ik52")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_7e4jn")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_iax6m")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_eb61q")
-}],
-"loop": true,
-"name": &"Arrow",
-"speed": 5.0
-}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("9_fkht1")
@@ -441,8 +407,7 @@ one_shot = true
 [node name="Interaction" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -34)
 sprite_frames = SubResource("SpriteFrames_0essj")
-animation = &"Arrow"
-frame_progress = 0.18935
+animation = &"ExclamationPoint"
 
 [connection signal="mouse_entered" from="." to="." method="OnMouseEntered"]
 [connection signal="mouse_exited" from="." to="." method="OnMouseExited"]

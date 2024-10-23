@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using Godot;
 using Godot.Collections;
@@ -30,8 +31,8 @@ public partial class GameLogistics : Node2D
 	private PackedScene _roadScene = ResourceLoader.Load<PackedScene>("res://Scenes/Other/Road.tscn");
 	public static string FoodResourceAsString;
 	public Sprite2D RoadRemovalTexture;
-
-
+	
+	
 	public override void _Ready()
 	{
 		_gameMap = GetParent<GameMap>();
@@ -64,7 +65,7 @@ public partial class GameLogistics : Node2D
 	}
 	
 
-	private void CalculateFoods()
+	private static void CalculateFoods()
 	{
 		FoodResourceAsString = "";
 

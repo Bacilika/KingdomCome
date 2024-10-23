@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://25kpv3trjyvk"]
+[gd_scene load_steps=46 format=3 uid="uid://25kpv3trjyvk"]
 
 [ext_resource type="Script" path="res://Scripts/Game/GameMenu.cs" id="1_dev6f"]
 [ext_resource type="Theme" uid="uid://c2femp2uxsefw" path="res://Themes/Theme.tres" id="1_vgcun"]
@@ -16,7 +16,6 @@
 [ext_resource type="Texture2D" uid="uid://fgflcwfg7ymo" path="res://Sprites/Extra/Icons/Sign3.png" id="7_k3pbr"]
 [ext_resource type="StyleBox" uid="uid://boch0qr65svlr" path="res://Themes/TabSelect.tres" id="8_cewdh"]
 [ext_resource type="Texture2D" uid="uid://bg65o6c0eh1bw" path="res://Sprites/Extra/Icons/Sign4.png" id="8_mbmc5"]
-[ext_resource type="Texture2D" uid="uid://cda3k1x7wfasp" path="res://Sprites/Extra/Icons/Sign5.png" id="9_0d0hb"]
 [ext_resource type="StyleBox" uid="uid://dl4wjdx8vlj4p" path="res://Themes/TabUnselect.tres" id="9_iv2ij"]
 [ext_resource type="Texture2D" uid="uid://oy5wxt57vaiu" path="res://Sprites/Extra/Icons/Sign6.png" id="10_jbmre"]
 [ext_resource type="Texture2D" uid="uid://wecbgst7xike" path="res://Sprites/Extra/Icons/Sign7.png" id="11_hpum0"]
@@ -289,8 +288,8 @@ TabContainer/styles/tab_unselected = ExtResource("9_iv2ij")
 y_sort_enabled = true
 layout_mode = 3
 anchors_preset = 0
-offset_left = -8.0
-offset_right = 1272.0
+offset_left = -7.0
+offset_right = 1273.0
 offset_bottom = 696.0
 size_flags_vertical = 8
 mouse_filter = 2
@@ -374,11 +373,6 @@ layout_mode = 2
 tooltip_text = "Happiness"
 texture = ExtResource("8_mbmc5")
 
-[node name="Unemployed" parent="MenuCanvasLayer/GameStats" instance=ExtResource("4_2bxld")]
-layout_mode = 2
-tooltip_text = "Unemployed"
-texture = ExtResource("9_0d0hb")
-
 [node name="Money" parent="MenuCanvasLayer/GameStats" instance=ExtResource("4_2bxld")]
 layout_mode = 2
 tooltip_text = "Money"
@@ -405,13 +399,6 @@ max_value = 10.0
 step = 1.0
 value = 5.0
 show_percentage = false
-
-[node name="NextLevel" type="Label" parent="MenuCanvasLayer/GameStats/Level"]
-layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("3_d13wb")
-theme_override_font_sizes/font_size = 26
-text = "1"
 
 [node name="Day" type="Label" parent="MenuCanvasLayer/GameStats"]
 layout_mode = 2

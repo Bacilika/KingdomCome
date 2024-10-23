@@ -31,6 +31,8 @@ public partial class GameMap : Node2D
 	private PackedScene infoScene;
 	public static bool TutorialMode = true;
 
+	private TutorialWindow tutorial;
+
 	public Timer GracePeriodTimer;
 	private WorkBench _workBench;
 	private double _timeSinceLastTick;
@@ -46,6 +48,7 @@ public partial class GameMap : Node2D
 
 	public override void _Ready()
 	{
+		tutorial = new TutorialWindow(this);
 		_foodTimer = GetNode<Timer>("EatFoodTimer");
 		_dayTimer = GetNode<Timer>("DayTimer");
 		_dayTimer.Start();
@@ -116,6 +119,7 @@ public partial class GameMap : Node2D
 			Homeless.Add(npc);
 			NpcStats[NpcStatuses.Homeless] = Homeless.Count;
 		}
+		NpcStats[NpcStatuses.Citizens] = Citizens.Count;
 		if (NpcStats[NpcStatuses.Unemployed] > 0) //there are unemployed
 			GiveJobToNpcs();
 
@@ -217,7 +221,6 @@ public partial class GameMap : Node2D
 	{
 		SubscribeToSignals(npc);
 		Citizens.Add(npc);
-		Homeless.Add(npc);
 		npc.OnJobChange += OnSelectJob;
 		if (Citizens.Count % 10 + 2 == 0)
 		{
@@ -269,9 +272,6 @@ public partial class GameMap : Node2D
 		EmitSignal(SignalName.SendLog,$"Day {GameLogistics.Day} has passed");
 		GameLogistics.Day += 1;
 		EmitSignal(SignalName.DayOver);
-		if (GameLogistics.Resources[RawResource.Food] > 0) GameLogistics.Resources[RawResource.Food] -= 1;
-		
-		
 	}
 	public static bool HasUnemployedCitizens()
 	{

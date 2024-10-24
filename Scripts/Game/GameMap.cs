@@ -18,6 +18,7 @@ public partial class GameMap : Node2D
 	public List<Npc> Citizens = [];
 	public static Dictionary<string, int> NpcStats  = new ();
 	private TutorialWindow _tutorialWindow;
+	
 
 	//for job selection
 	public static bool JobSelectMode;
@@ -177,6 +178,20 @@ public partial class GameMap : Node2D
 		//placeable.Position = GetGlobalMousePosition();
 		AddChild(placeable);
 		placeable.HouseSprite.SetAnimation("Building"); 
+		
+		//progress bar
+		if (placeable is not WorkBench)
+		{
+			placeable.AddChild(placeable.BuildingProgressBar);
+			placeable.BuildingProgressBar.MinValue = 0;
+			placeable.BuildingProgressBar.Position = placeable.Position;
+			placeable.BuildingProgressBar.MaxValue = 25;
+			placeable.BuildingProgressBar.Visible = true;
+			placeable.BuildingProgressBar.ZIndex = 4;
+			placeable.BuildingProgressBar.SetCustomMinimumSize(new Vector2(100, 30));
+
+		}
+
 		EmitSignal(SignalName.SendLog,$"Successfully built {placeable.BuildingName}");
 	}
 

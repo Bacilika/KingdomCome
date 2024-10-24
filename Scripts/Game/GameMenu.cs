@@ -47,14 +47,14 @@ public partial class GameMenu : Control
 		
 		//Event 
 		AddChild(eventtimer);
-		int waitTime = random.RandiRange(5, 10);
+		int waitTime = random.RandiRange(30, 40);
 		eventtimer.SetWaitTime(waitTime);
 		eventtimer.Start();
 		eventtimer.OneShot = false;
 		eventtimer.Timeout += () =>
 		{
 			CanvasLayer.AddChild(EventGenerator.getEvent());
-			int waitTime = random.RandiRange(5, 10);
+			int waitTime = random.RandiRange(120, 300);
 			eventtimer.SetWaitTime(waitTime);
 			eventtimer.Start();
 		};

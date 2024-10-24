@@ -78,10 +78,10 @@ public partial class WorkBench : Production
 		List<AbstractPlaceable> toBeRemoved = [];
 		foreach (var entry in BuildList.Where(entry => entry.Key.BuildingCounter >= 25))
 		{
-			
 			toBeRemoved.Add(entry.Key);
 			entry.Key.isDone = true;
 			entry.Key.HouseSprite.SetAnimation("Level" + entry.Key.Level); 
+			entry.Key.BuildingProgressBar.Visible = false;
 			foreach (var person in entry.Value)
 			{
 				person.SetDestination(Position);
@@ -103,6 +103,7 @@ public partial class WorkBench : Production
 			person._move = false;
 			person.Idle = false;
 			building.BuildingCounter ++;
+			building.BuildingProgressBar.Value += 1;
 		}
 		else
 		{

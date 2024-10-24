@@ -49,12 +49,11 @@ theme_override_constants/side_margin = 0
 theme_override_constants/icon_separation = 0
 theme_override_icons/menu = SubResource("ViewportTexture_ok3r1")
 tab_alignment = 1
-current_tab = 4
+current_tab = 0
 tabs_position = 1
 clip_tabs = false
 
 [node name="Houses" type="ScrollContainer" parent="BuildTabButtons"]
-visible = false
 clip_contents = false
 layout_mode = 2
 script = ExtResource("5_3m6vu")
@@ -97,6 +96,7 @@ custom_minimum_size = Vector2(400, 80)
 layout_mode = 2
 
 [node name="Activities" type="ScrollContainer" parent="BuildTabButtons"]
+visible = false
 clip_contents = false
 layout_mode = 2
 script = ExtResource("9_vpmg5")

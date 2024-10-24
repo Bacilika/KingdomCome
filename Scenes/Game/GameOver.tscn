@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://d4icbsx75u25r"]
+
+[ext_resource type="Script" path="res://Scripts/Game/GameOver.cs" id="1_bofce"]
+[ext_resource type="Theme" uid="uid://c2femp2uxsefw" path="res://Themes/Theme.tres" id="1_shry5"]
+
+[node name="GameOver" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_bofce")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 468.0
+offset_top = 194.0
+offset_right = 1035.0
+offset_bottom = 370.0
+theme = ExtResource("1_shry5")
+theme_override_font_sizes/font_size = 46
+text = "Game over"
+horizontal_alignment = 1

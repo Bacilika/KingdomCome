@@ -54,7 +54,7 @@ public partial class GameLogistics : Node2D
 		
 		FoodResource = new System.Collections.Generic.Dictionary<string, int>
 		{
-			{ Food.Bread, 5 }, { Food.Meat, 6 }, { Food.Crops, 7 }
+			{ Food.Bread, 0 }, { Food.Meat, 0 }, { Food.Crops, 0 }
 		};
 		
 		ProcessedResources = new System.Collections.Generic.Dictionary<string, int>

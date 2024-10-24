@@ -1,7 +1,8 @@
-[gd_scene load_steps=56 format=3 uid="uid://2uovf4y3vnqd"]
+[gd_scene load_steps=57 format=3 uid="uid://2uovf4y3vnqd"]
 
 [ext_resource type="Script" path="res://Scripts/Other/Npc.cs" id="1_dv6rn"]
 [ext_resource type="Texture2D" uid="uid://7ld563nokdjq" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Character/Character/Character_Walk.png" id="1_f3dyl"]
+[ext_resource type="Texture2D" uid="uid://dnu3ptgna4t4q" path="res://Sprites/Extra/CharacterPortrait_dead.png" id="2_6y88q"]
 [ext_resource type="Texture2D" uid="uid://bnr631t1td44f" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Character/CharacterPortrait.png" id="2_m8sf3"]
 [ext_resource type="Texture2D" uid="uid://dks13v40j0uxo" path="res://Art/Characters/Character/Character_Slash.png" id="3_bfk5s"]
 [ext_resource type="AudioStream" uid="uid://b42k3qloq1c6x" path="res://Audio/GrassWalking.mp3" id="3_kh5mf"]
@@ -177,6 +178,14 @@ region = Rect2(160, 96, 32, 48)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("2_6y88q")
+}],
+"loop": true,
+"name": &"dead",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("2_m8sf3")
 }, {
 "duration": 1.0,
@@ -348,6 +357,8 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jqgkw"]
+radius = 11.0
+height = 22.0
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_0essj"]
 animations = [{
@@ -378,8 +389,7 @@ script = ExtResource("1_dv6rn")
 [node name="WalkingAnimation" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -8)
 sprite_frames = SubResource("SpriteFrames_2xgin")
-animation = &"idle"
-frame_progress = 0.429972
+animation = &"dead"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 y_sort_enabled = true

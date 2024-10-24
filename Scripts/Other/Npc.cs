@@ -31,8 +31,11 @@ public partial class Npc : CharacterBody2D
 	public string CitizenName = NameGenerator.GenerateFirstName();
 	private AnimatedSprite2D _animation;
 	private const int BaseHappiness = 5;
-	public int Hunger = 0;
+	private int Hunger = 0;
 	private bool _focused;
+	private int daysUnhappy = 0;
+	private int daysNotFed = 0;
+	public bool dead = false;
 	
 	private Dictionary<string, MoodReason> _moodReasons = new();
 
@@ -202,14 +205,6 @@ public partial class Npc : CharacterBody2D
 			return;
 		}
 
-		if (!_move)
-		{
-			//_animation.SetAnimation("idle");
-			_animation.Play("idle");
-		}
-
-		
-
 		if (_move) // going to destination
 		{
 			_direction = GetDirection();
@@ -232,10 +227,17 @@ public partial class Npc : CharacterBody2D
 				_animation.Animation = $"work{_direction}";
 				
 			}
+			
+			else if (dead)
+			{
+				_animation.Animation = "dead";
+				_animation.Play();
+				
+			}
 			else
 			{
-				_animation.Stop();
-				_animation.Animation = "walkDown";
+				_animation.Play();
+				_animation.Animation = "idle";
 			}
 			ToggleWalkingSound(false);
 
@@ -554,16 +556,31 @@ public partial class Npc : CharacterBody2D
 			if (Hunger >= 5)
 			{
 				EmitSignal(GameMap.SignalName.SendLog, $"{CitizenName} starved to death.");
-				foreach (var familyMember in Home.People)
-				{
-					familyMember.SetMoodReason("Trauma", "Family member died", -3,3);
+				if (Home is not null){
+					foreach (var familyMember in Home.People)
+					{
+						familyMember.SetMoodReason("Trauma", "Family member died", -3,3);
+					}
 				}
-				
+				AtWorkTimer.Stop();
+				ScheduleTimer.Stop();
+				_move = false;
+				dead = true;
 			}
 			else
 			{
 				EmitSignal(SignalName.OnFed, this, false);
 				SetMoodReason("Food", "Did not get fed",-Hunger);
+			}
+		}
+
+		if (Happiness < 3)
+		{
+			daysUnhappy += 1;
+			if (daysUnhappy > 5)
+			{
+				OnDelete();
+				//Todo: Write in log that Npc has moved out. 
 			}
 		}
 	}

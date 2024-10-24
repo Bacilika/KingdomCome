@@ -125,9 +125,25 @@ public partial class GameMap : Node2D
 			GiveJobToNpcs();
 
 		SetNpcString();
-
+		checkNpcIsNotNull();
 	}
 
+	public void checkNpcIsNotNull()
+	{
+		int deadc = 0;
+		foreach (var npc in Citizens)
+		{
+			if (npc.dead)
+			{
+				deadc++;
+			}
+		}
+		if (Citizens.Count == deadc)
+		{
+			GetNode<Control>("GameOver").Visible = true;
+		}
+	}
+	
 	public void PauseGame()
 	{
 		_gameMenu.GetNode<ColorRect>("MenuCanvasLayer/PausedRect").Visible = true;

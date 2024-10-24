@@ -10,12 +10,16 @@ public class EventGenerator
     public static List<EventCard> eventCards = [];
     private PackedScene _eventScene;
     private PackedScene _npcScene;
+    private PackedScene _npcScene1;
+    private PackedScene _npcScene2;
     private RandomNumberGenerator _rand = new(); 
     
     //Event variables
     private bool helpedSalesman = false;
     private bool helpedBoy = false;
     private Npc _boyNpc;
+    private Npc _sibling1Npc;
+    private Npc _sibling2Npc;
     
     public EventGenerator()
     {
@@ -32,13 +36,29 @@ public class EventGenerator
         event1.Ready += () => { createEvent1(event1); };
         event2.Ready += () => { createEvent2(event2); };
         event3.Ready += () => { createEvent3(event3); };
-        event5.Ready += () =>
-        {
-            if(helpedBoy) createEvent5Boy(event5);
-        };
         event4.Ready += () =>
         {
-            if(helpedBoy) createEvent4Boy(event4);
+            if (helpedBoy)
+            {
+                createEvent4Boy(event4);
+            }
+            else
+            {
+                createEvent4NoBoy(event4);
+    
+            }
+        };
+        event5.Ready += () =>
+        {
+            if (helpedBoy)
+            {
+                createEvent5Boy(event5);
+            }
+            else
+            {
+                createEvent5NoBoy(event5);
+            }
+
         };
         eventCards.Add(event2);       
         eventCards.Add(event3);
@@ -59,8 +79,103 @@ public class EventGenerator
             $"\n\"What are you doing?\" The boy looks scared and starts crying, but after some time you get an explaination. Apparently his father" +
             $"demands that he gives food to them, otherwise he will leave his siblings to starve, and that is why he has been stealing. ";
         event2.buttons[0].Text = "Stealing is never okay. Please leave.";
-        event2.buttons[1].Text = "I will let you stay, but you must stop stealing.";
+        event2.buttons[1].Text = "You can stay, but don't speak to your family again.";
         event2.buttons[2].Text = "Bring your siblings here!";
+        
+        event2.DoneButton.Pressed += () =>
+        {
+            event2.Gamemap.PlayGame();
+            eventCards.Remove(event2);
+            event2.GetParent().RemoveChild(event2);
+            event2.QueueFree();
+        };
+        //actions
+        event2.buttons[0].Pressed += () =>
+        {
+            GameLogistics.Resources[RawResource.Wood] += 5;
+            GameLogistics.ProcessedResources[ProcessedResource.Plank] += 5;
+            event2.Description.Text = $"{_boyNpc.CitizenName} looked horrified as {luckyNpc} gathered his belongings and forced him out the door. " +
+                                      $"This boy was, however, not of your concern anymore.";
+        };
+        event2.buttons[1].Pressed += () =>
+        {
+            event2.Description.Text = $"{_boyNpc.CitizenName} looked unhappy, but promised never to see his family or to steal again. " +
+                                      $"Although you wanted to believe him, it was hard to picture him so easily leaving his siblings" +
+                                      $"without a second thought.";
+        };
+        
+        event2.buttons[2].Pressed += () =>
+        {
+            _npcScene1 = ResourceLoader.Load<PackedScene>("res://Scenes/Other/NPC.tscn");
+            _sibling1Npc = _npcScene1.Instantiate<Npc>();
+            event2.GetTree().Root.AddChild(_sibling1Npc);
+            event2.Gamemap.SpawnFirstNpc(_sibling1Npc);
+            _npcScene2 = ResourceLoader.Load<PackedScene>("res://Scenes/Other/NPC.tscn");
+            _sibling2Npc = _npcScene2.Instantiate<Npc>();
+            event2.GetTree().Root.AddChild(_sibling2Npc);
+            event2.Gamemap.SpawnFirstNpc(_sibling2Npc);
+            event2.Description.Text =
+                $"{_boyNpc.CitizenName} looked startled, but soon started smiling in joy. \"Thank you!\" he almost screamed. " +
+                $"\n After a few days of preparation, {_boyNpc.CitizenName}'s two siblings, {_sibling1Npc.CitizenName} and" +
+                $"{_sibling2Npc.CitizenName} were quietly brought from their" +
+                $"parents' house, without the parents noticing, to your village. Although {luckyNpc} felt certain they had made the right desition, " +
+                $"there was an uncertainty of the parents reaction if they ever were to find out... (+2 citizens).";
+        };
+    }
+    
+    
+        private void createEvent4NoBoy(EventCard event2)
+    {
+        event2.Gamemap.PauseGame();
+        var luckyNpc = event2.Gamemap.Citizens.Last().CitizenName;
+        event2.Title.Text = "Something in the ditch";
+        event2.Description.Text =$"As {luckyNpc} was walking along the outskirts of the village, they saw something curled up in a blanket in" +
+                                 $"the ditch. After looking more closely, it looked like a human body curled up in those blankets, with what looked " +
+                                 $"like a plank next to it.";
+        event2.buttons[0].Text = "Try to shake the human awake";
+        event2.buttons[1].Text = "Take the plank and leave.";
+        event2.buttons[2].Text = "Leave without doing anything";
+        
+        event2.DoneButton.Pressed += () =>
+        {
+            event2.Gamemap.PlayGame();
+            eventCards.Remove(event2);
+            event2.GetParent().RemoveChild(event2);
+            event2.QueueFree();
+        };
+        //actions
+        event2.buttons[0].Pressed += () =>
+        {
+            event2.Description.Text = $"{luckyNpc} tried shake the body awake, but soon discovered that it was not moving. " +
+                                      $"When unwrapping the blankets, {luckyNpc} saw that it was the boy from earlier, dead." +
+                                      $"{luckyNpc} left the area, wondering if turning him away had really been the right choice." ;
+        };
+        event2.buttons[1].Pressed += () =>
+        {
+            GameLogistics.ProcessedResources[ProcessedResource.Plank] += 1;
+            event2.Description.Text = $"{luckyNpc} took the plank while carefully avoiding the blankets, and quickly left. " +
+                                      $"Whatever was under there, it was none of their business. ";
+        };
+        
+        event2.buttons[1].Pressed += () =>
+        {
+            event2.Description.Text = $"{luckyNpc} quickly left the area without looking back. Whatever was under that blanket, it was none of their business." ;
+        };
+    }
+    
+        
+    private void createEvent5NoBoy(EventCard event2)
+    {
+        event2.Gamemap.PauseGame();
+        var luckyNpc = event2.Gamemap.Citizens.Last().CitizenName;
+        event2.Title.Text = "Second time's the charm";
+        event2.Description.Text =
+            $"The villagers had been noticing that food had been mysteriously dissapearing the past few days. One night, {luckyNpc}" +
+            $"saw a small girl grabbing some of your food and running away. {luckyNpc} run after her, and quickly caught her." +
+            $"\n\"Why do you steal or food?\" {luckyNpc} asked." +
+            $"\n\"I'm sorry!\" she squealed. \"My family is forcing me to. If I don't, they will kick me out, just like they did to my brother!";
+        event2.buttons[0].Text = "Not our problem. Leave, and don't come back!";
+        event2.buttons[1].Text = "You can stay here.";
         
         event2.DoneButton.Pressed += () =>
         {
@@ -82,7 +197,8 @@ public class EventGenerator
             event2.Description.Text = $"The boy looked sad as he accepted your refusal, but said nothing more.";
         };
     }
-    
+
+        
     
     private void createEvent5Boy(EventCard event2)
     {

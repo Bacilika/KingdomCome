@@ -29,7 +29,7 @@ public partial class GameMap : Node2D
 	private AudioStreamPlayer2D _music;
 	private PackedScene NPCScene;
 	private PackedScene infoScene;
-	public static bool TutorialMode = true;
+	public static bool TutorialMode = false;
 
 	private TutorialWindow tutorial;
 
@@ -129,26 +129,14 @@ public partial class GameMap : Node2D
 
 	public void PauseGame()
 	{
+		_gameMenu.GetNode<ColorRect>("MenuCanvasLayer/PausedRect").Visible = true;
 		GetTree().Paused = true;
-		/*foreach (var npc in Citizens)
-		{
-			npc.ScheduleTimer.Paused = true;
-			npc.AtWorkTimer.Paused = true;
-			npc._move = false;
-			_dayTimer.Paused = true;
-		}*/
 	}
 	
 	public void PlayGame()
 	{
 		GetTree().Paused = false;
-		/*foreach (Npc npc in Citizens)
-		{
-			npc.ScheduleTimer.Paused = false;
-			npc.AtWorkTimer.Paused = false;
-			npc._move = true;
-			_dayTimer.Paused = false;
-		}*/
+		_gameMenu.GetNode<ColorRect>("MenuCanvasLayer/PausedRect").Visible = false;
 	}
 
 	private void OnBackgroundMusicFinish()

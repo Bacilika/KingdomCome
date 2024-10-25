@@ -198,6 +198,12 @@ public partial class GameLogistics : Node2D
 
 	public bool CanPlace()
 	{
+		var positionInGrid = _gameMap.GetNode<TileMapLayer>("WaterLayer").LocalToMap(_object.Position);
+		if (_gameMap.GetNode<TileMapLayer>("WaterLayer").GetCellAtlasCoords(positionInGrid) !=
+		    new Vector2I(-1, -1)) // There is water at position
+		{
+			return false;
+		}
 		return _containBuilding == false;
 	}
 
@@ -304,6 +310,12 @@ public partial class GameLogistics : Node2D
 
 	private bool CanPlaceRoad()
 	{
+		var positionInGrid = _gameMap.GetNode<TileMapLayer>("WaterLayer").LocalToMap(_roadObject.Position);
+		if (_gameMap.GetNode<TileMapLayer>("WaterLayer").GetCellAtlasCoords(positionInGrid) !=
+		    new Vector2I(-1, -1)) // There is water at position
+		{
+			return false;
+		}
 		return !_roadPositions.Contains(_roadLayer.LocalToMap(GetGlobalMousePosition())) && CanAfford(_roadObject);
 	}
 }

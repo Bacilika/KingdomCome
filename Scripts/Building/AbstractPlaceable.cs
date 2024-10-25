@@ -79,11 +79,26 @@ public abstract partial class AbstractPlaceable : Area2D
         {
             var npc = People[i];
             // TODO: dont delte npc, remove them from house
-            npc.OnDelete();
+            npc.OnHouseDestroyed();
         }
         foreach (var cost in DeleteCost) GameLogistics.Resources[cost.Key] += cost.Value[Level];
         Shop.deleteAudio.Play();
-        
+        foreach (var house in GameMap._placedHouses)
+        {
+            if (house == this)
+            {
+                GameMap._placedHouses.Remove(house);
+                break;
+            }
+        }
+        foreach (var activity in GameMap._placedActivities)
+        {
+            if (activity == this)
+            {
+                GameMap._placedActivities.Remove(activity);
+                break;
+            }
+        }
         QueueFree();
     }
 

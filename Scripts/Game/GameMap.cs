@@ -84,6 +84,7 @@ public partial class GameMap : Node2D
 		_workBench = GetNode<WorkBench>("WorkBench");
 		_workBench.IsPlaced = true;
 		_workBench.Visible = true;
+		_workBench.ZIndex = 0;
 		
 		// Start NPC
 		SpawnFirstNpc(GetNode<Npc>("Male"));
@@ -246,6 +247,7 @@ public partial class GameMap : Node2D
 			if (house.isDone && house.Inhabitants < house.Upgrades[Upgrade.MaxInhabitants][Level])
 			{
 				house.MoveIntoHouse(npc);
+				house.Inhabitants++;
 				return;
 			}
 		}

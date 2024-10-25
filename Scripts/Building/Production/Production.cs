@@ -80,14 +80,7 @@ public abstract partial class Production : AbstractPlaceable
 				RemoveWorker(npc);
 			}
 			//Remove from _placedProduction so NPCs can't get job there. 
-			foreach (var production in GameMap._placedProduction)
-			{
-				if (production == this)
-				{
-					GameMap._placedProduction.Remove(production);
-					break;
-				}
-			}
+
 		}
 		else
 		{

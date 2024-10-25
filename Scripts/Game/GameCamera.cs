@@ -77,19 +77,16 @@ public partial class GameCamera : Camera2D
 			_zoomStep++;
 			_zoom /= 2;
 		}
-
 		// Panning behaviour
 		if (@event.IsActionPressed(Inputs.CameraLeft)) _directionsPressed.Add("Left");
 		if (@event.IsActionPressed(Inputs.CameraRight)) _directionsPressed.Add("Right");
 		if (@event.IsActionPressed(Inputs.CameraUp)) _directionsPressed.Add("Up");
 		if (@event.IsActionPressed(Inputs.CameraDown)) _directionsPressed.Add("Down");
-
 		if (@event.IsActionReleased(Inputs.CameraDown)) _directionsPressed.Remove("Down");
 		if (@event.IsActionReleased(Inputs.CameraUp)) _directionsPressed.Remove("Up");
 		if (@event.IsActionReleased(Inputs.CameraLeft)) _directionsPressed.Remove("Left");
 		if (@event.IsActionReleased(Inputs.CameraRight)) _directionsPressed.Remove("Right");
-
-
+		
 		if (!_isDragging && @event.IsActionPressed(Inputs.CameraPan))
 		{
 			_dragStartMousePosition = GetViewport().GetMousePosition();

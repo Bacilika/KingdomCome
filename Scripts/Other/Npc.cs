@@ -596,11 +596,12 @@ public partial class Npc : CharacterBody2D
 
 		if (Happiness < 3)
 		{
+			// TODO: Tell player that unhappy is bad
 			daysUnhappy += 1;
 			if (daysUnhappy > 5)
 			{
 				OnDelete();
-				//Todo: Write in log that Npc has moved out. 
+				EmitSignal(GameMap.SignalName.SendLog, $"{CitizenName} Was too unhappy and left.");
 			}
 		}
 	}

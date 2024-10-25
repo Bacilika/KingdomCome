@@ -46,7 +46,7 @@ public partial class GameMap : Node2D
 	[Signal]
 	public delegate void HomelessNpcEventHandler(Npc npc);
 
-	public static bool GracePeriod = true;
+	public static bool GracePeriod = false;
 	
 
 	public override void _Ready()

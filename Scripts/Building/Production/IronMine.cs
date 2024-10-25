@@ -38,7 +38,7 @@ public partial class IronMine : Production
 	
 	public override void NpcWork(Npc npc)
 	{
-		npc.CurrentBuilding = npc.Work;s
+		npc.CurrentBuilding = npc.Work;
 		npc.TargetBuilding = npc.Work;
 		npc.SetDestination(new Vector2(458, -436));
 		npc.AtWorkTimer.SetWaitTime(5);

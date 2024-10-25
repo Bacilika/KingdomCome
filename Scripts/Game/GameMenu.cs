@@ -15,6 +15,7 @@ public partial class GameMenu : Control
 	public static Label Day;
 	public static Label Level;
 	public static ProgressBar LevelProgressbar;
+	public static ProgressBar DayProgressbar;
 	public CanvasLayer CanvasLayer;
 	public ProductionInfo ProductionInfo;
 	public GameLog GameLog;
@@ -42,12 +43,18 @@ public partial class GameMenu : Control
 	{
 		_citizen = GetParent<GameMap>().Citizens;
 		ProductionInfo = GetNode<ProductionInfo>("MenuCanvasLayer/ProductionInfo");
-		Day = GetNode<Label>("MenuCanvasLayer/GameStats/Day");
+		Day = GetNode<Label>("MenuCanvasLayer/GameStats/Day/Day");
+		DayProgressbar = GetNode<ProgressBar>("MenuCanvasLayer/GameStats/Day/DayProgress");
 		Level = GetNode<Label>("MenuCanvasLayer/GameStats/Level/Level");
 		LevelProgressbar = GetNode<ProgressBar>("MenuCanvasLayer/GameStats/Level/LevelProgress");
 		GameMode = GetNode<Label>("MenuCanvasLayer/CurrentGameMode");
 		CanvasLayer = GetNode<CanvasLayer>("MenuCanvasLayer");
 		GameLog = GetNode<GameLog>("MenuCanvasLayer/GameLog");
+		var gameMap = GetParent<GameMap>();
+		var timer = gameMap.GetNode<Timer>("DayTimer");
+		DayProgressbar.MaxValue = timer.WaitTime;
+		
+		
 		
 		//Event timer
 		AddChild(eventtimer);
@@ -134,6 +141,7 @@ public partial class GameMenu : Control
 		LevelProgressbar.TooltipText = $"{10 - _citizen.Count % 10 } more citizen until next level";
 
 		Day.Text = "Day: " + GameLogistics.Day;
+		DayProgressbar.Value = GetParent<GameMap>()._dayTimer.WaitTime - GetParent<GameMap>()._dayTimer.TimeLeft;
 
 		foreach (var item in _gameStatLabels)
 		{
@@ -154,7 +162,7 @@ public partial class GameMenu : Control
 		Shop.Visible = !hide;
 	}
 
-	private void SetToolTip(string key)
+	private static void SetToolTip(string key)
 	{
 		switch (key)
 		{

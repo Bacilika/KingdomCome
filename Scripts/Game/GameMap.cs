@@ -24,7 +24,7 @@ public partial class GameMap : Node2D
 	public static bool JobSelectMode;
 	public static Npc NpcJobSelect;
 	public static int Level = 1;
-	private Timer _dayTimer;
+	public Timer _dayTimer;
 	private Timer _foodTimer;
 	public GameMenu _gameMenu;
 	private AudioStreamPlayer2D _music;
@@ -51,7 +51,15 @@ public partial class GameMap : Node2D
 
 	public override void _Ready()
 	{
+		TutorialMode = true;
+		NpcStats = new Dictionary<string, int>()
+		{
+			{NpcStatuses.Unemployed, 0},
+			{NpcStatuses.Citizens, 0},
+			{NpcStatuses.Homeless, 0},
+		};
 		tutorial = new TutorialWindow(this);
+		tutorial.ShowTutorial();
 		_foodTimer = GetNode<Timer>("EatFoodTimer");
 		_dayTimer = GetNode<Timer>("DayTimer");
 		_dayTimer.Start();
@@ -73,7 +81,6 @@ public partial class GameMap : Node2D
 			GracePeriod = false;
 			QueueFree();
 		};
-		_tutorialWindow = GetNode<TutorialWindow>("TutorialWindow");
 		
 		
 		// Connect pause and play buttons
@@ -88,12 +95,7 @@ public partial class GameMap : Node2D
 		// Start NPC
 		SpawnFirstNpc(GetNode<Npc>("Male"));
 		SpawnFirstNpc(GetNode<Npc>("Female"));
-		NpcStats = new Dictionary<string, int>()
-		{
-			{NpcStatuses.Unemployed, 0},
-			{NpcStatuses.Citizens, 0},
-			{NpcStatuses.Homeless, 0},
-		};
+
 	}
 
 	public void SetNpcString()
@@ -107,8 +109,13 @@ public partial class GameMap : Node2D
 
 	public override void _Process(double delta)
 	{
-		if(TutorialMode) _tutorialWindow.ShowTutorial();
+		
 		_timeSinceLastTick += delta;
+		if (_timeSinceLastTick >= 0.5)
+		{
+			_timeSinceLastTick -= 0.5;
+			if(TutorialMode) tutorial.ShowTutorial();
+		}
 		Unemployed = [];
 		foreach (var npc in Citizens.Where(npc => npc.Work is null))
 		{
@@ -127,7 +134,7 @@ public partial class GameMap : Node2D
 			GiveJobToNpcs();
 
 		SetNpcString();
-		checkNpcIsNotNull();
+		//checkNpcIsNotNull();
 	}
 
 	public void checkNpcIsNotNull()
@@ -172,28 +179,28 @@ public partial class GameMap : Node2D
 	{
 		var placeable = (AbstractPlaceable)nodeObject;
 		_workBench.BuildList.Add(placeable, []);
-		if (placeable is LivingSpace livingSpace)
+		switch (placeable)
 		{
-			//livingSpace.OnCreateNpc += PlaceNpc;
-			_placedHouses.Add(livingSpace);
-		}
-		
-		else if (placeable is AbstractActivity activity)
-		{
-			_placedActivities.Add(activity);
-		}
-		else if (placeable is Decoration decoration)
-		{
-			decoration.DecorationsPoint += 1;
-			if (decoration.DecorationsPoint == 5)
+			case LivingSpace livingSpace:
+				_placedHouses.Add(livingSpace);
+				break;
+			case AbstractActivity activity:
+				_placedActivities.Add(activity);
+				break;
+			case Decoration decoration:
 			{
-				decoration.addDecorationPoint(Citizens);
+				decoration.DecorationsPoint += 1;
+				if (decoration.DecorationsPoint == 5)
+				{
+					decoration.addDecorationPoint(Citizens);
+				}
+
+				break;
 			}
 		}
 
 		if (placeable is Production production) _placedProduction.Add(production);
 		placeable.IsPlaced = true;
-		//placeable.Position = GetGlobalMousePosition();
 		AddChild(placeable);
 		placeable.HouseSprite.SetAnimation("Building"); 
 		

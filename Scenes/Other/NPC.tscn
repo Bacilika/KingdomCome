@@ -415,6 +415,7 @@ wait_time = 10.0
 one_shot = true
 
 [node name="Interaction" type="AnimatedSprite2D" parent="."]
+visible = false
 position = Vector2(0, -34)
 sprite_frames = SubResource("SpriteFrames_0essj")
 animation = &"ExclamationPoint"

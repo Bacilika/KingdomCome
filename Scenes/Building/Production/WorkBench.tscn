@@ -124,11 +124,11 @@ shape = SubResource("CircleShape2D_gf4u1")
 shape = SubResource("CircleShape2D_l3wa0")
 
 [node name="Animation" type="AnimatedSprite2D" parent="."]
+visible = false
 position = Vector2(0, -40)
 scale = Vector2(2.25864, 2.0419)
 sprite_frames = SubResource("SpriteFrames_pfse0")
 animation = &"ExclamationPoint"
-frame_progress = 0.63004
 
 [node name="PlaceableInfo" parent="." instance=ExtResource("12_3jk2m")]
 visible = false

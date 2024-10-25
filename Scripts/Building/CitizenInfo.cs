@@ -31,6 +31,10 @@ public partial class CitizenInfo : Panel
 
 	public void SetInfo(Npc npc)
 	{
+		if (!GameMap.TutorialMode)
+		{
+			//GetNode<Button>("HBoxContainer/ChangeJob").ToggleMode = false;
+		}
 		if (_unemploy is null)
 		{
 			_unemploy = new Button();

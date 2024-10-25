@@ -63,9 +63,12 @@ grow_vertical = 0
 alignment = 1
 
 [node name="ChangeJob" type="Button" parent="HBoxContainer"]
+light_mask = 2
 layout_mode = 2
+theme = ExtResource("1_wgayp")
 theme_override_fonts/font = ExtResource("2_gsgww")
 theme_override_font_sizes/font_size = 15
+toggle_mode = true
 text = "Change job"
 expand_icon = true
 

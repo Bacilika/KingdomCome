@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=4 uid="uid://ewr80hsqehps"]
+[gd_scene load_steps=33 format=4 uid="uid://ewr80hsqehps"]
 
 [ext_resource type="Script" path="res://Scripts/Game/GameMap.cs" id="1_owh02"]
 [ext_resource type="PackedScene" uid="uid://dtgqg8p8u8ecn" path="res://Scenes/Other/Mountain.tscn" id="2_8oyys"]
@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://g121wpunkvls" path="res://Scenes/Game/GameLogistics.tscn" id="10_4gj8f"]
 [ext_resource type="PackedScene" uid="uid://l32r8or4fhm7" path="res://Scenes/Building/Production/WorkBench.tscn" id="14_ei2b0"]
 [ext_resource type="PackedScene" uid="uid://2uovf4y3vnqd" path="res://Scenes/Other/NPC.tscn" id="15_2y8h7"]
+[ext_resource type="Texture2D" uid="uid://brddo04fjmv4b" path="res://Sprites/Extra/Arrow.png" id="16_lrqra"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ehtao"]
 texture = ExtResource("4_iuwca")
@@ -2280,6 +2281,42 @@ vertices = PackedVector2Array(-1922.04, 1229.83, -2077.43, 934.602, -1663.97, -8
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4, 5, 6), PackedInt32Array(7, 8, 9, 6, 5, 10)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-1672, -896, 1480, -976, 1800, -288, 1800, 1024, 1752, 1240, 1096, 1600, -168, 1552, -504, 1480, -1312, 1224, -1928, 1240, -2088, 936)])
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_a8d62"]
+atlas = ExtResource("16_lrqra")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xd1gq"]
+atlas = ExtResource("16_lrqra")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hd7mx"]
+atlas = ExtResource("16_lrqra")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bch1g"]
+atlas = ExtResource("16_lrqra")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qgfk4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a8d62")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xd1gq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hd7mx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bch1g")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
 [node name="GameMap" type="Node2D"]
 process_mode = 1
 y_sort_enabled = true
@@ -2344,6 +2381,12 @@ position = Vector2(-297, -144)
 
 [node name="WorkBench" parent="." instance=ExtResource("14_ei2b0")]
 position = Vector2(0, -127)
+
+[node name="TutorialArrow" type="AnimatedSprite2D" parent="."]
+top_level = true
+position = Vector2(292, 324)
+scale = Vector2(1.5, 1.5)
+sprite_frames = SubResource("SpriteFrames_qgfk4")
 
 [connection signal="timeout" from="EatFoodTimer" to="." method="OnEatFoodTimerTimedout"]
 [connection signal="timeout" from="DayTimer" to="." method="OnDayTimerTimeout"]

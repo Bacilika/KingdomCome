@@ -295,6 +295,7 @@ public partial class Npc : CharacterBody2D
 		{
 			Happiness += entry.Value.Happiness;
 		}
+		if(GameMap.TutorialMode) return;
 
 		if (Happiness < BaseHappiness)
 		{
@@ -518,6 +519,11 @@ public partial class Npc : CharacterBody2D
 	public override void _Input(InputEvent @event)
 	{
 		if (!@event.IsActionPressed(Inputs.LeftClick)) return;
+
+		if (GameMap.TutorialMode)
+		{
+			TutorialWindow.CompleteTutorialStep(TutorialStep.SelectNpc);
+		}
 		
 		if (_focused || Info.focused)
 		{

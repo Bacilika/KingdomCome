@@ -14,7 +14,6 @@ public partial class WorkBench : Production
 	{
 		_animatedSprite = GetNode<AnimatedSprite2D>("Animation");
 		_animatedSprite.Animation = "ExclamationPoint";
-		_animatedSprite.Play();
 		BuildingName = "WorkBench";
 		BuildingDescription = "All Npcs assigned to the workbench will help build";
 		PlayerLevel = 1;

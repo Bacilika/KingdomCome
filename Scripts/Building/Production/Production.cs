@@ -40,7 +40,7 @@ public abstract partial class Production : AbstractPlaceable
 
 	public virtual void OnNpcReachWork(Node2D npc)
 	{
-		Console.WriteLine("OnNpcReachWork");
+		//Console.WriteLine("OnNpcReachWork");
 	}
 
 	public virtual void SpaceOutWorkers()
@@ -50,7 +50,7 @@ public abstract partial class Production : AbstractPlaceable
 
 	public virtual void ProduceItem()
 	{
-		Console.WriteLine("ProduceItem instance");
+		//Console.WriteLine("ProduceItem instance");
 	}
 
 	public virtual void AtWorkTimerTimeout(Npc npc)
@@ -72,7 +72,6 @@ public abstract partial class Production : AbstractPlaceable
 		if (isOn)
 		{
 			isOn = false;
-			Console.WriteLine(People.Count);
 			int npcWorking = People.Count-1;
 			for (var i = People.Count -1; i > -1; i--)
 			{
@@ -80,17 +79,8 @@ public abstract partial class Production : AbstractPlaceable
 				npc.OnWorkDelete();
 				RemoveWorker(npc);
 			}
-			Console.WriteLine(People.Count);
-		
 			//Remove from _placedProduction so NPCs can't get job there. 
-			foreach (var production in GameMap._placedProduction)
-			{
-				if (production == this)
-				{
-					GameMap._placedProduction.Remove(production);
-					break;
-				}
-			}
+
 		}
 		else
 		{

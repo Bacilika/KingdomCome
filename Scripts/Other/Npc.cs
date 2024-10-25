@@ -52,19 +52,19 @@ public partial class Npc : CharacterBody2D
 	public Timer AtWorkTimer;
 	public LivingSpace Home;
 	public CitizenInfo Info;
-	public AbstractPlaceable PlaceablePosition;
+	private AbstractPlaceable PlaceablePosition;
 	public Texture2D Sprite;
 	public Production Work;
 	public AbstractPlaceable CurrentBuilding;
-	public Timer ScheduleTimer;
+	private Timer ScheduleTimer;
 	public bool _move;
 	public AbstractPlaceable TargetBuilding;
 	public bool AtWork;
-	public double time;
-	public string _direction;
+	private double time;
+	private string _direction;
 	private bool scheduleIsStarted = false;
-	public AnimatedSprite2D Interaction;
-	public bool isHomeless = true;
+	private AnimatedSprite2D Interaction;
+	private bool _isHomeless = true;
 
 	private Vector2 _homelessPos = new (-1, -1);
 
@@ -81,14 +81,13 @@ public partial class Npc : CharacterBody2D
 		Info.Visible = false;
 		ZIndex = 1;
 		
-		if(isHomeless) EmitSignal(SignalName.OnHomelessNpc, this);
+		if(_isHomeless) EmitSignal(SignalName.OnHomelessNpc, this);
 		
 		ScheduleTimer = new Timer();
 		ScheduleTimer.WaitTime = 30;
 		ScheduleTimer.OneShot = true;
 		ScheduleTimer.Timeout += () =>
 		{
-			Console.WriteLine("Schedule update");
 			AtWorkTimer.Stop();
 			//ScheduleTimer.Stop();
 			scheduleIsStarted = false;
@@ -120,10 +119,18 @@ public partial class Npc : CharacterBody2D
 		SetMoodReason("Home", "Is Homeless", -3);
 	}
 
+	public void OnHouseDestroyed()
+	{
+		Home = null;
+		_isHomeless = true;
+		SetMoodReason("Home", "Is Homeless", -3);
+		
+	}
+
 	public void OnMoveIn()
 	{
 		SetMoodReason("Home", "Has a home", 0);
-		isHomeless = false;
+		_isHomeless = false;
 	}
 
 	public void OnBuildingEntered(AbstractPlaceable building)
@@ -204,7 +211,7 @@ public partial class Npc : CharacterBody2D
 	public override void _PhysicsProcess(double delta)
 	{
 		if (NavigationServer2D.MapGetIterationId(_navigation.GetNavigationMap()) == 0) return; //Not ready
-		if(isHomeless) EmitSignal(SignalName.OnHomelessNpc, this);
+		if(_isHomeless) EmitSignal(SignalName.OnHomelessNpc, this);
 		if (_stopped) //stopped by player
 		{
 			_animation.Stop();
@@ -432,7 +439,7 @@ public partial class Npc : CharacterBody2D
 					break;
 					
 				}
-				if (!GoToActivity()) // Going home
+				else if (!GoToActivity()) // Going home
 				{
 					SetDestinationToTargetBuilding(Home);
 					break;

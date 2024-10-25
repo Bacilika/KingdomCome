@@ -27,12 +27,14 @@ public class EventGenerator
         _eventScene = ResourceLoader.Load<PackedScene>("res://Scenes/Game/EventCard.tscn");
         
         //-----Create events-----
+        var event0 = CreateEvent(1);
         var event1 = CreateEvent(2);
         var event2 = CreateEvent(2);
         var event3 = CreateEvent(2);
         var event4 = CreateEvent(3);
         var event5 = CreateEvent(2);
         
+        event0.Ready += () => { createEvent0(event0); };
         event1.Ready += () => { createEvent1(event1); };
         event2.Ready += () => { createEvent2(event2); };
         event3.Ready += () => { createEvent3(event3); };
@@ -60,6 +62,7 @@ public class EventGenerator
             }
 
         };
+        eventCards.Add(event0);       
         eventCards.Add(event2);       
         eventCards.Add(event3);
         eventCards.Add(event4);
@@ -332,7 +335,6 @@ public class EventGenerator
         event1.buttons[0].Pressed += () =>
         {
             _eventScene = ResourceLoader.Load<PackedScene>("res://Scenes/Game/EventCard.tscn");
-            Console.WriteLine("event works.");
             GameLogistics.Resources[RawResource.Wood] += 5;
             var npc = event1.Gamemap.Citizens.Last();
             event1.Description.Text = $"You won the battle, but lost {npc.CitizenName}! +5 wood " ;
@@ -353,6 +355,35 @@ public class EventGenerator
             event1.Description.Text = $"They didn't listen and killed {amount} of your people. Their names were {names} ";
         };
     }
+    
+    private void createEvent0(EventCard event0)
+    {
+        event0.Gamemap.PauseGame();
+        var firstNpc = event0.Gamemap.Citizens.Last().CitizenName;
+        var lastNpc = event0.Gamemap.Citizens.First().CitizenName;
+        event0.Title.Text = "Growing a family";
+        event0.Description.Text =$"As {firstNpc} and {lastNpc} finished up the work for the day, {lastNpc} suddenly" +
+                                 $"got a terrible stomach ache. After some panic, they realised she's about to give birth!";
+        event0.buttons[0].Text = "Oh my!";
+        
+        event0.DoneButton.Pressed += () =>
+        {
+            event0.Gamemap.PlayGame();
+            eventCards.Remove(event0);
+            event0.GetParent().RemoveChild(event0);
+            event0.QueueFree();
+        };
+        //actions
+        event0.buttons[0].Pressed += () =>
+        {
+            _npcScene = ResourceLoader.Load<PackedScene>("res://Scenes/Other/NPC.tscn");
+            _boyNpc = _npcScene.Instantiate<Npc>();
+            event0.GetTree().Root.AddChild(_boyNpc);
+            event0.Gamemap.SpawnFirstNpc(_boyNpc);
+            event0.Description.Text = $"The birth went well! {firstNpc} and {lastNpc} are ready to welcome ";
+        };
+
+    }
 
     public EventCard CreateEvent(int choices)
     {
@@ -366,4 +397,5 @@ public class EventGenerator
     {
         return eventCards[0];
     }
+    
 }

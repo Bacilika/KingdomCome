@@ -59,9 +59,8 @@ public partial class CitizenInfo : Panel
 		Job.Text += CitizenNpc.Home is null ? "\nHomeless" : "";
 		Job.Text += $"\n At Work: {npc.AtWork}";
 		Name.Text = CitizenNpc.CitizenName;
-		if (npc.Happiness > 0){
-			Happiness.Text = $"Happiness: {GameLogistics.ConvertHappiness(npc.Happiness)}" + "\n"+ npc.GetUnhappyReason();
-		}
+		Happiness.Text = $"Happiness: {GameLogistics.ConvertHappiness(npc.Happiness)}" + "\n"+ npc.GetUnhappyReason();
+		
 		_icon.Texture = npc.Sprite;
 		if (npc.Work == null)
 		{

@@ -51,56 +51,11 @@ texture = ExtResource("4_bim5b")
 [node name="MenuOverlay" type="CanvasLayer" parent="."]
 script = ExtResource("4_64bq2")
 
-[node name="StartGameButton" type="Button" parent="MenuOverlay"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -128.0
-offset_top = 39.0
-offset_right = 128.0
-offset_bottom = 85.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 6
-size_flags_vertical = 6
-theme = ExtResource("4_qgu1q")
-theme_override_fonts/font = ExtResource("11_yv51q")
-theme_override_font_sizes/font_size = 40
-text = "Start"
-
-[node name="Quit" type="Button" parent="MenuOverlay"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -128.0
-offset_top = 122.5
-offset_right = 128.0
-offset_bottom = 166.5
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 6
-size_flags_vertical = 6
-theme = ExtResource("4_qgu1q")
-theme_override_fonts/font = ExtResource("11_yv51q")
-theme_override_font_sizes/font_size = 40
-text = "Quit"
-
 [node name="Label" type="Label" parent="MenuOverlay"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -312.0
-offset_top = -205.0
-offset_right = 317.0
-offset_bottom = -77.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_left = 1.0
+offset_top = 164.0
+offset_right = 1285.0
+offset_bottom = 221.0
 theme_override_colors/font_color = Color(0.266667, 0.219608, 0.137255, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("11_yv51q")
@@ -109,5 +64,115 @@ text = "Kingdom Come: The Game"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[connection signal="pressed" from="MenuOverlay/StartGameButton" to="." method="OnStartGamePressed"]
-[connection signal="pressed" from="MenuOverlay/Quit" to="." method="OnQuitPressed"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MenuOverlay"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -640.0
+offset_top = 5.0
+offset_right = 644.0
+offset_bottom = 163.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+alignment = 1
+
+[node name="StartGameButton" type="Button" parent="MenuOverlay/VBoxContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme = ExtResource("4_qgu1q")
+theme_override_fonts/font = ExtResource("11_yv51q")
+theme_override_font_sizes/font_size = 40
+text = "New Game"
+
+[node name="Quit" type="Button" parent="MenuOverlay/VBoxContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme = ExtResource("4_qgu1q")
+theme_override_fonts/font = ExtResource("11_yv51q")
+theme_override_font_sizes/font_size = 40
+text = "Quit"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MenuOverlay"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -640.0
+offset_top = -17.0
+offset_right = 644.0
+offset_bottom = 141.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 40
+alignment = 1
+
+[node name="LineEdit" type="LineEdit" parent="MenuOverlay/VBoxContainer2"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("4_qgu1q")
+theme_override_font_sizes/font_size = 22
+placeholder_text = "Enter Kingdom Name"
+expand_to_text_length = true
+context_menu_enabled = false
+virtual_keyboard_enabled = false
+shortcut_keys_enabled = false
+caret_blink = true
+
+[node name="Label" type="Label" parent="MenuOverlay/VBoxContainer2/LineEdit"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -110.5
+offset_top = 15.0
+offset_right = 110.5
+offset_bottom = 35.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Please enter a name for your kingdom."
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MenuOverlay/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+alignment = 1
+
+[node name="Cancel" type="Button" parent="MenuOverlay/VBoxContainer2/HBoxContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme = ExtResource("4_qgu1q")
+theme_override_fonts/font = ExtResource("11_yv51q")
+theme_override_font_sizes/font_size = 40
+text = "Cancel"
+
+[node name="StartGame" type="Button" parent="MenuOverlay/VBoxContainer2/HBoxContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme = ExtResource("4_qgu1q")
+theme_override_fonts/font = ExtResource("11_yv51q")
+theme_override_font_sizes/font_size = 40
+text = "Start"
+
+[connection signal="pressed" from="MenuOverlay/VBoxContainer/StartGameButton" to="." method="OnStartGamePressed"]
+[connection signal="pressed" from="MenuOverlay/VBoxContainer/Quit" to="." method="OnQuitPressed"]
+[connection signal="pressed" from="MenuOverlay/VBoxContainer2/HBoxContainer/Cancel" to="." method="OnCancelPressed"]

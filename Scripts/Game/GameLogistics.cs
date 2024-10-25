@@ -83,6 +83,7 @@ public partial class GameLogistics : Node2D
 	{
 		foreach (var food in FoodResource)
 		{
+			if(food.Value == 0) continue;
 			FoodResource[food.Key] --;
 			Resources[RawResource.Food]--;
 			return;

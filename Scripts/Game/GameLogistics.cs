@@ -59,7 +59,7 @@ public partial class GameLogistics : Node2D
 		
 		ProcessedResources = new System.Collections.Generic.Dictionary<string, int>
 		{
-			{ ProcessedResource.Plank, 0 }, { ProcessedResource.IronIngot, 0 },
+			{ProcessedResource.Plank, 5 }, { ProcessedResource.IronIngot, 0 },
 			{ProcessedResource.Flour,0}
 		};
 	}
@@ -222,8 +222,17 @@ public partial class GameLogistics : Node2D
 		if (!Move)
 		{
 			foreach (var cost in _building.BuildCost)
-				if (cost.Value[_building.Level] > Resources[cost.Key])
-					return false;
+				if (Resources.ContainsKey(cost.Key))
+				{
+					if (cost.Value[_building.Level] > Resources[cost.Key])
+						return false;
+				}
+				else if (ProcessedResources.ContainsKey(cost.Key))
+				{
+					if (cost.Value[_building.Level] > ProcessedResources[cost.Key])
+						return false;
+				}
+
 
 			return true;
 		}

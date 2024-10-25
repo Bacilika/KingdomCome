@@ -265,8 +265,6 @@ public partial class GameMap : Node2D
 			{
 				house.MoveIntoHouse(npc);
 				house.Inhabitants++;
-				Console.WriteLine(house.Inhabitants);
-				Console.WriteLine(house.Upgrades[Upgrade.MaxInhabitants][Level]);
 				return;
 			}
 		}

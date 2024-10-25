@@ -39,6 +39,13 @@ public partial class GameMap : Node2D
 	private double _timeSinceLastTick;
 	public static string NpcStatsAsString;
 	
+	//Allowing children to be born
+	public bool ChildIsBorn = false;
+	private RandomNumberGenerator _rand = new();
+	private PackedScene _npcScene1;
+
+
+	
 	[Signal]
 	public delegate void SendLogEventHandler(string log);
 	[Signal]
@@ -254,10 +261,12 @@ public partial class GameMap : Node2D
 	{
 		foreach (var house in _placedHouses)
 		{
-			if (house.isDone && house.Inhabitants < house.Upgrades[Upgrade.MaxInhabitants][Level])
+			if (house.isDone && house.Inhabitants < house.Upgrades[Upgrade.MaxInhabitants][house.Level])
 			{
 				house.MoveIntoHouse(npc);
 				house.Inhabitants++;
+				Console.WriteLine(house.Inhabitants);
+				Console.WriteLine(house.Upgrades[Upgrade.MaxInhabitants][Level]);
 				return;
 			}
 		}
@@ -318,6 +327,35 @@ public partial class GameMap : Node2D
 		EmitSignal(SignalName.SendLog,$"Day {GameLogistics.Day} has passed");
 		GameLogistics.Day += 1;
 		EmitSignal(SignalName.DayOver);
+		int birth = _rand.RandiRange(0, 1);
+		
+		foreach (var house in _placedHouses)
+		{
+			if (house.isDone && house.Inhabitants < house.Upgrades[Upgrade.MaxInhabitants][house.Level] && ChildIsBorn)
+			{
+				_npcScene1 = ResourceLoader.Load<PackedScene>("res://Scenes/Other/NPC.tscn");
+				Npc npc = _npcScene1.Instantiate<Npc>();
+				if (1 < house.Inhabitants)
+				{
+					AddChild(npc);
+					SpawnFirstNpc(npc);
+					return;
+				}
+				else
+				{
+					AddChild(npc);
+					SpawnFirstNpc(npc);
+					_npcScene1 = ResourceLoader.Load<PackedScene>("res://Scenes/Other/NPC.tscn");
+					Npc npc2 = _npcScene1.Instantiate<Npc>();
+					AddChild(npc2);
+					SpawnFirstNpc(npc2);
+					EmitSignal(SignalName.SendLog,$" {npc.CitizenName} and {npc2.CitizenName} just moved in to your village!");
+					return;
+				}
+				
+			}
+			
+		}
 	}
 	public static bool HasUnemployedCitizens()
 	{

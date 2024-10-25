@@ -596,6 +596,7 @@ public partial class Npc : CharacterBody2D
 
 		if (Happiness < 3)
 		{
+			
 			daysUnhappy += 1;
 			if (daysUnhappy > 5)
 			{

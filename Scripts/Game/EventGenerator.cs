@@ -380,6 +380,7 @@ public class EventGenerator
             _boyNpc = _npcScene.Instantiate<Npc>();
             event0.GetTree().Root.AddChild(_boyNpc);
             event0.Gamemap.SpawnFirstNpc(_boyNpc);
+            event0.Gamemap.ChildIsBorn = true;
             event0.Description.Text = $"The birth went well! {firstNpc} and {lastNpc} are ready to welcome {_boyNpc.CitizenName}";
         };
 

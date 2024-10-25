@@ -88,7 +88,6 @@ public partial class Npc : CharacterBody2D
 		ScheduleTimer.OneShot = true;
 		ScheduleTimer.Timeout += () =>
 		{
-			Console.WriteLine("Schedule update");
 			AtWorkTimer.Stop();
 			//ScheduleTimer.Stop();
 			scheduleIsStarted = false;

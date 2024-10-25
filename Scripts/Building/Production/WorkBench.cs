@@ -132,7 +132,6 @@ public partial class WorkBench : Production
 			var circlePos = new Vector2(radius * (float)Math.Cos(positions * i),
 				radius * (float)Math.Sin(positions * i));
 			person.SetDestination( Position + circlePos);
-			Console.WriteLine(person._navigation.TargetPosition);
 		}
 	}
 	public override void OnBuildingPressed()

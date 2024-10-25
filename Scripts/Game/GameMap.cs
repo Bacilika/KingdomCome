@@ -202,12 +202,12 @@ public partial class GameMap : Node2D
 		{
 			placeable.AddChild(placeable.BuildingProgressBar);
 			placeable.BuildingProgressBar.MinValue = 0;
-			placeable.BuildingProgressBar.Position = placeable.Position;
+			placeable.BuildingProgressBar.GlobalPosition = placeable.GlobalPosition + new Vector2(-50, -60);
 			placeable.BuildingProgressBar.MaxValue = 25;
 			placeable.BuildingProgressBar.Visible = true;
 			placeable.BuildingProgressBar.ZIndex = 4;
+			placeable.BuildingProgressBar.ShowPercentage = false;
 			placeable.BuildingProgressBar.SetCustomMinimumSize(new Vector2(100, 30));
-
 		}
 
 		EmitSignal(SignalName.SendLog,$"Successfully built {placeable.BuildingName}");

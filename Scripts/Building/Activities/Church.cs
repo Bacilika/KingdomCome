@@ -17,7 +17,9 @@ public partial class Church : AbstractActivity
 		BuildCost = new Dictionary<string, List<int>>
 		{
 			{ RawResource.Wood, [5, 7, 10] },
-			{ RawResource.Stone, [5, 7, 10] }
+			{ RawResource.Stone, [5, 7, 10] }, 
+			{ ProcessedResource.Plank, [5, 7, 10] },
+			{ RawResource.Iron, [5, 7, 10] }
 		};
 		MoveCost = new Dictionary<string, List<int>>
 		{

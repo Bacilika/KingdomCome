@@ -15,8 +15,8 @@ public class EventGenerator
     private RandomNumberGenerator _rand = new(); 
     
     //Event variables
-    private bool helpedSalesman = false;
-    private bool helpedBoy = false;
+    private bool _helpedSalesman = false;
+    private bool _helpedBoy = false;
     private Npc _boyNpc;
     private Npc _sibling1Npc;
     private Npc _sibling2Npc;
@@ -40,7 +40,7 @@ public class EventGenerator
         event3.Ready += () => { createEvent3(event3); };
         event4.Ready += () =>
         {
-            if (helpedBoy)
+            if (_helpedBoy)
             {
                 createEvent4Boy(event4);
             }
@@ -52,7 +52,7 @@ public class EventGenerator
         };
         event5.Ready += () =>
         {
-            if (helpedBoy)
+            if (_helpedBoy)
             {
                 createEvent5Boy(event5);
             }
@@ -63,8 +63,8 @@ public class EventGenerator
 
         };
         eventCards.Add(event0);       
-        eventCards.Add(event2);       
-        eventCards.Add(event3);
+        eventCards.Add(event3);       
+        eventCards.Add(event2);
         eventCards.Add(event4);
         eventCards.Add(event5);
         eventCards.Add(event1);
@@ -262,7 +262,7 @@ public class EventGenerator
         //actions
         event2.buttons[0].Pressed += () =>
         {
-            helpedBoy = true;
+            _helpedBoy = true;
             _npcScene = ResourceLoader.Load<PackedScene>("res://Scenes/Other/NPC.tscn");
             _boyNpc = _npcScene.Instantiate<Npc>();
             event2.GetTree().Root.AddChild(_boyNpc);
@@ -304,7 +304,7 @@ public class EventGenerator
         //actions
         event2.buttons[0].Pressed += () =>
         {
-            helpedSalesman = true;
+            _helpedSalesman = true;
             GameLogistics.FoodResource[Food.Meat] += 5;
             GameLogistics.Resources[RawResource.Wood] -= 3;
             event2.Description.Text = $"The salesman smiled as he happily trades the meat for the wood, and thanks {luckyNpc} profusely! He promises to come" +
@@ -380,7 +380,7 @@ public class EventGenerator
             _boyNpc = _npcScene.Instantiate<Npc>();
             event0.GetTree().Root.AddChild(_boyNpc);
             event0.Gamemap.SpawnFirstNpc(_boyNpc);
-            event0.Description.Text = $"The birth went well! {firstNpc} and {lastNpc} are ready to welcome ";
+            event0.Description.Text = $"The birth went well! {firstNpc} and {lastNpc} are ready to welcome {_boyNpc.CitizenName}";
         };
 
     }

@@ -1,9 +1,7 @@
-[gd_scene load_steps=16 format=3 uid="uid://btpj4uhoq4i5d"]
+[gd_scene load_steps=14 format=3 uid="uid://btpj4uhoq4i5d"]
 
 [ext_resource type="Script" path="res://Scripts/Building/Production/SawMill.cs" id="1_xmouv"]
-[ext_resource type="Texture2D" uid="uid://bjdox8485ygaf" path="res://Sprites/Edificios 2d Medieval/Edificios 2d Medieval/Tower2.png" id="2_7kh0y"]
-[ext_resource type="Texture2D" uid="uid://10xetr8cuy7r" path="res://Sprites/Edificios 2d Medieval/Edificios 2d Medieval/Tower.png" id="3_uodvc"]
-[ext_resource type="Texture2D" uid="uid://151p6fpaxchb" path="res://Sprites/Edificios 2d Medieval/Edificios 2d Medieval/Tree.png" id="4_rlnq6"]
+[ext_resource type="Texture2D" uid="uid://hfd202dkbued" path="res://Sprites/Extra/Buildings/Sawmill.webp" id="2_8g6up"]
 [ext_resource type="Texture2D" uid="uid://dt1kbfdm7dk2a" path="res://Sprites/Extra/addResource1.png" id="5_6cfjl"]
 [ext_resource type="Texture2D" uid="uid://co3y7ufhufouh" path="res://Sprites/Extra/addResource2.png" id="6_m2oj4"]
 [ext_resource type="Texture2D" uid="uid://bpp4m7x6k6cyf" path="res://Sprites/Extra/addResource3.png" id="7_2ohj4"]
@@ -17,13 +15,7 @@
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_7kh0y")
-}, {
-"duration": 1.0,
-"texture": ExtResource("3_uodvc")
-}, {
-"duration": 1.0,
-"texture": ExtResource("4_rlnq6")
+"texture": ExtResource("2_8g6up")
 }],
 "loop": true,
 "name": &"Level0",
@@ -31,7 +23,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cews5"]
-size = Vector2(153, 108.5)
+size = Vector2(121.5, 123.75)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_pfse0"]
 animations = [{
@@ -68,23 +60,17 @@ collision_mask = 3
 script = ExtResource("1_xmouv")
 
 [node name="HouseSprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(-9, 9)
+scale = Vector2(0.17, 0.17)
 sprite_frames = SubResource("SpriteFrames_gy8eo")
 animation = &"Level0"
 
 [node name="CollisionShape0" type="CollisionShape2D" parent="."]
-position = Vector2(1, 1.5)
+position = Vector2(-14.75, 9.125)
 shape = SubResource("RectangleShape2D_cews5")
 
 [node name="WoodTimer" type="Timer" parent="."]
 wait_time = 5.0
-
-[node name="CollisionShape1" type="CollisionShape2D" parent="."]
-position = Vector2(2, 0.5)
-shape = SubResource("RectangleShape2D_cews5")
-
-[node name="CollisionShape2" type="CollisionShape2D" parent="."]
-position = Vector2(-1.5, 2.75)
-shape = SubResource("RectangleShape2D_cews5")
 
 [node name="Animation" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -72)

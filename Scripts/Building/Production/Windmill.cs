@@ -11,15 +11,17 @@ public partial class Windmill : Production
 		BuildingName = "Windmill";
 		BuildingDescription = "Procudes flour from wheat";
 		Producing = ProcessedResource.Flour;
-		PlayerLevel = 1;
+		PlayerLevel = 3;
 		Upgrades = new Dictionary<string, List<int>>
 		{
 			{ Upgrade.MaxWorkers, [5, 7, 10] }
 		};
 		BuildCost = new Dictionary<string, List<int>>
 		{
-			{ RawResource.Wood, [5, 7, 10] },
-			{ RawResource.Stone, [5, 7, 10] }
+			{ RawResource.Wood, [2, 7, 10] },
+			{ RawResource.Stone, [5, 7, 10] },
+			{ ProcessedResource.Plank, [5, 7, 10] },
+			{ RawResource.Iron, [2, 5, 8] }
 		};
 		MoveCost = new Dictionary<string, List<int>>
 		{

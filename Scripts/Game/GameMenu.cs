@@ -65,7 +65,7 @@ public partial class GameMenu : Control
 		eventtimer.Timeout += () =>
 		{
 			CanvasLayer.AddChild(EventGenerator.getEvent());
-			int waitTime = random.RandiRange(120, 300);
+			int waitTime = random.RandiRange(60, 300);
 			eventtimer.SetWaitTime(waitTime);
 			eventtimer.Start();
 		};

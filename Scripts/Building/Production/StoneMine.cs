@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Godot;
 using Scripts.Constants;
 
 public partial class StoneMine : Production
@@ -31,7 +32,25 @@ public partial class StoneMine : Production
 			{ RawResource.Stone, [2, 3, 4] }
 		};
 	}
+	
+	public override void NpcWork(Npc npc)
+	{
+		npc.CurrentBuilding = npc.Work;
+		npc.TargetBuilding = npc.Work;
+		npc.SetDestination(new Vector2(458, -436));
+		npc.AtWorkTimer.SetWaitTime(5);
+		npc._move = true;
+		npc.Idle = false;
 
+	}
+
+	public override void AtWorkTimerTimeout(Npc npc)
+	{
+		GatherResource(npc.Position);
+		npc.SetDestination(Position);
+		npc._move = true;
+	}
+	
 	public override void ProduceItem()
 	{
 		GameLogistics.Resources[RawResource.Stone]++;

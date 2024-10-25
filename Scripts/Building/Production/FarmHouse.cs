@@ -21,7 +21,7 @@ public partial class FarmHouse : Production
 		{
 			{ RawResource.Wood, [5, 7, 10] },
 			{ RawResource.Stone, [5, 7, 10] },
-			{ RawResource.Iron, [5, 7, 10] }
+			{ RawResource.Iron, [3, 5, 7] }
 		};
 		MoveCost = new Dictionary<string, List<int>>
 		{

@@ -215,6 +215,9 @@ public partial class GameMap : Node2D
 			placeable.BuildingProgressBar.Visible = true;
 			placeable.BuildingProgressBar.ZIndex = 4;
 			placeable.BuildingProgressBar.ShowPercentage = false;
+			var theme = GD.Load<Theme>("res://Themes/Theme.tres");
+			placeable.BuildingProgressBar.Theme = theme;
+			placeable.BuildingProgressBar.Size = new Vector2(placeable.BuildingProgressBar.Size.X, 15); 
 			placeable.BuildingProgressBar.SetCustomMinimumSize(new Vector2(100, 30));
 		}
 

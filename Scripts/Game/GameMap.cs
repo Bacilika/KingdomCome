@@ -43,6 +43,8 @@ public partial class GameMap : Node2D
 	public delegate void SendLogEventHandler(string log);
 	[Signal]
 	public delegate void DayOverEventHandler();
+	[Signal]
+	public delegate void HomelessNpcEventHandler(Npc npc);
 
 	public static bool GracePeriod = true;
 	
@@ -172,7 +174,7 @@ public partial class GameMap : Node2D
 		_workBench.BuildList.Add(placeable, []);
 		if (placeable is LivingSpace livingSpace)
 		{
-			livingSpace.OnCreateNpc += PlaceNpc;
+			//livingSpace.OnCreateNpc += PlaceNpc;
 			_placedHouses.Add(livingSpace);
 		}
 		
@@ -233,7 +235,20 @@ public partial class GameMap : Node2D
 	{
 		npc.SendLog += _gameMenu.GameLog.CreateLog;
 		npc.OnFed += OnNpcFed;
+		npc.OnHomelessNpc += OnNpcHomeless;
 		DayOver += npc.OnDayOver;
+	}
+
+	public void OnNpcHomeless(Npc npc)
+	{
+		foreach (var house in _placedHouses)
+		{
+			if (house.isDone && house.Inhabitants < house.Upgrades[Upgrade.MaxInhabitants][Level])
+			{
+				house.MoveIntoHouse(npc);
+				return;
+			}
+		}
 	}
 	
 	public void SpawnFirstNpc(Npc npc)

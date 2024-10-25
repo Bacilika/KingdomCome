@@ -2321,7 +2321,7 @@ wait_time = 10.0
 autostart = true
 
 [node name="DayTimer" type="Timer" parent="."]
-wait_time = 3.768
+wait_time = 60.0
 autostart = true
 
 [node name="Forest" parent="." instance=ExtResource("8_obv6i")]

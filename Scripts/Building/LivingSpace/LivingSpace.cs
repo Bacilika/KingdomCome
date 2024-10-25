@@ -15,6 +15,7 @@ public abstract partial class LivingSpace : AbstractPlaceable
 
     protected override void Tick()
     {
+        /*
         if (Inhabitants < Upgrades[Upgrade.MaxInhabitants][Level])
         {
             if (Rnd.RandiRange(0, Growth) == 0)
@@ -23,18 +24,19 @@ public abstract partial class LivingSpace : AbstractPlaceable
                 PlayAnimation();
                 EmitSignal(SignalName.OnCreateNpc, this);
             }
-        }
+        }*/
 
         DoAction();
         UpdateInfo();
-
     }
+    
 
     public void MoveIntoHouse(Npc npc)
     {
         People.Add(npc);
         var npcPortrait = InfoBox.CitizenPortrait.Instantiate<CitizenPortraitButton>();
         npcPortrait.npc = npc;
+        npc.Home = this;
         InfoBox.PortraitContainer.AddChild(npcPortrait);
         GetNode<AnimatedSprite2D>("HouseSprite").SetAnimation("AnimationLevel" + Level);
         GetNode<AnimatedSprite2D>("HouseSprite").Play();
@@ -42,6 +44,7 @@ public abstract partial class LivingSpace : AbstractPlaceable
         npc.CitizenName += $" {HouseholdName}";
         npc.EmitSignal(GameMap.SignalName.SendLog, $"{npc.CitizenName} moved into house!");
     }
+    
     public void UpdateInfo()
     {
         if (People.Count == 0)

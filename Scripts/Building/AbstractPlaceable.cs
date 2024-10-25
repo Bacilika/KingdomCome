@@ -37,7 +37,7 @@ public abstract partial class AbstractPlaceable : Area2D
     protected int HouseholdHappiness;
 
     public PlaceableInfo InfoBox;
-    protected int Inhabitants;
+    public int Inhabitants;
     public bool IsPlaced;
     public bool IsUnlocked = false;
 
@@ -123,7 +123,7 @@ public abstract partial class AbstractPlaceable : Area2D
 
         //Remove buttons from decorations
         InfoBox.GetNode<Button>("HouseInfo/ButtonContainer/UpgradeButton").Visible = this is not Decoration.Decoration;
-
+        
         _Ready_instance();
         SetObjectValues();
         OnParentReady();

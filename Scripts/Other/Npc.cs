@@ -25,6 +25,9 @@ public partial class Npc : CharacterBody2D
 	[Signal]
 	public delegate void OnFedEventHandler(Npc npc, bool fed);
 	
+	[Signal]
+	public delegate void OnHomelessNpcEventHandler(Npc npc);
+	
 	private AbstractActivity _activity;
 	//npc fields
 	public int Happiness = BaseHappiness;
@@ -61,6 +64,7 @@ public partial class Npc : CharacterBody2D
 	public string _direction;
 	private bool scheduleIsStarted = false;
 	public AnimatedSprite2D Interaction;
+	public bool isHomeless = true;
 
 	private Vector2 _homelessPos = new (-1, -1);
 
@@ -76,6 +80,9 @@ public partial class Npc : CharacterBody2D
 		Info.SetInfo(this);
 		Info.Visible = false;
 		ZIndex = 1;
+		
+		if(isHomeless) EmitSignal(SignalName.OnHomelessNpc, this);
+		
 		ScheduleTimer = new Timer();
 		ScheduleTimer.WaitTime = 30;
 		ScheduleTimer.OneShot = true;
@@ -92,7 +99,6 @@ public partial class Npc : CharacterBody2D
 			}
 			if (AtWork)
 			{
-				
 				AtWork = false;
 				Idle = true;
 				CurrentBuilding = Work;
@@ -104,6 +110,7 @@ public partial class Npc : CharacterBody2D
 		AddChild(ScheduleTimer);
 		_navigation.TargetReached += OnTargetReached;
 		
+		//Mood reasons.
 		_moodReasons.Add("Work", new MoodReason());
 		_moodReasons.Add("Activity", new MoodReason());
 		_moodReasons.Add("Food", new MoodReason());
@@ -116,6 +123,7 @@ public partial class Npc : CharacterBody2D
 	public void OnMoveIn()
 	{
 		SetMoodReason("Home", "Has a home", 0);
+		isHomeless = false;
 	}
 
 	public void OnBuildingEntered(AbstractPlaceable building)
@@ -147,7 +155,6 @@ public partial class Npc : CharacterBody2D
 		{
 			StartScheduleTimer();
 		}
-		
 	}
 
 	public void StartScheduleTimer()
@@ -197,7 +204,7 @@ public partial class Npc : CharacterBody2D
 	public override void _PhysicsProcess(double delta)
 	{
 		if (NavigationServer2D.MapGetIterationId(_navigation.GetNavigationMap()) == 0) return; //Not ready
-		
+		if(isHomeless) EmitSignal(SignalName.OnHomelessNpc, this);
 		if (_stopped) //stopped by player
 		{
 			_animation.Stop();

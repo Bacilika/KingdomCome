@@ -140,7 +140,7 @@ public partial class GameMap : Node2D
 		}
 		if (Citizens.Count == deadc)
 		{
-			GetNode<Control>("GameOver").Visible = true;
+			_gameMenu.GameOver();
 		}
 	}
 	

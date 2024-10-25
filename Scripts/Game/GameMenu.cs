@@ -25,6 +25,10 @@ public partial class GameMenu : Control
 	public EventGenerator EventGenerator = new();
 	private RandomNumberGenerator random = new();
 	private Timer eventtimer = new Timer();
+	
+	//Game over
+	private PackedScene _gameOverScene;
+
 
 	
 	[Signal]
@@ -45,7 +49,7 @@ public partial class GameMenu : Control
 		CanvasLayer = GetNode<CanvasLayer>("MenuCanvasLayer");
 		GameLog = GetNode<GameLog>("MenuCanvasLayer/GameLog");
 		
-		//Event 
+		//Event timer
 		AddChild(eventtimer);
 		int waitTime = random.RandiRange(30, 40);
 		eventtimer.SetWaitTime(waitTime);
@@ -112,7 +116,14 @@ public partial class GameMenu : Control
 	{
 		LevelProgressbar.Value = 0;
 		Level.Text =  $"Level: {updatedLevel.ToString()}";
+	}
 
+	public void GameOver()
+	{
+		_gameOverScene = ResourceLoader.Load<PackedScene>("res://Scenes/Game/GameOver.tscn");
+		GameOver gameOver = _gameOverScene.Instantiate<GameOver>();
+		CanvasLayer.AddChild(gameOver);
+		gameOver.Visible = true;
 	}
 
 	public void UpdateMenuInfo()

@@ -16,22 +16,19 @@ public partial class House : LivingSpace
 		BuildingDescription = "A place for citizens to live";
 		Upgrades = new Dictionary<string, List<int>>
 		{
-			{ Upgrade.MaxInhabitants, [5, 7, 10] }
+			{ Upgrade.MaxInhabitants, [4, 7, 10] }
 		};
 		BuildCost = new Dictionary<string, List<int>>
 		{
-			{ RawResource.Wood, [5, 7, 10] },
-			{ RawResource.Stone, [5, 7, 10] }
+			{ RawResource.Wood, [10, 5, 5] },
 		};
 		MoveCost = new Dictionary<string, List<int>>
 		{
 			{ RawResource.Wood, [1, 2, 3] },
-			{ RawResource.Stone, [1, 2, 3] }
 		};
 		DeleteCost = new Dictionary<string, List<int>>
 		{
 			{ RawResource.Wood, [2, 3, 4] },
-			{ RawResource.Stone, [2, 3, 4] }
 		};
 	}
 

@@ -33,7 +33,6 @@ public partial class IronMine : Production
 			{ RawResource.Wood, [2, 3, 4] },
 			{ RawResource.Stone, [2, 3, 4] }
 		};
-		ProductionRate = 25;
 	}
 	
 	public override void NpcWork(Npc npc)

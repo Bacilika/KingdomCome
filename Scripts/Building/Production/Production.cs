@@ -8,7 +8,7 @@ public abstract partial class Production : AbstractPlaceable
 	private int _food;
 	protected Timer _timer;
 	protected string Producing;
-	protected int ProductionRate = 10; // 1/ProductionRate % chance to produce item by 1 each tick. 
+	protected RandomNumberGenerator ProductionRate = new (); // 1/ProductionRate % chance to produce item by 1 each tick. 
 	private bool isOn = true;
 
 	

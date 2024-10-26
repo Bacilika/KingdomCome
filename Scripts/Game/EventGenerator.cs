@@ -102,9 +102,13 @@ public class EventGenerator
         };
         event2.buttons[1].Pressed += () =>
         {
+            foreach (var npc in event2.Gamemap.Citizens)
+            {
+                npc.SetMoodReason("Event", "Feeling scammed...", -2, 120);
+            }
             event2.Description.Text = $"{_boyNpc.CitizenName} looked unhappy, but promised never to see his family or to steal again. " +
                                       $"Although you wanted to believe him, it was hard to picture him so easily leaving his siblings" +
-                                      $"without a second thought.";
+                                      $"without a second thought. (-2 mood, feeling scammed)";
         };
         
         event2.buttons[2].Pressed += () =>
@@ -149,9 +153,14 @@ public class EventGenerator
         //actions
         event2.buttons[0].Pressed += () =>
         {
+            foreach (var npc in event2.Gamemap.Citizens)
+            {
+                npc.SetMoodReason("Event", "Might have done a bad choice...", -2, 120);
+            }
             event2.Description.Text = $"{luckyNpc} tried shake the body awake, but soon discovered that it was not moving. " +
                                       $"When unwrapping the blankets, {luckyNpc} saw that it was the boy from earlier, dead." +
-                                      $"{luckyNpc} left the area, wondering if turning him away had really been the right choice." ;
+                                      $"{luckyNpc} left the area, wondering if turning him away had really been the right choice." +
+                                      $"(-2 mood)" ;
         };
         event2.buttons[1].Pressed += () =>
         {
@@ -380,6 +389,7 @@ public class EventGenerator
             _boyNpc = _npcScene.Instantiate<Npc>();
             event0.GetTree().Root.AddChild(_boyNpc);
             event0.Gamemap.SpawnFirstNpc(_boyNpc);
+            event0.Gamemap.ChildIsBorn = true;
             event0.Description.Text = $"The birth went well! {firstNpc} and {lastNpc} are ready to welcome {_boyNpc.CitizenName}";
         };
 

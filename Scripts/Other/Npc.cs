@@ -116,6 +116,7 @@ public partial class Npc : CharacterBody2D
 		_moodReasons.Add("Home", new MoodReason());
 		_moodReasons.Add("Decoration", new MoodReason());
 		_moodReasons.Add("Trauma", new MoodReason());
+        _moodReasons.Add("Event", new MoodReason());
 		SetMoodReason("Home", "Is Homeless", -3);
 	}
 

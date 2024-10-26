@@ -19,7 +19,7 @@ public partial class WoodCutter : Production
 		
 		Upgrades = new Dictionary<string, List<int>>
 		{
-			{ Upgrade.MaxWorkers, [2, 4, 5] }
+			{ Upgrade.MaxWorkers, [3, 5, 7] }
 		};
 		BuildCost = new Dictionary<string, List<int>>
 		{
@@ -59,7 +59,9 @@ public partial class WoodCutter : Production
 
 	public override void ProduceItem()
 	{
-		GameLogistics.Resources[RawResource.Wood]++;
+		
+		int production = ProductionRate.RandiRange(1, 3);
+		if (production == 1) GameLogistics.Resources[RawResource.Wood]++;
 	}
 
 	public override void OnParentReady()

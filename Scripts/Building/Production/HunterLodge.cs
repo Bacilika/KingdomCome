@@ -12,11 +12,11 @@ public partial class HunterLodge : Production
 		Producing = "Food";
 		Upgrades = new Dictionary<string, List<int>>
 		{
-			{ Upgrade.MaxWorkers, [2, 5, 10] }
+			{ Upgrade.MaxWorkers, [3, 5, 7] }
 		};
 		BuildCost = new Dictionary<string, List<int>>
 		{
-			{ RawResource.Wood, [5, 7, 10] },
+			{ RawResource.Wood, [7, 5, 5] },
 		};
 		MoveCost = new Dictionary<string, List<int>>
 		{

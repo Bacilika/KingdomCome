@@ -16,7 +16,7 @@ public partial class House : LivingSpace
 		BuildingDescription = "A place for citizens to live";
 		Upgrades = new Dictionary<string, List<int>>
 		{
-			{ Upgrade.MaxInhabitants, [4, 7, 10] }
+			{ Upgrade.MaxInhabitants, [5, 7, 10] }
 		};
 		BuildCost = new Dictionary<string, List<int>>
 		{

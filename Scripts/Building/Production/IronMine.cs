@@ -13,15 +13,15 @@ public partial class IronMine : Production
 		BuildingDescription = "A Mine for Iron";
 		ActivityIndoors = false;
 		Producing = "Iron";
-		PlayerLevel = 3;
+		PlayerLevel = 4;
 		Upgrades = new Dictionary<string, List<int>>
 		{
-			{ Upgrade.MaxWorkers, [5, 7, 10] }
+			{ Upgrade.MaxWorkers, [3, 5, 7] }
 		};
 		BuildCost = new Dictionary<string, List<int>>
 		{
-			{ RawResource.Wood, [5, 7, 10] },
-			{ RawResource.Stone, [10, 15, 20] }
+			{ ProcessedResource.Plank, [20, 10, 10] },
+			{ RawResource.Stone, [10, 7, 7] }
 		};
 		MoveCost = new Dictionary<string, List<int>>
 		{

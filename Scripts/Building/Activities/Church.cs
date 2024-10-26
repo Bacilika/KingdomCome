@@ -6,20 +6,20 @@ public partial class Church : AbstractActivity
 {
 	protected override void _Ready_instance()
 	{
-		PlayerLevel = 2;
+		PlayerLevel = 3;
 		BuildingName = "Church";
 		BuildingDescription = "Increases happiness";
 
 		Upgrades = new Dictionary<string, List<int>>
 		{
-			{ Upgrade.MaxWorkers, [5, 7, 10] }
+			{ Upgrade.MaxWorkers, [2, 3, 4] }
 		};
 		BuildCost = new Dictionary<string, List<int>>
 		{
 			{ RawResource.Wood, [5, 7, 10] },
 			{ RawResource.Stone, [5, 7, 10] }, 
 			{ ProcessedResource.Plank, [5, 7, 10] },
-			{ RawResource.Iron, [5, 7, 10] }
+			{ RawResource.Iron, [0, 5, 10] }
 		};
 		MoveCost = new Dictionary<string, List<int>>
 		{
@@ -32,5 +32,4 @@ public partial class Church : AbstractActivity
 			{ RawResource.Stone, [2, 3, 4] }
 		};
 	}
-	
 }

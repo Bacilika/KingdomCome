@@ -15,27 +15,26 @@ public partial class MarketStall : Production
 		ActivityIndoors = false;
 		BuildingName = "Market Stall";
 		BuildingDescription = "Market stall to sell resources";
-
 		Producing = "Iron";
 		InfoBox.Connect(PlaceableInfo.SignalName.OnChooseWare, Callable.From(OnChooseWare));
-		PlayerLevel = 3;
+		PlayerLevel = 4;
 		Upgrades = new Dictionary<string, List<int>>
 		{
 			{ Upgrade.MaxWorkers, [5, 7, 10] }
 		};
 		BuildCost = new Dictionary<string, List<int>>
 		{
-			{ RawResource.Wood, [5, 7, 10] },
-			{ RawResource.Stone, [5, 7, 10] }
+			{ ProcessedResource.Plank, [10, 6, 6] },
+			{ RawResource.Stone, [5, 4, 4] }
 		};
 		MoveCost = new Dictionary<string, List<int>>
 		{
-			{ RawResource.Wood, [1, 2, 3] },
+			{ ProcessedResource.Plank, [1, 2, 3] },
 			{ RawResource.Stone, [1, 2, 3] }
 		};
 		DeleteCost = new Dictionary<string, List<int>>
 		{
-			{ RawResource.Wood, [2, 3, 4] },
+			{ ProcessedResource.Plank, [2, 3, 4] },
 			{ RawResource.Stone, [2, 3, 4] }
 		};
 		WareBox = InfoBox.GetNode<ChooseWare>("ChooseWare");

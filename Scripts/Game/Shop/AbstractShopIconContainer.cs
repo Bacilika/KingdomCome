@@ -51,6 +51,7 @@ public abstract partial class AbstractShopIconContainer : ScrollContainer
 
     public override void _Process(double delta)
     {
+        UpdateStock(GameLogistics.Resources);
     }
 
     public void UpdateStock(Dictionary<string, int> resources)
@@ -61,7 +62,10 @@ public abstract partial class AbstractShopIconContainer : ScrollContainer
             {
                 continue;
             }
-            foreach (var cost in item.Product.BuildCost)
+            foreach (var cost in item.Product.BuildCost){
+                if (GameLogistics.ProcessedResources.ContainsKey(cost.Key))
+                    resources = GameLogistics.ProcessedResources;
+                else if (GameLogistics.FoodResource.ContainsKey(cost.Key)) resources = GameLogistics.FoodResource;
                 if (item.Product.PlayerLevel > GameMap.Level) //too low level
                 {
                     item.Icon.SelfModulate = _disabled;
@@ -79,6 +83,7 @@ public abstract partial class AbstractShopIconContainer : ScrollContainer
                     item.Icon.SelfModulate = _canBuy;
                     item.Icon.Disabled = false;
                 }
+            }
         }
     }
 }

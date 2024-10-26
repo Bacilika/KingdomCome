@@ -12,16 +12,17 @@ public partial class FarmHouse : Production
 		BuildingDescription = "A Barn that produces food";
 		Producing = RawResource.Food;
 		_timer = GetNode<Timer>("FoodTimer");
-		PlayerLevel = 3;
+		PlayerLevel = 5;
 		Upgrades = new Dictionary<string, List<int>>
 		{
 			{ Upgrade.MaxWorkers, [5, 7, 10] }
 		};
 		BuildCost = new Dictionary<string, List<int>>
 		{
-			{ RawResource.Wood, [5, 7, 10] },
-			{ RawResource.Stone, [5, 7, 10] },
-			{ RawResource.Iron, [3, 5, 7] }
+			{ ProcessedResource.Plank, [20, 10, 10] },
+			{ RawResource.Stone, [10, 7, 5] },
+			{ RawResource.Iron, [10, 5, 3] },
+			{ RawResource.Wood, [2, 2, 3] }
 		};
 		MoveCost = new Dictionary<string, List<int>>
 		{
@@ -34,7 +35,6 @@ public partial class FarmHouse : Production
 			{ RawResource.Stone, [2, 3, 4] }
 		};
 	}
-
 
 	public override void ProduceItem()
 	{

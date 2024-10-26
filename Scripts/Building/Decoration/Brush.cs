@@ -12,6 +12,7 @@ public partial class Brush : Decoration
 	{
 		BuildingName = "Bush";
 		BuildingDescription = "A beautiful bush making your citizens happier";
+		PlayerLevel = 3;
 		Upgrades = new Dictionary<string, List<int>>();
 		BuildCost = new Dictionary<string, List<int>>
 		{

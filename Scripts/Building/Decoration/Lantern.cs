@@ -11,6 +11,7 @@ public partial class Lantern : Decoration
 	protected override void _Ready_instance()
 	{		
 		BuildingName = "Lantern";
+		PlayerLevel = 3;
 		BuildingDescription = "A lantern lighting up the streets, making the citizens happier";
 		Upgrades = new Dictionary<string, List<int>>();
 		BuildCost = new Dictionary<string, List<int>>

@@ -18,8 +18,10 @@ public partial class Brewery : Production
 		};
 		BuildCost = new Dictionary<string, List<int>>
 		{
-			{ RawResource.Wood, [5, 7, 10] },
-			{ RawResource.Stone, [5, 7, 10] }
+			{ ProcessedResource.Plank, [10, 5, 5] },
+			{ RawResource.Stone, [7, 3, 5] },
+			{ RawResource.Iron, [20, 5, 3] },
+			{ RawResource.Wood, [3, 2, 3] }
 		};
 		MoveCost = new Dictionary<string, List<int>>
 		{

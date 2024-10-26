@@ -13,6 +13,7 @@ public partial class Flower : Decoration
 		BuildingName = "Flower";
 		BuildingDescription = "A beautiful flower making your citizens happier";
 		Upgrades = new Dictionary<string, List<int>>();
+		PlayerLevel = 3;
 		BuildCost = new Dictionary<string, List<int>>
 		{
 			{ RawResource.Wood, [5, 7, 10] },

@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://25kpv3trjyvk"]
+[gd_scene load_steps=53 format=3 uid="uid://25kpv3trjyvk"]
 
 [ext_resource type="Script" path="res://Scripts/Game/GameMenu.cs" id="1_dev6f"]
 [ext_resource type="Theme" uid="uid://c2femp2uxsefw" path="res://Themes/Theme.tres" id="1_vgcun"]
@@ -24,6 +24,7 @@
 [ext_resource type="PackedScene" uid="uid://3falldunylfw" path="res://Scenes/Game/ProductionInfo.tscn" id="15_enu43"]
 [ext_resource type="PackedScene" uid="uid://c0ejkvqyxdkcc" path="res://Scenes/Game/GameLog.tscn" id="16_3yc3n"]
 [ext_resource type="PackedScene" uid="uid://1hu3hnur2kr5" path="res://Scenes/Game/TutorialWindow.tscn" id="23_wqoes"]
+[ext_resource type="Texture2D" uid="uid://brddo04fjmv4b" path="res://Sprites/Extra/Arrow.png" id="24_y3wim"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gs2ww"]
 content_margin_left = 5.0
@@ -285,6 +286,42 @@ TabContainer/styles/tab_hovered = SubResource("StyleBoxFlat_eypih")
 TabContainer/styles/tab_selected = SubResource("StyleBoxFlat_5vgi6")
 TabContainer/styles/tab_unselected = ExtResource("9_iv2ij")
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_a8d62"]
+atlas = ExtResource("24_y3wim")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xd1gq"]
+atlas = ExtResource("24_y3wim")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hd7mx"]
+atlas = ExtResource("24_y3wim")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bch1g"]
+atlas = ExtResource("24_y3wim")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_o1irp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a8d62")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xd1gq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hd7mx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bch1g")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
 [node name="GameMenu" type="Control"]
 y_sort_enabled = true
 layout_mode = 3
@@ -520,6 +557,13 @@ offset_right = 1289.0
 offset_bottom = 700.0
 mouse_filter = 2
 color = Color(0, 0, 0, 0.258824)
+
+[node name="TutorialArrow" type="AnimatedSprite2D" parent="MenuCanvasLayer"]
+visible = false
+top_level = true
+position = Vector2(292, 325)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_o1irp")
 
 [node name="TutorialWindow" parent="MenuCanvasLayer" instance=ExtResource("23_wqoes")]
 

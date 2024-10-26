@@ -116,7 +116,7 @@ public partial class Npc : CharacterBody2D
 		_moodReasons.Add("Home", new MoodReason());
 		_moodReasons.Add("Decoration", new MoodReason());
 		_moodReasons.Add("Trauma", new MoodReason());
-        _moodReasons.Add("Event", new MoodReason());
+		_moodReasons.Add("Event", new MoodReason());
 		SetMoodReason("Home", "Is Homeless", -3);
 	}
 
@@ -346,6 +346,10 @@ public partial class Npc : CharacterBody2D
 
 	public bool ChangeJob(Production production)
 	{
+		if (GameMap.TutorialMode && production is WorkBench)
+		{
+			TutorialWindow.CompleteTutorialStep(TutorialStep.EmployNpc);
+		} 
 		var oldWork = Work;
 		Work?.RemoveWorker(this);
 		Work = production;
@@ -384,11 +388,10 @@ public partial class Npc : CharacterBody2D
 			SetMoodReason("Work", "Unemployed", -1);
 			AtWorkTimer.Stop();
 			ScheduleTimer.Stop();
-			SetDestination(Home?.Position ?? new Vector2(-1,-1));
-			
-			
+			SetDestinationToTargetBuilding(Home);
 			return false;
 		}
+		if(!production.isDone) return false;
 		if (Work is not null)
 		{
 			return ChangeJob(production);

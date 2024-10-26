@@ -28,6 +28,7 @@ public partial class GameMenu : Control
 	private RandomNumberGenerator random = new();
 	private Timer eventtimer = new Timer();
 	public TutorialWindow TutorialWindow; 
+	private double _tickCounter;
 	
 	//Game over
 	private PackedScene _gameOverScene;
@@ -128,8 +129,7 @@ public partial class GameMenu : Control
 		};
 		
 		TutorialWindow = GetNode<TutorialWindow>("MenuCanvasLayer/TutorialWindow");
-		TutorialWindow.Description.Text =
-			"Your Citizen can help you build your kingdom if you assign them to the workbench.";
+
 		
 		// game stats
 		var statLabels = GetNode<HBoxContainer>("MenuCanvasLayer/GameStats");
@@ -160,8 +160,13 @@ public partial class GameMenu : Control
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		_tickCounter += delta;
+		if (_tickCounter >= 0.5)
+		{
+			_tickCounter -= 0.5;
+			if (GameMap.TutorialMode) TutorialWindow.ShowTutorial();
+		}
 		UpdateMenuInfo();
-		if(GameMap.TutorialMode) TutorialWindow.ShowTutorial();
 	}
 
 	public static void UpdateLevel(int updatedLevel)

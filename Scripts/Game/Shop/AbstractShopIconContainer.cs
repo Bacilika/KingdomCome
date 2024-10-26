@@ -46,8 +46,7 @@ public abstract partial class AbstractShopIconContainer : ScrollContainer
             
         } 
     }
-
-
+    
     public abstract void AddProducts();
 
     public override void _Process(double delta)

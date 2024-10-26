@@ -1,7 +1,9 @@
 using Godot;
 using System;
+using System.Threading;
 using Godot.Collections;
 using Scripts.Constants;
+using Timer = Godot.Timer;
 
 public static class TutorialStep
 {
@@ -9,14 +11,17 @@ public static class TutorialStep
 	public static string SelectGiveJob = "Select GiveJob";
 	public static string EmployNpc = "Employ Npc";
 	public static string BuildHouse = "Build House";
+	public static string BuildProduction = "Build Production Npc";
 }
 
-public partial class TutorialWindow: Window
+public partial class TutorialWindow: Panel
 {
 	public GameMap GameMap;
 	public AnimatedSprite2D ArrowSprite;
 	public RichTextLabel Title;
 	public RichTextLabel Description;
+	public GameMenu GameMenu;
+	public Timer timer;
 
 	public static Dictionary<string, bool> TutorialSteps = new();
 
@@ -26,14 +31,23 @@ public partial class TutorialWindow: Window
 		Title = GetNode<RichTextLabel>("VBoxContainer/Title");
 		Description = GetNode<RichTextLabel>("VBoxContainer/Description");
 		GameMap = GetParent<CanvasLayer>().GetParent<GameMenu>().GetParent<GameMap>();
+		GameMenu = GetParent<CanvasLayer>().GetParent<GameMenu>();
 		ArrowSprite = GameMap.GetNode<AnimatedSprite2D>("TutorialArrow");
 		var screenPos = GetViewport().GetVisibleRect().Position.X;
 		var screenSize = GetTree().Root.Size[0];
-		Position =  (Vector2I) new Vector2(screenPos + screenSize -300, 300);
-		Title.Text = "Royal Advisor";
-		CloseRequested += () => Visible = false;
+		Position =  (Vector2I) new Vector2(screenPos + screenSize -300, 100);
 		GetNode<Button>("VBoxContainer/Button").Pressed += () => Visible = false;
+		timer = new Timer();
+		timer.WaitTime = 20;
+		timer.OneShot = true;
+		timer.Autostart = false;
+		timer.Timeout += () => Visible = false;
+		AddChild(timer);
+		ShowTutorialWindow("Royal Advisor",
+			"Citizens that are assigned to the workbench can help you build buildings such as Housing and Production.");
+		Visible = false;
 	}
+	
 	
 
 	public static void CompleteTutorialStep(string key)
@@ -49,6 +63,7 @@ public partial class TutorialWindow: Window
 		Visible = true;
 		Title.Text = title;
 		Description.Text = description;
+		timer.Start();
 	}
 
 	public static bool CanBeCompleted(string key)
@@ -68,13 +83,14 @@ public partial class TutorialWindow: Window
 		return false;
 	}
 
+	public void TutorialDone()
+	{
+		GameMap.TutorialMode = false;
+		
+	}
+
 	public void ShowTutorial()
 	{
-		if (GetViewport() is null) return;
-		
-		var screenPos = GetViewport().GetVisibleRect().Position.X;
-		var screenSize = GetTree().Root.Size[0];
-		Position =  (Vector2I) new Vector2(screenPos + screenSize -300, 300);
 		
 		ArrowSprite.Visible = false;
 		ArrowSprite.MoveToFront();
@@ -85,6 +101,7 @@ public partial class TutorialWindow: Window
 			TutorialSteps.Add(TutorialStep.SelectGiveJob, false);
 			TutorialSteps.Add(TutorialStep.EmployNpc, false);
 			TutorialSteps.Add(TutorialStep.BuildHouse, false);
+			TutorialSteps.Add(TutorialStep.BuildProduction, false);
 		}
 		
 		if (!TutorialSteps[TutorialStep.SelectNpc])
@@ -108,16 +125,38 @@ public partial class TutorialWindow: Window
 		}
 		else if (!TutorialSteps[TutorialStep.EmployNpc])
 		{
-			if (GameMenu.GameMode.Text == GameMode.JobChange)
-			{
-				ArrowSprite.Visible = true;
-				ArrowSprite.Position = GameMap.GetNode<WorkBench>("WorkBench").Position+ new Vector2(0,-50);
-				ArrowSprite.Play();
-			}
+			if (GameMenu.GameMode.Text != GameMode.JobChange) return;
+			ArrowSprite.Visible = true;
+			ArrowSprite.Position = GameMap.GetNode<WorkBench>("WorkBench").Position+ new Vector2(0,-50);
+			ArrowSprite.Play();
 		}
 		else if (!TutorialSteps[TutorialStep.BuildHouse])
 		{
+
+			ArrowSprite = GameMenu.GetNode<AnimatedSprite2D>("MenuCanvasLayer/TutorialArrow");
+			if (!GameMenu.Shop.GetNode<ScrollContainer>("BuildTabButtons/Houses").Visible) return;
+			if(!GameMenu.Shop.Visible) return;
+			ArrowSprite.Visible = true;
+				
+			var position =GameMenu.Shop.GlobalPosition + new Vector2(40,-40);
+			ArrowSprite.Position= position;
+			ArrowSprite.Play();
+		}
+		else if (!TutorialSteps[TutorialStep.BuildProduction])
+		{
+			ShowTutorialWindow("Royal Advisor",
+				"Your Citizens need food to live. A good way to get food is through a Hunter's Lodge.");
+			if (!GameMenu.Shop.GetNode<ScrollContainer>("BuildTabButtons/Productions").Visible) return;
+			if(!GameMenu.Shop.Visible) return;
+			
+			ArrowSprite.Visible = true;
+			var position =GameMenu.Shop.GlobalPosition + new Vector2(25,-40);
+			ArrowSprite.Position= position;
+			ArrowSprite.Play();
+		}
+		else
+		{
+			TutorialDone();
 		}
 	}
-
 }

@@ -2368,7 +2368,7 @@ position = Vector2(-749, -412)
 stream = ExtResource("8_2qw43")
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
-position = Vector2(-42, 25)
+position = Vector2(-42, 24)
 navigation_polygon = SubResource("NavigationPolygon_n6683")
 
 [node name="GameLogistics" parent="." instance=ExtResource("10_4gj8f")]
@@ -2383,6 +2383,7 @@ position = Vector2(-297, -144)
 position = Vector2(0, -127)
 
 [node name="TutorialArrow" type="AnimatedSprite2D" parent="."]
+visible = false
 top_level = true
 position = Vector2(292, 324)
 scale = Vector2(1.5, 1.5)

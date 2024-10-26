@@ -59,7 +59,7 @@ public partial class GameMap : Node2D
 	public override void _Ready()
 	{
 		TutorialMode = true;
-		NpcStats = new Dictionary<string, int>()
+		NpcStats = new Dictionary<string, int>
 		{
 			{NpcStatuses.Unemployed, 0},
 			{NpcStatuses.Citizens, 0},
@@ -101,6 +101,7 @@ public partial class GameMap : Node2D
 		// Start NPC
 		SpawnFirstNpc(GetNode<Npc>("Male"));
 		SpawnFirstNpc(GetNode<Npc>("Female"));
+		GetNode<AbstractShopIconContainer>("GameMenu/MenuCanvasLayer/Shop/BuildTabButtons/Houses").UpdateStock(GameLogistics.Resources);
 
 	}
 
@@ -176,10 +177,6 @@ public partial class GameMap : Node2D
 		_music.Play();
 	}
 
-	private void OnEatFoodTimerTimedout()
-	{
-	}
-
 	public void PlaceBuilding(Node2D nodeObject)
 	{
 		var placeable = (AbstractPlaceable)nodeObject;
@@ -204,10 +201,15 @@ public partial class GameMap : Node2D
 			}
 		}
 
-		if (placeable is Production production) _placedProduction.Add(production);
+			if (placeable is Production production)
+			{
+				if(TutorialMode && production is HunterLodge) TutorialWindow.CompleteTutorialStep(TutorialStep.BuildProduction);
+				_placedProduction.Add(production);
+			}
 		placeable.IsPlaced = true;
 		AddChild(placeable);
 		placeable.HouseSprite.SetAnimation("Building"); 
+		TutorialWindow.CompleteTutorialStep(TutorialStep.BuildHouse);
 		
 		//progress bar
 		if (placeable is not WorkBench)

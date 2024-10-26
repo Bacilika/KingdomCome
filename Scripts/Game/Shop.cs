@@ -32,6 +32,7 @@ public partial class Shop : Control
 			GetNode<AbstractShopIconContainer>("BuildTabButtons/Roads"),
 			GetNode<AbstractShopIconContainer>("BuildTabButtons/Activities")
 		];
+
 	}
 
 	public void OnTabClicked(int i)

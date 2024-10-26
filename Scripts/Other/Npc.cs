@@ -580,6 +580,11 @@ public partial class Npc : CharacterBody2D
 			if (Hunger >= 5)
 			{
 				EmitSignal(GameMap.SignalName.SendLog, $"{CitizenName} starved to death.");
+				var gameMap = GetParent<GameMap>();
+				gameMap.DeadCitizens.Add(this);
+				gameMap.Citizens.Remove(this);
+				Work?.People.Remove(this);
+				Home?.People.Remove(this);
 				if (Home is not null){
 					foreach (var familyMember in Home.People)
 					{
@@ -608,6 +613,8 @@ public partial class Npc : CharacterBody2D
 			}
 			if (daysUnhappy > 5)
 			{
+				var gameMap = GetParent<GameMap>();
+				gameMap.Citizens.Remove(this);
 				OnDelete();
 				EmitSignal(GameMap.SignalName.SendLog, $"{CitizenName} Was too unhappy and left.");
 			}

@@ -293,11 +293,11 @@ public class EventGenerator
         var luckyNpc = event2.Gamemap.Citizens.Last().CitizenName;
         event2.Title.Text = "A little bit of kindness for a stranger?";
         event2.Description.Text = $"When walking in the woods, {luckyNpc} met a traveling salesman that stood by a broken cart. " +
-                                  $"He offered {luckyNpc} 5 meat in exchange for 10 wood so that he could fix his cart! " +
+                                  $"He offered {luckyNpc} 5 meat in exchange for 5 wood so that he could fix his cart! " +
                                   $"Do you want to trade?";
         event2.buttons[0].Text = "Yes!";
         event2.buttons[1].Text = "No thank you";
-        if (GameLogistics.Resources[RawResource.Wood] < 10)
+        if (GameLogistics.Resources[RawResource.Wood] < 5)
         {
             event2.buttons[0].Disabled = true;
             event2.buttons[0].TooltipText = "Not enough wood";
@@ -315,7 +315,7 @@ public class EventGenerator
         {
             _helpedSalesman = true;
             GameLogistics.FoodResource[Food.Meat] += 5;
-            GameLogistics.Resources[RawResource.Wood] -= 10;
+            GameLogistics.Resources[RawResource.Wood] -= 5;
             event2.Description.Text = $"The salesman smiled as he happily trades the meat for the wood, and thanks {luckyNpc} profusely! He promises to come" +
                                       "back and trade more in the future. (+5 meat, -3 wood)" ;
         };

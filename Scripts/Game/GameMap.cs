@@ -16,6 +16,7 @@ public partial class GameMap : Node2D
 	public static List<Npc> Homeless = [];
 	public static List<Npc> Unemployed = [];
 	public List<Npc> Citizens = [];
+	public List<Npc> DeadCitizens = [];
 	public static Dictionary<string, int> NpcStats  = new ();
 	private TutorialWindow _tutorialWindow;
 	

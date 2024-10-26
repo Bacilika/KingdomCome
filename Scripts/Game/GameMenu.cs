@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Net.Mime;
 using Godot;
 using Scripts.Constants;
 
@@ -26,6 +27,7 @@ public partial class GameMenu : Control
 	public EventGenerator EventGenerator = new();
 	private RandomNumberGenerator random = new();
 	private Timer eventtimer = new Timer();
+	public TutorialWindow TutorialWindow; 
 	
 	//Game over
 	private PackedScene _gameOverScene;
@@ -53,7 +55,6 @@ public partial class GameMenu : Control
 		var gameMap = GetParent<GameMap>();
 		var timer = gameMap.GetNode<Timer>("DayTimer");
 		DayProgressbar.MaxValue = timer.WaitTime;
-		
 		
 		
 		//Event timer
@@ -86,6 +87,50 @@ public partial class GameMenu : Control
 
 		// set up tutorial selection
 		
+		
+		var introEvent = EventGenerator.CreateEvent(1);
+		GetNode<CanvasLayer>("MenuCanvasLayer").AddChild(introEvent);
+		GetParent().Ready += () =>
+		{
+			gameMap.PauseGame();
+			introEvent.Visible = true;
+		};
+		
+		introEvent.Title.Text = "Your New Kingdom";
+		introEvent.Description.Text = "You and your partner once lived under the rule of a crumbling kingdom," +
+									  " where neglect and corruption stifled hope and progress. " +
+									  "Tired of watching the land and its people suffer, you dared to dream " +
+									  "of something better: a kingdom built on fairness, strength, and vision. " +
+									  "Together, you set out to create a place where every choice is yours, " +
+									  "where people thrive, and dreams flourish. Though challenges will come, " +
+									  "this time, the future is in your hands. Brick by brick, " +
+									  "you will build a realm that stands as a beacon of hope—a kingdom truly " +
+									  "worth fighting for.\nYour journey begins now.";
+		
+		introEvent.buttons[0].Text = "Continue";
+		introEvent.buttons[0].Pressed += () =>
+		{
+			introEvent.Title.Text = "Your Royal Advisor";
+			introEvent.Description.Text = "By your side stands your loyal advisor—a wise and steady guide, shaped by years" +
+										  " of experience and dedication. With a keen eye for strategy and a heart aligned" +
+										  " with your vision, he offers insights, counsel, and encouragement, helping you transform" +
+										  " ideas into action as you build your new kingdom.";
+		};
+		introEvent.DoneButton.Visible = false;
+		introEvent.ButtonContainer.Visible = true;
+		introEvent.DoneButton.Pressed += () =>
+		{
+			introEvent.Gamemap.PlayGame();
+			introEvent.GetParent().RemoveChild(introEvent);
+			introEvent.QueueFree();
+			TutorialWindow.Visible = true;
+			
+		};
+		
+		TutorialWindow = GetNode<TutorialWindow>("MenuCanvasLayer/TutorialWindow");
+		TutorialWindow.Description.Text =
+			"Your Citizen can help you build your kingdom if you assign them to the workbench.";
+		
 		// game stats
 		var statLabels = GetNode<HBoxContainer>("MenuCanvasLayer/GameStats");
 		_gameStatLabels = new Godot.Collections.Dictionary<string, Label>
@@ -110,13 +155,13 @@ public partial class GameMenu : Control
 			{ RawResource.Iron, statLabels.GetNode<TextureRect>(RawResource.Iron)},
 			{ RawResource.Water, statLabels.GetNode<TextureRect>(RawResource.Water)}
 		};
-		
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
 		UpdateMenuInfo();
+		if(GameMap.TutorialMode) TutorialWindow.ShowTutorial();
 	}
 
 	public static void UpdateLevel(int updatedLevel)
@@ -135,7 +180,6 @@ public partial class GameMenu : Control
 
 	public void UpdateMenuInfo()
 	{
-
 		LevelProgressbar.Value = _citizen.Count % 10;
 		Level.TooltipText = $"{10 - _citizen.Count % 10 } more citizen until next level";
 		LevelProgressbar.TooltipText = $"{10 - _citizen.Count % 10 } more citizen until next level";

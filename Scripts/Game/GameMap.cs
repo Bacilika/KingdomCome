@@ -58,8 +58,6 @@ public partial class GameMap : Node2D
 			{NpcStatuses.Citizens, 0},
 			{NpcStatuses.Homeless, 0},
 		};
-		tutorial = new TutorialWindow(this);
-		tutorial.ShowTutorial();
 		_foodTimer = GetNode<Timer>("EatFoodTimer");
 		_dayTimer = GetNode<Timer>("DayTimer");
 		_dayTimer.Start();
@@ -115,7 +113,6 @@ public partial class GameMap : Node2D
 		if (_timeSinceLastTick >= 0.5)
 		{
 			_timeSinceLastTick -= 0.5;
-			if(TutorialMode) tutorial.ShowTutorial();
 		}
 		Unemployed = [];
 		foreach (var npc in Citizens.Where(npc => npc.Work is null))

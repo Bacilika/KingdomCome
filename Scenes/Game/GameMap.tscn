@@ -2368,7 +2368,7 @@ position = Vector2(-749, -412)
 stream = ExtResource("8_2qw43")
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
-position = Vector2(-289, -696)
+position = Vector2(-42, 25)
 navigation_polygon = SubResource("NavigationPolygon_n6683")
 
 [node name="GameLogistics" parent="." instance=ExtResource("10_4gj8f")]

@@ -19,7 +19,6 @@ public partial class EventCard : Control
 	public override void _Ready()
 	{
 		Gamemap = GetParent().GetParent().GetParent<GameMap>();
-		//SetAnchorsPreset(LayoutPreset.Center);
 	}
 
 	public void SetFields()
@@ -33,10 +32,12 @@ public partial class EventCard : Control
 
 	public void AddButtons(int amount)
 	{
+		
 		for (int i = 0; i < amount; i++)
 		{
 			var button = new Button();
 			ButtonContainer.AddChild(button);
+			button.AddThemeFontSizeOverride("font_size",22);
 			button.Pressed += () =>
 			{
 				OnEventChoiceSelected();

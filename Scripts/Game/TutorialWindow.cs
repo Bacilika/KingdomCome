@@ -86,7 +86,7 @@ public partial class TutorialWindow: Panel
 	public void TutorialDone()
 	{
 		GameMap.TutorialMode = false;
-		
+		GameMenu.eventtimer.Start();
 	}
 
 	public void ShowTutorial()

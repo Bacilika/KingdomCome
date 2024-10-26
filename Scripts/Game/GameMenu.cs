@@ -26,7 +26,7 @@ public partial class GameMenu : Control
 	public bool CancelButtonFocused;
 	public EventGenerator EventGenerator = new();
 	private RandomNumberGenerator random = new();
-	private Timer eventtimer = new Timer();
+	public Timer eventtimer = new Timer();
 	public TutorialWindow TutorialWindow; 
 	private double _tickCounter;
 	
@@ -62,7 +62,6 @@ public partial class GameMenu : Control
 		AddChild(eventtimer);
 		int waitTime = random.RandiRange(65, 125);
 		eventtimer.SetWaitTime(waitTime);
-		eventtimer.Start();
 		eventtimer.OneShot = false;
 		eventtimer.Timeout += () =>
 		{

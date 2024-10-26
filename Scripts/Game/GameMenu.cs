@@ -60,7 +60,7 @@ public partial class GameMenu : Control
 		
 		//Event timer
 		AddChild(eventtimer);
-		int waitTime = random.RandiRange(30, 40);
+		int waitTime = random.RandiRange(65, 125);
 		eventtimer.SetWaitTime(waitTime);
 		eventtimer.Start();
 		eventtimer.OneShot = false;

@@ -9,17 +9,16 @@ public partial class Well : Production
 		BuildingName = "Well";
 		BuildingDescription = "Allows citizens to get water";
 		ActivityIndoors = false;
-
 		Producing = RawResource.Water;
-		PlayerLevel = 0;
+		PlayerLevel = 2;
 		Upgrades = new Dictionary<string, List<int>>
 		{
-			{ Upgrade.MaxWorkers, [5, 7, 10] }
+			{ Upgrade.MaxWorkers, [1, 2, 4] }
 		};
 		BuildCost = new Dictionary<string, List<int>>
 		{
-			{ RawResource.Wood, [5, 7, 10] },
-			{ RawResource.Stone, [5, 7, 10] }
+			{ RawResource.Wood, [2, 5, 5] },
+			{ RawResource.Stone, [10, 8, 8] }
 		};
 		MoveCost = new Dictionary<string, List<int>>
 		{
@@ -28,7 +27,7 @@ public partial class Well : Production
 		};
 		DeleteCost = new Dictionary<string, List<int>>
 		{
-			{ RawResource.Wood, [2, 3, 4] },
+			{ RawResource.Wood, [1, 3, 4] },
 			{ RawResource.Stone, [2, 3, 4] }
 		};
 	}

@@ -12,27 +12,25 @@ public partial class HunterLodge : Production
 		Producing = "Food";
 		Upgrades = new Dictionary<string, List<int>>
 		{
-			{ Upgrade.MaxWorkers, [5, 7, 10] }
+			{ Upgrade.MaxWorkers, [2, 5, 10] }
 		};
 		BuildCost = new Dictionary<string, List<int>>
 		{
 			{ RawResource.Wood, [5, 7, 10] },
-			{ RawResource.Stone, [5, 7, 10] }
 		};
 		MoveCost = new Dictionary<string, List<int>>
 		{
 			{ RawResource.Wood, [1, 2, 3] },
-			{ RawResource.Stone, [1, 2, 3] }
 		};
 		DeleteCost = new Dictionary<string, List<int>>
 		{
 			{ RawResource.Wood, [2, 3, 4] },
-			{ RawResource.Stone, [2, 3, 4] }
 		};
 	}
 
 	public override void ProduceItem()
 	{
-		GameLogistics.FoodResource[Food.Meat]++;
+		int production = ProductionRate.RandiRange(1, 5);
+		if (production == 1) GameLogistics.FoodResource[Food.Meat]++;
 	}
 }

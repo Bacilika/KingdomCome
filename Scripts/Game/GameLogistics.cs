@@ -47,19 +47,19 @@ public partial class GameLogistics : Node2D
 		Resources = new System.Collections.Generic.Dictionary<string, int>
 		{
 			{ RawResource.Money, 0 }, { RawResource.Happiness, 0 },
-			{ RawResource.Food, 0 }, { RawResource.Stone, 100 },
+			{ RawResource.Food, 0 }, { RawResource.Stone, 0 },
 			{ RawResource.Iron, 0 }, { RawResource.Water, 0 },
-			{ RawResource.Wood, 100 }, { RawResource.Wheat, 10}
+			{ RawResource.Wood, 30 }, { RawResource.Wheat, 0}
 		};
 		
 		FoodResource = new System.Collections.Generic.Dictionary<string, int>
 		{
-			{ Food.Bread, 5 }, { Food.Meat,5 }, { Food.Crops, 0 }
+			{ Food.Bread, 0 }, { Food.Meat,5 }, { Food.Crops, 0 }
 		};
 		
 		ProcessedResources = new System.Collections.Generic.Dictionary<string, int>
 		{
-			{ProcessedResource.Plank, 5 }, { ProcessedResource.IronIngot, 0 },
+			{ProcessedResource.Plank, 0 }, { ProcessedResource.IronIngot, 0 },
 			{ProcessedResource.Flour,0}
 		};
 	}

@@ -15,16 +15,6 @@ public abstract partial class LivingSpace : AbstractPlaceable
 
     protected override void Tick()
     {
-        /*
-        if (Inhabitants < Upgrades[Upgrade.MaxInhabitants][Level])
-        {
-            if (Rnd.RandiRange(0, Growth) == 0)
-            {
-                Inhabitants++;
-                PlayAnimation();
-                EmitSignal(SignalName.OnCreateNpc, this);
-            }
-        }*/
 
         DoAction();
         UpdateInfo();

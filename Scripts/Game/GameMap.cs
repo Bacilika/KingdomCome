@@ -274,7 +274,7 @@ public partial class GameMap : Node2D
 		SubscribeToSignals(npc);
 		Citizens.Add(npc);
 		npc.OnJobChange += OnSelectJob;
-		if (Citizens.Count % 10 + 2 == 0)
+		if (Citizens.Count % 10 == 0)
 		{
 			Level++;
 			GameMenu.UpdateLevel(Level);
@@ -324,18 +324,19 @@ public partial class GameMap : Node2D
 		EmitSignal(SignalName.SendLog,$"Day {GameLogistics.Day} has passed");
 		GameLogistics.Day += 1;
 		EmitSignal(SignalName.DayOver);
-		int birth = _rand.RandiRange(0, 1);
 		
 		foreach (var house in _placedHouses)
 		{
-			if (house.isDone && house.Inhabitants < house.Upgrades[Upgrade.MaxInhabitants][house.Level] && ChildIsBorn)
+			int birth = _rand.RandiRange(0, 2);
+			if (house.isDone && house.Inhabitants < house.Upgrades[Upgrade.MaxInhabitants][house.Level] && ChildIsBorn && birth == 1)
 			{
 				_npcScene1 = ResourceLoader.Load<PackedScene>("res://Scenes/Other/NPC.tscn");
 				Npc npc = _npcScene1.Instantiate<Npc>();
-				if (1 < house.Inhabitants)
+				if (0 < house.Inhabitants)
 				{
 					AddChild(npc);
 					SpawnFirstNpc(npc);
+					EmitSignal(SignalName.SendLog,$" {npc.CitizenName} was just born into the {house.HouseholdName} family!");
 					return;
 				}
 				else

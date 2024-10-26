@@ -11,25 +11,22 @@ public partial class StoneMine : Production
 		BuildingName = "Stone Mine";
 		BuildingDescription = "Mine for Mining stone";
 		Producing = RawResource.Stone;
-		PlayerLevel = 1;
+		PlayerLevel = 2;
 		Upgrades = new Dictionary<string, List<int>>
 		{
-			{ Upgrade.MaxWorkers, [5, 7, 10] }
+			{ Upgrade.MaxWorkers, [2, 5, 8] }
 		};
 		BuildCost = new Dictionary<string, List<int>>
 		{
-			{ RawResource.Wood, [5, 7, 10] },
-			{ RawResource.Stone, [5, 7, 10] }
+			{ RawResource.Wood, [7, 7, 10] },
 		};
 		MoveCost = new Dictionary<string, List<int>>
 		{
 			{ RawResource.Wood, [1, 2, 3] },
-			{ RawResource.Stone, [1, 2, 3] }
 		};
 		DeleteCost = new Dictionary<string, List<int>>
 		{
 			{ RawResource.Wood, [2, 3, 4] },
-			{ RawResource.Stone, [2, 3, 4] }
 		};
 	}
 	

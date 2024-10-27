@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://bcq17ot4ayeyu" path="res://Sprites/Buttons/movebutton.png" id="6_syf04"]
 
 [node name="PlaceableInfo" type="Panel"]
-z_index = 2
+z_index = 6
 offset_right = 247.0
 offset_bottom = 245.0
 theme = ExtResource("1_0e4c4")

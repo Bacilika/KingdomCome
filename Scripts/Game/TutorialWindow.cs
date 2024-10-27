@@ -12,12 +12,14 @@ public static class TutorialStep
 	public static string EmployNpc = "Employ Npc";
 	public static string BuildHouse = "Build House";
 	public static string BuildProduction = "Build Production Npc";
+	public static string MoveCamera = "Move Camera";
 }
 
 public partial class TutorialWindow: Panel
 {
 	public GameMap GameMap;
 	public AnimatedSprite2D ArrowSprite;
+	public AnimatedSprite2D wasd;
 	public RichTextLabel Title;
 	public RichTextLabel Description;
 	public GameMenu GameMenu;
@@ -33,6 +35,7 @@ public partial class TutorialWindow: Panel
 		GameMap = GetParent<CanvasLayer>().GetParent<GameMenu>().GetParent<GameMap>();
 		GameMenu = GetParent<CanvasLayer>().GetParent<GameMenu>();
 		ArrowSprite = GameMap.GetNode<AnimatedSprite2D>("TutorialArrow");
+		wasd = GameMenu.GetNode<AnimatedSprite2D>("MenuCanvasLayer/Wasd");
 		var screenPos = GetViewport().GetVisibleRect().Position.X;
 		var screenSize = GetTree().Root.Size[0];
 		Position =  (Vector2I) new Vector2(screenPos + screenSize -300, 100);
@@ -43,19 +46,16 @@ public partial class TutorialWindow: Panel
 		timer.Autostart = false;
 		timer.Timeout += () => Visible = false;
 		AddChild(timer);
-		ShowTutorialWindow("Royal Advisor",
-			"Citizens that are assigned to the workbench can help you build buildings such as Housing and Production.");
 		Visible = false;
+		wasd.Visible = false;
 	}
 	
 	
 
 	public static void CompleteTutorialStep(string key)
 	{
-		if (CanBeCompleted(key))
-		{
-			if (TutorialSteps.ContainsKey(key)) TutorialSteps[key] = true;
-		}
+
+		if (TutorialSteps.ContainsKey(key)) TutorialSteps[key] = true;
 	}
 
 	public void ShowTutorialWindow(string title, string description)
@@ -91,7 +91,8 @@ public partial class TutorialWindow: Panel
 
 	public void ShowTutorial()
 	{
-		
+		Visible = false;
+		wasd.Visible = false;
 		ArrowSprite.Visible = false;
 		ArrowSprite.MoveToFront();
 		ArrowSprite.RotationDegrees = 0;
@@ -102,10 +103,19 @@ public partial class TutorialWindow: Panel
 			TutorialSteps.Add(TutorialStep.EmployNpc, false);
 			TutorialSteps.Add(TutorialStep.BuildHouse, false);
 			TutorialSteps.Add(TutorialStep.BuildProduction, false);
+			TutorialSteps.Add(TutorialStep.MoveCamera, false);
+		}
+		if (!TutorialSteps[TutorialStep.MoveCamera])
+		{
+			wasd.Visible = true;
+			wasd.Play();
+			Visible = false;
 		}
 		
-		if (!TutorialSteps[TutorialStep.SelectNpc])
+		else if (!TutorialSteps[TutorialStep.SelectNpc])
 		{
+			ShowTutorialWindow("Royal Advisor",
+				"Citizens that are assigned to the workbench can help you build buildings such as Housing and Production.");
 			ArrowSprite.Visible = true;
 			ArrowSprite.Position = GameMap.GetNode<Npc>("Male").Position + new Vector2(0,-50);
 			ArrowSprite.Play();
@@ -154,6 +164,7 @@ public partial class TutorialWindow: Panel
 			ArrowSprite.Position= position;
 			ArrowSprite.Play();
 		}
+
 		else
 		{
 			TutorialDone();

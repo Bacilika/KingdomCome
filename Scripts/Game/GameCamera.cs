@@ -18,6 +18,10 @@ public partial class GameCamera : Camera2D
 
 	private void MoveCamera(string direction)
 	{
+		if (GameMap.TutorialMode)
+		{
+			TutorialWindow.CompleteTutorialStep(TutorialStep.MoveCamera);
+		}
 		switch (direction)
 		{
 			case "Up":
@@ -65,6 +69,7 @@ public partial class GameCamera : Camera2D
 
 	public override void _Input(InputEvent @event)
 	{
+
 		// Zooming behaviour
 		if (@event.IsActionPressed(Inputs.ZoomIn) && _zoomStep > ZoomMinStep)
 		{

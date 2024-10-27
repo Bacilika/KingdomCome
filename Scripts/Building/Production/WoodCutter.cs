@@ -12,7 +12,7 @@ public partial class WoodCutter : Production
 	protected override void _Ready_instance()
 	{
 		BuildingName = "WoodCutter";
-		BuildingDescription = "Place for citizen to chop wood";
+		BuildingDescription = "A cottage providing tools for wood cutting.";
 		Producing = "Wood";
 		PlayerLevel = 1;
 		_timer = GetNode<Timer>("WoodTimer");

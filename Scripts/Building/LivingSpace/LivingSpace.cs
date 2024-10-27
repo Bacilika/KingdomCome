@@ -44,7 +44,8 @@ public abstract partial class LivingSpace : AbstractPlaceable
         else
         {
             InfoBox.UpdateInfo($"The {HouseholdName}'s",
-                $"Inhabitants: {Inhabitants} / {Upgrades[Upgrade.MaxInhabitants][Level]}");
+                $"{BuildingDescription}. \nInhabitants: {Inhabitants} / {Upgrades[Upgrade.MaxInhabitants][Level]}", 
+                $"Upgrade to get {Upgrades[Upgrade.MaxInhabitants][Level+1]} max inhabitants.");
         }
 
     }

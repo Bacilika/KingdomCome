@@ -7,9 +7,9 @@ public partial class HunterLodge : Production
 	protected override void _Ready_instance()
 	{
 		BuildingName = "Hunter's Lodge";
-		BuildingDescription = "A station for hunters to gather and hunt. Produces meat.";
+		BuildingDescription = "A station for hunters to gather and hunt meat.";
 		PlayerLevel = 0;
-		Producing = "Food";
+		Producing = "Meat (food)";
 		Upgrades = new Dictionary<string, List<int>>
 		{
 			{ Upgrade.MaxWorkers, [3, 5, 7] }

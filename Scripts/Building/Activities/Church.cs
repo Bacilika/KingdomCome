@@ -8,7 +8,8 @@ public partial class Church : AbstractActivity
 	{
 		PlayerLevel = 3;
 		BuildingName = "Church";
-		BuildingDescription = "Increases happiness";
+		BuildingDescription = "The holy church provides a good place for citizens to " +
+							  "reflect and pray.";
 
 		Upgrades = new Dictionary<string, List<int>>
 		{

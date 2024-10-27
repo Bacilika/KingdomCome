@@ -14,7 +14,7 @@ public partial class GameCamera : Camera2D
 	private Vector2 _zoom;
 	private float _zoomStep = 3;
 
-	private int PanStep => (int)(5 * (_zoomStep == 0 ? 0.5f : _zoomStep));
+	private int PanStep => (int)(3 * (_zoomStep == 0 ? 0.5f : _zoomStep));
 
 	private void MoveCamera(string direction)
 	{
@@ -93,6 +93,7 @@ public partial class GameCamera : Camera2D
 		
 		if (!_isDragging && @event.IsActionPressed(Inputs.CameraPan))
 		{
+		
 			_dragStartMousePosition = GetViewport().GetMousePosition();
 			_dragStartCameraPosition = Position;
 			_isDragging = true;
@@ -105,6 +106,10 @@ public partial class GameCamera : Camera2D
 			var moveVector = GetViewport().GetMousePosition() - _dragStartMousePosition;
 			_position = _dragStartCameraPosition - moveVector * (1 / Zoom.X);
 			_position = _position.Floor();
+			if (GameMap.TutorialMode)
+			{
+				TutorialWindow.CompleteTutorialStep(TutorialStep.MoveCamera);
+			}
 		}
 	}
 }

@@ -35,6 +35,7 @@ public static class Upgrade
     public const string MaxInhabitants = "MaxInhabitants";
 }
 
+
 public static class RawResource
 {
     public const string Wood = "Wood";
@@ -42,10 +43,9 @@ public static class RawResource
     public const string Food = "Food";
     public const string Water = "Water";
     public const string Iron = "Iron";
-    public const string Happiness = "Happiness";
-
     public const string Wheat = "Wheat";
 }
+
 
 public static class NpcStatuses
 {

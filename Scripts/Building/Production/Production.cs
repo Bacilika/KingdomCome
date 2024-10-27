@@ -79,7 +79,8 @@ public abstract partial class Production : AbstractPlaceable
 				npc.OnWorkDelete();
 				RemoveWorker(npc);
 			}
-			//Remove from _placedProduction so NPCs can't get job there. 
+
+			GameMap._placedProduction.Remove(this);
 
 		}
 		else
@@ -125,6 +126,15 @@ public abstract partial class Production : AbstractPlaceable
 	public void RemoveWorker(Npc npc)
 	{
 		People.Remove(npc);
+		foreach (var child in InfoBox.PortraitContainer.GetChildren())
+		{
+			var portrait = child as CitizenPortraitButton;
+			if (npc == portrait.npc)
+			{
+				InfoBox.PortraitContainer.RemoveChild(portrait);
+				return;
+			}
+		}
 	}
 
 	public virtual void UpdateInfo()

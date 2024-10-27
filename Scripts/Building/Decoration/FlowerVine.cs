@@ -9,24 +9,21 @@ public partial class FlowerVine : Decoration
 	// Called when the node enters the scene tree for the first time.
 	protected override void _Ready_instance()
 	{
-		BuildingName = "Flower vine";
-		BuildingDescription = "A beautiful flower vine making your citizens happier";
+		BuildingName = "WheelBarrel";
+		BuildingDescription = "Cute Decoration to make your citizens happier";
 		PlayerLevel = 3;
 		Upgrades = new Dictionary<string, List<int>>();
 		BuildCost = new Dictionary<string, List<int>>
 		{
-			{ RawResource.Wood, [5, 7, 10] },
-			{ RawResource.Stone, [5, 7, 10] }
+			{ RawResource.Wood, [1 ] },
 		};
 		MoveCost = new Dictionary<string, List<int>>
 		{
-			{ RawResource.Wood, [1, 2, 3] },
-			{ RawResource.Stone, [1, 2, 3] }
+			{ RawResource.Wood, [0] },
 		};
 		DeleteCost = new Dictionary<string, List<int>>
 		{
-			{ RawResource.Wood, [2, 3, 4] },
-			{ RawResource.Stone, [2, 3, 4] }
+			{ RawResource.Wood, [0] },
 		};
 		GetNode<AnimatedSprite2D>("HouseSprite").Play();
 	}

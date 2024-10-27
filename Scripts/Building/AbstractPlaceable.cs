@@ -178,6 +178,35 @@ public abstract partial class AbstractPlaceable : Area2D
 
             InfoBox.MoveToFront();
         }
+
+        if (InfoBox.Visible)
+        {
+            InfoBox.DeleteButton.TooltipText ="Resources Back On Delete\n" +DeleteResources();
+            InfoBox.UpgradeButton.TooltipText ="Cost To Upgrade\n" + UpgradeResources();
+        }
+    }
+
+    private string DeleteResources()
+    {
+        var result = "";
+        foreach (var resource in DeleteCost)
+        {
+            result += $"{resource.Key}: {resource.Value[Level]}";
+        }
+
+        return result;
+    }
+    private string UpgradeResources()
+    {
+        var result = "";
+        if (Level == 2) return "Max Level Reached";
+        foreach (var resource in BuildCost)
+        {
+            
+            result += $"{resource.Key}: {resource.Value[Level+1]}";
+        }
+
+        return result;
     }
 
     private void OnMouseEntered()

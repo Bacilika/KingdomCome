@@ -91,7 +91,7 @@ public partial class Npc : CharacterBody2D
 			AtWorkTimer.Stop();
 			//ScheduleTimer.Stop();
 			scheduleIsStarted = false;
-			if (Work is WorkBench && Home == null)
+			if (Work is WorkBench)
 			{
 				ScheduleTimer.Start();
 				return;
@@ -205,6 +205,10 @@ public partial class Npc : CharacterBody2D
 
 	public override void _Process(double delta)
 	{
+		if (AtWork)
+		{
+			CurrentBuilding = Work;
+		}
 		CalculateHappiness();
 		if (Info is not null && Info.Visible) Info.SetInfo(this);
 	}
@@ -295,7 +299,7 @@ public partial class Npc : CharacterBody2D
 	private void CalculateHappiness()
 	{
 		Happiness = BaseHappiness;
-		if (GameMap.GracePeriod)
+		if (GameMap.TutorialMode)
 		{
 			return;
 		}
@@ -303,8 +307,6 @@ public partial class Npc : CharacterBody2D
 		{
 			Happiness += entry.Value.Happiness;
 		}
-		if(GameMap.TutorialMode) return;
-
 		if (Happiness < BaseHappiness)
 		{
 			Interaction.Animation = "ExclamationPoint";
@@ -360,7 +362,7 @@ public partial class Npc : CharacterBody2D
 		if (AtWork)
 		{
 			AtWork = false;
-			SetDestination(Work.Position);
+			SetDestinationToTargetBuilding(Work);
 		}
 		EmitSignal(SignalName.SendLog, $"{CitizenName} changed job from {oldWork.BuildingName} to {Work.BuildingName}");
 		return true;

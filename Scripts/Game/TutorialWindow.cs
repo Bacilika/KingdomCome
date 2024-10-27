@@ -23,7 +23,7 @@ public partial class TutorialWindow: Panel
 	public static RichTextLabel Title;
 	public static RichTextLabel Description;
 	public GameMenu GameMenu;
-	public static Timer timer;
+	private static bool _hidden;
 
 	public static Dictionary<string, bool> TutorialSteps = new();
 
@@ -36,17 +36,11 @@ public partial class TutorialWindow: Panel
 		GameMenu = GetParent<CanvasLayer>().GetParent<GameMenu>();
 		ArrowSprite = GameMap.GetNode<AnimatedSprite2D>("TutorialArrow");
 		wasd = GameMenu.GetNode<AnimatedSprite2D>("MenuCanvasLayer/Wasd");
-		var screenPos = GetViewport().GetVisibleRect().Position.X;
-		var screenSize = GetTree().Root.Size[0];
-		Position =  (Vector2I) new Vector2(screenPos + screenSize -300, 100);
-		GetNode<Button>("VBoxContainer/Button").Pressed += () => Visible = false;
-		timer = new Timer();
-		timer.WaitTime = 20;
-		timer.OneShot = true;
-		timer.Autostart = false;
-		timer.Timeout += () => Visible = false;
-		AddChild(timer);
-		Visible = false;
+		GetNode<Button>("VBoxContainer/Button").Pressed += () =>
+		{
+			_hidden = true;
+			Visible = false;
+		};
 		wasd.Visible = false;
 	}
 	
@@ -56,20 +50,14 @@ public partial class TutorialWindow: Panel
 	{
 
 		if (TutorialSteps.ContainsKey(key)) TutorialSteps[key] = true;
-		if (key == TutorialStep.BuildHouse)
-		{
-			Title.Text = "Royal Advisor";
-			Description.Text = "Your Citizens need food to live. A good way to get food is through a Hunter's Lodge.";
-			timer.Start();
-		}
+		_hidden = false;
 	}
 
 	public void ShowTutorialWindow(string title, string description)
 	{
-		Visible = true;
+		if(!_hidden) Visible = true;
 		Title.Text = title;
 		Description.Text = description;
-		timer.Start();
 	}
 
 	public static bool CanBeCompleted(string key)
@@ -104,24 +92,24 @@ public partial class TutorialWindow: Panel
 		ArrowSprite.RotationDegrees = 0;
 		if (TutorialSteps.Count == 0)
 		{
+			TutorialSteps.Add(TutorialStep.MoveCamera, false);
 			TutorialSteps.Add(TutorialStep.SelectNpc, false);
 			TutorialSteps.Add(TutorialStep.SelectGiveJob, false);
 			TutorialSteps.Add(TutorialStep.EmployNpc, false);
 			TutorialSteps.Add(TutorialStep.BuildHouse, false);
 			TutorialSteps.Add(TutorialStep.BuildProduction, false);
-			TutorialSteps.Add(TutorialStep.MoveCamera, false);
 		}
 		if (!TutorialSteps[TutorialStep.MoveCamera])
 		{
 			wasd.Visible = true;
 			wasd.Play();
-			Visible = false;
+			
 		}
 		
 		else if (!TutorialSteps[TutorialStep.SelectNpc])
 		{
 			ShowTutorialWindow("Royal Advisor",
-				"Citizens that are assigned to the workbench can help you build buildings such as Housing and Production.");
+				"\"Citizens that are assigned to the workbench can help you build buildings such as Housing and Production.\"");
 			ArrowSprite.Visible = true;
 			ArrowSprite.Position = GameMap.GetNode<Npc>("Male").Position + new Vector2(0,-50);
 			ArrowSprite.Play();
@@ -148,7 +136,8 @@ public partial class TutorialWindow: Panel
 		}
 		else if (!TutorialSteps[TutorialStep.BuildHouse])
 		{
-			ShowTutorialWindow("Royal Advisor","Your Citizens need a House to sleep in when they are not at work.");
+
+			ShowTutorialWindow("Royal Advisor","\"Your Citizens need a House to sleep in when they are not at work.\"");
 			ArrowSprite = GameMenu.GetNode<AnimatedSprite2D>("MenuCanvasLayer/TutorialArrow");
 			if (!GameMenu.Shop.GetNode<ScrollContainer>("BuildTabButtons/Houses").Visible) return;
 			if(!GameMenu.Shop.Visible) return;
@@ -160,7 +149,7 @@ public partial class TutorialWindow: Panel
 		}
 		else if (!TutorialSteps[TutorialStep.BuildProduction])
 		{
-			
+			ShowTutorialWindow("Royal Advisor", "\"Your Citizens need food everyday to live. A good way to get food is through a Hunter's Lodge.\"");
 			if (!GameMenu.Shop.GetNode<ScrollContainer>("BuildTabButtons/Productions").Visible) return;
 			if(!GameMenu.Shop.Visible) return;
 			
@@ -172,6 +161,7 @@ public partial class TutorialWindow: Panel
 
 		else
 		{
+			ShowTutorialWindow("Royal Advisor","\"Remember to keep track of your citizens happiness, or they might move out.\"");
 			TutorialDone();
 		}
 	}

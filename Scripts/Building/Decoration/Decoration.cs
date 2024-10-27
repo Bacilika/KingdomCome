@@ -4,7 +4,7 @@ namespace KingdomCome.Scripts.Building.Decoration;
 
 public abstract partial class Decoration: AbstractPlaceable
 {
-    public int DecorationsPoint = 0;
+    
     public int increaseHappiness = 0;
     
     
@@ -23,8 +23,10 @@ public abstract partial class Decoration: AbstractPlaceable
     
     public void UpdateInfo()
     {
+        InfoBox.UpgradeButton.Visible = false;
         InfoBox.UpdateInfo($"{BuildingName}",
             $"{BuildingDescription}");
     }
+    
     
 }

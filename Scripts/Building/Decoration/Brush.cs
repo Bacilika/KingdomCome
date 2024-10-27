@@ -16,18 +16,15 @@ public partial class Brush : Decoration
 		Upgrades = new Dictionary<string, List<int>>();
 		BuildCost = new Dictionary<string, List<int>>
 		{
-			{ RawResource.Wood, [5, 7, 10] },
-			{ RawResource.Stone, [5, 7, 10] }
+			{ RawResource.Wood, [1 ] },
 		};
 		MoveCost = new Dictionary<string, List<int>>
 		{
-			{ RawResource.Wood, [1, 2, 3] },
-			{ RawResource.Stone, [1, 2, 3] }
+			{ RawResource.Wood, [0] },
 		};
 		DeleteCost = new Dictionary<string, List<int>>
 		{
-			{ RawResource.Wood, [2, 3, 4] },
-			{ RawResource.Stone, [2, 3, 4] }
+			{ RawResource.Wood, [0] },
 		};
 	}
 }

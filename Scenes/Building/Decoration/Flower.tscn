@@ -1,7 +1,7 @@
 [gd_scene load_steps=14 format=3 uid="uid://byvbkpvia3ea7"]
 
 [ext_resource type="Script" path="res://Scripts/Building/Decoration/Flower.cs" id="1_22p6d"]
-[ext_resource type="Texture2D" uid="uid://cxmj0qwpnwxi6" path="res://Sprites/Pixel Art Flower Pack/Pixel Art Flower Pack/Flower 2/Flower 2 - MAGENTA.png" id="4_ylk4l"]
+[ext_resource type="Texture2D" uid="uid://k0v4p0r7ajiq" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Props/Plant_Sunflower.png" id="2_47wqy"]
 [ext_resource type="Texture2D" uid="uid://dt1kbfdm7dk2a" path="res://Sprites/Extra/addResource1.png" id="7_d5rjw"]
 [ext_resource type="Texture2D" uid="uid://co3y7ufhufouh" path="res://Sprites/Extra/addResource2.png" id="8_a6x1r"]
 [ext_resource type="Texture2D" uid="uid://bpp4m7x6k6cyf" path="res://Sprites/Extra/addResource3.png" id="9_hd5wh"]
@@ -15,7 +15,7 @@
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("4_ylk4l")
+"texture": ExtResource("2_47wqy")
 }],
 "loop": true,
 "name": &"Level0",

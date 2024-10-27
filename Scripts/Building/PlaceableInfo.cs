@@ -25,6 +25,9 @@ public partial class PlaceableInfo : Panel
 	public bool Focused;
 	public HFlowContainer PortraitContainer;
 
+	public Button DeleteButton;
+	public Button UpgradeButton;
+
 	public override void _Process(double delta)
 	{
 	}
@@ -37,7 +40,10 @@ public partial class PlaceableInfo : Panel
 		CitizenPortrait = ResourceLoader.Load<PackedScene>("res://Scenes/Building/CitizenPortraitButton.tscn");
 		_houseInfo = GetNode<Control>("HouseInfo");
 		_upgradesInfo = GetNode<RichTextLabel>("UpgradesDescription");
+		DeleteButton = GetNode<Button>("HouseInfo/ButtonContainer/DeleteButton");
+		UpgradeButton = GetNode<Button>("HouseInfo/ButtonContainer/UpgradeButton");
 	}
+	
 	
 
 	public void OnTurnOffButtonPressed()

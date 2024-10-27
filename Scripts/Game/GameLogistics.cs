@@ -46,7 +46,6 @@ public partial class GameLogistics : Node2D
 		
 		Resources = new System.Collections.Generic.Dictionary<string, int>
 		{
-			{ RawResource.Happiness, 0 },
 			{ RawResource.Food, 0 }, { RawResource.Stone, 0 },
 			{ RawResource.Iron, 0 }, { RawResource.Water, 0 },
 			{ RawResource.Wood, 30 }, { RawResource.Wheat, 0}
@@ -72,11 +71,37 @@ public partial class GameLogistics : Node2D
 		var totalfood = 0;
 		foreach (var food in FoodResource)
 		{
-			FoodResourceAsString += $"{food.Key}: {food.Value}\n";
+			if(food.Value>0)
+				FoodResourceAsString += $"{food.Key}: {food.Value}\n";
 			totalfood += food.Value;
 		}
 
 		Resources[RawResource.Food] = totalfood;
+	}
+
+	public static string RawResourceAsString()
+	{
+		var ResourceAsString = "";
+		
+		foreach (var resource in Resources)
+		{
+			if(resource.Key == RawResource.Food) continue;
+			if(resource.Value>0)
+				ResourceAsString += $"{resource.Key}: {resource.Value}\n";
+		}
+		return ResourceAsString;
+	}
+
+	public static string ProcessedResourceAsString()
+	{
+		var ResourceAsString = "";
+		
+		foreach (var resource in ProcessedResources)
+		{
+			if(resource.Value>0)
+				ResourceAsString += $"{resource.Key}: {resource.Value}\n";
+		}
+		return ResourceAsString;
 	}
 
 	public static void ConsumeFood()
@@ -200,7 +225,7 @@ public partial class GameLogistics : Node2D
 	{
 		var positionInGrid = _gameMap.GetNode<TileMapLayer>("WaterLayer").LocalToMap(_object.Position);
 		if (_gameMap.GetNode<TileMapLayer>("WaterLayer").GetCellAtlasCoords(positionInGrid) !=
-		    new Vector2I(-1, -1)) // There is water at position
+			new Vector2I(-1, -1)) // There is water at position
 		{
 			return false;
 		}
@@ -321,7 +346,7 @@ public partial class GameLogistics : Node2D
 	{
 		var positionInGrid = _gameMap.GetNode<TileMapLayer>("WaterLayer").LocalToMap(_roadObject.Position);
 		if (_gameMap.GetNode<TileMapLayer>("WaterLayer").GetCellAtlasCoords(positionInGrid) !=
-		    new Vector2I(-1, -1)) // There is water at position
+			new Vector2I(-1, -1)) // There is water at position
 		{
 			return false;
 		}

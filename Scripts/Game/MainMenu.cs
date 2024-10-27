@@ -8,6 +8,8 @@ public partial class MainMenu : Control
 
 	public override void _Ready()
 	{
+		GetTree().Root.Mode = Window.ModeEnum.Maximized;
+		GetNode<LineEdit>("MenuOverlay/VBoxContainer2/LineEdit").GrabFocus();
 		GetNode<LineEdit>("MenuOverlay/VBoxContainer2/LineEdit").FocusEntered += () =>
 		{
 			GetNode<Label>("MenuOverlay/VBoxContainer2/LineEdit/Label").Visible = false;

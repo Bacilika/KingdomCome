@@ -1,7 +1,7 @@
 [gd_scene load_steps=23 format=3 uid="uid://l32r8or4fhm7"]
 
 [ext_resource type="Script" path="res://Scripts/Building/Production/WorkBench.cs" id="1_nfn77"]
-[ext_resource type="Texture2D" uid="uid://ydjrrgbkgcr3" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Rock Slopes/Props/Table_1.png" id="2_73adh"]
+[ext_resource type="Texture2D" uid="uid://ydjrrgbkgcr3" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Props/Table_1.png" id="2_73adh"]
 [ext_resource type="Texture2D" uid="uid://cbh8kp0bh3y5c" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Rock Slopes/Props/Chopped_Tree_2.png" id="2_srsif"]
 [ext_resource type="Texture2D" uid="uid://brddo04fjmv4b" path="res://Sprites/Extra/Arrow.png" id="4_ie072"]
 [ext_resource type="Texture2D" uid="uid://dt1kbfdm7dk2a" path="res://Sprites/Extra/addResource1.png" id="5_48sth"]

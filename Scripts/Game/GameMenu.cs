@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Mime;
 using Godot;
 using Scripts.Constants;
@@ -123,7 +124,6 @@ public partial class GameMenu : Control
 			introEvent.Gamemap.PlayGame();
 			introEvent.GetParent().RemoveChild(introEvent);
 			introEvent.QueueFree();
-			TutorialWindow.Visible = true;
 			
 		};
 		
@@ -136,21 +136,18 @@ public partial class GameMenu : Control
 		{
 			{ RawResource.Food, statLabels.GetNode<TextureRect>(RawResource.Food).GetNode<Label>("Value") },
 			{ NpcStatuses.Citizens, statLabels.GetNode<TextureRect>(NpcStatuses.Citizens).GetNode<Label>("Value") },
-			{ RawResource.Stone, statLabels.GetNode<TextureRect>(RawResource.Stone).GetNode<Label>("Value") },
-			{ RawResource.Happiness, statLabels.GetNode<TextureRect>(RawResource.Happiness).GetNode<Label>("Value") },
-			{ RawResource.Wood, statLabels.GetNode<TextureRect>(RawResource.Wood).GetNode<Label>("Value") },
-			{ RawResource.Iron, statLabels.GetNode<TextureRect>(RawResource.Iron).GetNode<Label>("Value") },
-			{ RawResource.Water, statLabels.GetNode<TextureRect>(RawResource.Water).GetNode<Label>("Value") }
+			{ "Happiness", statLabels.GetNode<TextureRect>("Happiness").GetNode<Label>("Value") },
+			{ "RawResources", statLabels.GetNode<TextureRect>("RawResources").GetNode<Label>("Value") },
+			{ "ProcessedResources", statLabels.GetNode<TextureRect>("ProcessedResources").GetNode<Label>("Value") },
 		};
 		_gameStats = new Godot.Collections.Dictionary<string, TextureRect>
 		{
 			{ RawResource.Food, statLabels.GetNode<TextureRect>(RawResource.Food)},
 			{ NpcStatuses.Citizens, statLabels.GetNode<TextureRect>(NpcStatuses.Citizens)},
-			{ RawResource.Stone, statLabels.GetNode<TextureRect>(RawResource.Stone)},
-			{ RawResource.Happiness, statLabels.GetNode<TextureRect>(RawResource.Happiness)},
-			{ RawResource.Wood, statLabels.GetNode<TextureRect>(RawResource.Wood)},
-			{ RawResource.Iron, statLabels.GetNode<TextureRect>(RawResource.Iron)},
-			{ RawResource.Water, statLabels.GetNode<TextureRect>(RawResource.Water)}
+			{ "Happiness", statLabels.GetNode<TextureRect>("Happiness")},
+			{ "RawResources", statLabels.GetNode<TextureRect>("RawResources")},
+			{ "ProcessedResources", statLabels.GetNode<TextureRect>("ProcessedResources")},
+			
 		};
 	}
 
@@ -170,21 +167,22 @@ public partial class GameMenu : Control
 	{
 		LevelProgressbar.Value = 0;
 		Level.Text =  $"Level: {updatedLevel.ToString()}";
+		
 	}
 
 	public void GameOver()
 	{
 		_gameOverScene = ResourceLoader.Load<PackedScene>("res://Scenes/Game/GameOver.tscn");
-		GameOver gameOver = _gameOverScene.Instantiate<GameOver>();
+		var gameOver = _gameOverScene.Instantiate<GameOver>();
 		CanvasLayer.AddChild(gameOver);
 		gameOver.Visible = true;
 	}
 
 	public void UpdateMenuInfo()
 	{
-		LevelProgressbar.Value = _citizen.Count % 10;
-		Level.TooltipText = $"{10 - _citizen.Count % 10 } more citizen until next level";
-		LevelProgressbar.TooltipText = $"{10 - _citizen.Count % 10 } more citizen until next level";
+		LevelProgressbar.Value = _citizen.Count % 5;
+		Level.TooltipText = $"{5 - _citizen.Count % 5 } more citizen until next level";
+		LevelProgressbar.TooltipText = $"{5 - _citizen.Count % 5 } more citizen until next level";
 
 		Day.Text = "Day: " + GameLogistics.Day;
 		DayProgressbar.Value = GetParent<GameMap>()._dayTimer.WaitTime - GetParent<GameMap>()._dayTimer.TimeLeft;
@@ -192,13 +190,20 @@ public partial class GameMenu : Control
 		foreach (var item in _gameStatLabels)
 		{
 			SetToolTip(item.Key);
-			if (GameMap.NpcStats.ContainsKey(item.Key))
+			if (GameMap.NpcStats.TryGetValue(item.Key, out var stat))
 			{
-				item.Value.Text = GameMap.NpcStats[item.Key].ToString();
+				item.Value.Text = stat.ToString();
 				continue;
 			}
-			
-			item.Value.Text = GameLogistics.Resources[item.Key].ToString();
+
+			item.Value.Text = item.Key switch
+			{
+				"Happiness" => GameLogistics.ConvertHappiness(GameMap.KingdomHappiness),
+				"RawResources" => (GameLogistics.Resources.Sum(resource => resource.Value) -
+								   GameLogistics.Resources[RawResource.Food]).ToString(),
+				"ProcessedResources" => GameLogistics.ProcessedResources.Sum(resource => resource.Value).ToString(),
+				_ => GameLogistics.Resources[item.Key].ToString()
+			};
 		}
 	}
 
@@ -213,10 +218,16 @@ public partial class GameMenu : Control
 		switch (key)
 		{
 			case RawResource.Food:
-				_gameStats[key].SetTooltipText(GameLogistics.FoodResourceAsString);
+				_gameStats[key].SetTooltipText("Foods\n" + GameLogistics.FoodResourceAsString);
 				break;
 			case NpcStatuses.Citizens:
-				_gameStats[key].SetTooltipText(GameMap.NpcStatsAsString);
+				_gameStats[key].SetTooltipText("Citizen Info\n" + GameMap.NpcStatsAsString);
+				break;
+			case "RawResources":
+				_gameStats[key].SetTooltipText( "Raw Resources\n" + GameLogistics.RawResourceAsString());
+				break;
+			case "ProcessedResources":
+				_gameStats[key].SetTooltipText( "Processed Resources\n" + GameLogistics.ProcessedResourceAsString());
 				break;
 		}
 	}

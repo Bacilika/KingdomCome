@@ -82,7 +82,6 @@ public partial class MarketStall : Production
 		if (GetParent() is not GameMap) return;
 		foreach (var resource in GameLogistics.Resources)
 		{
-			if(resource.Key == RawResource.Happiness) continue;
 			allResources.Add(resource.Key, resource.Value);
 		}
 
@@ -118,7 +117,6 @@ public partial class MarketStall : Production
 	{
 		foreach (var resource in GameLogistics.Resources)
 		{
-			if(resource.Key == RawResource.Happiness) continue;
 			allResources[resource.Key] = resource.Value;
 		}
 

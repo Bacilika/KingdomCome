@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Scripts/Building/Decoration/Brush.cs" id="1_fx5xo"]
 [ext_resource type="Texture2D" uid="uid://bwrsvxhm848ni" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/House_RedWood_Stone_1 - lights on-2.png" id="2_66lyp"]
 [ext_resource type="Texture2D" uid="uid://ghj85165vddc" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/House_RedWood_Stone_1 - lights on.png" id="3_wasb0"]
-[ext_resource type="Texture2D" uid="uid://f3v44u2wn2fs" path="res://Sprites/Pixel Art Flower Pack/Pixel Art Flower Pack/Bush 1 (No Flowers)/Bush 1 (no flowers) - RED.png" id="4_3u8be"]
+[ext_resource type="Texture2D" uid="uid://c6x2lkln0uub0" path="res://Sprites/The Fan-tasy Tileset - Castles and Fortresses/Art/Trees and Bushes/Bush_Dark_1.png" id="4_wg7w0"]
 [ext_resource type="Texture2D" uid="uid://bsojsx4kufh5r" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/House_RedWood_Stone_2 - lights on_1.png" id="5_8r645"]
 [ext_resource type="Texture2D" uid="uid://b8vmwtxt2qrvu" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/House_RedWood_Stone_2 - lights on_2.png" id="6_kd34j"]
 [ext_resource type="Texture2D" uid="uid://dt1kbfdm7dk2a" path="res://Sprites/Extra/addResource1.png" id="7_vdj3t"]
@@ -30,7 +30,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("4_3u8be")
+"texture": ExtResource("4_wg7w0")
 }],
 "loop": true,
 "name": &"Level0",

@@ -24,6 +24,7 @@ gdscript/warnings/exclude_addons=false
 
 window/size/viewport_width=1280
 window/size/viewport_height=690
+window/size/mode=2
 window/size/resizable=false
 window/stretch/mode="canvas_items"
 window/stretch/scale_mode="integer"

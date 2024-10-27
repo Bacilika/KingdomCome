@@ -256,7 +256,7 @@ public class EventGenerator
         event2.Title.Text = "To help or not to help";
         event2.Description.Text =
             $"As the settlers were finishing for the day, they saw a figure moving towards them. " +
-            $"It was a young boy, with hollow looking eyes and sunken cheeks. \"I got kicked out from" +
+            $"It was a young boy, with hollow looking eyes and sunken cheeks. \"I got kicked out from " +
             $"my parent's place, and I need a place to stay. But I'm a good worker! Please let me stay?\"";
         event2.buttons[0].Text = "Yes, you can stay";
         event2.buttons[1].Text = "No, we don't have room...";

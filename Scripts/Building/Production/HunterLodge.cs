@@ -30,7 +30,6 @@ public partial class HunterLodge : Production
 
 	public override void ProduceItem()
 	{
-		int production = ProductionRate.RandiRange(1, 5);
-		if (production == 1) GameLogistics.FoodResource[Food.Meat]++;
+		GameLogistics.FoodResource[Food.Meat]++;
 	}
 }

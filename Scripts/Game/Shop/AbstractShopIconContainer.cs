@@ -70,7 +70,6 @@ public abstract partial class AbstractShopIconContainer : ScrollContainer
                 {
                     item.Icon.SelfModulate = _disabled;
                     item.Icon.Disabled = true;
-                    item.TooltipText = $"Unlocks at level {item.Product.PlayerLevel}";
                 }
                 else if (resources[cost.Key] < cost.Value[item.Product.Level]) //not enough resources
                 {

@@ -18,8 +18,6 @@ public partial class GameMap : Node2D
 	public List<Npc> Citizens = [];
 	public List<Npc> DeadCitizens = [];
 	public static Dictionary<string, int> NpcStats  = new ();
-	private TutorialWindow _tutorialWindow;
-	
 
 	//for job selection
 	public static bool JobSelectMode;
@@ -32,6 +30,7 @@ public partial class GameMap : Node2D
 	private PackedScene NPCScene;
 	private PackedScene infoScene;
 	public static bool TutorialMode = false;
+	public static int KingdomHappiness;
 
 	private TutorialWindow tutorial;
 
@@ -44,7 +43,7 @@ public partial class GameMap : Node2D
 	public bool ChildIsBorn = false;
 	private RandomNumberGenerator _rand = new();
 	private PackedScene _npcScene1;
-
+	public int DecorationsPoint = 0;
 
 	
 	[Signal]
@@ -117,47 +116,27 @@ public partial class GameMap : Node2D
 
 	public override void _Process(double delta)
 	{
+		int totalhappiness = Citizens.Sum(npc => npc.Happiness);
+		KingdomHappiness = totalhappiness / Citizens.Count;
+		
 		
 		_timeSinceLastTick += delta;
 		if (_timeSinceLastTick >= 0.5)
 		{
 			_timeSinceLastTick -= 0.5;
 		}
-		Unemployed = [];
-		foreach (var npc in Citizens.Where(npc => npc.Work is null))
-		{
-			Unemployed.Add(npc);
-			NpcStats[NpcStatuses.Unemployed] = Unemployed.Count;
-
-		}
-		Homeless = [];
-		foreach (var npc in Citizens.Where(npc => npc.Home is null))
-		{
-			Homeless.Add(npc);
-			NpcStats[NpcStatuses.Homeless] = Homeless.Count;
-		}
+		
+		Unemployed = Citizens.Where(npc => npc.Work is null).ToList();
+		NpcStats[NpcStatuses.Unemployed] = Unemployed.Count;
+		
+		Homeless = Citizens.Where(npc => npc.Home is null).ToList();
+		NpcStats[NpcStatuses.Homeless] = Homeless.Count;
+		
 		NpcStats[NpcStatuses.Citizens] = Citizens.Count;
 		if (NpcStats[NpcStatuses.Unemployed] > 0) //there are unemployed
 			GiveJobToNpcs();
 
 		SetNpcString();
-		//checkNpcIsNotNull();
-	}
-
-	public void checkNpcIsNotNull()
-	{
-		int deadc = 0;
-		foreach (var npc in Citizens)
-		{
-			if (npc.dead)
-			{
-				deadc++;
-			}
-		}
-		if (Citizens.Count == deadc)
-		{
-			_gameMenu.GameOver();
-		}
 	}
 	
 	public void PauseGame()
@@ -192,8 +171,8 @@ public partial class GameMap : Node2D
 				_placedActivities.Add(activity);
 				break;
 			case Decoration decoration:
-				decoration.DecorationsPoint += 1;
-				if (decoration.DecorationsPoint == 5)
+				DecorationsPoint += 1;
+				if (DecorationsPoint % 3 == 1)
 				{
 					decoration.addDecorationPoint(Citizens);
 				}
@@ -204,7 +183,6 @@ public partial class GameMap : Node2D
 				break;
 			
 		}
-
 		
 		placeable.IsPlaced = true;
 		AddChild(placeable);
@@ -229,7 +207,7 @@ public partial class GameMap : Node2D
 
 		EmitSignal(SignalName.SendLog,$"Successfully built {placeable.BuildingName}");
 	}
-
+	
 	public void PlaceNpc(LivingSpace house)
 	{
 		var npc = NPCScene.Instantiate<Npc>();
@@ -241,10 +219,11 @@ public partial class GameMap : Node2D
 		house.InfoBox.MoveToFront();
 		Citizens.Add(npc);
 		npc.OnJobChange += OnSelectJob;
-		if (Citizens.Count % 10 == 0)
+		if (Citizens.Count % 5 == 0)
 		{
 			Level++;
 			GameMenu.UpdateLevel(Level);
+			SpawnFirstNpc(NPCScene.Instantiate<Npc>());
 		}
 	}
 
@@ -274,10 +253,11 @@ public partial class GameMap : Node2D
 		SubscribeToSignals(npc);
 		Citizens.Add(npc);
 		npc.OnJobChange += OnSelectJob;
-		if (Citizens.Count % 10 == 0)
+		if (Citizens.Count % 5 == 0)
 		{
 			Level++;
 			GameMenu.UpdateLevel(Level);
+			SpawnFirstNpc(NPCScene.Instantiate<Npc>());
 		}
 	}
 
@@ -335,7 +315,7 @@ public partial class GameMap : Node2D
 				if (0 < house.Inhabitants)
 				{
 					AddChild(npc);
-					SpawnFirstNpc(npc);
+					PlaceNpc(house);
 					EmitSignal(SignalName.SendLog,$" {npc.CitizenName} was just born into the {house.HouseholdName} family!");
 					return;
 				}

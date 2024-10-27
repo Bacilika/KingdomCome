@@ -24,39 +24,17 @@ public partial class CitizenInfo : Panel
 
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
-
 	public void SetInfo(Npc npc)
 	{
 		if (!GameMap.TutorialMode)
 		{
 			//GetNode<Button>("HBoxContainer/ChangeJob").ToggleMode = false;
 		}
-		if (_unemploy is null)
-		{
-			_unemploy = new Button();
-			_unemploy.Pressed += () =>
-			{
-				npc.GetJob(null);
-			};
-			_unemploy.Text = "Unemploy";
-			GetNode<HBoxContainer>("HBoxContainer").AddChild(_unemploy);
-		}
-
-		if (npc.Work != null)
-			_unemploy.Visible = true;
-
-		else if(_unemployedAdded)
-			_unemploy.Visible = false;
-		
-		
 		
 		CitizenNpc = npc;
 		Job.Text = CitizenNpc.Work is not null ? $"Works at {CitizenNpc.Work.GetBuildingName()}" : NpcStatuses.Unemployed;
 		Job.Text += CitizenNpc.Home is null ? "\nHomeless" : "";
+		Job.Text += npc.CurrentBuilding is null?  "":  $"\nCurrently at {npc.CurrentBuilding.GetBuildingName() }";
 		Name.Text = CitizenNpc.CitizenName;
 		Happiness.Text = $"Happiness: {GameLogistics.ConvertHappiness(npc.Happiness)}" + "\n"+ npc.GetUnhappyReason();
 		

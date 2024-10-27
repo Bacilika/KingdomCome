@@ -43,7 +43,7 @@ public static class RawResource
     public const string Water = "Water";
     public const string Iron = "Iron";
     public const string Happiness = "Happiness";
-    public const string Money = "Money";
+
     public const string Wheat = "Wheat";
 }
 

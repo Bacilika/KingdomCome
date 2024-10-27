@@ -7,6 +7,7 @@
 offset_right = 222.0
 offset_bottom = 38.0
 theme = ExtResource("1_07eac")
+theme_override_constants/separation = 11
 script = ExtResource("2_3r214")
 
 [node name="Label" type="Label" parent="."]

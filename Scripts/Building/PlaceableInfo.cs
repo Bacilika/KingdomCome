@@ -1,4 +1,5 @@
 using Godot;
+using KingdomCome.Scripts.Building;
 
 public partial class PlaceableInfo : Panel
 {
@@ -89,10 +90,30 @@ public partial class PlaceableInfo : Panel
 		Focused = false;
 	}
 
-	public void UpdateInfo(string buildingName, string text ="", string upgrades = "")
+	public void UpdateInfo(string buildingName, string text = "", string upgrades = "")
 	{
 		_buildingName.Text = buildingName;
 		_textLabel.Text = text;
 		_upgradesInfo.Text = upgrades;
+		foreach (var child in PortraitContainer.GetChildren())
+		{
+			var portrait = child as CitizenPortraitButton;
+			if (portrait.npc.CurrentBuilding == null)
+			{
+				portrait.SelfModulate = new Color("#696969");
+				portrait.TooltipText = "Not in building";
+				continue;
+			}
+			if (portrait.npc.CurrentBuilding.CurrentPeople.Contains(portrait.npc))
+			{
+				portrait.SelfModulate = new Color("#696969");
+				portrait.TooltipText = "Not in building";
+			}
+			else
+			{
+				portrait.SelfModulate = new Color("#fff");
+				portrait.TooltipText = "";
+			}
+		}
 	}
 }

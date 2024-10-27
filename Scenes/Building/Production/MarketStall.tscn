@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://b7ydnji8nlrtu"]
+[gd_scene load_steps=20 format=3 uid="uid://b7ydnji8nlrtu"]
 
 [ext_resource type="Script" path="res://Scripts/Building/Production/MarketStall.cs" id="1_tdre6"]
 [ext_resource type="Texture2D" uid="uid://d4dxackhgjuth" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/MarketStand_Small_1.png" id="3_qfx01"]
@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://epbdr1v164x7" path="res://Sprites/Extra/addResource8.png" id="12_e82i4"]
 [ext_resource type="StyleBox" uid="uid://pneb3lr30nud" path="res://Themes/ButtonDark.tres" id="13_1jxdb"]
 [ext_resource type="Theme" uid="uid://c2femp2uxsefw" path="res://Themes/Theme.tres" id="13_8k1op"]
+[ext_resource type="FontFile" uid="uid://4apkhqisib11" path="res://BLKCHCRY.TTF" id="14_y3sp4"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_gy8eo"]
 animations = [{
@@ -211,21 +212,36 @@ layout_mode = 2
 
 [node name="Button" type="Button" parent="Panel"]
 layout_mode = 0
-offset_left = 498.5
-offset_top = 14.0
-offset_right = 623.5
-offset_bottom = 34.0
+offset_left = 480.5
+offset_top = 44.0
+offset_right = 605.5
+offset_bottom = 64.0
 text = "Show Building Info"
 
+[node name="Exit" type="Button" parent="Panel"]
+layout_mode = 0
+offset_left = 600.0
+offset_top = 9.0
+offset_right = 622.0
+offset_bottom = 27.0
+theme_override_fonts/font = ExtResource("14_y3sp4")
+text = "X"
+
 [node name="PlaceableInfo" parent="." instance=ExtResource("5_k5x2f")]
+visible = false
+offset_left = -124.0
+offset_top = -103.0
+offset_right = 123.0
+offset_bottom = 142.0
 
 [node name="SwitchMode" type="Button" parent="PlaceableInfo"]
 layout_mode = 0
-offset_left = 119.0
-offset_top = 7.0
-offset_right = 208.0
-offset_bottom = 41.0
+offset_left = 183.0
+offset_top = 8.0
+offset_right = 237.0
+offset_bottom = 44.0
 text = "Show Market"
+autowrap_mode = 2
 
 [connection signal="area_entered" from="." to="." method="OnAreaEntered"]
 [connection signal="area_exited" from="." to="." method="OnAreaExited"]

@@ -42,8 +42,7 @@ public partial class GameCamera : Camera2D
 			}
 		}
 	}
-
-
+	
 	public override void _Ready()
 	{
 		// Set minimum size for window rescaling.

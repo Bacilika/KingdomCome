@@ -186,31 +186,30 @@ public partial class GameMap : Node2D
 		{
 			case LivingSpace livingSpace:
 				_placedHouses.Add(livingSpace);
+				TutorialWindow.CompleteTutorialStep(TutorialStep.BuildHouse);
 				break;
 			case AbstractActivity activity:
 				_placedActivities.Add(activity);
 				break;
 			case Decoration decoration:
-			{
 				decoration.DecorationsPoint += 1;
 				if (decoration.DecorationsPoint == 5)
 				{
 					decoration.addDecorationPoint(Citizens);
 				}
-
 				break;
-			}
-		}
-
-			if (placeable is Production production)
-			{
+			case Production production:
 				if(TutorialMode && production is HunterLodge) TutorialWindow.CompleteTutorialStep(TutorialStep.BuildProduction);
 				_placedProduction.Add(production);
-			}
+				break;
+			
+		}
+
+		
 		placeable.IsPlaced = true;
 		AddChild(placeable);
 		placeable.HouseSprite.SetAnimation("Building"); 
-		TutorialWindow.CompleteTutorialStep(TutorialStep.BuildHouse);
+		
 		
 		//progress bar
 		if (placeable is not WorkBench)
@@ -307,7 +306,7 @@ public partial class GameMap : Node2D
 		JobSelectMode = true;
 		NpcJobSelect = npc;
 		GameMenu.GameMode.Text = GameMode.JobChange;
-		TutorialWindow.CompleteTutorialStep("Select GiveJob");
+		TutorialWindow.CompleteTutorialStep(TutorialStep.SelectGiveJob);
 	}
 
 

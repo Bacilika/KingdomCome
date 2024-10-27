@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.AccessControl;
+using System.Threading.Tasks;
 using Godot;
 using Scripts.Constants;
 
@@ -12,20 +13,22 @@ public partial class MarketStall : Production
 	private int price;
 	public Panel Panel;
 	public int MarketStash;
-	public List<TradeObject> SellObjects = [];
-	public List<TradeObject> BuyObjects = [];
+	public Dictionary<string,TradeObject> SellObjects = [];
+	public Dictionary<string,TradeObject> BuyObjects = [];
 	public Dictionary<string, int> allResources = new();
 	public Dictionary<string,int> ResourcesToSell = new ();
 	public Dictionary<string,int> ResourcesToBuy = new ();
 	public Dictionary<string, int> PointsOnSell = new();
 	public Dictionary<string, int> PointsToBuy = new();
-
+	public Label MarketStashLabel;
 	protected override void _Ready_instance()
 	{
 		ActivityIndoors = false;
 		BuildingName = "Market Stall";
 		BuildingDescription = "Market stall to sell resources";
 		Panel = GetNode<Panel>("Panel");
+		MarketStashLabel = Panel.GetNode<Label>("Label/MarketStash");
+		
 		
 		PlayerLevel = 0;
 		Upgrades = new Dictionary<string, List<int>>
@@ -61,7 +64,7 @@ public partial class MarketStall : Production
 			{ Food.Crops, 3 },
 			{ Food.Bread, 3 },
 		};
-		PointsOnSell = new Dictionary<string, int>()
+		PointsToBuy = new Dictionary<string, int>()
 		{
 			{ RawResource.Wood, 3 },
 			{ RawResource.Stone, 4 },
@@ -103,18 +106,16 @@ public partial class MarketStall : Production
 			GetNode<PlaceableInfo>("PlaceableInfo").Visible = false;
 			Panel.Visible = true;
 		};
-			;
 		Panel.GetNode<Button>("Button").Pressed += () =>
 		{
 			GetNode<PlaceableInfo>("PlaceableInfo").Visible = true;
 			Panel.Visible = false;
 		};
+		Panel.GetNode<Button>("Exit").Pressed += () => Panel.Visible = false;
 	}
 
 	public void GetAllResources()
 	{
-		
-
 		foreach (var resource in GameLogistics.Resources)
 		{
 			if(resource.Key == RawResource.Happiness) continue;
@@ -140,15 +141,16 @@ public partial class MarketStall : Production
 			var tradeObject = tradeObjectScene.Instantiate<TradeObject>();
 			Panel.GetNode<VBoxContainer>("SellPanel/sell/VBoxContainer").AddChild(tradeObject);
 			tradeObject.Label.Text = resource.Key;
-			tradeObject.Value.Text = $"({resource.Value.ToString()})";
+			tradeObject.ResourcesOwned.Text = $"({resource.Value.ToString()})";
 			tradeObject.Plus.Pressed += () =>
 			{
-				var amountInt = int.Parse(tradeObject.Amount.Text);
-				tradeObject.Amount.Text = Math.Min(amountInt + 1, resource.Value).ToString();
+				IncreaseAmountToTrade(resource.Key,SellObjects);
 			};
-			SellObjects.Add(tradeObject);
-			ResourcesToSell.Add(resource.Key, resource.Value);
-			
+			tradeObject.Minus.Pressed += () =>
+			{
+				DecreaseAmountToTrade(resource.Key,SellObjects);
+			};
+			SellObjects.Add(resource.Key,tradeObject);
 		}
 	}
 	public void SetUpBuy()
@@ -161,12 +163,73 @@ public partial class MarketStall : Production
 			tradeObject.Label.Text = resource.Key;
 			tradeObject.Plus.Pressed += () =>
 			{
-				var amountInt = int.Parse(tradeObject.Amount.Text);
-				tradeObject.Amount.Text = (amountInt + 1).ToString();
+				IncreaseAmountToTrade(resource.Key,BuyObjects);
+
 			};
-			BuyObjects.Add(tradeObject);
-			ResourcesToBuy.Add(resource.Key, resource.Value);
+			tradeObject.Minus.Pressed += () =>
+			{
+				DecreaseAmountToTrade(resource.Key,BuyObjects);
+			};
+			BuyObjects.Add(resource.Key,tradeObject);
 		}
+	}
+
+	private void DecreaseAmountToTrade(string key, Dictionary<string, TradeObject> objects)
+	{
+		var tradeObject = objects[key];
+		var amountInt = int.Parse(tradeObject.AmountToTrade.Text) -1;
+		if (amountInt == 0)
+		{
+			objects.Remove(key);
+		}
+		//buying
+		if (objects == BuyObjects)
+		{
+			tradeObject.AmountToTrade.Text = amountInt.ToString();
+			ResourcesToBuy[key] = amountInt;
+		}
+		//selling
+		else
+		{
+			tradeObject.AmountToTrade.Text = Math.Min(amountInt, allResources[key]).ToString();
+			ResourcesToSell[key] = amountInt;
+		}
+	}
+	
+	private void IncreaseAmountToTrade(string key, Dictionary<string, TradeObject> objects)
+	{
+		var tradeObject = objects[key];
+		var amountInt = int.Parse(tradeObject.AmountToTrade.Text) +1 ;
+		
+		//buying
+		if (objects == BuyObjects)
+		{
+			tradeObject.AmountToTrade.Text = amountInt.ToString();
+			ResourcesToBuy[key] = amountInt;
+		}
+		//selling
+		else
+		{
+			tradeObject.AmountToTrade.Text = Math.Min(amountInt, allResources[key]).ToString();
+			ResourcesToSell[key] = amountInt;
+		}
+	}
+
+	public override void NpcWork(Npc npc)
+	{
+		_= Trade( npc);
+	}
+
+	public async Task Trade(Npc npc)
+	{
+		await Task.Delay(1500);
+		SellResource();
+		BuyResource();
+		if (npc.AtWork)
+		{
+			_= Trade(npc);
+		}
+		
 	}
 	
 	public override void _Process(double delta)
@@ -176,69 +239,36 @@ public partial class MarketStall : Production
 		{
 			foreach (var tradeObject in SellObjects)
 			{
-				var resource = allResources[tradeObject.Label.Text]; //update amount of resources
-				tradeObject.Value.Text = $"({resource.ToString()})";
+				var resource = allResources[tradeObject.Value.Label.Text]; //update amount of resources
+				tradeObject.Value.ResourcesOwned.Text = $"({resource.ToString()})";
 			}
 		}
-	}
-
-	public override void ProduceItem()
-	{
-		foreach (var resource in ResourcesToSell)
-		{
-			if (resource.Value > 0)
-			{
-				ResourcesToSell[resource.Key] -= 1;
-				MarketStash += Math.Min(PointsOnSell[resource.Key], 20);
-			}
-		}
+		MarketStashLabel.Text = $"{MarketStash}/20";
 	}
 
 	public void BuyResource()
 	{
-		List<string> remove = [];
-		remove.AddRange(from resource in ResourcesToBuy where resource.Value == 0 select resource.Key);
-		foreach (var resource in remove) ResourcesToBuy.Remove(resource);
-
+		
 		foreach (var resource in ResourcesToBuy)
 		{
-			if (resource.Value == 0) // doesnt want resource
-			{
-				remove.Add(resource.Key);
-				continue;
-			}
 			if (PointsToBuy[resource.Key] > MarketStash) continue; //cant afford
-			
-			foreach (var buyObject in BuyObjects)
-			{
-				if(buyObject.Label.Text != resource.Key) continue;
-				
-				ResourcesToBuy[resource.Key] -= 1;
-				MarketStash -= PointsToBuy[resource.Key];
-				AddResource(resource.Key);
-				return;
-			}
+			MarketStash -= PointsToBuy[resource.Key];
+			AddResource(resource.Key);
+			DecreaseAmountToTrade(resource.Key, BuyObjects);
+			return;
 		}
 	}
 	
 	public void SellResource()
 	{
-		List<string> remove = [];
-		remove.AddRange(from resourceToSell in ResourcesToSell where resourceToSell.Value == 0 select resourceToSell.Key);
-		foreach (var resource in remove) ResourcesToBuy.Remove(resource);
-		
 		foreach (var resource in ResourcesToSell)
 		{
-			if (allResources[resource.Key] == 0) continue; //no resource to sell			
-			foreach (var sellObject in SellObjects)
-			{
-				if(sellObject.Label.Text != resource.Key) continue;
-				
-				ResourcesToSell[resource.Key] -= 1;
-				MarketStash = Math.Min(MarketStash + PointsOnSell[resource.Key], 20);
-				RemoveResource(resource.Key);
-				return;
-			}
+			if (allResources[resource.Key] == 0) continue; //no resource to sell	
+			
+			MarketStash = Math.Min(MarketStash + PointsOnSell[resource.Key], 20); //add to stash
+			RemoveResource(resource.Key);
+			DecreaseAmountToTrade(resource.Key, SellObjects);
+			return;
 		}
 	}
 

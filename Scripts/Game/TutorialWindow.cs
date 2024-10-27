@@ -18,10 +18,10 @@ public partial class TutorialWindow: Panel
 {
 	public GameMap GameMap;
 	public AnimatedSprite2D ArrowSprite;
-	public RichTextLabel Title;
-	public RichTextLabel Description;
+	public static RichTextLabel Title;
+	public static RichTextLabel Description;
 	public GameMenu GameMenu;
-	public Timer timer;
+	public static Timer timer;
 
 	public static Dictionary<string, bool> TutorialSteps = new();
 
@@ -55,6 +55,13 @@ public partial class TutorialWindow: Panel
 		if (CanBeCompleted(key))
 		{
 			if (TutorialSteps.ContainsKey(key)) TutorialSteps[key] = true;
+		}
+
+		if (key == TutorialStep.BuildHouse)
+		{
+			Title.Text = "Royal Advisor";
+			Description.Text = "Your Citizens need food to live. A good way to get food is through a Hunter's Lodge.";
+			timer.Start();
 		}
 	}
 
@@ -104,6 +111,7 @@ public partial class TutorialWindow: Panel
 			TutorialSteps.Add(TutorialStep.BuildProduction, false);
 		}
 		
+		
 		if (!TutorialSteps[TutorialStep.SelectNpc])
 		{
 			ArrowSprite.Visible = true;
@@ -132,7 +140,7 @@ public partial class TutorialWindow: Panel
 		}
 		else if (!TutorialSteps[TutorialStep.BuildHouse])
 		{
-
+			ShowTutorialWindow("Royal Advisor","Your Citizens need a House to sleep in when they are not at work.");
 			ArrowSprite = GameMenu.GetNode<AnimatedSprite2D>("MenuCanvasLayer/TutorialArrow");
 			if (!GameMenu.Shop.GetNode<ScrollContainer>("BuildTabButtons/Houses").Visible) return;
 			if(!GameMenu.Shop.Visible) return;
@@ -144,16 +152,16 @@ public partial class TutorialWindow: Panel
 		}
 		else if (!TutorialSteps[TutorialStep.BuildProduction])
 		{
-			ShowTutorialWindow("Royal Advisor",
-				"Your Citizens need food to live. A good way to get food is through a Hunter's Lodge.");
+			
 			if (!GameMenu.Shop.GetNode<ScrollContainer>("BuildTabButtons/Productions").Visible) return;
 			if(!GameMenu.Shop.Visible) return;
 			
 			ArrowSprite.Visible = true;
-			var position =GameMenu.Shop.GlobalPosition + new Vector2(25,-40);
+			var position = GameMenu.Shop.GlobalPosition + new Vector2(25,-40);
 			ArrowSprite.Position= position;
 			ArrowSprite.Play();
 		}
+		
 		else
 		{
 			TutorialDone();

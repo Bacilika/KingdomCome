@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=3 uid="uid://25kpv3trjyvk"]
+[gd_scene load_steps=52 format=3 uid="uid://25kpv3trjyvk"]
 
 [ext_resource type="Script" path="res://Scripts/Game/GameMenu.cs" id="1_dev6f"]
 [ext_resource type="Theme" uid="uid://c2femp2uxsefw" path="res://Themes/Theme.tres" id="1_vgcun"]
@@ -13,7 +13,6 @@
 [ext_resource type="AudioStream" uid="uid://b51ml7us3al4e" path="res://Audio/ButtonPressed.mp3" id="5_hysb5"]
 [ext_resource type="StyleBox" uid="uid://d1ywmmmu3yml0" path="res://Themes/ButtonTheme.tres" id="6_b7axs"]
 [ext_resource type="Texture2D" uid="uid://ocbp46wni417" path="res://Sprites/Extra/Icons/Sign2.png" id="6_v7o1e"]
-[ext_resource type="Texture2D" uid="uid://fgflcwfg7ymo" path="res://Sprites/Extra/Icons/Sign3.png" id="7_k3pbr"]
 [ext_resource type="StyleBox" uid="uid://boch0qr65svlr" path="res://Themes/TabSelect.tres" id="8_cewdh"]
 [ext_resource type="Texture2D" uid="uid://bg65o6c0eh1bw" path="res://Sprites/Extra/Icons/Sign4.png" id="8_mbmc5"]
 [ext_resource type="StyleBox" uid="uid://dl4wjdx8vlj4p" path="res://Themes/TabUnselect.tres" id="9_iv2ij"]
@@ -410,11 +409,6 @@ tooltip_text = "Citizens"
 layout_mode = 2
 tooltip_text = "Happiness"
 texture = ExtResource("8_mbmc5")
-
-[node name="Money" parent="MenuCanvasLayer/GameStats" instance=ExtResource("4_2bxld")]
-layout_mode = 2
-tooltip_text = "Money"
-texture = ExtResource("7_k3pbr")
 
 [node name="Level" type="HBoxContainer" parent="MenuCanvasLayer/GameStats"]
 layout_mode = 2

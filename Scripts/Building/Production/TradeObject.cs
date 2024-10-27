@@ -4,24 +4,20 @@ using System;
 public partial class TradeObject : HBoxContainer
 {
 	public Label Label;
-	public Label Value;
+	public Label ResourcesOwned;
 	public Button Minus;
 	public Button Plus;
-	public Label Amount;
+	public Label AmountToTrade;
 	public override void _Ready()
 	{
 		Label = GetNode<Label>("Label");
-		Value = GetNode<Label>("Value");
-		Value.Text = "";
+		ResourcesOwned = GetNode<Label>("Value");
+		ResourcesOwned.Text = "";
 		Minus = GetNode<Button>("Minus");
 		Plus = GetNode<Button>("Plus");
-		Amount = GetNode<Label>("Amount");
+		AmountToTrade = GetNode<Label>("Amount");
 
-		Minus.Pressed += () =>
-		{
-			var amountInt = int.Parse(Amount.Text);
-			Amount.Text = Math.Max(amountInt-1,0).ToString();
-		};
+		
 	}
 	
 

@@ -116,6 +116,9 @@ public abstract partial class Production : AbstractPlaceable
 		{
 			People.Add(npc);
 		}
+		var npcPortrait = InfoBox.CitizenPortrait.Instantiate<CitizenPortraitButton>();
+		npcPortrait.npc = npc;
+		InfoBox.PortraitContainer.AddChild(npcPortrait);
 		return true;
 	}
 

@@ -44,7 +44,7 @@ public abstract partial class AbstractPlaceable : Area2D
     public Dictionary<string, List<int>> MoveCost;
     public List<Npc> People = [];
     public int PlayerLevel = 0;
-    protected List<Npc> CurrentPeople = []; // npcs who are currently at the location
+    public List<Npc> CurrentPeople = []; // npcs who are currently at the location
 
     public bool ActivityIndoors = true;
 

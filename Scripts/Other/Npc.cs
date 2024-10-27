@@ -184,7 +184,7 @@ public partial class Npc : CharacterBody2D
 	}
 	public void OnBuildingExited()
 	{
-		CurrentBuilding = null;
+		if(!AtWork) CurrentBuilding = null;
 	}
 
 	public void OnAtWorkTimerTimeout()
@@ -332,7 +332,8 @@ public partial class Npc : CharacterBody2D
 			foreach (var entry in sortedDict)
 			{
 				if(entry.Value.Reason is null) continue;
-				if (entry.Value.Happiness >= 0)
+				if(entry.Value.Happiness == 0) continue;
+				if (entry.Value.Happiness > 0)
 				{
 					unhappyReason += $"+{entry.Value.Reason}\n";
 				}
@@ -346,10 +347,7 @@ public partial class Npc : CharacterBody2D
 
 	public bool ChangeJob(Production production)
 	{
-		if (GameMap.TutorialMode && production is WorkBench)
-		{
-			TutorialWindow.CompleteTutorialStep(TutorialStep.EmployNpc);
-		} 
+		
 		var oldWork = Work;
 		Work?.RemoveWorker(this);
 		Work = production;
@@ -381,6 +379,10 @@ public partial class Npc : CharacterBody2D
 	}
 	public bool GetJob(Production production)
 	{
+		if (GameMap.TutorialMode && production is WorkBench)
+		{
+			TutorialWindow.CompleteTutorialStep(TutorialStep.EmployNpc);
+		} 
 		if (production is null)
 		{
 			Work = null;
@@ -399,7 +401,6 @@ public partial class Npc : CharacterBody2D
 		Work = production;
 		SetMoodReason("Work", "Has Work", 1);
 		EmitSignal(SignalName.SendLog, $"{CitizenName} got their first job at the {Work.BuildingName}!");
-		TutorialWindow.CompleteTutorialStep("Employ Npc");
 		SetDestinationToTargetBuilding(Work);
 		return true;
 	}
@@ -608,7 +609,6 @@ public partial class Npc : CharacterBody2D
 			daysUnhappy += 1;
 			if (daysUnhappy == 1)
 			{
-				OnDelete();
 				EmitSignal(GameMap.SignalName.SendLog, $"{CitizenName} is unhappy! Do something about it before they leave!");
 			}
 			if (daysUnhappy > 5)

@@ -134,7 +134,6 @@ public partial class GameMenu : Control
 		var statLabels = GetNode<HBoxContainer>("MenuCanvasLayer/GameStats");
 		_gameStatLabels = new Godot.Collections.Dictionary<string, Label>
 		{
-			{ RawResource.Money, statLabels.GetNode<TextureRect>(RawResource.Money).GetNode<Label>("Value") },
 			{ RawResource.Food, statLabels.GetNode<TextureRect>(RawResource.Food).GetNode<Label>("Value") },
 			{ NpcStatuses.Citizens, statLabels.GetNode<TextureRect>(NpcStatuses.Citizens).GetNode<Label>("Value") },
 			{ RawResource.Stone, statLabels.GetNode<TextureRect>(RawResource.Stone).GetNode<Label>("Value") },
@@ -145,7 +144,6 @@ public partial class GameMenu : Control
 		};
 		_gameStats = new Godot.Collections.Dictionary<string, TextureRect>
 		{
-			{ RawResource.Money, statLabels.GetNode<TextureRect>(RawResource.Money) },
 			{ RawResource.Food, statLabels.GetNode<TextureRect>(RawResource.Food)},
 			{ NpcStatuses.Citizens, statLabels.GetNode<TextureRect>(NpcStatuses.Citizens)},
 			{ RawResource.Stone, statLabels.GetNode<TextureRect>(RawResource.Stone)},

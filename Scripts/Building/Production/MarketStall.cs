@@ -39,12 +39,12 @@ public partial class MarketStall : Production
 		};
 		MoveCost = new Dictionary<string, List<int>>
 		{
-			{ RawResource.Wood, [1, 2, 3] },
+			{ ProcessedResource.Plank, [1, 2, 3] },
 			{ RawResource.Stone, [1, 2, 3] }
 		};
 		DeleteCost = new Dictionary<string, List<int>>
 		{
-			{ RawResource.Wood, [2, 3, 4] },
+			{ ProcessedResource.Plank, [2, 3, 4] },
 			{ RawResource.Stone, [2, 3, 4] }
 		};
 

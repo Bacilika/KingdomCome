@@ -7,6 +7,7 @@ public abstract partial class Decoration: AbstractPlaceable
     public int DecorationsPoint = 0;
     public int increaseHappiness = 0;
     
+    
     protected override void Tick()
     {
         UpdateInfo();

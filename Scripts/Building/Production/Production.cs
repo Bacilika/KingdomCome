@@ -126,6 +126,15 @@ public abstract partial class Production : AbstractPlaceable
 
 	public virtual void UpdateInfo()
 	{
-		InfoBox.UpdateInfo(GetBuildingName(), $"Produces  {Producing}\nWorkers: {GetWorkers()} / {Upgrades[Upgrade.MaxWorkers][Level]}");
+		string upgradesResources = "";
+		foreach (var resourse in BuildCost)
+		{
+			upgradesResources += resourse.Key;
+			upgradesResources += ": ";
+			upgradesResources += resourse.Value[Level+1];
+		}
+		
+		InfoBox.UpdateInfo(GetBuildingName(), $"{BuildingDescription} \n Produces  {Producing}\nWorkers: {GetWorkers()} / {Upgrades[Upgrade.MaxWorkers][Level]}", 
+			$"Upgrade to get {Upgrades[Upgrade.MaxWorkers][Level+1]} max workers." + $"\n Cost: {upgradesResources}");
 	}
 }

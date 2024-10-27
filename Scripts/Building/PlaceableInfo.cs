@@ -17,7 +17,8 @@ public partial class PlaceableInfo : Panel
 	
 	private Label _buildingName;
 	private Control _houseInfo;
-	private RichTextLabel _textLabel;
+	private Label _textLabel;
+	private RichTextLabel _upgradesInfo;
 	public PackedScene CitizenPortrait;
 
 	public bool Focused;
@@ -30,10 +31,11 @@ public partial class PlaceableInfo : Panel
 	public override void _Ready()
 	{
 		_buildingName = GetNode<Label>("HouseInfo/BuildingName");
-		_textLabel = GetNode<RichTextLabel>("HouseInfo/RichTextLabel");
+		_textLabel = GetNode<Label>("HouseInfo/BuildingInfo");
 		PortraitContainer = GetNode<HFlowContainer>("HouseInfo/CitizenPortraitContainer");
 		CitizenPortrait = ResourceLoader.Load<PackedScene>("res://Scenes/Building/CitizenPortraitButton.tscn");
 		_houseInfo = GetNode<Control>("HouseInfo");
+		_upgradesInfo = GetNode<RichTextLabel>("UpgradesDescription");
 	}
 	
 
@@ -87,9 +89,10 @@ public partial class PlaceableInfo : Panel
 		Focused = false;
 	}
 
-	public void UpdateInfo(string buildingName, string text ="")
+	public void UpdateInfo(string buildingName, string text ="", string upgrades = "")
 	{
 		_buildingName.Text = buildingName;
 		_textLabel.Text = text;
+		_upgradesInfo.Text = upgrades;
 	}
 }

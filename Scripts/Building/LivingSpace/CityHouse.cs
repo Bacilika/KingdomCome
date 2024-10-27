@@ -12,7 +12,7 @@ public partial class CityHouse : LivingSpace
 	{
 		PlayerLevel = 4;
 		BuildingName = "City house";
-		BuildingDescription = "A living space for more people.";
+		BuildingDescription = "A big living space with room for many people.";
 		Upgrades = new Dictionary<string, List<int>>
 		{
 			{ Upgrade.MaxInhabitants, [10, 15, 20] }

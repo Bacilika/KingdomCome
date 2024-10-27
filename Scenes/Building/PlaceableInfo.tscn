@@ -3,21 +3,20 @@
 [ext_resource type="Theme" uid="uid://c2femp2uxsefw" path="res://Themes/Theme.tres" id="1_0e4c4"]
 [ext_resource type="Script" path="res://Scripts/Building/PlaceableInfo.cs" id="1_snswj"]
 [ext_resource type="FontFile" uid="uid://dul1t3v440c7s" path="res://Deutsch.ttf" id="3_uwas0"]
-[ext_resource type="FontFile" uid="uid://4apkhqisib11" path="res://BLKCHCRY.TTF" id="4_pvjke"]
 
 [node name="PlaceableInfo" type="Panel"]
 z_index = 2
-offset_right = 213.0
-offset_bottom = 185.0
+offset_right = 247.0
+offset_bottom = 245.0
 theme = ExtResource("1_0e4c4")
 script = ExtResource("1_snswj")
 
 [node name="TurnOffButton" type="Button" parent="."]
 layout_mode = 2
-offset_left = 139.0
-offset_top = 7.0
-offset_right = 206.0
-offset_bottom = 39.0
+offset_left = 153.0
+offset_top = 118.0
+offset_right = 220.0
+offset_bottom = 150.0
 theme_override_fonts/font = ExtResource("3_uwas0")
 theme_override_font_sizes/font_size = 17
 toggle_mode = true
@@ -31,40 +30,39 @@ offset_bottom = 40.0
 
 [node name="BuildingName" type="Label" parent="HouseInfo"]
 layout_mode = 0
-offset_left = 4.0
+offset_left = 11.0
 offset_top = 8.0
-offset_right = 136.0
+offset_right = 237.0
 offset_bottom = 40.0
 theme_override_fonts/font = ExtResource("3_uwas0")
 theme_override_font_sizes/font_size = 27
 text = "Building"
 horizontal_alignment = 1
 
-[node name="RichTextLabel" type="RichTextLabel" parent="HouseInfo"]
+[node name="BuildingInfo" type="Label" parent="HouseInfo"]
 layout_mode = 0
 offset_left = 8.0
-offset_top = 56.0
-offset_right = 200.0
-offset_bottom = 96.0
-mouse_filter = 2
-theme_override_fonts/normal_font = ExtResource("4_pvjke")
+offset_top = 46.0
+offset_right = 237.0
+offset_bottom = 102.0
 text = "Building info"
-fit_content = true
-scroll_active = false
+autowrap_mode = 3
+visible_characters = 100
+visible_ratio = 7.69231
 
 [node name="CitizenPortraitContainer" type="HFlowContainer" parent="HouseInfo"]
 layout_mode = 0
-offset_left = 8.0
-offset_top = 80.0
-offset_right = 200.0
-offset_bottom = 144.0
+offset_left = 5.0
+offset_top = 107.0
+offset_right = 241.0
+offset_bottom = 153.0
 
 [node name="ButtonContainer" type="HBoxContainer" parent="HouseInfo"]
 layout_mode = 0
-offset_left = 16.0
-offset_top = 144.0
-offset_right = 192.0
-offset_bottom = 176.0
+offset_left = 35.0
+offset_top = 157.0
+offset_right = 215.0
+offset_bottom = 189.0
 theme_override_constants/separation = 13
 alignment = 1
 
@@ -85,6 +83,19 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("3_uwas0")
 theme_override_font_sizes/font_size = 17
 text = "Move"
+[node name="UpgradesDescription" type="RichTextLabel" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -108.5
+offset_top = -51.0
+offset_right = 106.5
+offset_bottom = -9.0
+grow_horizontal = 2
+grow_vertical = 0
 
 [connection signal="mouse_entered" from="." to="." method="OnMouseEntered"]
 [connection signal="mouse_exited" from="." to="." method="OnMouseExited"]

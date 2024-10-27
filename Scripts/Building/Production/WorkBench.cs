@@ -152,6 +152,6 @@ public partial class WorkBench : Production
 		var info = $"All Npcs assigned to the workbench will build the buildings" +
 				   $"\nWorkers: {GetWorkers()}";
 		
-		InfoBox.UpdateInfo(GetBuildingName(), info);
+		InfoBox.UpdateInfo(GetBuildingName(), info, "");
 	}
 }

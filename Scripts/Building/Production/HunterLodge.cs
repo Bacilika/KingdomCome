@@ -7,16 +7,16 @@ public partial class HunterLodge : Production
 	protected override void _Ready_instance()
 	{
 		BuildingName = "Hunter's Lodge";
-		BuildingDescription = "A station for hunters to gather and hunt. Produces meat.";
+		BuildingDescription = "A station for hunters to gather and hunt meat.";
 		PlayerLevel = 0;
-		Producing = "Food";
+		Producing = "Meat (food)";
 		Upgrades = new Dictionary<string, List<int>>
 		{
-			{ Upgrade.MaxWorkers, [2, 5, 10] }
+			{ Upgrade.MaxWorkers, [3, 5, 7] }
 		};
 		BuildCost = new Dictionary<string, List<int>>
 		{
-			{ RawResource.Wood, [5, 7, 10] },
+			{ RawResource.Wood, [7, 5, 5] },
 		};
 		MoveCost = new Dictionary<string, List<int>>
 		{

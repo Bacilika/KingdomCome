@@ -13,12 +13,15 @@ public partial class Bakery : Production{
 		PlayerLevel = 5;
 		Upgrades = new Dictionary<string, List<int>>
 		{
-			{ Upgrade.MaxWorkers, [5, 7, 10] }
+			{ Upgrade.MaxWorkers, [3, 5, 7] }
 		};
 		BuildCost = new Dictionary<string, List<int>>
 		{
-			{ RawResource.Wood, [5, 7, 10] },
-			{ RawResource.Stone, [5, 7, 10] }
+			{ ProcessedResource.Plank, [20, 10, 10] },
+			{ RawResource.Stone, [10, 7, 5] },
+			{ RawResource.Iron, [10, 5, 3] },
+			{ RawResource.Wood, [3, 2, 3] }
+
 		};
 		MoveCost = new Dictionary<string, List<int>>
 		{

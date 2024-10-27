@@ -121,7 +121,7 @@ public abstract partial class AbstractPlaceable : Area2D
         InfoBox.Visible = false;
         InfoBox.MoveToFront();
         
-        var turnoffbutton = InfoBox.GetNode<Button>("TurnOffButton");
+        var turnoffbutton = InfoBox.GetNode<Button>("HouseInfo/ButtonContainer/TurnOffButton");
         turnoffbutton.Visible = this is Production;
         BodyEntered += CitizenEntered;
         BodyExited += CitizenExited;

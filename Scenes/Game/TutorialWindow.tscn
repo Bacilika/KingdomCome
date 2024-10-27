@@ -1,7 +1,23 @@
-[gd_scene load_steps=3 format=3 uid="uid://1hu3hnur2kr5"]
+[gd_scene load_steps=6 format=3 uid="uid://1hu3hnur2kr5"]
 
 [ext_resource type="Theme" uid="uid://c2femp2uxsefw" path="res://Themes/Theme.tres" id="1_2n3gh"]
 [ext_resource type="Script" path="res://Scripts/Game/TutorialWindow.cs" id="2_u0l0r"]
+[ext_resource type="Texture2D" uid="uid://bngkblrwrpg8" path="res://Sprites/Buttons/wasd.png" id="3_6ty54"]
+[ext_resource type="Texture2D" uid="uid://b6eu8ol61fxtd" path="res://Sprites/Buttons/wasd2.png" id="4_s5yjp"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_if60i"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_6ty54")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_s5yjp")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="TutorialWindow" type="Panel"]
 offset_top = 36.0
@@ -36,3 +52,9 @@ size_flags_horizontal = 4
 theme = ExtResource("1_2n3gh")
 text = "Close
 "
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+visible = false
+scale = Vector2(0.58901, 0.58901)
+sprite_frames = SubResource("SpriteFrames_if60i")
+frame_progress = 0.254018

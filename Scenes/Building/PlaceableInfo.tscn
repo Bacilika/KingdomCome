@@ -1,8 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://biil4p82w3tjw"]
+[gd_scene load_steps=5 format=3 uid="uid://biil4p82w3tjw"]
 
 [ext_resource type="Theme" uid="uid://c2femp2uxsefw" path="res://Themes/Theme.tres" id="1_0e4c4"]
 [ext_resource type="Script" path="res://Scripts/Building/PlaceableInfo.cs" id="1_snswj"]
-[ext_resource type="PackedScene" uid="uid://ud23v844segc" path="res://Scenes/Building/Production/ChooseWare.tscn" id="3_j5mfn"]
 [ext_resource type="FontFile" uid="uid://dul1t3v440c7s" path="res://Deutsch.ttf" id="3_uwas0"]
 [ext_resource type="FontFile" uid="uid://4apkhqisib11" path="res://BLKCHCRY.TTF" id="4_pvjke"]
 
@@ -12,16 +11,6 @@ offset_right = 213.0
 offset_bottom = 185.0
 theme = ExtResource("1_0e4c4")
 script = ExtResource("1_snswj")
-
-[node name="ChooseWareButton" type="Button" parent="."]
-layout_mode = 0
-offset_left = 49.0
-offset_top = 100.0
-offset_right = 159.0
-offset_bottom = 131.0
-theme_override_fonts/font = ExtResource("3_uwas0")
-theme_override_font_sizes/font_size = 18
-text = "Choose Ware"
 
 [node name="TurnOffButton" type="Button" parent="."]
 layout_mode = 2
@@ -97,18 +86,8 @@ theme_override_fonts/font = ExtResource("3_uwas0")
 theme_override_font_sizes/font_size = 17
 text = "Move"
 
-[node name="ChooseWare" parent="." instance=ExtResource("3_j5mfn")]
-layout_mode = 0
-offset_left = 216.0
-offset_top = 1.0
-offset_right = 424.0
-offset_bottom = 185.0
-
 [connection signal="mouse_entered" from="." to="." method="OnMouseEntered"]
 [connection signal="mouse_exited" from="." to="." method="OnMouseExited"]
-[connection signal="mouse_entered" from="ChooseWareButton" to="." method="OnMouseEntered"]
-[connection signal="mouse_exited" from="ChooseWareButton" to="." method="OnMouseExited"]
-[connection signal="pressed" from="ChooseWareButton" to="." method="OnChooseWareButtonPressed"]
 [connection signal="mouse_entered" from="TurnOffButton" to="." method="OnMouseEntered"]
 [connection signal="mouse_exited" from="TurnOffButton" to="." method="OnMouseExited"]
 [connection signal="pressed" from="TurnOffButton" to="." method="OnTurnOffButtonPressed"]

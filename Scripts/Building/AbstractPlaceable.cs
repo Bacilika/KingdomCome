@@ -26,7 +26,6 @@ public abstract partial class AbstractPlaceable : Area2D
     private Color _noModulation = new(1, 1, 1);
 
     private double _time;
-    private ChooseWare _wareBox;
     public AnimatedSprite2D HouseSprite;
     public Dictionary<string, List<int>> BuildCost;
     public string BuildingDescription;
@@ -121,11 +120,7 @@ public abstract partial class AbstractPlaceable : Area2D
         Monitorable = true;
         InfoBox.Visible = false;
         InfoBox.MoveToFront();
-        _wareBox = InfoBox.GetNode<ChooseWare>("ChooseWare");
-        _wareBox.Visible = false;
-
-        var button = InfoBox.GetNode<Button>("ChooseWareButton");
-        button.Visible = this is MarketStall;
+        
         var turnoffbutton = InfoBox.GetNode<Button>("TurnOffButton");
         turnoffbutton.Visible = this is Production;
         BodyEntered += CitizenEntered;
@@ -254,7 +249,7 @@ public abstract partial class AbstractPlaceable : Area2D
             }
             else //if building is not focused
             {
-                if (!InfoBox.Focused && !_wareBox.Focused) //and infobox is not focused
+                if (!InfoBox.Focused) //and infobox is not focused
                     InfoBox.Visible = false;
                 else
                     InfoBox.Focused = true;

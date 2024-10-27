@@ -2,9 +2,7 @@ using Godot;
 
 public partial class PlaceableInfo : Panel
 {
-	[Signal]
-	public delegate void OnChooseWareEventHandler();
-
+	
 	[Signal]
 	public delegate void OnDeleteEventHandler();
 
@@ -51,11 +49,6 @@ public partial class PlaceableInfo : Panel
 		{
 			turnoffbutton.Text = "Turn Off";
 		}
-	}
-
-	public void OnChooseWareButtonPressed()
-	{
-		EmitSignal(SignalName.OnChooseWare); //Emitted to market stall
 	}
 
 	public void OnDeleteButtonPressed()

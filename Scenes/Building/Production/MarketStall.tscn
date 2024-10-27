@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://b7ydnji8nlrtu"]
+[gd_scene load_steps=19 format=3 uid="uid://b7ydnji8nlrtu"]
 
 [ext_resource type="Script" path="res://Scripts/Building/Production/MarketStall.cs" id="1_tdre6"]
 [ext_resource type="Texture2D" uid="uid://d4dxackhgjuth" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Buildings/MarketStand_Small_1.png" id="3_qfx01"]
@@ -12,6 +12,8 @@
 [ext_resource type="Texture2D" uid="uid://bh7bofwv2v6rn" path="res://Sprites/Extra/addResource5.png" id="10_0bq51"]
 [ext_resource type="Texture2D" uid="uid://c2s5x2ag6prrg" path="res://Sprites/Extra/addResource6.png" id="11_klhoe"]
 [ext_resource type="Texture2D" uid="uid://epbdr1v164x7" path="res://Sprites/Extra/addResource8.png" id="12_e82i4"]
+[ext_resource type="StyleBox" uid="uid://pneb3lr30nud" path="res://Themes/ButtonDark.tres" id="13_1jxdb"]
+[ext_resource type="Theme" uid="uid://c2femp2uxsefw" path="res://Themes/Theme.tres" id="13_8k1op"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_gy8eo"]
 animations = [{
@@ -62,7 +64,24 @@ animations = [{
 "speed": 6.0
 }]
 
-[node name="FarmHouse" type="Area2D"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qgi3f"]
+content_margin_left = 5.0
+content_margin_top = 0.0
+content_margin_right = 5.0
+content_margin_bottom = 0.0
+bg_color = Color(0.592157, 0.54902, 0.466667, 1)
+border_width_left = 7
+border_width_top = 7
+border_width_right = 7
+border_width_bottom = 7
+border_color = Color(0.268554, 0.218538, 0.138917, 1)
+border_blend = true
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="MarketStall" type="Area2D"]
 collision_layer = 3
 collision_mask = 3
 script = ExtResource("1_tdre6")
@@ -90,7 +109,123 @@ shape = SubResource("RectangleShape2D_cews5")
 position = Vector2(0, -64)
 sprite_frames = SubResource("SpriteFrames_smqcn")
 
+[node name="Panel" type="Panel" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -316.5
+offset_top = -192.0
+offset_right = 316.5
+offset_bottom = 192.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("13_8k1op")
+theme_override_styles/panel = SubResource("StyleBoxFlat_qgi3f")
+
+[node name="Label" type="Label" parent="Panel"]
+layout_mode = 2
+offset_left = 12.0
+offset_top = 10.0
+offset_right = 626.0
+offset_bottom = 48.0
+theme_override_font_sizes/font_size = 29
+text = "Market Stall Trade Center"
+horizontal_alignment = 1
+
+[node name="Label" type="Label" parent="Panel/Label"]
+layout_mode = 0
+offset_left = 201.0
+offset_top = 36.0
+offset_right = 407.0
+offset_bottom = 56.0
+theme_override_font_sizes/font_size = 14
+text = "Select the resource you want to trade."
+
+[node name="MarketStash" type="Label" parent="Panel/Label"]
+layout_mode = 0
+offset_left = 30.5
+offset_top = 1.0
+offset_right = 99.5
+offset_bottom = 21.0
+text = "Stash: 0/20"
+
+[node name="SellPanel" type="Panel" parent="Panel"]
+layout_mode = 0
+offset_left = 17.0
+offset_top = 67.0
+offset_right = 296.0
+offset_bottom = 368.0
+theme_override_styles/panel = ExtResource("13_1jxdb")
+
+[node name="SellLabel" type="Label" parent="Panel/SellPanel"]
+layout_mode = 2
+offset_left = 8.0
+offset_top = 3.0
+offset_right = 61.0
+offset_bottom = 27.0
+theme_override_font_sizes/font_size = 19
+text = "Selling
+"
+
+[node name="sell" type="ScrollContainer" parent="Panel/SellPanel"]
+layout_mode = 2
+offset_left = 8.0
+offset_top = 24.0
+offset_right = 275.0
+offset_bottom = 293.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/SellPanel/sell"]
+layout_mode = 2
+
+[node name="BuyPanel" type="Panel" parent="Panel"]
+layout_mode = 0
+offset_left = 339.0
+offset_top = 67.0
+offset_right = 613.0
+offset_bottom = 371.0
+theme_override_styles/panel = ExtResource("13_1jxdb")
+
+[node name="buyLabel" type="Label" parent="Panel/BuyPanel"]
+layout_mode = 2
+offset_left = 11.0
+offset_top = 2.0
+offset_right = 71.0
+offset_bottom = 28.0
+theme_override_font_sizes/font_size = 20
+text = "Buying
+"
+
+[node name="buy" type="ScrollContainer" parent="Panel/BuyPanel"]
+layout_mode = 2
+offset_left = 11.0
+offset_top = 29.0
+offset_right = 269.0
+offset_bottom = 297.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/BuyPanel/buy"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="Panel"]
+layout_mode = 0
+offset_left = 498.5
+offset_top = 14.0
+offset_right = 623.5
+offset_bottom = 34.0
+text = "Show Building Info"
+
 [node name="PlaceableInfo" parent="." instance=ExtResource("5_k5x2f")]
+
+[node name="SwitchMode" type="Button" parent="PlaceableInfo"]
+layout_mode = 0
+offset_left = 119.0
+offset_top = 7.0
+offset_right = 208.0
+offset_bottom = 41.0
+text = "Show Market"
 
 [connection signal="area_entered" from="." to="." method="OnAreaEntered"]
 [connection signal="area_exited" from="." to="." method="OnAreaExited"]

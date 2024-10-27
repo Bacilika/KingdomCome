@@ -1,7 +1,7 @@
 [gd_scene load_steps=14 format=3 uid="uid://dq6vw2u2mgsil"]
 
 [ext_resource type="Script" path="res://Scripts/Building/Decoration/Lantern.cs" id="1_uj1ek"]
-[ext_resource type="Texture2D" uid="uid://cta1scvto5yye" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Props/Lamp_1.png" id="2_f08b6"]
+[ext_resource type="Texture2D" uid="uid://cta1scvto5yye" path="res://Sprites/The Fan-tasy Tileset (Premium)/Art/Rock Slopes/Props/Lamp_1.png" id="2_f08b6"]
 [ext_resource type="Texture2D" uid="uid://dt1kbfdm7dk2a" path="res://Sprites/Extra/addResource1.png" id="7_ryxsb"]
 [ext_resource type="Texture2D" uid="uid://co3y7ufhufouh" path="res://Sprites/Extra/addResource2.png" id="8_gdvdf"]
 [ext_resource type="Texture2D" uid="uid://bpp4m7x6k6cyf" path="res://Sprites/Extra/addResource3.png" id="9_udv6k"]

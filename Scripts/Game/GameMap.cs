@@ -160,7 +160,7 @@ public partial class GameMap : Node2D
 	public void PlaceBuilding(Node2D nodeObject)
 	{
 		var placeable = (AbstractPlaceable)nodeObject;
-		_workBench.BuildList.Add(placeable, []);
+		AbstractPlaceable.BuildList.Add(placeable, []);
 		switch (placeable)
 		{
 			case LivingSpace livingSpace:
@@ -197,7 +197,7 @@ public partial class GameMap : Node2D
 			placeable.BuildingProgressBar.GlobalPosition = placeable.GlobalPosition + new Vector2(-50, -60);
 			placeable.BuildingProgressBar.MaxValue = 25;
 			placeable.BuildingProgressBar.Visible = true;
-			placeable.BuildingProgressBar.ZIndex = 2;
+			placeable.BuildingProgressBar.ZIndex = 1;
 			placeable.BuildingProgressBar.ShowPercentage = false;
 			var theme = GD.Load<Theme>("res://Themes/Theme.tres");
 			placeable.BuildingProgressBar.Theme = theme;

@@ -291,7 +291,7 @@ public partial class GameLogistics : Node2D
 		if (CanAfford(building))
 		{
 			RemoveResources(building);
-			building.SetObjectValues();
+			//building.SetObjectValues();
 		}
 		else
 		{

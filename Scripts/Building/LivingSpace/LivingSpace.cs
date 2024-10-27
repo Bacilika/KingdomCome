@@ -28,8 +28,8 @@ public abstract partial class LivingSpace : AbstractPlaceable
         npcPortrait.npc = npc;
         npc.Home = this;
         InfoBox.PortraitContainer.AddChild(npcPortrait);
-        GetNode<AnimatedSprite2D>("HouseSprite").SetAnimation("AnimationLevel" + Level);
-        GetNode<AnimatedSprite2D>("HouseSprite").Play();
+        //GetNode<AnimatedSprite2D>("HouseSprite").SetAnimation("AnimationLevel" + Level);
+        //GetNode<AnimatedSprite2D>("HouseSprite").Play();
         npc.OnMoveIn();
         npc.CitizenName += $" {HouseholdName}";
         npc.EmitSignal(GameMap.SignalName.SendLog, $"{npc.CitizenName} moved into house!");

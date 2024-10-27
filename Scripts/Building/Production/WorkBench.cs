@@ -8,8 +8,6 @@ using Scripts.Constants;
 
 public partial class WorkBench : Production
 {
-	
-	public Dictionary<AbstractPlaceable, List<Npc>> BuildList = [];
 	protected override void _Ready_instance()
 	{
 		_animatedSprite = GetNode<AnimatedSprite2D>("Animation");
@@ -48,10 +46,12 @@ public partial class WorkBench : Production
 	protected override void Tick()
 	{
 		RemoveFinishedBuildings();
-		
+
 		UpdateInfo();
 		if (BuildList.Count == 0)
 		{
+			Console.WriteLine(BuildList.Count);
+
 			foreach (var person in CurrentPeople)
 			{
 				person.Idle = true;
@@ -80,10 +80,16 @@ public partial class WorkBench : Production
 		List<AbstractPlaceable> toBeRemoved = [];
 		foreach (var entry in BuildList.Where(entry => entry.Key.BuildingCounter >= 25))
 		{
+			Console.WriteLine(entry.Key);
+			Console.WriteLine(entry);
+			Console.WriteLine(entry.Value);
 			toBeRemoved.Add(entry.Key);
 			entry.Key.isDone = true;
+			entry.Key.isUpgrading = false;
+
 			entry.Key.HouseSprite.SetAnimation("Level" + entry.Key.Level); 
 			entry.Key.BuildingProgressBar.Visible = false;
+			entry.Key.Upgradeprogressbar.Visible = false;
 			foreach (var person in entry.Value)
 			{
 				person.SetDestination(Position);
@@ -140,12 +146,8 @@ public partial class WorkBench : Production
 	{
 		GetNode<AnimatedSprite2D>("Animation").Visible = false;
 		_animatedSprite.Stop();
-
 	}
 
-	public override void NpcWork(Npc npc)
-	{
-	}
 	
 	public override void UpdateInfo()
 	{

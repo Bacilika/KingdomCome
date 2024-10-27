@@ -39,7 +39,7 @@ public partial class House : LivingSpace
 
 	protected override void DoAction()
 	{
-		if (!_isPeopleInside())
+		if (!_isPeopleInside() && !isUpgrading)
 		{
 			GetNode<AnimatedSprite2D>("HouseSprite").SetAnimation("Level" + Level);
 			GetNode<AnimatedSprite2D>("HouseSprite").Pause();
@@ -49,7 +49,7 @@ public partial class House : LivingSpace
 	private bool _isPeopleInside()
 	{
 		foreach (var person in People)
-			if (Position.DistanceTo(person.Position) < 15)
+			if (Position.DistanceTo(person.Position) < 15 && !isUpgrading)
 			{
 				GetNode<AnimatedSprite2D>("HouseSprite").SetAnimation("AnimationLevel" + Level);
 				GetNode<AnimatedSprite2D>("HouseSprite").Play();

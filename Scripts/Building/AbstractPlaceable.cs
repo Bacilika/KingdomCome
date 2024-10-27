@@ -17,6 +17,10 @@ public abstract partial class AbstractPlaceable : Area2D
 
     [Signal]
     public delegate void OnMoveBuildingEventHandler(AbstractPlaceable building);
+    public delegate void OnMoveBonupguildingEventHandler(AbstractPlaceable building);
+    
+    public static Dictionary<AbstractPlaceable, List<Npc>> BuildList = [];
+
 
     public CollisionShape2D _hitbox;
     private bool _isFocused;
@@ -55,9 +59,11 @@ public abstract partial class AbstractPlaceable : Area2D
     //Used by workbench
     public int BuildingCounter = 0;
     public bool isDone = false;
+    public bool isUpgrading = false;
     
     //Progress bar
     public ProgressBar BuildingProgressBar = new();
+    public ProgressBar Upgradeprogressbar = new();
 
     protected AnimatedSprite2D _animatedSprite;
 
@@ -248,10 +254,7 @@ public abstract partial class AbstractPlaceable : Area2D
     }
 
 
-    public virtual void OnBuildingPressed()
-    {
-        
-    }
+    public virtual void OnBuildingPressed() { }
     public override void _Input(InputEvent @event)
     {
         if (@event.IsActionPressed(Inputs.LeftClick) && !GameLogistics.IsPlaceMode)
@@ -297,23 +300,35 @@ public abstract partial class AbstractPlaceable : Area2D
 
     private async void OnUpgrade()
     {
+        BuildingCounter = 0;
         if (Level < _maxLevel)
         {
             if (await EnoughSpace())
             {
-                GD.Print("No collision");
-                ActivateHitbox(Level); //return to old hitbox
+                isUpgrading = true;
+                isDone = false;
+                HouseSprite.SetAnimation("Building"); 
                 Level++;
-                if (this is House)
+                BuildList.Add(this, []);
+                ActivateHitbox(Level); 
+                EmitSignal(SignalName.OnBuildingUpgrade, this);
+                Shop.placeAudio.Play();
+                
+                if (this is not WorkBench)
                 {
-                    HouseSprite.SetAnimation("Level" + Level);
-                    HouseSprite.Pause();
+                    AddChild(Upgradeprogressbar);
+                    Upgradeprogressbar.MinValue = 0;
+                    Upgradeprogressbar.GlobalPosition = GlobalPosition + new Vector2(-50, -60);
+                    Upgradeprogressbar.MaxValue = 25;
+                    Upgradeprogressbar.Visible = true;
+                    Upgradeprogressbar.ZIndex = 1;
+                    Upgradeprogressbar.ShowPercentage = false;
+                    var theme = GD.Load<Theme>("res://Themes/Theme.tres");
+                    Upgradeprogressbar.Theme = theme;
+                    Upgradeprogressbar.Size = new Vector2(BuildingProgressBar.Size.X, 15); 
+                    Upgradeprogressbar.SetCustomMinimumSize(new Vector2(100, 30));
                 }
 
-                EmitSignal(SignalName.OnBuildingUpgrade, this);
-
-                SetObjectValues();
-                Shop.placeAudio.Play();
             }
             else
             {
@@ -344,7 +359,6 @@ public abstract partial class AbstractPlaceable : Area2D
                 {
                     shape2D.Disabled = true;
                 }
-
                 shape2D.Visible = true;
             }
     }

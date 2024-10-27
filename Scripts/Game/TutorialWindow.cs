@@ -59,7 +59,7 @@ public partial class TutorialWindow: Panel
 		Title.Text = title;
 		Description.Text = description;
 	}
-
+	
 	public static bool CanBeCompleted(string key)
 	{
 		foreach (var entry in TutorialSteps)

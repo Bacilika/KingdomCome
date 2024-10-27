@@ -220,7 +220,7 @@ public partial class GameMap : Node2D
 			placeable.BuildingProgressBar.GlobalPosition = placeable.GlobalPosition + new Vector2(-50, -60);
 			placeable.BuildingProgressBar.MaxValue = 25;
 			placeable.BuildingProgressBar.Visible = true;
-			placeable.BuildingProgressBar.ZIndex = 4;
+			placeable.BuildingProgressBar.ZIndex = 2;
 			placeable.BuildingProgressBar.ShowPercentage = false;
 			var theme = GD.Load<Theme>("res://Themes/Theme.tres");
 			placeable.BuildingProgressBar.Theme = theme;

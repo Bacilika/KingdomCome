@@ -1,8 +1,12 @@
-[gd_scene load_steps=5 format=3 uid="uid://biil4p82w3tjw"]
+[gd_scene load_steps=8 format=3 uid="uid://biil4p82w3tjw"]
 
 [ext_resource type="Theme" uid="uid://c2femp2uxsefw" path="res://Themes/Theme.tres" id="1_0e4c4"]
 [ext_resource type="Script" path="res://Scripts/Building/PlaceableInfo.cs" id="1_snswj"]
+[ext_resource type="PackedScene" uid="uid://ud23v844segc" path="res://Scenes/Building/Production/ChooseWare.tscn" id="3_j5mfn"]
 [ext_resource type="FontFile" uid="uid://dul1t3v440c7s" path="res://Deutsch.ttf" id="3_uwas0"]
+[ext_resource type="Texture2D" uid="uid://direieh7up5ik" path="res://Sprites/Buttons/deleteButton.png" id="4_k2xu8"]
+[ext_resource type="Texture2D" uid="uid://bqkgv1y08enb4" path="res://Sprites/Buttons/upgradebutton.png" id="5_tvl3t"]
+[ext_resource type="Texture2D" uid="uid://bcq17ot4ayeyu" path="res://Sprites/Buttons/movebutton.png" id="6_syf04"]
 
 [node name="PlaceableInfo" type="Panel"]
 z_index = 2
@@ -10,6 +14,16 @@ offset_right = 247.0
 offset_bottom = 245.0
 theme = ExtResource("1_0e4c4")
 script = ExtResource("1_snswj")
+
+[node name="ChooseWareButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 34.0
+offset_top = 119.0
+offset_right = 144.0
+offset_bottom = 150.0
+theme_override_fonts/font = ExtResource("3_uwas0")
+theme_override_font_sizes/font_size = 18
+text = "Choose Ware"
 
 [node name="TurnOffButton" type="Button" parent="."]
 layout_mode = 2
@@ -61,28 +75,46 @@ offset_bottom = 153.0
 layout_mode = 0
 offset_left = 35.0
 offset_top = 157.0
-offset_right = 215.0
-offset_bottom = 189.0
+offset_right = 237.0
+offset_bottom = 228.0
 theme_override_constants/separation = 13
 alignment = 1
 
 [node name="DeleteButton" type="Button" parent="HouseInfo/ButtonContainer"]
+custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 theme_override_fonts/font = ExtResource("3_uwas0")
 theme_override_font_sizes/font_size = 17
-text = "Delete"
+icon = ExtResource("4_k2xu8")
+expand_icon = true
 
 [node name="UpgradeButton" type="Button" parent="HouseInfo/ButtonContainer"]
+custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 theme_override_fonts/font = ExtResource("3_uwas0")
 theme_override_font_sizes/font_size = 17
-text = "Upgrade"
+icon = ExtResource("5_tvl3t")
+expand_icon = true
 
 [node name="Move" type="Button" parent="HouseInfo/ButtonContainer"]
+custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 theme_override_fonts/font = ExtResource("3_uwas0")
 theme_override_font_sizes/font_size = 17
-text = "Move"
+icon = ExtResource("6_syf04")
+expand_icon = true
+
+[node name="ChooseWare" parent="." instance=ExtResource("3_j5mfn")]
+layout_mode = 0
+offset_left = 255.0
+offset_right = 463.0
+
 [node name="UpgradesDescription" type="RichTextLabel" parent="."]
 layout_mode = 1
 anchors_preset = 7
@@ -99,6 +131,9 @@ grow_vertical = 0
 
 [connection signal="mouse_entered" from="." to="." method="OnMouseEntered"]
 [connection signal="mouse_exited" from="." to="." method="OnMouseExited"]
+[connection signal="mouse_entered" from="ChooseWareButton" to="." method="OnMouseEntered"]
+[connection signal="mouse_exited" from="ChooseWareButton" to="." method="OnMouseExited"]
+[connection signal="pressed" from="ChooseWareButton" to="." method="OnChooseWareButtonPressed"]
 [connection signal="mouse_entered" from="TurnOffButton" to="." method="OnMouseEntered"]
 [connection signal="mouse_exited" from="TurnOffButton" to="." method="OnMouseExited"]
 [connection signal="pressed" from="TurnOffButton" to="." method="OnTurnOffButtonPressed"]
